@@ -14,7 +14,7 @@ export interface Establishment extends CollectionObject {
     establishment_code: string;
     paymentMethods: string[];
     points_validity: string;
-    reward_points: number;
+    reward_points: string;
     tables_quantity: number;
     image?: EstablishmentImage;
     isActive: boolean;

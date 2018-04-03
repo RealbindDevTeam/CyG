@@ -31,6 +31,7 @@ import './imports/publications/payment/payment-transaction';
 import './imports/publications/payment/invoice-info';
 import './imports/publications/payment/iurest-invoices';
 import './imports/publications/establishment/establishment';
+import './imports/publications/establishment/establishment-qr';
 import './imports/publications/establishment/table';
 import './imports/publications/establishment/order';
 import './imports/publications/establishment/waiter-call';

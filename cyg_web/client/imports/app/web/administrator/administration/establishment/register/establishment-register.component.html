@@ -13,30 +13,12 @@
                                         <mat-option *ngFor="let country of _countries | async" (click)="changeCountry(country._id);" value="{{country._id}}"> {{country.alfaCode3}} - {{country.name | translate}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                                <!--mat-form-field style="width: 48%;margin-left: 2%;">
-                                    <mat-select formControlName="city" placeholder="{{'RESTAURANT_REGISTER.SELECT_CITY' | translate}}" [(ngModel)]="_selectedCityValue">
-                                        <mat-option *ngFor="let city of _cities | async" (click)="changeCity(city._id);" value="{{city._id}}">{{city.name}}</mat-option>
-                                        <mat-option *ngIf="(_cities | async)?.length > 0" (click)="changeCity('0000');" value="0000">{{'OTHER' | translate}}</mat-option>
-                                    </mat-select>
-                                </mat-form-field-->
                                 <mat-form-field style="width: 48%;margin-left: 2%;">
                                     <input matInput formControlName="city" placeholder="{{'RESTAURANT_REGISTER.CITY' | translate}}" required minlength="1" maxlength="50"
                                         #inputCity>
                                     <mat-hint align="end">{{inputCity.value.length}} / 50</mat-hint>
                                 </mat-form-field>
                             </div>
-
-                            <!--div>
-                                <div *ngIf="_showMessage" style="display: inline-block; width: 48%; margin-top: 1%">
-                                    <p style="font-weight: bold;">{{'RESTAURANT.CITY_OTHER' | translate}}</p>
-                                </div>
-                                <mat-form-field *ngIf="_showMessage" style="width: 48%; margin-left: 2%;">
-                                    <input matInput formControlName="otherCity" placeholder="{{'RESTAURANT.WHICH_ONE' | translate}}" required minlength="1" maxlength="50"
-                                        #inputOtherCity>
-                                    <mat-hint align="end">{{inputOtherCity.value.length}} / 50</mat-hint>
-                                </mat-form-field>
-                            </div-->
-
                             <div style="margin-top: 1%;">
                                 <mat-form-field style="width: 48%">
                                     <textarea matInput required formControlName="name" placeholder="{{'RESTAURANT_REGISTER.NAME' | translate}}" minlength="1"
@@ -62,11 +44,6 @@
                                 </mat-form-field>
                             </div>
                             <div>
-                                <!--mat-form-field style="width: 48%;">
-                                    <input matInput required formControlName="tables_number" type="tel" (change)="changeTablesNumber()" placeholder="{{'RESTAURANT_REGISTER.INITIAL_TABLES_NUMBER' | translate}} {{'RESTAURANT_REGISTER.MAX_TABLES' | translate}} {{max_table_number}}"
-                                        minlength="1" maxlength="3" #inputInitialTables>
-                                    <mat-hint align="end">{{inputInitialTables.value.length}} / 3</mat-hint>
-                                </mat-form-field-->
                                 <mat-form-field style="width: 48%;">
                                     <mat-select formControlName="pointsValidity" placeholder="{{'RESTAURANT_REGISTER.POINTS_VALIDITY' | translate}}" required>
                                         <mat-option *ngFor="let point_validity of _pointsValidity | async" value="{{point_validity._id}}"> {{point_validity.point_validity}} {{'RESTAURANT_REGISTER.DAYS' | translate}}</mat-option>
@@ -91,13 +68,6 @@
                                     <span *ngIf="_createImage">{{_nameImageFile}}&hellip;</span>
                                 </label>
                             </div>
-                            <!--div style="margin-top: 1%;">
-                                <mat-form-field style="width: 48%;">
-                                    <mat-select formControlName="pointsValidity" placeholder="{{'RESTAURANT_REGISTER.POINTS_VALIDITY' | translate}}" required>
-                                        <mat-option *ngFor="let point_validity of _pointsValidity | async" value="{{point_validity._id}}"> {{point_validity.point_validity}} {{'RESTAURANT_REGISTER.DAYS' | translate}}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div-->
                             <div style="margin-top: 1%;">
                                 <div>
                                     <p>{{'RESTAURANT_REGISTER.ADD_PAYMENTMETHODS_RESTURANT' | translate}}</p>
@@ -114,7 +84,7 @@
                         </mat-card-content>
                         <mat-card-actions align="end">
                             <button mat-raised-button (click)="cancel()">{{'CANCEL' | translate}}</button>
-                            <button mat-raised-button (click)="addEstablishment()" [disabled]="!_establishmentForm.valid || !validateTablesNumber || !validatePaymentMethod">{{'FINISH' | translate}}</button>
+                            <button mat-raised-button (click)="addEstablishment()" [disabled]="!_establishmentForm.valid || !validatePaymentMethod">{{'FINISH' | translate}}</button>
                         </mat-card-actions>
                     </form>
                 </mat-card-content>

@@ -761,7 +761,7 @@
         "GENERAL_INFO": "Información general del restaurante",
         "GENERAL_INFO_TEXT": "Edita la información del restaurante. Dicha información será visualizada por las personas en internet y te dará mayor visivilidad",
         "SELECT_COUNTRY": "Selecciona país",
-        "SELECT_CITY": "Selecciona ciudad",
+        "CITY": "Ciudad / Estado / Provincia",
         "ADDRESS": "Dirección",
         "PHONE": "Teléfono",
         "WEBPAGE": "Página de internet",
@@ -794,7 +794,8 @@
         "PLAN_TWO": "Plan Dos",
         "PLAN_THREE": "Plan Tres",
         "OTHER": "Otra...",
-        "CITY_OTHER": "Si seleccionaste otra ciudad, escribela en el siguiente campo"
+        "CITY_OTHER": "Si seleccionaste otra ciudad, escribela en el siguiente campo",
+        "RESTAURANT_EDITED": "Restaurante Editado"
     },
     "RESTAURANT_LOCATION": {
         "TITTLE": "Ubicación del establecimiento",
