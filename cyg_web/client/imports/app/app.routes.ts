@@ -5,7 +5,6 @@ import { CustomerGuard } from './web/services/navigation/customer-guard.service'
 import { AdminGuard } from './web/services/navigation/admin-guard.service';
 import { WaiterGuard } from './web/services/navigation/waiter-guard.service';
 import { SupervisorGuard } from './web/services/navigation/supervisor-guard.service';
-import { CashierGuard } from './web/services/navigation/cashier-guard.service';
 import { DashboardComponent } from './web/administrator/dashboard/dashboard.component';
 import { SectionComponent } from './web/administrator/menu/sections/section/section.component';
 import { SigninWebComponent } from './web/auth/signin/signin.web.component';
@@ -14,7 +13,7 @@ import { SubcategoryComponent } from './web/administrator/menu/subcategories/sub
 import { AdditionComponent } from './web/administrator/menu/additions/addition/addition.component';
 import { GarnishFoodComponent } from './web/administrator/menu/garnish-food/garnish-food/garnish-food.component';
 import { OrdersComponent } from './web/customer/orders/order/order.component';
-import { TableComponent } from './web/administrator/administration/tables/table/table.component';
+//import { TableComponent } from './web/administrator/administration/tables/table/table.component';
 import { EstablishmentRegisterComponent } from './web/administrator/administration/establishment/register/establishment-register.component';
 import { SettingsWebComponent } from './web/settings/settings/settings.web.component';
 import { EstablishmentComponent } from './web/administrator/administration/establishment/establishment/establishment.component';
@@ -44,7 +43,7 @@ import { SupervisorCollaboratorsRegisterComponent } from './web/supervisor/colla
 import { SupervisorTableComponent } from './web/supervisor/tables/supervisor-tables.component';
 import { TableChangeComponent } from './web/customer/table-change/table-change.component';
 import { EstablishmentExitComponent } from './web/customer/establishment-exit/establishment-exit.component';
-import { EstablishmentTableControlComponent } from './web/administrator/administration/tables/table-control/establishment-table-control.component';
+//import { EstablishmentTableControlComponent } from './web/administrator/administration/tables/table-control/establishment-table-control.component';
 import { TableDetailComponent } from './web/administrator/administration/tables/table-control/table-detail/table-detail.component';
 import { SupervisorEstablishmentTableControlComponent } from './web/supervisor/establishment-table-control/supervisor-establishment-table-control.component';
 import { EstablishmentProfileComponent } from './web/administrator/administration/establishment/profile/establishment-profile.component';
@@ -57,8 +56,7 @@ import { OptionsComponent } from './web/administrator/menu/options/options/optio
 import { OptionValueComponent } from './web/administrator/menu/options/values/option-value/option-value.component';
 import { RewardHistoryChartComponent } from './web/administrator/dashboard/reward-history-chart/reward-history-chart.component';
 import { OrdersTodayComponent } from "./web/administrator/orders-today/orders-today.component";
-import { CashierOrdersTodayComponent } from "./web/cashier/cashier-orders-today.component";
-import { EstablishmentListComponent } from './web/administrator/administration/establishment/monthly-config/establishment-list/establishment-list.component';
+//import { EstablishmentListComponent } from './web/administrator/administration/establishment/monthly-config/establishment-list/establishment-list.component';
 import { EnableDisableComponent } from './web/administrator/administration/establishment/monthly-config/enable-disable/enable-disable.component';
 import { BagsPaymentComponent } from './web/administrator/payment/bags-payment/bags-payment.component';
 
@@ -80,14 +78,14 @@ export const routes: Route[] = [
             { path: 'establishment', component: EstablishmentComponent, canActivate: [AdminGuard] },
             { path: 'establishment-register', component: EstablishmentRegisterComponent, canActivate: [AdminGuard] },
             { path: 'establishment-edition/:param1', component: EstablishmentEditionComponent, canActivate: [AdminGuard] },
-            { path: 'tables', component: TableComponent, canActivate: [AdminGuard] },
+            //{ path: 'tables', component: TableComponent, canActivate: [AdminGuard] },
             { path: 'orders', component: OrdersComponent, canActivate: [CustomerGuard] },
             { path: 'items-enable', component: ItemEnableComponent, canActivate: [SupervisorGuard] },
             { path: 'waiter-call', component: WaiterCallComponent, canActivate: [CustomerGuard] },
             { path: 'calls', component: CallsComponent, canActivate: [WaiterGuard] },
             { path: 'monthly-payment', component: MonthlyPaymentComponent, canActivate: [AdminGuard] },
             { path: 'dashboards', component: SupervisorDashboardComponent, canActivate: [SupervisorGuard] },
-            { path: 'establishment-list', component: EstablishmentListComponent, canActivate: [AdminGuard] },
+            //{ path: 'establishment-list', component: EstablishmentListComponent, canActivate: [AdminGuard] },
             { path: 'enable-disable/:param1', component: EnableDisableComponent, canActivate: [AdminGuard] },
             { path: 'payment-form/:param1/:param2/:param3', component: PayuPaymentFormComponent, canActivate: [AdminGuard] },
             { path: 'payment-history', component: PaymentHistoryComponent, canActivate: [AdminGuard] },
@@ -99,7 +97,7 @@ export const routes: Route[] = [
             { path: 'supervisor-tables', component: SupervisorTableComponent, canActivate: [SupervisorGuard] },
             { path: 'table-change', component: TableChangeComponent, canActivate: [CustomerGuard] },
             { path: 'establishment-exit', component: EstablishmentExitComponent, canActivate: [CustomerGuard] },
-            { path: 'establishment-table-control', component: EstablishmentTableControlComponent, canActivate: [AdminGuard] },
+            //{ path: 'establishment-table-control', component: EstablishmentTableControlComponent, canActivate: [AdminGuard] },
             { path: 'table-detail/:param1/:param2/:param3/:param4/:param5', component: TableDetailComponent, canActivate: [SupervisorGuard] },
             { path: 'supervisor-establishment-table-control', component: SupervisorEstablishmentTableControlComponent, canActivate: [SupervisorGuard] },
             { path: 'establishment-profile', component: EstablishmentProfileComponent, canActivate: [AdminGuard] },
@@ -115,7 +113,6 @@ export const routes: Route[] = [
             { path: 'options', component: OptionsComponent, canActivate: [AdminGuard] },
             { path: 'option-values', component: OptionValueComponent, canActivate: [AdminGuard] },
             { path: 'reward-history-chart/:param1', component: RewardHistoryChartComponent, canActivate: [AdminGuard] },
-            { path: 'cashier-orders-today', component: CashierOrdersTodayComponent, canActivate: [CashierGuard] },
             { path: 'bags-payment', component: BagsPaymentComponent, canActivate: [AdminGuard] }
         ]
     },
