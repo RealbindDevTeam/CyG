@@ -1,0 +1,89 @@
+<mat-card *ngIf="!_thereAreEstablishments">
+    <mat-card-content>
+        <div class="card_initial">
+            <div class="card_initial has-image">
+                <div class="card_initial-image-container">
+                    <img class="card_initial-image" src="/images/item.png" />
+                </div>
+                <div class="card_initial-copy">
+                    <div class="card_initial-tagline">
+                        {{'SECTIONS.THERE_NOT_RESTAURANTS' | translate}}
+                    </div>
+                    <div class="card_initial-additional-links">
+                        {{'SECTIONS.MESSAGE' | translate}}
+                    </div>
+                </div>
+                <div class="card_initial-button">
+                    <button mat-raised-button (click)="goToAddEstablishment()">{{'SECTIONS.RESTAURANT_REGISTER' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="_thereAreEstablishments && !_thereAreItems">
+    <mat-card-content>
+        <div class="card_initial">
+            <div class="card_initial has-image">
+                <div class="card_initial-image-container">
+                    <img class="card_initial-image" src="/images/items.png" />
+                </div>
+                <div class="card_initial-copy">
+                    <div class="card_initial-tagline">
+                        {{ 'ITEMS.MSG_INITIAL' | translate }}
+                    </div>
+                    <div class="card_initial-additional-links">
+
+                    </div>
+                </div>
+                <div class="card_initial-button">
+                    <button mat-raised-button (click)="openItemCreation()">{{'ITEMS.CREATE_NEW_ITEM' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+
+<div class="dpa" *ngIf="_thereAreEstablishments && _thereAreItems">
+    <div class="dcf">
+        <div class="dc">
+            <div class="dmpc">
+                <mat-card *ngFor="let item of _items | async" class="item">
+                    <div class="mdc-card__horizontal-block">
+                        <section class="mdc-card__primary">
+                            <mat-card-title>{{item.name}}</mat-card-title>
+                            <p *ngIf="item.description.length > 50">{{item.description.substring(0, 50)}}...</p>
+                            <p *ngIf="item.description.length <= 50">{{item.description}}</p>
+                            <mat-card-subtitle>{{showItemPrices(item.prices)}}</mat-card-subtitle>
+                            <mat-card-subtitle>{{showItemTaxes(item.prices)}}</mat-card-subtitle>
+                            <mat-chip-list *ngIf="item.has_reward">
+                                <mat-chip class="cust-color-chip">{{item.reward_points}} {{'ORDER_CREATE.POINTS'
+                                    | translate}}
+                                </mat-chip>
+                            </mat-chip-list>
+                        </section>
+                        <img class="mdc-card-media-item" *ngIf="item.image" src="{{ item.image.url }}" alt="{{item.name}}">
+                        <img class="mdc-card-media-item" *ngIf="!item.image" src="/images/default-plate.png" alt="{{item.name}}">
+                    </div>
+
+                    <mat-card-actions align="end">
+                        <button mat-button (click)="open(item)">{{'ITEMS.EDIT_ITEM' | translate}}</button>
+                        <button mat-button (click)="confirmRemove(item)">{{'ITEMS.REMOVE' | translate}}</button>
+                        <span class="app-flex-filler lh">
+                            <button mat-icon-button>
+                                <mat-icon class="md-24 cust-icon-color" aria-label="" (click)="openRecommendDialog(item)">start</mat-icon>
+                            </button>
+                            <mat-slide-toggle [(checked)]="item.is_active" (change)="updateStatus(item)"></mat-slide-toggle>
+                        </span>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div class="fixed-action-btn">
+        <button mat-fab (click)="openItemCreation()">
+            <mat-icon style="color: white;">add</mat-icon>
+        </button>
+    </div>
+</div>

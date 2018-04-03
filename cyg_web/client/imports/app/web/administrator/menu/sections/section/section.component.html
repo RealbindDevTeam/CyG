@@ -1,0 +1,77 @@
+<mat-card mat-cell="12" class="demo-card demo-basic" *ngIf="!_thereAreEstablishments">
+  <mat-card-content>
+    <div class="card_initial">
+      <div class="card_initial has-image">
+        <div class="card_initial-image-container">
+          <img class="card_initial-image" src="/images/sections.png" />
+        </div>
+        <div class="card_initial-copy">
+          <div class="card_initial-tagline">
+            {{'SECTIONS.THERE_NOT_RESTAURANTS' | translate}}
+          </div>
+          <div class="card_initial-additional-links">
+            {{'SECTIONS.MESSAGE' | translate}}
+          </div>
+        </div>
+        <div class="card_initial-button">
+          <button mat-raised-button (click)="goToAddEstablishment()">{{'SECTIONS.RESTAURANT_REGISTER' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="_thereAreEstablishments">
+  <mat-card-title>{{'SECTIONS.SECTION_CREATION' | translate}}</mat-card-title>
+  <mat-card-subtitle>{{'SECTIONS.SECTION_TEXT' | translate}}</mat-card-subtitle>
+  <mat-card-content>
+    <form [formGroup]="_sectionForm" (ngSubmit)="addSection();">
+      <div>
+        <mat-form-field class="section-name">
+          <input matInput required formControlName="name" placeholder="{{'NAME' | translate}}" minlength="1" maxlength="50" #inputName>
+          <mat-hint align="end">{{inputName.value.length}} / 50</mat-hint>
+        </mat-form-field>
+      </div>
+      <div>
+        <p>{{'SECTIONS.RESTAURANT_SECTION' | translate}}</p>
+        <p>
+          <label *ngIf="!_showEstablishments" class="label-field-void">{{'SECTIONS.NO_RESTAURANT_CREATED' | translate}}</label>
+        </p>
+        <div *ngIf="_showEstablishments" formGroupName="establishments">
+          <mat-checkbox *ngFor="let establishment of _establishments | async" [formControlName]="establishment._id" [class.invalid]="!_sectionForm.controls.establishments.valid"
+            class="checkbox">{{establishment.name}} - {{establishment.address}}</mat-checkbox>
+          <label></label>
+        </div>
+      </div>
+      <br/>
+      <button mat-raised-button class="secondary-button" [disabled]="!_sectionForm.valid" type="button" (click)="cancel()">{{'CANCEL' | translate}}</button>
+      <button mat-raised-button class="primary-button" [disabled]="!_sectionForm.valid" type="submit">{{'CREATE' | translate}}</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngFor="let section of _sections | async" class="section">
+  <mat-card-title>{{section.name}}</mat-card-title>
+  <mat-card-content>
+    <p *ngIf="section.establishments.length == 0">{{'SECTIONS.NO_RESTAURANT' | translate}}</p>
+    <div *ngFor="let est of _establishments | async">
+      <div *ngFor="let secEst of section.establishments">
+        <div *ngIf="est._id === secEst">
+          <div>
+            <p mat-line style="font-size: 1rem;">
+              <mat-icon style="vertical-align: middle">store</mat-icon>
+              <span> {{est.name}} </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button (click)="open(section)">{{'SECTIONS.MODIFY' | translate}}</button>
+    <button mat-button (click)="confirmRemove(section)">{{'SECTIONS.REMOVE' | translate}}</button>
+    <span class="app-flex-filler lh">
+      <mat-slide-toggle [(checked)]="section.is_active" (change)="updateStatus(section)"></mat-slide-toggle>
+    </span>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,63 @@
+<mat-card *ngFor="let establishment of _establishments | async">
+    <mat-card-header>
+        <img mat-card-avatar *ngIf="establishment.image" src="{{establishment.image.url }}">
+        <img mat-card-avatar *ngIf="!establishment.image" src="/images/default-restaurant.png">
+        <mat-card-title>{{establishment.name}} -
+            <span *ngIf="getEstablishmentPoints(establishment._id) > 0" style="font-weight: bold;color: green;font-size: large;">{{getEstablishmentPoints(establishment._id)}} {{'ADMIN_DASHBOARD.AVAILABLE_POINTS' | translate}}</span>
+            <span *ngIf="getEstablishmentPoints(establishment._id) <= 0" style="font-weight: bold;color: red;font-size: large;">{{getEstablishmentPoints(establishment._id)}} {{'ADMIN_DASHBOARD.AVAILABLE_POINTS' | translate}}</span>
+        </mat-card-title>
+        <mat-card-subtitle>{{establishment.address}}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+        <div class="layout-row">
+            <div class="section" (click)="goToItemUnitsCharts(establishment._id)">
+                <label>{{'ADMIN_DASHBOARD.ITEMS' | translate}}</label>
+                <div class="view">
+                    {{'VIEW' | translate}}
+                </div>
+            </div>
+            <div class="section" (click)="goToItemHistoryChart(establishment._id)">
+                <label>{{'ADMIN_DASHBOARD.ITEMS_HISTORY' | translate}}</label>
+                <div class="view">
+                    {{'VIEW' | translate}}
+                </div>
+            </div>
+            <div class="section" (click)="goToRewardUnitsCharts(establishment._id)">
+                <label>{{'ADMIN_DASHBOARD.REWARDS' | translate}}</label>
+                <div class="view">
+                    {{'VIEW' | translate}}
+                </div>
+            </div>
+            <div class="section" (click)="goToRewardHistoryCharts(establishment._id)">
+                <label>{{'ADMIN_DASHBOARD.REWARDS_HISTORY' | translate}}</label>
+                <div class="view">
+                    {{'VIEW' | translate}}
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card mat-cell="12" class="demo-card demo-basic" *ngIf="!_thereAreEstablishments">
+    <mat-card-content>
+        <div class="card_initial">
+            <div class="card_initial has-image">
+                <div class="card_initial-image-container">
+                    <img class="card_initial-image" src="/images/restaurante.png" />
+                </div>
+                <div class="card_initial-copy">
+                    <div class="card_initial-tagline">
+                        {{'ADMIN_DASHBOARD.THERE_NOT_RESTAURANTS' | translate}}
+                    </div>
+                    <div class="card_initial-additional-links">
+                        {{'ADMIN_DASHBOARD.MESSAGE' | translate}}
+                    </div>
+                </div>
+                <div class="card_initial-button">
+                    <button mat-raised-button (click)="goToAddEstablishment()">{{'ADMIN_DASHBOARD.RESTAURANT_REGISTER' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

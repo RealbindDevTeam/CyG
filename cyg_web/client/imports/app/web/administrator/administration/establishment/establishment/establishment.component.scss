@@ -1,0 +1,42 @@
+.btn-position-location{
+    position: absolute;
+    top: -45px;
+    right: 135px;
+}
+
+.fixed-action-btn {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+}
+
+.card-footer-btn{
+    text-align: -webkit-center; 
+    color: #EF5350
+}
+
+.establishment-inactive{
+    text-align: center;
+    color: #EF5350;
+    font-weight: 600;
+}
+
+.establishment-active{
+    text-align: center;
+    color: green;
+    font-weight: 600;
+}
+
+.points{
+    text-align: center;
+    font-weight: 600;
+    color: green;
+    font-size: large;
+}
+
+.negative-points{
+    text-align: center;
+    font-weight: 600;
+    color: red;
+    font-size: large;
+}
