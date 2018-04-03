@@ -357,7 +357,7 @@
     },
     "RESTAURANT_REGISTER": {
         "SELECT_COUNTRY": "Selecciona país",
-        "SELECT_CITY": "Selecciona ciudad",
+        "CITY": "Ciudad / Estado / Provincia",
         "NAME": "Nombre del restaurante",
         "ADDRESS": "Dirección del restaurante",
         "PHONE": "Teléfono de contacto",
@@ -407,7 +407,8 @@
         "DIALOG_SENTENCE_1A": "A partir de la creación del restaurante vas a tener una bolsa de ",
         "DIALOG_SENTENCE_1B": "puntos comeygama ",
         "DIALOG_SENTENCE_2": "Los puntos se restan de la bolsa cada vez que un consumidor redime una recompensa",
-        "DIALOG_SENTENCE_3": "Estas seguro que deseas crear el restaurante?"
+        "DIALOG_SENTENCE_3": "Estas seguro que deseas crear el restaurante?",
+        "POINTS_PLACEHOLER": "Puntos de Recompensa"
     },
     "WEEK": {
         "MONDAY": "Lunes",

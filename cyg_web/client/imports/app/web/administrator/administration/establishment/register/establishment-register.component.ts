@@ -15,8 +15,8 @@ import { PaymentMethod } from '../../../../../../../../both/models/general/payme
 import { PaymentMethods } from '../../../../../../../../both/collections/general/paymentMethod.collection';
 import { Countries } from '../../../../../../../../both/collections/general/country.collection';
 import { Country } from '../../../../../../../../both/models/general/country.model';
-import { City } from '../../../../../../../../both/models/general/city.model';
-import { Cities } from '../../../../../../../../both/collections/general/city.collection';
+//import { City } from '../../../../../../../../both/models/general/city.model';
+//import { Cities } from '../../../../../../../../both/collections/general/city.collection';
 import { createEstablishmentCode, generateQRCode, createTableCode } from '../../../../../../../../both/methods/establishment/establishment.methods';
 import { CreateConfirmComponent } from './create-confirm/create-confirm.component';
 import { Table } from '../../../../../../../../both/models/establishment/table.model';
@@ -25,9 +25,9 @@ import { PaymentsHistory } from '../../../../../../../../both/collections/paymen
 import { AlertConfirmComponent } from '../../../../../web/general/alert-confirm/alert-confirm.component';
 import { ImageService } from '../../../../services/general/image.service';
 import { Addition, AdditionPrice, AdditionEstablishment } from '../../../../../../../../both/models/menu/addition.model';
-import { GarnishFood, GarnishFoodPrice, GarnishFoodEstablishment } from '../../../../../../../../both/models/menu/garnish-food.model';
+//import { GarnishFood, GarnishFoodPrice, GarnishFoodEstablishment } from '../../../../../../../../both/models/menu/garnish-food.model';
 import { Additions } from '../../../../../../../../both/collections/menu/addition.collection';
-import { GarnishFoodCol } from '../../../../../../../../both/collections/menu/garnish-food.collection';
+//import { GarnishFoodCol } from '../../../../../../../../both/collections/menu/garnish-food.collection';
 import { AfterEstablishmentCreationComponent } from './after-establishment-creation/after-establishment-creation.component';
 import { PointValidity } from '../../../../../../../../both/models/general/point-validity.model';
 import { PointsValidity } from '../../../../../../../../both/collections/general/point-validity.collection';
@@ -40,7 +40,8 @@ import { BagPlans } from '../../../../../../../../both/collections/points/bag-pl
 import { BagPlanHistory, BagPlansPoints } from '../../../../../../../../both/models/points/bag-plan-history.model';
 import { BagPlanHistories } from '../../../../../../../../both/collections/points/bag-plans-history.collection';
 import { PricePoints } from '../../../../../../../../both/models/points/bag-plan.model';
-
+import { Points } from '../../../../../../../../both/collections/general/point.collection';
+import { Point } from '../../../../../../../../both/models/general/point.model';
 import * as QRious from 'qrious';
 import { UserDetails } from 'both/collections/auth/user-detail.collection';
 
@@ -58,30 +59,32 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
     private _establishmentSub: Subscription;
     private _currencySub: Subscription;
     private _countriesSub: Subscription;
-    private _citiesSub: Subscription;
+    //private _citiesSub: Subscription;
     private _paymentMethodsSub: Subscription;
     private _additionsSub: Subscription;
     private _garnishFoodSub: Subscription;
     private _usrDetailSubscription: Subscription;
     private _pointValiditySub: Subscription;
+    private _pointsSub: Subscription;
     private _parameterSubscription: Subscription;
     private _bagPlansSubscription: Subscription;
     private _bagPlanHistorySubscription: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
 
     private _countries: Observable<Country[]>;
-    private _cities: Observable<City[]>;
+    //private _cities: Observable<City[]>;
     private _paymentMethods: Observable<PaymentMethod[]>;
     private _pointsValidity: Observable<PointValidity[]>;
+    private _points: Observable<Point[]>;
 
     private _establishmentImageToInsert: EstablishmentImage;
     private _createImage: boolean;
     private _nameImageFile: string;
     public _selectedIndex: number = 0;
 
-    private _queues: string[] = [];
+    //private _queues: string[] = [];
     private _selectedCountryValue: string;
-    private _selectedCityValue: string;
+    //private _selectedCityValue: string;
     private _establishmentCurrency: string = '';
     private _countryIndicative: string;
     private _establishmentCurrencyId: string = '';
@@ -89,7 +92,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
     private establishmentCode: string = '';
 
     private _loading: boolean;
-    private _showMessage: boolean = false;
+    //private _showMessage: boolean = false;
     private _mdDialogRef: MatDialogRef<any>;
     private _currentDate: Date;
     private _firstMonthDay: Date;
@@ -97,7 +100,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
     private titleMsg: string;
     private btnAcceptLbl: string;
 
-    private max_table_number: number;
+    //private max_table_number: number;
     private showRestCreation: boolean;
     private validateTablesNumber: boolean = false;
     private validatePaymentMethod: boolean = false;
@@ -124,7 +127,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
         _translate.setDefaultLang('en');
         this._imageService.setPickOptionsLang(_lng);
         this._selectedCountryValue = "";
-        this._selectedCityValue = "";
+        //this._selectedCityValue = "";
         this._nameImageFile = "";
         this._createImage = false;
         this.titleMsg = 'SIGNUP.SYSTEM_MSG';
@@ -142,11 +145,12 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
             name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(70)]),
             address: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(90)]),
             phone: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]),
-            tables_number: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]),
+            //tables_number: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(3)]),
+            pointsValidity: new FormControl('', [Validators.required]),
+            rewardValue: new FormControl('', [Validators.required]),
             image: new FormControl(''),
-            pointsValidity: new FormControl(''),
-            paymentMethods: this._paymentsFormGroup,
-            otherCity: new FormControl()
+            paymentMethods: this._paymentsFormGroup
+            //otherCity: new FormControl()
         });
 
         this._paymentMethodsSub = MeteorObservable.subscribe('paymentMethods').takeUntil(this._ngUnsubscribe).subscribe(() => {
@@ -162,7 +166,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                 this._countries = Countries.find({}).zone();
             });
         });
-        this._citiesSub = MeteorObservable.subscribe('cities').takeUntil(this._ngUnsubscribe).subscribe();
+        //this._citiesSub = MeteorObservable.subscribe('cities').takeUntil(this._ngUnsubscribe).subscribe();
         this._currencySub = MeteorObservable.subscribe('currencies').takeUntil(this._ngUnsubscribe).subscribe();
         this._additionsSub = MeteorObservable.subscribe('additions', this._user).takeUntil(this._ngUnsubscribe).subscribe();
         this._garnishFoodSub = MeteorObservable.subscribe('garnishFood', this._user).takeUntil(this._ngUnsubscribe).subscribe();
@@ -172,7 +176,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
         this._firstMonthDay = new Date(this._currentDate.getFullYear(), this._currentDate.getMonth(), 1);
         this._lastMonthDay = new Date(this._currentDate.getFullYear(), this._currentDate.getMonth() + 1, 0);
 
-        this._establishmentForm.get('tables_number').disable();
+        //this._establishmentForm.get('tables_number').disable();
 
         this._usrDetailSubscription = MeteorObservable.subscribe('getUserDetailsByUser', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             let _lUsrDetail = UserDetails.findOne({ user_id: this._user });
@@ -183,6 +187,12 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
         this._pointValiditySub = MeteorObservable.subscribe('pointsValidity').takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._pointsValidity = PointsValidity.find({ '_id': { $gte: '20' } }).zone();
+            });
+        });
+
+        this._pointsSub = MeteorObservable.subscribe('points').takeUntil(this._ngUnsubscribe).subscribe(() => {
+            this._ngZone.run(() => {
+                this._points = Points.find({ _id: { $in: ['5', '10', '15'] } }).zone();
             });
         });
     }
@@ -200,12 +210,12 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
      */
     cancel(): void {
         if (this._selectedCountryValue !== "") { this._selectedCountryValue = ""; }
-        if (this._selectedCityValue !== "") { this._selectedCityValue = ""; }
+        //if (this._selectedCityValue !== "") { this._selectedCityValue = ""; }
         this._establishmentForm.controls['paymentMethods'].reset();
         this._establishmentForm.controls['name'].reset();
         this._establishmentForm.controls['address'].reset();
         this._establishmentForm.controls['phone'].reset();
-        this._establishmentForm.controls['tables_number'].reset();
+        //this._establishmentForm.controls['tables_number'].reset();
         this._router.navigate(['app/establishment']);
     }
 
@@ -261,8 +271,8 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
      * Promise to create new establishment
      */
     createNewEstablishment(): Promise<string> {
-        let cityIdAux: string;
-        let cityAux: string;
+        //let cityIdAux: string;
+        //let cityAux: string;
         let _lNewEstablishment: string;
         let _lNewEstablishmentPoint: string;
         return new Promise((resolve, reject) => {
@@ -276,13 +286,13 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                     }
                 });
 
-                if (this._selectedCityValue === '0000') {
+                /*if (this._selectedCityValue === '0000') {
                     cityIdAux = '';
                     cityAux = this._establishmentForm.value.otherCity;
                 } else {
                     cityIdAux = this._selectedCityValue;
                     cityAux = '';
-                }
+                }*/
 
                 if (this._createImage) {
                     _lNewEstablishment = Establishments.collection.insert({
@@ -291,8 +301,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                         modification_user: '-',
                         modification_date: new Date(),
                         countryId: this._establishmentForm.value.country,
-                        cityId: cityIdAux,
-                        other_city: cityAux,
+                        city: this._establishmentForm.value.city,
                         name: this._establishmentForm.value.name,
                         currencyId: this._establishmentCurrencyId,
                         address: this._establishmentForm.value.address,
@@ -301,11 +310,9 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                         establishment_code: this.generateEstablishmentCode(),
                         paymentMethods: _lPaymentMethodsToInsert,
                         points_validity: this._establishmentForm.value.pointsValidity,
+                        reward_points: this._establishmentForm.value.rewardValue,
                         image: this._establishmentImageToInsert,
                         tables_quantity: 0,
-                        orderNumberCount: 0,
-                        max_jobs: 5,
-                        queue: this._queues,
                         isActive: true,
                         firstPay: true,
                         freeDays: true,
@@ -320,8 +327,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                         modification_user: '-',
                         modification_date: new Date(),
                         countryId: this._establishmentForm.value.country,
-                        cityId: cityIdAux,
-                        other_city: cityAux,
+                        city: this._establishmentForm.value.city,
                         name: this._establishmentForm.value.name,
                         currencyId: this._establishmentCurrencyId,
                         address: this._establishmentForm.value.address,
@@ -330,10 +336,8 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                         establishment_code: this.generateEstablishmentCode(),
                         paymentMethods: _lPaymentMethodsToInsert,
                         points_validity: this._establishmentForm.value.pointsValidity,
+                        reward_points: this._establishmentForm.value.rewardValue,
                         tables_quantity: 0,
-                        orderNumberCount: 0,
-                        max_jobs: 5,
-                        queue: this._queues,
                         isActive: true,
                         firstPay: true,
                         freeDays: true,
@@ -373,13 +377,13 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
 
                 //Insert tables
                 let _lEstabl: Establishment = Establishments.findOne({ _id: _lNewEstablishment });
-                let _lTableNumber: number = this._establishmentForm.value.tables_number;
+                //let _lTableNumber: number = this._establishmentForm.value.tables_number;
                 let _lParameterUrl: Parameter = Parameters.collection.findOne({ _id: "50000" });
 
                 this.establishmentCode = _lEstabl.establishment_code;
                 let _lUrl: string = _lParameterUrl.value;
 
-                for (let _i = 0; _i < _lTableNumber; _i++) {
+                /*for (let _i = 0; _i < _lTableNumber; _i++) {
                     let _lEstablishmentTableCode: string = '';
                     let _lTableCode: string = '';
 
@@ -419,7 +423,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                     };
                     Tables.insert(_lNewTable);
                     Establishments.update({ _id: _lNewEstablishment }, { $set: { tables_quantity: _i + 1 } })
-                }
+                }*/
 
                 let _lCurrency: Currency;
                 Currencies.find({ _id: _lEstabl.currencyId }).fetch().forEach((cu) => {
@@ -451,7 +455,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                     });
                 }
 
-                if (GarnishFoodCol.collection.find({ creation_user: this._user }).count() > 0) {
+                /*if (GarnishFoodCol.collection.find({ creation_user: this._user }).count() > 0) {
                     GarnishFoodCol.collection.find({ creation_user: this._user }).forEach(function <GarnishFood>(garnishFood, index, arr) {
                         garnishFood.prices.forEach(function <GarnishFoodPrice>(garnishFoodPrice, index, arr) {
                             if (_lCurrency._id === garnishFoodPrice.currencyId) {
@@ -460,7 +464,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                             }
                         })
                     });
-                }
+                }*/
 
                 resolve(_lNewEstablishment);
                 if (this.showRestCreation) {
@@ -502,7 +506,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
         let _lCountry: Country;
         Countries.find({ _id: _country }).fetch().forEach((c) => {
             _lCountry = c;
-            this.max_table_number = _lCountry.max_number_tables;
+            //this.max_table_number = _lCountry.max_number_tables;
         });
         let _lCurrency: Currency;
         Currencies.find({ _id: _lCountry.currencyId }).fetch().forEach((cu) => {
@@ -511,16 +515,16 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
         this._establishmentCurrencyId = _lCurrency._id;
         this._establishmentCurrency = _lCurrency.code + ' - ' + this.itemNameTraduction(_lCurrency.name);
         this._countryIndicative = _lCountry.indicative;
-        this._queues = _lCountry.queue;
-        this._cities = Cities.find({ country: _country }).zone();
+        //this._queues = _lCountry.queue;
+        //this._cities = Cities.find({ country: _country }).zone();
 
-        this._establishmentForm.get('tables_number').enable();
+        //this._establishmentForm.get('tables_number').enable();
     }
 
     /**
      * Function to change city
      * @param {string} _city
-     */
+     
     changeCity(_city) {
 
         if (_city === '0000') {
@@ -533,7 +537,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
 
         this._selectedCityValue = _city;
         this._establishmentForm.controls['city'].setValue(_city);
-    }
+    }*/
 
     /**
      * Function to insert new image
@@ -552,7 +556,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
 
     /**
      * Function to validate tables number
-     */
+     
     changeTablesNumber() {
         let _lTableNumber: number = this._establishmentForm.value.tables_number;
 
@@ -561,7 +565,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
         } else {
             this.validateTablesNumber = false;
         }
-    }
+    }*/
 
     /**
      * Function to validate establishment payment methods

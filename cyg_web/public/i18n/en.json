@@ -357,7 +357,7 @@
     },
     "RESTAURANT_REGISTER": {
         "SELECT_COUNTRY": "Select Country",
-        "SELECT_CITY": "Select City",
+        "CITY": "City / State / Province",
         "NAME": "Restaurant name",
         "ADDRESS": "Restaurant address",
         "PHONE": "Phone contact",
@@ -407,7 +407,8 @@
         "DIALOG_SENTENCE_1A": "Since the restaurant creation you are going to have a bag of ",
         "DIALOG_SENTENCE_1B": "comeygana points ",
         "DIALOG_SENTENCE_2": "The points are subtracted from the bag every time when a consumer redeem a reward",
-        "DIALOG_SENTENCE_3": "Are you sure to create the restaurant?"
+        "DIALOG_SENTENCE_3": "Are you sure to create the restaurant?",
+        "POINTS_PLACEHOLER": "Reward points"
     },
     "WEEK": {
         "MONDAY": "Monday",
