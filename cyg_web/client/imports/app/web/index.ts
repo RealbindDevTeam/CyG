@@ -85,9 +85,7 @@ import { AfterEstablishmentCreationComponent } from './administrator/administrat
 import { LightBoxComponent } from './general/lightbox/lightbox.component';
 import { CustomerPointsComponent } from './customer/points/points/customer-points.component';
 import { PointsDetailComponent } from './customer/points/points-detail/points-detail.component';
-import { ItemUnitsChartComponent } from './administrator/dashboard/item-units-chart/item-units-chart.component';
 import { RewardUnitsChartComponent } from './administrator/dashboard/reward-units-chart/reward-units-chart.component';
-import { ItemHistoryChartComponent } from './administrator/dashboard/item-history-chart/item-history-chart.component';
 import { OptionsComponent } from './administrator/menu/options/options/option/option.component';
 import { OptionEditComponent } from './administrator/menu/options/options/option-edit/option-edit.component';
 import { OptionValueComponent } from './administrator/menu/options/values/option-value/option-value.component';
@@ -153,9 +151,7 @@ export const WEB_DECLARATIONS = [
     RewardComponent,
     CustomerPointsComponent,
     PointsDetailComponent,
-    ItemUnitsChartComponent,
     RewardUnitsChartComponent,
-    ItemHistoryChartComponent,
     RewardHistoryChartComponent,
     OrdersTodayComponent,
     OptionsComponent,
