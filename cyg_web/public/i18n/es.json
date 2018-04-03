@@ -578,7 +578,11 @@
         "RESTAURANT_INACTIVE": "Restaurante inactivo",
         "RESTAURANT_ACTIVE": "Restaurante activo",
         "WAITERS_ERROR": "Hay restaurantes que no cuentan con meseros. Por favor verifica en la opción de colaboradores",
-        "AVAILABLE_POINTS": "Puntos Disponibles"
+        "AVAILABLE_POINTS": "Puntos Disponibles",
+        "QR_CODE": "Código_QR",
+        "QR_CODE_DOWNLOADED": "Código QR Descargado",
+        "QR_CODE_ERROR": "Error descargando código QR",
+        "DOWNLOAD_QR_CODE": "Descargar QR"
     },
     "TABLES": {
         "TABLES_CREATION": "Creación de mesas",

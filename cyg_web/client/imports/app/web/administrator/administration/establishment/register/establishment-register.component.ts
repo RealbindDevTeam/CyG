@@ -131,7 +131,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
         this._establishmentForm = new FormGroup({
             country: new FormControl('', [Validators.required]),
             city: new FormControl('', [Validators.required]),
-            name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(70)]),
+            name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
             address: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(90)]),
             phone: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]),
             pointsValidity: new FormControl('', [Validators.required]),

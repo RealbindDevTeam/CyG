@@ -578,7 +578,11 @@
         "RESTAURANT_INACTIVE": "Inactive Restaurant",
         "RESTAURANT_ACTIVE": "Active Restaurant",
         "WAITERS_ERROR": "There are restaurants that don't have waiters/waitress. please check the collaborators option",
-        "AVAILABLE_POINTS": "Available Points"
+        "AVAILABLE_POINTS": "Available Points",
+        "QR_CODE": "QR_Code",
+        "QR_CODE_DOWNLOADED": "QR Code Downloaded",
+        "QR_CODE_ERROR": "QR Code Download Error",
+        "DOWNLOAD_QR_CODE": "QR Download"
     },
     "TABLES": {
         "TABLES_CREATION": "Create tables",
