@@ -23,7 +23,6 @@ import { CollaboratorsComponent } from './web/administrator/administration/colla
 import { CollaboratorsRegisterComponent } from './web/administrator/administration/collaborators/register/collaborators-register.component';
 import { ItemComponent } from './web/administrator/menu/items/item/item.component';
 import { EstablishmentEditionComponent } from './web/administrator/administration/establishment/edition/establishment-edition.component';
-import { CallsComponent } from './web/waiter/calls/calls/calls.component';
 import { NotFoundWebComponent } from './web/auth/notfound/notfound.web.component';
 import { MonthlyPaymentComponent } from './web/administrator/payment/monthly-payment/monthly-payment.component';
 import { SupervisorDashboardComponent } from './web/supervisor/dashboard/supervisor-dashboard.component';
@@ -33,7 +32,6 @@ import { ReactivateEstablishmentComponent } from './web/administrator/payment/re
 import { TrnResponseConfirmComponent } from './web/administrator/payment/payu-payment-form/transaction-response-confirm/trn-response-confirm.component';
 import { AdminSignupComponent } from './web/auth/admin-signup/admin-signup.component';
 import { ItemEnableSupComponent } from './web/supervisor/items-enable/items-enable-sup.component';
-import { MenuListComponent } from './web/waiter/menu-list/menu-list.component';
 import { SupervisorCollaboratorsComponent } from './web/supervisor/collaborators/collaborators/supervisor-collaborators.component';
 import { SupervisorCollaboratorsRegisterComponent } from './web/supervisor/collaborators/register/supervisor-collaborators-register.component';
 import { SupervisorTableComponent } from './web/supervisor/tables/supervisor-tables.component';
@@ -68,7 +66,6 @@ export const routes: Route[] = [
             { path: 'establishment-register', component: EstablishmentRegisterComponent, canActivate: [AdminGuard] },
             { path: 'establishment-edition/:param1', component: EstablishmentEditionComponent, canActivate: [AdminGuard] },
             //{ path: 'tables', component: TableComponent, canActivate: [AdminGuard] },
-            { path: 'calls', component: CallsComponent, canActivate: [WaiterGuard] },
             { path: 'monthly-payment', component: MonthlyPaymentComponent, canActivate: [AdminGuard] },
             { path: 'dashboards', component: SupervisorDashboardComponent, canActivate: [SupervisorGuard] },
             //{ path: 'establishment-list', component: EstablishmentListComponent, canActivate: [AdminGuard] },
@@ -77,7 +74,6 @@ export const routes: Route[] = [
             { path: 'payment-history', component: PaymentHistoryComponent, canActivate: [AdminGuard] },
             { path: 'reactivate-establishment', component: ReactivateEstablishmentComponent, canActivate: [AdminGuard] },
             { path: 'items-enable-sup', component: ItemEnableSupComponent, canActivate: [SupervisorGuard] },
-            { path: 'menu-list', component: MenuListComponent },
             { path: 'supervisor-collaborators', component: SupervisorCollaboratorsComponent, canActivate: [SupervisorGuard] },
             { path: 'supervisor-collaborators-register', component: SupervisorCollaboratorsRegisterComponent, canActivate: [SupervisorGuard] },
             { path: 'supervisor-tables', component: SupervisorTableComponent, canActivate: [SupervisorGuard] },

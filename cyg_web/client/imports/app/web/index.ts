@@ -28,8 +28,6 @@ import { EstablishmentEditionComponent } from './administrator/administration/es
 import { IurestScheduleComponent } from './general/schedule/schedule.component';
 import { CollaboratorsEditionComponent } from './administrator/administration/collaborators/edition/collaborators-edition.component';
 import { EstablishmentInfoComponent } from './administrator/administration/establishment/info/establishment-info.component';
-import { CallsComponent } from './waiter/calls/calls/calls.component';
-import { CallCloseConfirmComponent } from './waiter/calls/call-close-confirm/call-close-confirm.component';
 import { NotFoundWebComponent } from './auth/notfound/notfound.web.component';
 import { IurestSliderComponent } from './general/slider/slider.component';
 import { CreateConfirmComponent } from './administrator/administration/establishment/register/create-confirm/create-confirm.component';
@@ -38,7 +36,6 @@ import { SupervisorDashboardComponent } from './supervisor/dashboard/supervisor-
 import { EstablishmentListComponent } from './administrator/administration/establishment/monthly-config/establishment-list/establishment-list.component';
 import { EnableDisableComponent } from './administrator/administration/establishment/monthly-config/enable-disable/enable-disable.component';
 import { DisableConfirmComponent } from './administrator/administration/establishment//monthly-config/disable-confirm/disable-confirm.component';
-import { CustomerOrderConfirmComponent } from './waiter/calls/customer-order-confirm/customer-order-confirm.component';
 import { PayuPaymentFormComponent } from './administrator/payment/payu-payment-form/payu-payment-form.component';
 import { PaymentHistoryComponent } from './administrator/payment/payment-history/payment-history.component';
 import { ReactivateEstablishmentComponent } from './administrator/payment/reactivate-establishment/reactivate-establishment.component';
@@ -49,7 +46,6 @@ import { AdminSignupComponent } from './auth/admin-signup/admin-signup.component
 import { AlertConfirmComponent } from './general/alert-confirm/alert-confirm.component';
 import { UserLanguageService } from './services/general/user-language.service';
 import { ItemEnableSupComponent } from './supervisor/items-enable/items-enable-sup.component';
-import { MenuListComponent } from './waiter/menu-list/menu-list.component';
 import { SupervisorCollaboratorsComponent } from './supervisor/collaborators/collaborators/supervisor-collaborators.component';
 import { SupervisorCollaboratorsEditionComponent } from './supervisor/collaborators/edition/supervisor-collaborators-edition.component';
 import { SupervisorCollaboratorsRegisterComponent } from './supervisor/collaborators/register/supervisor-collaborators-register.component';
@@ -99,7 +95,6 @@ export const WEB_DECLARATIONS = [
     CollaboratorsComponent,
     CollaboratorsRegisterComponent,
     GoToStoreComponent,
-    CallsComponent,
     NotFoundWebComponent,
     IurestSliderComponent,
     MonthlyPaymentComponent,
@@ -111,7 +106,6 @@ export const WEB_DECLARATIONS = [
     ReactivateEstablishmentComponent,
     AdminSignupComponent,
     ItemEnableSupComponent,
-    MenuListComponent,
     SupervisorCollaboratorsComponent,
     SupervisorCollaboratorsRegisterComponent,
     SupervisorTableComponent,
@@ -136,11 +130,9 @@ export const MODAL_DIALOG_DECLARATIONS = [
     CategoriesEditComponent,
     SubcategoryEditComponent,
     RecoverWebComponent,
-    CallCloseConfirmComponent,
     CreateConfirmComponent,
     CollaboratorsEditionComponent,
     DisableConfirmComponent,
-    CustomerOrderConfirmComponent,
     CcPaymentConfirmComponent,
     TrnResponseConfirmComponent,
     VerifyResultComponent,
