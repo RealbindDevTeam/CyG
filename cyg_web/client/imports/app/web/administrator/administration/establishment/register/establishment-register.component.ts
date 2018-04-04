@@ -25,8 +25,6 @@ import { ImageService } from '../../../../services/general/image.service';
 import { Addition, AdditionPrice, AdditionEstablishment } from '../../../../../../../../both/models/menu/addition.model';
 import { Additions } from '../../../../../../../../both/collections/menu/addition.collection';
 import { AfterEstablishmentCreationComponent } from './after-establishment-creation/after-establishment-creation.component';
-import { PointValidity } from '../../../../../../../../both/models/general/point-validity.model';
-import { PointsValidity } from '../../../../../../../../both/collections/general/point-validity.collection';
 import { Parameter } from '../../../../../../../../both/models/general/parameter.model';
 import { Parameters } from '../../../../../../../../both/collections/general/parameter.collection';
 import { EstablishmentPoint } from '../../../../../../../../both/models/points/establishment-point.model';
@@ -36,8 +34,6 @@ import { BagPlans } from '../../../../../../../../both/collections/points/bag-pl
 import { BagPlanHistory, BagPlansPoints } from '../../../../../../../../both/models/points/bag-plan-history.model';
 import { BagPlanHistories } from '../../../../../../../../both/collections/points/bag-plans-history.collection';
 import { PricePoints } from '../../../../../../../../both/models/points/bag-plan.model';
-import { Points } from '../../../../../../../../both/collections/general/point.collection';
-import { Point } from '../../../../../../../../both/models/general/point.model';
 import * as QRious from 'qrious';
 import { UserDetails } from 'both/collections/auth/user-detail.collection';
 import { EstablishmentQR } from '../../../../../../../../both/models/establishment/establishment-qr.model';
@@ -61,8 +57,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
     private _paymentMethodsSub: Subscription;
     private _additionsSub: Subscription;
     private _usrDetailSubscription: Subscription;
-    private _pointValiditySub: Subscription;
-    private _pointsSub: Subscription;
     private _parameterSubscription: Subscription;
     private _bagPlansSubscription: Subscription;
     private _bagPlanHistorySubscription: Subscription;
@@ -70,8 +64,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
 
     private _countries: Observable<Country[]>;
     private _paymentMethods: Observable<PaymentMethod[]>;
-    private _pointsValidity: Observable<PointValidity[]>;
-    private _points: Observable<Point[]>;
 
     private _establishmentImageToInsert: EstablishmentImage;
     private _createImage: boolean;
@@ -133,8 +125,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
             name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
             address: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(90)]),
             phone: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]),
-            pointsValidity: new FormControl('', [Validators.required]),
-            rewardValue: new FormControl('', [Validators.required]),
             image: new FormControl(''),
             paymentMethods: this._paymentsFormGroup
         });
@@ -166,17 +156,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
             if (_lUsrDetail) {
                 this.showRestCreation = _lUsrDetail.show_after_rest_creation;
             }
-        });
-        this._pointValiditySub = MeteorObservable.subscribe('pointsValidity').takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._pointsValidity = PointsValidity.find({ '_id': { $gte: '20' } }).zone();
-            });
-        });
-
-        this._pointsSub = MeteorObservable.subscribe('points').takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._points = Points.find({ _id: { $in: ['5', '10', '15'] } }).zone();
-            });
         });
     }
 
@@ -280,8 +259,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                         phone: this._establishmentForm.value.phone,
                         establishment_code: this.generateEstablishmentCode(),
                         paymentMethods: _lPaymentMethodsToInsert,
-                        points_validity: this._establishmentForm.value.pointsValidity,
-                        reward_points: this._establishmentForm.value.rewardValue,
                         image: this._establishmentImageToInsert,
                         tables_quantity: 0,
                         isActive: true,
@@ -306,8 +283,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                         phone: this._establishmentForm.value.phone,
                         establishment_code: this.generateEstablishmentCode(),
                         paymentMethods: _lPaymentMethodsToInsert,
-                        points_validity: this._establishmentForm.value.pointsValidity,
-                        reward_points: this._establishmentForm.value.rewardValue,
                         tables_quantity: 0,
                         isActive: true,
                         firstPay: true,
@@ -382,7 +357,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                     },
                     QR_URI: _lQrCode.toDataURL(),
                     uri_redirect: _lUriRedirect,
-                    reward_points: Number.parseInt(this._establishmentForm.value.rewardValue)
+                    reward_points: 1
                 });
 
                 let _lCurrency: Currency;
