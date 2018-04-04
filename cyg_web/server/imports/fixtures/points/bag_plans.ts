@@ -13,7 +13,7 @@ export function loadBagPlans() {
                     price: 0,
                     currency: 'COP'
                 },
-                value_points: 2000,
+                value_points: 1500,
                 active: true,
             },
             {

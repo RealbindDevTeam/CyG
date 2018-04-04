@@ -25,10 +25,6 @@ import { Country } from '../../../../../../../../both/models/general/country.mod
 import { Countries } from '../../../../../../../../both/collections/general/country.collection';
 import { AlertConfirmComponent } from '../../../../../web/general/alert-confirm/alert-confirm.component';
 import { ImageService } from '../../../../services/general/image.service';
-import { CookingTimes } from '../../../../../../../../both/collections/general/cooking-time.collection';
-import { CookingTime } from '../../../../../../../../both/models/general/cooking-time.model';
-import { Points } from '../../../../../../../../both/collections/general/point.collection';
-import { Point } from '../../../../../../../../both/models/general/point.model';
 import { Option } from '../../../../../../../../both/models/menu/option.model';
 import { Options } from '../../../../../../../../both/collections/menu/option.collection';
 import { OptionValue } from '../../../../../../../../both/models/menu/option-value.model';
@@ -59,8 +55,6 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
     private _categories: Observable<Category[]>;
     private _subcategories: Observable<Subcategory[]>;
     private _currencies: Observable<Currency[]>;
-    private _cookingTimes: Observable<CookingTime[]>;
-    private _points: Observable<Point[]>;
     private _options: Observable<Option[]>;
     private _optionValues: Observable<OptionValue[]>;
 
@@ -69,12 +63,9 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
     private _categorySub: Subscription;
     private _subcategorySub: Subscription;
     private _establishmentSub: Subscription;
-    private _garnishFoodSub: Subscription;
     private _additionSub: Subscription;
     private _currenciesSub: Subscription;
     private _countriesSub: Subscription;
-    private _cookingTimeSub: Subscription;
-    private _pointsSub: Subscription;
     private _optionSub: Subscription;
     private _optionValuesSub: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -86,7 +77,6 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
     private _optionList: Option[] = [];
     private _optionValuesList: OptionValue[] = [];
 
-    private _showGarnishFood: boolean = false;
     private _createImage: boolean = false;
     private _showAdditions: boolean = false;
     private _showEstablishments: boolean = false;
@@ -107,7 +97,7 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
     private titleMsg: string;
     private btnAcceptLbl: string;
 
-    private _rewardEnable: boolean = false;
+    //private _rewardEnable: boolean = false;
 
     /**
      * ItemComponent constructor
@@ -154,10 +144,6 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
         this._generalFormGroup = new FormGroup({
             name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(55)]),
             description: new FormControl(''),
-            cookingTime: new FormControl(''),
-            observations: new FormControl(false),
-            acceptReward: new FormControl(false),
-            rewardValue: new FormControl(''),
             image: new FormControl(''),
             establishments: this._establishmentsFormGroup,
             currencies: this._currenciesFormGroup,
@@ -206,20 +192,7 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
             });
         });
         this._itemsSub = MeteorObservable.subscribe('items', this._user).takeUntil(this._ngUnsubscribe).subscribe();
-        this._garnishFoodSub = MeteorObservable.subscribe('garnishFood', this._user).takeUntil(this._ngUnsubscribe).subscribe();
         this._additionSub = MeteorObservable.subscribe('additions', this._user).takeUntil(this._ngUnsubscribe).subscribe();
-
-        this._cookingTimeSub = MeteorObservable.subscribe('cookingTimes').takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._cookingTimes = CookingTimes.find({}).zone();
-            });
-        });
-
-        this._pointsSub = MeteorObservable.subscribe('points').takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._points = Points.find({ _id: { $in: ['5', '10', '15'] } }).zone();
-            });
-        });
     }
 
     /**
@@ -299,7 +272,7 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
                 var error: string = this.itemNameTraduction('ITEMS.CREATION_ERROR');
                 this.openDialog(this.titleMsg, '', error, '', this.btnAcceptLbl, false);
             });
-        }, 2000);
+        }, 3500);
     }
 
     /**
@@ -340,13 +313,6 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
                         _lItemPricesToInsert.push(_lItemPrice);
                     }
                 });
-
-                let rewardPointsAux: string;
-                if (this._generalFormGroup.value.acceptReward) {
-                    rewardPointsAux = this._generalFormGroup.value.rewardValue
-                } else {
-                    rewardPointsAux = "0";
-                }
 
                 let arrOptions: any[] = Object.keys(this._optionAdditionsFormGroup.value.options);
                 let _optionsToInsert: ItemOption[] = [];
@@ -421,16 +387,12 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
                         categoryId: this._sectionsFormGroup.value.category,
                         subcategoryId: this._sectionsFormGroup.value.subcategory,
                         name: this._generalFormGroup.value.name,
-                        time: this._generalFormGroup.value.cookingTime,
                         description: this._generalFormGroup.value.description,
                         establishments: _lItemEstablishmentsToInsert,
                         prices: _lItemPricesToInsert,
-                        observations: this._generalFormGroup.value.observations,
                         image: this._itemImageToInsert,
                         options: _optionsToInsert,
-                        additions: _lAdditionsToInsert,
-                        has_reward: this._generalFormGroup.value.acceptReward,
-                        reward_points: rewardPointsAux
+                        additions: _lAdditionsToInsert
                     });
                 } else {
                     _lNewItem = Items.collection.insert({
@@ -443,15 +405,11 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
                         categoryId: this._sectionsFormGroup.value.category,
                         subcategoryId: this._sectionsFormGroup.value.subcategory,
                         name: this._generalFormGroup.value.name,
-                        time: this._generalFormGroup.value.cookingTime,
                         description: this._generalFormGroup.value.description,
                         establishments: _lItemEstablishmentsToInsert,
                         prices: _lItemPricesToInsert,
-                        observations: this._generalFormGroup.value.observations,
                         options: _optionsToInsert,
-                        additions: _lAdditionsToInsert,
-                        has_reward: this._generalFormGroup.value.acceptReward,
-                        reward_points: rewardPointsAux
+                        additions: _lAdditionsToInsert
                     });
                 }
                 resolve(_lNewItem);
@@ -592,15 +550,7 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
             this._establishmentsSelectedCount++;
             let _lCountry: Country = Countries.findOne({ _id: _lEstablishment.countryId });
             if (this._establishmentCurrencies.indexOf(_lEstablishment.currencyId) <= -1) {
-                let _lCurrency: Currency = Currencies.findOne({ _id: _lEstablishment.currencyId });
-                let _initValue: string = '';
-                if (_lCurrency.decimal !== 0) {
-                    for (let i = 0; i < (_lCurrency.decimal).toString().slice((_lCurrency.decimal.toString().indexOf('.')), (_lCurrency.decimal.toString().length)).length - 1; i++) {
-                        _initValue += '0';
-                    }
-                    _initValue = '0.' + _initValue;
-                }
-                let control: FormControl = new FormControl(_initValue, [Validators.required]);
+                let control: FormControl = new FormControl('', [Validators.required]);
                 this._currenciesFormGroup.addControl(_lEstablishment.currencyId, control);
                 this._establishmentCurrencies.push(_lEstablishment.currencyId);
 

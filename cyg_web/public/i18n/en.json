@@ -298,7 +298,6 @@
             "SUBCATEGORIES": "Subcategories",
             "ADDITIONS": "Additions",
             "PROMOTIONS": "Promotions",
-            "GARNISHFOOD": "Side dishes",
             "ITEMS": "Items",
             "ITEMS_ENABLE": "Available Items",
             "ORDERS_CHEF": "Orders",
@@ -326,38 +325,9 @@
         "UPDATE_IMAGE": "Promotion image Updated",
         "NO_RESTAURANT_CREATED": "There are no restaurants created on the platform"
     },
-    "GARNISHFOOD": {
-        "GARNISHFOOD_CREATION": "Create side dishes",
-        "RESTAURANTS": "Restaurants",
-        "RESTAURANT_GARNISHFOOD": "Select the restaurants where the side dishes are available",
-        "GARNISHFOOD_EDIT": "Edit side dishes",
-        "UPDATE_IMAGE": "Update side dishes image",
-        "IMAGE_NOT_AVAILABLE": "Image not available",
-        "GARNISHFOOD_TEXT": "Create side dishes of your menu and select the restaurants where they will be shown",
-        "NO_DESCRIPTION": "There is not description of the side dishes",
-        "NO_RESTAURANT": "There is no restaurant selected",
-        "NO_RESTAURANT_CREATED": "There are no restaurants created on the platform",
-        "MODIFY": "Edit",
-        "ACTIVATE": "Activate",
-        "INACTIVATE": "Inactivate",
-        "SELECT_RESTAURANTS": "Please select the restaurants where the side dishes are available",
-        "GARNISHFOOD_PRICES": "Please enter the side dishes price, if any add 0",
-        "GARNISHFOOD_PRICE": "Side dishes price",
-        "GARNISHFOOD_TAXES": "Enter the side dishes tax, if any add 0",
-        "TAXES": "Taxes",
-        "PRICES": "Prices",
-        "GARNISH_FOOD_CREATED": "Side dishes created succesfully",
-        "GARNISH_FOOD_EDITED": "SIde dishes edited succesfully",
-        "WARNING": "Warning: You have ",
-        "WARNING_2": "logged users in your restaurants",
-        "WARNING_3": "Changing the side dishes configuration could affect the experience of the users",
-        "REMOVE_TITLE": "Garnishfood remove",
-        "REMOVE_MSG": "Do you want to remove the garnishfood?",
-        "GARNISHFOOD_REMOVED": "Garnishfood removed correctly"
-    },
     "RESTAURANT_REGISTER": {
         "SELECT_COUNTRY": "Select Country",
-        "SELECT_CITY": "Select City",
+        "CITY": "City / State / Province",
         "NAME": "Restaurant name",
         "ADDRESS": "Restaurant address",
         "PHONE": "Phone contact",
@@ -407,7 +377,8 @@
         "DIALOG_SENTENCE_1A": "Since the restaurant creation you are going to have a bag of ",
         "DIALOG_SENTENCE_1B": "comeygana points ",
         "DIALOG_SENTENCE_2": "The points are subtracted from the bag every time when a consumer redeem a reward",
-        "DIALOG_SENTENCE_3": "Are you sure to create the restaurant?"
+        "DIALOG_SENTENCE_3": "Are you sure to create the restaurant?",
+        "POINTS_PLACEHOLER": "Reward points"
     },
     "WEEK": {
         "MONDAY": "Monday",
@@ -577,7 +548,11 @@
         "RESTAURANT_INACTIVE": "Inactive Restaurant",
         "RESTAURANT_ACTIVE": "Active Restaurant",
         "WAITERS_ERROR": "There are restaurants that don't have waiters/waitress. please check the collaborators option",
-        "AVAILABLE_POINTS": "Available Points"
+        "AVAILABLE_POINTS": "Available Points",
+        "QR_CODE": "QR_Code",
+        "QR_CODE_DOWNLOADED": "QR Code Downloaded",
+        "QR_CODE_ERROR": "QR Code Download Error",
+        "DOWNLOAD_QR_CODE": "QR Download"
     },
     "TABLES": {
         "TABLES_CREATION": "Create tables",
@@ -760,7 +735,7 @@
         "GENERAL_INFO": "General information about the restaurant",
         "GENERAL_INFO_TEXT": "Edit the restaurant information. This information will be displayed to people on the internet and will give you greater visibility.",
         "SELECT_COUNTRY": "Select Country",
-        "SELECT_CITY": "Select City",
+        "CITY": "City / State / Province",
         "ADDRESS": "Address",
         "PHONE": "Phone",
         "WEBPAGE": "Web Page",
@@ -793,7 +768,8 @@
         "PLAN_TWO": "Plan Two",
         "PLAN_THREE": "Plan Three",
         "OTHER": "Other...",
-        "CITY_OTHER": "If you select other city, write it in the next field"
+        "CITY_OTHER": "If you select other city, write it in the next field",
+        "RESTAURANT_EDITED": "Restaurant edited"
     },
     "RESTAURANT_LOCATION": {
         "TITTLE": "Location of the establishment",

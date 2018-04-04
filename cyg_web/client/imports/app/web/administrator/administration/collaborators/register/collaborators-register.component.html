@@ -12,7 +12,7 @@
                                     <td style="width: 50%">
                                         <mat-form-field style="width: 100%;">
                                             <mat-select required formControlName="establishment_work" placeholder="{{'COLLABORATORS_REGISTER.SELECT_RESTAURANT' | translate}}">
-                                                <mat-option *ngFor="let est of _establishments | async" value="{{est._id}}" (click)="validateEstablishmentSelection(est._id)">{{est.name}} - {{est.address}}</mat-option>
+                                                <mat-option *ngFor="let est of _establishments | async" value="{{est._id}}">{{est.name}} - {{est.address}}</mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </td>
@@ -42,7 +42,6 @@
                                     </td>
                                 </tr>
                             </table>
-
                             <table style="width: 100%" cellspacing="0">
                                 <tr>
                                     <td colspan="1" style="padding-top: 10px; width: 50%">
@@ -60,24 +59,6 @@
                                     </td>
                                 </tr>
                             </table>
-                            <table style="width: 100%" cellspacing="0">
-                                <tr *ngIf="_showTablesSelect && _showTablesSelectByRest">
-                                    <td colspan="1" style="padding-top: 10px; width: 50%">
-                                        <mat-checkbox class="checkbox" (change)="pushSelectArray($event)">{{'COLLABORATORS_REGISTER.TABLES_ASSIGNMENT' | translate}}</mat-checkbox>
-                                        <mat-form-field style="width: 100px;">
-                                            <mat-select formControlName="table_init" [disabled]="_disabledTablesAssignment">
-                                                <mat-option *ngFor="let index of _tablesNumber" value="{{index}}">{{index}}</mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        &nbsp;
-                                        <mat-form-field style="width: 100px;">
-                                            <mat-select formControlName="table_end" [disabled]="_disabledTablesAssignment">
-                                                <mat-option *ngFor="let index of _tablesNumber" value="{{index}}">{{index}}</mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </td>
-                                </tr>
-                            </table>
                         </mat-card-content>
                         <mat-card-actions align="end">
                             <button mat-raised-button class="secondary-button" (click)="cancel()">{{'CANCEL' | translate}}</button>
@@ -86,7 +67,6 @@
                         </mat-card-actions>
                     </mat-card>
                 </mat-tab>
-
                 <mat-tab [disabled]="!canMove(1)" label="{{'COLLABORATORS_REGISTER.USER_LABEL' | translate}}">
                     <mat-card>
                         <mat-card-title>{{'COLLABORATORS_REGISTER.USER_INFO' | translate}}</mat-card-title>

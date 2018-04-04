@@ -16,7 +16,6 @@ export interface UserDetail extends CollectionObject {
     //
 
     establishment_work?: string;
-    jobs?: number;
     penalties?: UserDetailPenalty[];
     grant_start_points?: boolean;
     current_establishment?: string;
@@ -24,8 +23,6 @@ export interface UserDetail extends CollectionObject {
     birthdate?: Date;
     phone?: string;
     enabled?: boolean;
-    table_assignment_init?: number;
-    table_assignment_end?: number;
     image?: UserDetailImage;
     reward_points?: UserRewardPoints[];
 }
