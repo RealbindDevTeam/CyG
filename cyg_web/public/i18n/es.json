@@ -298,7 +298,6 @@
             "SUBCATEGORIES": "Subcategorías",
             "ADDITIONS": "Adiciones",
             "PROMOTIONS": "Promociones",
-            "GARNISHFOOD": "Guarniciones",
             "ITEMS": "Items",
             "ITEMS_ENABLE": "Habilitar items",
             "ORDERS_CHEF": "Ordenes",
@@ -326,38 +325,9 @@
         "UPDATE_IMAGE": "Actualizar imagen de la promoción",
         "NO_RESTAURANT_CREATED": "No se encuentran restaurantes creados en el sistema"
     },
-    "GARNISHFOOD": {
-        "GARNISHFOOD_CREATION": "Creación de guarniciones",
-        "RESTAURANTS": "Restaurantes",
-        "RESTAURANT_GARNISHFOOD": "Selecciona los restaurantes en donde se encontrara disponible la guarnición",
-        "GARNISHFOOD_EDIT": "Edición de la guarnición",
-        "UPDATE_IMAGE": "Actualizar imagen de la guarnición",
-        "IMAGE_NOT_AVAILABLE": "Imagen no disponible",
-        "GARNISHFOOD_TEXT": "Crea las guarniciones de tu menú y selecciona los restaurantes donde se verán",
-        "NO_DESCRIPTION": "No has ingresado descripción de la guarnición",
-        "NO_RESTAURANT": "No has seleccionado restaurante",
-        "NO_RESTAURANT_CREATED": "No se encuentran restaurantes creados en el sistema",
-        "MODIFY": "Modificar",
-        "ACTIVATE": "Activar",
-        "INACTIVATE": "Inactivar",
-        "SELECT_RESTAURANTS": "Por favor selecciona el(los) restaurante(s) donde se encontrara disponible la guarnición",
-        "GARNISHFOOD_PRICES": "Por favor ingresa el precio de la guarnición ( En caso de no tener valor ingresa 0 ). ",
-        "GARNISHFOOD_PRICE": "Precio de la guarnición",
-        "GARNISHFOOD_TAXES": "Ingresa los impuestos( En caso de no tener valor ingresa 0 ).",
-        "TAXES": "Impuestos",
-        "PRICES": "Precios",
-        "GARNISH_FOOD_CREATED": "Guarnición creada correctamente",
-        "GARNISH_FOOD_EDITED": "Guarnición editada correctamente",
-        "WARNING": "Advertencia: Tienes ",
-        "WARNING_2": "usuarios activos en tus restaurantes",
-        "WARNING_3": "Modificar la configuración de una guarnición podría afectar la experiencia de los usuarios",
-        "REMOVE_TITLE": "Remover guarnición",
-        "REMOVE_MSG": "Deseas remover la guarnición?",
-        "GARNISHFOOD_REMOVED": "Guarnición removida correctamente"
-    },
     "RESTAURANT_REGISTER": {
         "SELECT_COUNTRY": "Selecciona país",
-        "SELECT_CITY": "Selecciona ciudad",
+        "CITY": "Ciudad / Estado / Provincia",
         "NAME": "Nombre del restaurante",
         "ADDRESS": "Dirección del restaurante",
         "PHONE": "Teléfono de contacto",
@@ -407,7 +377,8 @@
         "DIALOG_SENTENCE_1A": "A partir de la creación del restaurante vas a tener una bolsa de ",
         "DIALOG_SENTENCE_1B": "puntos comeygama ",
         "DIALOG_SENTENCE_2": "Los puntos se restan de la bolsa cada vez que un consumidor redime una recompensa",
-        "DIALOG_SENTENCE_3": "Estas seguro que deseas crear el restaurante?"
+        "DIALOG_SENTENCE_3": "Estas seguro que deseas crear el restaurante?",
+        "POINTS_PLACEHOLER": "Puntos de Recompensa"
     },
     "WEEK": {
         "MONDAY": "Lunes",
@@ -577,7 +548,11 @@
         "RESTAURANT_INACTIVE": "Restaurante inactivo",
         "RESTAURANT_ACTIVE": "Restaurante activo",
         "WAITERS_ERROR": "Hay restaurantes que no cuentan con meseros. Por favor verifica en la opción de colaboradores",
-        "AVAILABLE_POINTS": "Puntos Disponibles"
+        "AVAILABLE_POINTS": "Puntos Disponibles",
+        "QR_CODE": "Código_QR",
+        "QR_CODE_DOWNLOADED": "Código QR Descargado",
+        "QR_CODE_ERROR": "Error descargando código QR",
+        "DOWNLOAD_QR_CODE": "Descargar QR"
     },
     "TABLES": {
         "TABLES_CREATION": "Creación de mesas",
@@ -760,7 +735,7 @@
         "GENERAL_INFO": "Información general del restaurante",
         "GENERAL_INFO_TEXT": "Edita la información del restaurante. Dicha información será visualizada por las personas en internet y te dará mayor visivilidad",
         "SELECT_COUNTRY": "Selecciona país",
-        "SELECT_CITY": "Selecciona ciudad",
+        "CITY": "Ciudad / Estado / Provincia",
         "ADDRESS": "Dirección",
         "PHONE": "Teléfono",
         "WEBPAGE": "Página de internet",
@@ -793,7 +768,8 @@
         "PLAN_TWO": "Plan Dos",
         "PLAN_THREE": "Plan Tres",
         "OTHER": "Otra...",
-        "CITY_OTHER": "Si seleccionaste otra ciudad, escribela en el siguiente campo"
+        "CITY_OTHER": "Si seleccionaste otra ciudad, escribela en el siguiente campo",
+        "RESTAURANT_EDITED": "Restaurante Editado"
     },
     "RESTAURANT_LOCATION": {
         "TITTLE": "Ubicación del establecimiento",

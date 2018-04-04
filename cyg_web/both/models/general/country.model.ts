@@ -11,7 +11,6 @@ export interface Country {
     indicative: string;
     currencyId: string;
     itemsWithDifferentTax: boolean;
-    queue: string[];
     establishment_price: number;
     tablePrice: number;
     cronValidateActive: string;

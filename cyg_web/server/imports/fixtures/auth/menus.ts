@@ -62,16 +62,16 @@ export function loadMenus() {
                                         url: "/app/establishment-profile",
                                         icon_name: "",
                                         order: 10012
-                                    }, {
+                                    }/*, {
                                         _id: "10013",
                                         is_active: true,
                                         name: "MENUS.ADMINISTRATION.MONTHLY_CONFIG",
                                         url: "/app/establishment-list",
                                         icon_name: "",
                                         order: 10013
-                                    }
+                                    }*/
                                 ]
-                        }, {
+                        }/*, {
                             _id: "1002",
                             is_active: true,
                             name: "MENUS.ADMINISTRATION.TABLES",
@@ -96,7 +96,7 @@ export function loadMenus() {
                                         order: 10022
                                     }
                                 ]
-                        }, {
+                        }*/, {
                             _id: "1003",
                             is_active: true,
                             name: "MENUS.ADMINISTRATION.COLLABORATORS",
@@ -156,14 +156,6 @@ export function loadMenus() {
                             order: 2002
                         }
                     ]
-            },
-            {
-                _id: "1400",
-                is_active: true,
-                name: "MENUS.ADMINISTRATION.ORDERS_TODAY",
-                url: "/app/orders-today",
-                icon_name: "assignment",
-                order: 1300
             },
             {
                 _id: "3000",
@@ -234,13 +226,6 @@ export function loadMenus() {
                             url: "/app/items",
                             icon_name: "",
                             order: 3006
-                        }, {
-                            _id: "3007",
-                            is_active: true,
-                            name: "MENUS.MENU_DEFINITION.ITEMS_ENABLE",
-                            url: "/app/items-enable",
-                            icon_name: "",
-                            order: 3007
                         }
                     ]
             },

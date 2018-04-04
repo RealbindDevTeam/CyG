@@ -6,7 +6,6 @@ import { SigninWebComponent } from './auth/signin/signin.web.component';
 import { CategoryComponent } from './administrator/menu/categories/categories/categories.component';
 import { SubcategoryComponent } from './administrator/menu/subcategories/subcategories/subcategories.component';
 import { AdditionComponent } from './administrator/menu/additions/addition/addition.component';
-import { GarnishFoodComponent } from './administrator/menu/garnish-food/garnish-food/garnish-food.component';
 import { OrdersComponent } from './customer/orders/order/order.component';
 import { TableComponent } from './administrator/administration/tables/table/table.component';
 import { EstablishmentRegisterComponent } from './administrator/administration/establishment/register/establishment-register.component';
@@ -14,7 +13,6 @@ import { SettingsWebComponent } from './settings/settings/settings.web.component
 import { ChangeEmailWebComponent } from './settings/modal-dialog/change-email/change-email.web.component';
 import { ChangePasswordWebComponent } from './settings/modal-dialog/change-password/change-password.web.component';
 import { EstablishmentComponent } from './administrator/administration/establishment/establishment/establishment.component';
-import { GarnishFoodEditComponent } from './administrator/menu/garnish-food/garnish-food-edit/garnish-food-edit.component';
 import { AdditionEditComponent } from './administrator/menu/additions/addition-edit/addition-edit.component';
 import { CategoriesEditComponent } from './administrator/menu/categories/categories-edit/categories-edit.component';
 import { SubcategoryEditComponent } from './administrator/menu/subcategories/subcategories-edit/subcategories-edit.component';
@@ -35,7 +33,6 @@ import { OrderNavigationService } from './services/navigation/order-navigation.s
 import { OrderMenuOptionComponent } from './customer/orders/order-navigation/order-menu-option.component';
 import { OrderCreateComponent } from './customer/orders/order-create/order-create.component';
 import { OrdersListComponent } from './customer/orders/order-list/order-list.component';
-import { ItemEnableComponent } from './administrator/menu/items/enable/items-enable.component';
 import { WaiterCallComponent } from './customer/waiter-call/waiter-call.component';
 import { CallsComponent } from './waiter/calls/calls/calls.component';
 import { CallCloseConfirmComponent } from './waiter/calls/call-close-confirm/call-close-confirm.component';
@@ -58,7 +55,6 @@ import { AdminSignupComponent } from './auth/admin-signup/admin-signup.component
 import { AlertConfirmComponent } from './general/alert-confirm/alert-confirm.component';
 import { UserLanguageService } from './services/general/user-language.service';
 import { ItemEnableSupComponent } from './supervisor/items-enable/items-enable-sup.component';
-import { EnableConfirmComponent } from './administrator/menu/items/enable/enable-confirm/enable-confirm.component';
 import { MenuListComponent } from './waiter/menu-list/menu-list.component';
 import { SupervisorCollaboratorsComponent } from './supervisor/collaborators/collaborators/supervisor-collaborators.component';
 import { SupervisorCollaboratorsEditionComponent } from './supervisor/collaborators/edition/supervisor-collaborators-edition.component';
@@ -85,16 +81,12 @@ import { AfterEstablishmentCreationComponent } from './administrator/administrat
 import { LightBoxComponent } from './general/lightbox/lightbox.component';
 import { CustomerPointsComponent } from './customer/points/points/customer-points.component';
 import { PointsDetailComponent } from './customer/points/points-detail/points-detail.component';
-import { ItemUnitsChartComponent } from './administrator/dashboard/item-units-chart/item-units-chart.component';
 import { RewardUnitsChartComponent } from './administrator/dashboard/reward-units-chart/reward-units-chart.component';
-import { ItemHistoryChartComponent } from './administrator/dashboard/item-history-chart/item-history-chart.component';
 import { OptionsComponent } from './administrator/menu/options/options/option/option.component';
 import { OptionEditComponent } from './administrator/menu/options/options/option-edit/option-edit.component';
 import { OptionValueComponent } from './administrator/menu/options/values/option-value/option-value.component';
 import { OptionValueEditComponent } from './administrator/menu/options/values/option-value-edit/option-value-edit.component';
 import { RewardHistoryChartComponent } from './administrator/dashboard/reward-history-chart/reward-history-chart.component';
-import { OrdersTodayComponent } from "./administrator/orders-today/orders-today.component";
-import { CashierOrdersTodayComponent } from "./cashier/cashier-orders-today.component";
 import { BagsPaymentComponent } from './administrator/payment/bags-payment/bags-payment.component';
 
 export const WEB_DECLARATIONS = [
@@ -107,7 +99,6 @@ export const WEB_DECLARATIONS = [
     CategoryComponent,
     SubcategoryComponent,
     AdditionComponent,
-    GarnishFoodComponent,
     ItemComponent,
     ItemEditionComponent,
     ItemCreationComponent,
@@ -125,7 +116,6 @@ export const WEB_DECLARATIONS = [
     OrderMenuOptionComponent,
     OrderCreateComponent,
     OrdersListComponent,
-    ItemEnableComponent,
     WaiterCallComponent,
     CallsComponent,
     NotFoundWebComponent,
@@ -153,15 +143,11 @@ export const WEB_DECLARATIONS = [
     RewardComponent,
     CustomerPointsComponent,
     PointsDetailComponent,
-    ItemUnitsChartComponent,
     RewardUnitsChartComponent,
-    ItemHistoryChartComponent,
     RewardHistoryChartComponent,
-    OrdersTodayComponent,
     OptionsComponent,
     OptionValueComponent,
     RewardHistoryChartComponent,
-    CashierOrdersTodayComponent,
     BagsPaymentComponent
 ];
 
@@ -169,7 +155,6 @@ export const MODAL_DIALOG_DECLARATIONS = [
     SectionEditComponent,
     ChangeEmailWebComponent,
     ChangePasswordWebComponent,
-    GarnishFoodEditComponent,
     AdditionEditComponent,
     CategoriesEditComponent,
     SubcategoryEditComponent,
@@ -183,7 +168,6 @@ export const MODAL_DIALOG_DECLARATIONS = [
     TrnResponseConfirmComponent,
     VerifyResultComponent,
     AlertConfirmComponent,
-    EnableConfirmComponent,
     SupervisorCollaboratorsEditionComponent,
     RecoverConfirmComponent,
     PenalizeCustomerComponent,

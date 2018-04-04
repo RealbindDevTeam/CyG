@@ -44,6 +44,19 @@ export function createTableCode(): string {
 }
 
 /**
+ * This function create random code with 14 length to establishment QR
+ */
+export function createCodeToEstablishmentQR(): string {
+    let _lText = '';
+    let _lPossible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    for (let _i = 0; _i < 14; _i++) {
+        _lText += _lPossible.charAt(Math.floor(Math.random() * _lPossible.length));
+    }
+    return _lText;
+}
+
+/**
  * This function create QR Codes to establishments
  * @param {string} _pStringToCode
  * @return {Table} generateQRCode

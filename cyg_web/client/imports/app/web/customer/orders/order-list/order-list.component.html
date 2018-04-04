@@ -137,7 +137,6 @@
                                                         <h4 mat-line>{{item.name}}</h4>
                                                         <h5 mat-line>
                                                             {{'ORDER_LIST.PRICE' | translate}}: {{it.paymentItem}} {{_currencyCode}} - {{'ORDER_LIST.QUANT' | translate}} {{it.quantity}}
-                                                            <!--div *ngIf="it.garnishFood.length > 0" class="order-item"> - {{'ORDER_LIST.GARNISH_FOOD' | translate}}: {{it.garnishFood.length}}</div-->
                                                             <div *ngIf="it.additions.length > 0" class="order-item"> - {{'ORDER_LIST.ADDITIONS' | translate}}: {{it.additions.length}}</div>
                                                         </h5>
                                                         <mat-chip-list mat-line *ngIf="it.reward_points > 0">
@@ -224,7 +223,6 @@
                                                     <h4 mat-line>{{item.name}}</h4>
                                                     <h5 mat-line>
                                                         {{'ORDER_LIST.PRICE' | translate}}: {{it.paymentItem}} {{_currencyCode}} - {{'ORDER_LIST.QUANT' | translate}} {{it.quantity}}
-                                                        <!--div *ngIf="it.garnishFood.length > 0" class="order-item"> - {{'ORDER_LIST.GARNISH_FOOD' | translate}}: {{it.garnishFood.length}}</div-->
                                                         <div *ngIf="it.additions.length > 0" class="order-item"> - {{'ORDER_LIST.ADDITIONS' | translate}}: {{it.additions.length}}</div>
                                                     </h5>
                                                     <mat-chip-list mat-line *ngIf="it.reward_points > 0">
@@ -375,9 +373,9 @@
                                     </div>
                                     <p *ngIf="_showOptionsError" style="color: #EF5350;">{{'ORDER_LIST.OPTIONS_ERROR' | translate}}</p>
                                     <div>
-                                        <button mat-button class="primary-button" *ngIf="_customerCanEdit" [disabled]="!_editOrderItemForm.valid || _showGarnishFoodError"
+                                        <button mat-button class="primary-button" *ngIf="_customerCanEdit" [disabled]="!_editOrderItemForm.valid"
                                             (click)="deleteOrderItem(item._id)">{{'ORDER_LIST.DELETE_ITEM' | translate}}</button>
-                                        <button mat-button class="primary-button" *ngIf="_customerCanEdit && getItemAvailability(item._id)" [disabled]="!_editOrderItemForm.valid || _showGarnishFoodError"
+                                        <button mat-button class="primary-button" *ngIf="_customerCanEdit && getItemAvailability(item._id)" [disabled]="!_editOrderItemForm.valid"
                                             (click)="editOrderItem(item._id)">{{'ORDER_LIST.MODIFY_ITEM' | translate}}</button>
                                     </div>
                                 </div>
