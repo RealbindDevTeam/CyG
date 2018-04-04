@@ -6,7 +6,6 @@ import { SigninWebComponent } from './auth/signin/signin.web.component';
 import { CategoryComponent } from './administrator/menu/categories/categories/categories.component';
 import { SubcategoryComponent } from './administrator/menu/subcategories/subcategories/subcategories.component';
 import { AdditionComponent } from './administrator/menu/additions/addition/addition.component';
-import { GarnishFoodComponent } from './administrator/menu/garnish-food/garnish-food/garnish-food.component';
 import { OrdersComponent } from './customer/orders/order/order.component';
 import { TableComponent } from './administrator/administration/tables/table/table.component';
 import { EstablishmentRegisterComponent } from './administrator/administration/establishment/register/establishment-register.component';
@@ -14,7 +13,6 @@ import { SettingsWebComponent } from './settings/settings/settings.web.component
 import { ChangeEmailWebComponent } from './settings/modal-dialog/change-email/change-email.web.component';
 import { ChangePasswordWebComponent } from './settings/modal-dialog/change-password/change-password.web.component';
 import { EstablishmentComponent } from './administrator/administration/establishment/establishment/establishment.component';
-import { GarnishFoodEditComponent } from './administrator/menu/garnish-food/garnish-food-edit/garnish-food-edit.component';
 import { AdditionEditComponent } from './administrator/menu/additions/addition-edit/addition-edit.component';
 import { CategoriesEditComponent } from './administrator/menu/categories/categories-edit/categories-edit.component';
 import { SubcategoryEditComponent } from './administrator/menu/subcategories/subcategories-edit/subcategories-edit.component';
@@ -101,7 +99,6 @@ export const WEB_DECLARATIONS = [
     CategoryComponent,
     SubcategoryComponent,
     AdditionComponent,
-    GarnishFoodComponent,
     ItemComponent,
     ItemEditionComponent,
     ItemCreationComponent,
@@ -158,7 +155,6 @@ export const MODAL_DIALOG_DECLARATIONS = [
     SectionEditComponent,
     ChangeEmailWebComponent,
     ChangePasswordWebComponent,
-    GarnishFoodEditComponent,
     AdditionEditComponent,
     CategoriesEditComponent,
     SubcategoryEditComponent,
