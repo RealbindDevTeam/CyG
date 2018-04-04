@@ -1841,6 +1841,9 @@
     },
     "BAGS_PAYMENT": {
         "TITLE": "Purchase of bags",
-        "SUBTITLE": "Here you can to purchase the bag of points by restaurant that you want"
+        "SUBTITLE": "Here you can to purchase the bag of points by restaurant that you want",
+        "THERE_NOT_RESTAURANTS": "There are not restaurants register yet",
+        "MESSAGE": "Register at least one restaurant to enable this option",
+        "RESTAURANT_REGISTER": ""
     }
 }

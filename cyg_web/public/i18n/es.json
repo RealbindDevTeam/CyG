@@ -1841,6 +1841,9 @@
     },
     "BAGS_PAYMENT": {
         "TITLE": "Compra de bolsas",
-        "SUBTITLE": "Aquí puedes comprar la bolsa de puntos por restaurante que desees"
+        "SUBTITLE": "Aquí puedes comprar la bolsa de puntos por restaurante que desees",
+        "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
+        "MESSAGE": "Registra uno para habilitar esta opción",
+        "RESTAURANT_REGISTER": "Registrar restaurante"
     }
 }
