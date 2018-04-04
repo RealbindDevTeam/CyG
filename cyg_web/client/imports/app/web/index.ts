@@ -35,7 +35,6 @@ import { OrderNavigationService } from './services/navigation/order-navigation.s
 import { OrderMenuOptionComponent } from './customer/orders/order-navigation/order-menu-option.component';
 import { OrderCreateComponent } from './customer/orders/order-create/order-create.component';
 import { OrdersListComponent } from './customer/orders/order-list/order-list.component';
-import { ItemEnableComponent } from './administrator/menu/items/enable/items-enable.component';
 import { WaiterCallComponent } from './customer/waiter-call/waiter-call.component';
 import { CallsComponent } from './waiter/calls/calls/calls.component';
 import { CallCloseConfirmComponent } from './waiter/calls/call-close-confirm/call-close-confirm.component';
@@ -58,7 +57,6 @@ import { AdminSignupComponent } from './auth/admin-signup/admin-signup.component
 import { AlertConfirmComponent } from './general/alert-confirm/alert-confirm.component';
 import { UserLanguageService } from './services/general/user-language.service';
 import { ItemEnableSupComponent } from './supervisor/items-enable/items-enable-sup.component';
-import { EnableConfirmComponent } from './administrator/menu/items/enable/enable-confirm/enable-confirm.component';
 import { MenuListComponent } from './waiter/menu-list/menu-list.component';
 import { SupervisorCollaboratorsComponent } from './supervisor/collaborators/collaborators/supervisor-collaborators.component';
 import { SupervisorCollaboratorsEditionComponent } from './supervisor/collaborators/edition/supervisor-collaborators-edition.component';
@@ -91,7 +89,6 @@ import { OptionEditComponent } from './administrator/menu/options/options/option
 import { OptionValueComponent } from './administrator/menu/options/values/option-value/option-value.component';
 import { OptionValueEditComponent } from './administrator/menu/options/values/option-value-edit/option-value-edit.component';
 import { RewardHistoryChartComponent } from './administrator/dashboard/reward-history-chart/reward-history-chart.component';
-import { OrdersTodayComponent } from "./administrator/orders-today/orders-today.component";
 import { BagsPaymentComponent } from './administrator/payment/bags-payment/bags-payment.component';
 
 export const WEB_DECLARATIONS = [
@@ -122,7 +119,6 @@ export const WEB_DECLARATIONS = [
     OrderMenuOptionComponent,
     OrderCreateComponent,
     OrdersListComponent,
-    ItemEnableComponent,
     WaiterCallComponent,
     CallsComponent,
     NotFoundWebComponent,
@@ -152,7 +148,6 @@ export const WEB_DECLARATIONS = [
     PointsDetailComponent,
     RewardUnitsChartComponent,
     RewardHistoryChartComponent,
-    OrdersTodayComponent,
     OptionsComponent,
     OptionValueComponent,
     RewardHistoryChartComponent,
@@ -177,7 +172,6 @@ export const MODAL_DIALOG_DECLARATIONS = [
     TrnResponseConfirmComponent,
     VerifyResultComponent,
     AlertConfirmComponent,
-    EnableConfirmComponent,
     SupervisorCollaboratorsEditionComponent,
     RecoverConfirmComponent,
     PenalizeCustomerComponent,

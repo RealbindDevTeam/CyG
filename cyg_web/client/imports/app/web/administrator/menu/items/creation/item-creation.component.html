@@ -46,21 +46,6 @@
                         <textarea matInput formControlName="description" placeholder="{{'DESCRIPTION' | translate}}" maxlength="200" #inputDesc></textarea>
                         <mat-hint align="end">{{inputDesc.value.length}} / 200</mat-hint>
                     </mat-form-field>
-                    <mat-form-field style="width: 100%;margin-top: 1%;">
-                        <mat-select formControlName="cookingTime" placeholder="{{'ITEMS.COOKING_TIME' | translate}}">
-                            <mat-option value="">{{'ITEMS.NO_TIME' | translate}}</mat-option>
-                            <mat-option *ngFor="let time of _cookingTimes | async" value="{{time.cooking_time}}">{{time.cooking_time}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-checkbox formControlName="observations">{{'ITEMS.OBSERVATIONS' | translate}}</mat-checkbox>
-                    <div>
-                        <mat-checkbox formControlName="acceptReward" [(ngModel)]="_rewardEnable">{{'ITEMS.REWARD_LABEL' | translate}}</mat-checkbox>
-                        <mat-form-field style="margin-left: 5%;width: 25%;">
-                            <mat-select [disabled]="!_rewardEnable" formControlName="rewardValue" placeholder="{{'ITEMS.POINTS_PLACEHOLER' | translate}}">
-                                <mat-option *ngFor="let point of _points | async" value="{{point._id}}">{{point.point}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
                     <div style="width: 100%;display: inline-block;margin-bottom: 1%;">
                         <input formControlName="image" (click)="changeImage()" style="display: none" name="file-1[]" id="file-1" class="inputfile inputfile-1"
                             data-multiple-caption="{count} files selected" />

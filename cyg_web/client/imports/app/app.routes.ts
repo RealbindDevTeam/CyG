@@ -11,7 +11,6 @@ import { SigninWebComponent } from './web/auth/signin/signin.web.component';
 import { CategoryComponent } from './web/administrator/menu/categories/categories/categories.component';
 import { SubcategoryComponent } from './web/administrator/menu/subcategories/subcategories/subcategories.component';
 import { AdditionComponent } from './web/administrator/menu/additions/addition/addition.component';
-import { GarnishFoodComponent } from './web/administrator/menu/garnish-food/garnish-food/garnish-food.component';
 import { OrdersComponent } from './web/customer/orders/order/order.component';
 //import { TableComponent } from './web/administrator/administration/tables/table/table.component';
 import { EstablishmentRegisterComponent } from './web/administrator/administration/establishment/register/establishment-register.component';
@@ -25,7 +24,6 @@ import { CollaboratorsComponent } from './web/administrator/administration/colla
 import { CollaboratorsRegisterComponent } from './web/administrator/administration/collaborators/register/collaborators-register.component';
 import { ItemComponent } from './web/administrator/menu/items/item/item.component';
 import { EstablishmentEditionComponent } from './web/administrator/administration/establishment/edition/establishment-edition.component';
-import { ItemEnableComponent } from './web/administrator/menu/items/enable/items-enable.component';
 import { WaiterCallComponent } from './web/customer/waiter-call/waiter-call.component';
 import { CallsComponent } from './web/waiter/calls/calls/calls.component';
 import { NotFoundWebComponent } from './web/auth/notfound/notfound.web.component';
@@ -55,7 +53,6 @@ import { RewardUnitsChartComponent } from 'client/imports/app/web/administrator/
 import { OptionsComponent } from './web/administrator/menu/options/options/option/option.component';
 import { OptionValueComponent } from './web/administrator/menu/options/values/option-value/option-value.component';
 import { RewardHistoryChartComponent } from './web/administrator/dashboard/reward-history-chart/reward-history-chart.component';
-import { OrdersTodayComponent } from "./web/administrator/orders-today/orders-today.component";
 //import { EstablishmentListComponent } from './web/administrator/administration/establishment/monthly-config/establishment-list/establishment-list.component';
 import { EnableDisableComponent } from './web/administrator/administration/establishment/monthly-config/enable-disable/enable-disable.component';
 import { BagsPaymentComponent } from './web/administrator/payment/bags-payment/bags-payment.component';
@@ -71,7 +68,6 @@ export const routes: Route[] = [
             { path: 'categories', component: CategoryComponent, canActivate: [AdminGuard] },
             { path: 'subcategories', component: SubcategoryComponent, canActivate: [AdminGuard] },
             { path: 'additions', component: AdditionComponent, canActivate: [AdminGuard] },
-            { path: 'garnishFood', component: GarnishFoodComponent, canActivate: [AdminGuard] },
             { path: 'items', component: ItemComponent, canActivate: [AdminGuard] },
             { path: 'items-creation', component: ItemCreationComponent, canActivate: [AdminGuard] },
             { path: 'items-edition/:param1', component: ItemEditionComponent, canActivate: [AdminGuard] },
@@ -80,7 +76,6 @@ export const routes: Route[] = [
             { path: 'establishment-edition/:param1', component: EstablishmentEditionComponent, canActivate: [AdminGuard] },
             //{ path: 'tables', component: TableComponent, canActivate: [AdminGuard] },
             { path: 'orders', component: OrdersComponent, canActivate: [CustomerGuard] },
-            { path: 'items-enable', component: ItemEnableComponent, canActivate: [SupervisorGuard] },
             { path: 'waiter-call', component: WaiterCallComponent, canActivate: [CustomerGuard] },
             { path: 'calls', component: CallsComponent, canActivate: [WaiterGuard] },
             { path: 'monthly-payment', component: MonthlyPaymentComponent, canActivate: [AdminGuard] },
@@ -109,7 +104,6 @@ export const routes: Route[] = [
             { path: 'establishment-points/:param1', component: PointsDetailComponent, canActivate: [CustomerGuard] },
             { path: 'reward-units-chart/:param1', component: RewardUnitsChartComponent, canActivate: [AdminGuard] },
             { path: 'reward-history-chart/:param1', component: RewardHistoryChartComponent, canActivate: [AdminGuard] },
-            { path: 'orders-today', component: OrdersTodayComponent, canActivate: [AdminGuard] },
             { path: 'options', component: OptionsComponent, canActivate: [AdminGuard] },
             { path: 'option-values', component: OptionValueComponent, canActivate: [AdminGuard] },
             { path: 'reward-history-chart/:param1', component: RewardHistoryChartComponent, canActivate: [AdminGuard] },

@@ -26,10 +26,6 @@ import { Country } from '../../../../../../../../both/models/general/country.mod
 import { Countries } from '../../../../../../../../both/collections/general/country.collection';
 import { AlertConfirmComponent } from '../../../../../web/general/alert-confirm/alert-confirm.component';
 import { ImageService } from '../../../../services/general/image.service';
-import { CookingTimes } from '../../../../../../../../both/collections/general/cooking-time.collection';
-import { CookingTime } from '../../../../../../../../both/models/general/cooking-time.model';
-import { Points } from '../../../../../../../../both/collections/general/point.collection';
-import { Point } from '../../../../../../../../both/models/general/point.model';
 import { Option } from '../../../../../../../../both/models/menu/option.model';
 import { Options } from '../../../../../../../../both/collections/menu/option.collection';
 import { OptionValue } from '../../../../../../../../both/models/menu/option-value.model';
@@ -60,8 +56,6 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
     private _categories: Observable<Category[]>;
     private _subcategories: Observable<Subcategory[]>;
     private _currencies: Observable<Currency[]>;
-    private _cookingTimes: Observable<CookingTime[]>;
-    private _points: Observable<Point[]>;
     private _options: Observable<Option[]>;
     private _optionValues: Observable<OptionValue[]>;
 
@@ -73,8 +67,6 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
     private _additionSub: Subscription;
     private _currenciesSub: Subscription;
     private _countriesSub: Subscription;
-    private _cookingTimeSub: Subscription;
-    private _pointsSub: Subscription;
     private _optionSub: Subscription;
     private _optionValuesSub: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -93,7 +85,6 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
     private _selectedCategory: string = "";
     private _selectedSection: string = "";
     private _selectedSubcategory: string = "";
-    private _selectedTime: string;
 
     private _itemAdditions: string[] = [];
     private _additionList: Addition[] = [];
@@ -112,9 +103,6 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
     private _establishmentsSelectedCount: number = 0;
     private titleMsg: string;
     private btnAcceptLbl: string;
-
-    private _rewardEnable: boolean = false;
-    private _selectedPoints: string;
 
     /**
      * ItemEditionComponent constructor
@@ -165,10 +153,6 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
         this._generalFormGroup = new FormGroup({
             editName: new FormControl(this._itemToEdit.name),
             editDescription: new FormControl(this._itemToEdit.description),
-            editCookingTime: new FormControl(this._itemToEdit.time),
-            editObservations: new FormControl(this._itemToEdit.observations),
-            editAcceptReward: new FormControl(this._itemToEdit.has_reward),
-            editRewardValue: new FormControl(this._itemToEdit.reward_points),
             editImage: new FormControl(''),
             editEstablishments: this._establishmentsFormGroup,
             editCurrencies: this._currenciesFormGroup,
@@ -187,14 +171,10 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
         this._selectedCategory = this._itemToEdit.categoryId;
         this._itemSubcategory = this._itemToEdit.subcategoryId;
         this._selectedSubcategory = this._itemToEdit.subcategoryId;
-        this._selectedTime = this._itemToEdit.time;
 
         this._itemAdditions = this._itemToEdit.additions;
         this._itemEstablishments = this._itemToEdit.establishments;
         this._itemOptions = this._itemToEdit.options;
-
-        this._rewardEnable = this._itemToEdit.has_reward;
-        this._selectedPoints = this._itemToEdit.reward_points;
 
         this._establishmentsSelectedCount = this._itemToEdit.establishments.length;
         if (this._itemToEdit.establishments.length > 0) { this._showEstablishments = true }
@@ -370,18 +350,6 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
                 });
 
                 if (this._additionList.length === 0) { this._showAddition = false; }
-            });
-        });
-
-        this._cookingTimeSub = MeteorObservable.subscribe('cookingTimes').takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._cookingTimes = CookingTimes.find({}).zone();
-            });
-        });
-
-        this._pointsSub = MeteorObservable.subscribe('points').takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._points = Points.find({ _id: { $in: ['5', '10', '15'] } }).zone();
             });
         });
     }
@@ -930,13 +898,6 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
             }
         });
 
-        let rewardPointsAux: string;
-        if (this._generalFormGroup.value.editAcceptReward) {
-            rewardPointsAux = this._generalFormGroup.value.editRewardValue
-        } else {
-            rewardPointsAux = "0";
-        }
-
         let arrOptions: any[] = Object.keys(this._optionAdditionsFormGroup.value.options);
         let _optionsToInsert: ItemOption[] = [];
         let _lItemOption: ItemOption = { option_id: '', is_required: false, values: [] };
@@ -1018,16 +979,12 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
                         categoryId: this._sectionsFormGroup.value.editCategoryId,
                         subcategoryId: this._sectionsFormGroup.value.editSubcategoryId,
                         name: this._generalFormGroup.value.editName,
-                        time: this._generalFormGroup.value.editCookingTime,
                         description: this._generalFormGroup.value.editDescription,
                         establishments: _lItemEstablishmentsToInsert,
                         prices: _lItemPricesToInsert,
-                        observations: this._generalFormGroup.value.editObservations,
                         image: this._editItemImageToInsert,
                         options: _optionsToInsert,
-                        additions: _lAdditionsToInsert,
-                        has_reward: this._generalFormGroup.value.editAcceptReward,
-                        reward_points: rewardPointsAux
+                        additions: _lAdditionsToInsert
                     }
                 });
             } else {
@@ -1040,15 +997,11 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
                         categoryId: this._sectionsFormGroup.value.editCategoryId,
                         subcategoryId: this._sectionsFormGroup.value.editSubcategoryId,
                         name: this._generalFormGroup.value.editName,
-                        time: this._generalFormGroup.value.editCookingTime,
                         description: this._generalFormGroup.value.editDescription,
                         establishments: _lItemEstablishmentsToInsert,
                         prices: _lItemPricesToInsert,
-                        observations: this._generalFormGroup.value.editObservations,
                         options: _optionsToInsert,
-                        additions: _lAdditionsToInsert,
-                        has_reward: this._generalFormGroup.value.editAcceptReward,
-                        reward_points: rewardPointsAux
+                        additions: _lAdditionsToInsert
                     }
                 });
             }

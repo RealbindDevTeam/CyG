@@ -11,8 +11,6 @@ import { Establishment } from '../../../../../../../../both/models/establishment
 import { Establishments } from '../../../../../../../../both/collections/establishment/establishment.collection';
 import { Role } from '../../../../../../../../both/models/auth/role.model';
 import { Roles } from '../../../../../../../../both/collections/auth/role.collection';
-import { Table } from '../../../../../../../../both/models/establishment/table.model';
-import { Tables } from '../../../../../../../../both/collections/establishment/table.collection';
 import { UserProfile } from '../../../../../../../../both/models/auth/user-profile.model';
 import { UserDetails } from '../../../../../../../../both/collections/auth/user-detail.collection';
 import { UserDetail } from '../../../../../../../../both/models/auth/user-detail.model';
@@ -27,32 +25,23 @@ import { AlertConfirmComponent } from '../../../../../web/general/alert-confirm/
 })
 export class CollaboratorsEditionComponent implements OnInit, OnDestroy {
 
-    private _tableSub: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
     private _collaboratorEditionForm: FormGroup;
     private _mdDialogRef: MatDialogRef<any>;
 
     private _establishments: Observable<Establishment[]>;
     private _roles: Observable<Role[]>;
-    private _tables: Observable<Table[]>;
 
     private _userProfile = new UserProfile();
     private selectUser: User;
     private selectUserDetail: UserDetail;
 
-    private _tablesNumber: number[] = [];
     private _selectedIndex: number = 0;
-    private _tableInit: number = 0;
-    private _tableEnd: number = 0;
     private titleMsg: string;
     private btnAcceptLbl: string;
     private _userLang: string;
     private _error: string
     private _message: string;
-    private _showConfirmError: boolean = false;
-    private _showTablesSelect: boolean = false;
-    private _disabledTablesAssignment: boolean = true;
-
     private _genderArray: any[] = [];
 
     /**
@@ -82,10 +71,7 @@ export class CollaboratorsEditionComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
         this.removeSubscriptions();
-        this.validateWaiterRole(this.selectUserDetail.role_id);
         this._collaboratorEditionForm = this._formBuilder.group({
-            //name: [this.selectUser.profile.first_name, [Validators.required, Validators.minLength(1), Validators.maxLength(70)]],
-            //last_name: [this.selectUser.profile.last_name, [Validators.required, Validators.minLength(1), Validators.maxLength(70)]],
             fullName: [this.selectUser.profile.full_name, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
             birthdate: [this.selectUserDetail.birthdate, [Validators.required]],
             establishment_work: [this.selectUserDetail.establishment_work],
@@ -95,17 +81,12 @@ export class CollaboratorsEditionComponent implements OnInit, OnDestroy {
             email: [],
             password: [],
             confirmPassword: [],
-            table_init: [this.selectUserDetail.table_assignment_init],
-            table_end: [this.selectUserDetail.table_assignment_end],
             new_password: new FormControl('', [Validators.minLength(8), Validators.maxLength(20)]),
             confirm_new_password: new FormControl('', [Validators.minLength(8), Validators.maxLength(20)]),
             gender: [this.selectUser.profile.gender, [Validators.required]]
         });
-        this._tableInit = this.selectUserDetail.table_assignment_init;
-        this._tableEnd = this.selectUserDetail.table_assignment_end;
         this._establishments = Establishments.find({}).zone();
         this._roles = Roles.find({}).zone();
-        this._tableSub = MeteorObservable.subscribe('getTablesByEstablishmentWork', this.selectUser._id).takeUntil(this._ngUnsubscribe).subscribe();
 
         this._genderArray = [{ value: "SIGNUP.MALE_GENDER", label: "SIGNUP.MALE_GENDER" },
         { value: "SIGNUP.FEMALE_GENDER", label: "SIGNUP.FEMALE_GENDER" },
@@ -118,38 +99,6 @@ export class CollaboratorsEditionComponent implements OnInit, OnDestroy {
     removeSubscriptions(): void {
         this._ngUnsubscribe.next();
         this._ngUnsubscribe.complete();
-    }
-
-    /**
-     * Validate waiter role is select to enabled tables assignment
-     * @param _roleId 
-     */
-    validateWaiterRole(_roleId: string) {
-        if (_roleId === '200') {
-            this._showTablesSelect = true;
-        } else {
-            this._showConfirmError = false;
-            this._showTablesSelect = false;
-            this._disabledTablesAssignment = true;
-        }
-    }
-
-    /**
-     * Enabled tables assignment
-     * @param _pEvent 
-     */
-    pushSelectArray(_pEvent: any) {
-        this._tablesNumber = [];
-        if (_pEvent.checked) {
-            this._disabledTablesAssignment = false;
-            let tablesCount: number = 0;
-            tablesCount = Tables.collection.find({}).count();
-            for (var index = 1; index <= tablesCount; index++) {
-                this._tablesNumber.push(index);
-            }
-        } else {
-            this._disabledTablesAssignment = true;
-        }
     }
 
     /**
@@ -166,26 +115,9 @@ export class CollaboratorsEditionComponent implements OnInit, OnDestroy {
         if (Meteor.userId()) {
             if (this._collaboratorEditionForm.valid) {
                 if (this._collaboratorEditionForm.valid) {
-                    if (this._collaboratorEditionForm.value.role === '200') {
-
-                        if (this._disabledTablesAssignment || (this._collaboratorEditionForm.value.table_init === 0 && this._collaboratorEditionForm.value.table_end === 0)) {
-                            this._collaboratorEditionForm.value.table_end = Tables.collection.find({}).count();
-                            if (this._collaboratorEditionForm.value.table_end > 0) {
-                                this._collaboratorEditionForm.value.table_init = 1;
-                            }
-                        }
-                        if (!this._disabledTablesAssignment && this._collaboratorEditionForm.value.table_end < this._collaboratorEditionForm.value.table_init) {
-                            this._message = this.itemNameTraduction('COLLABORATORS_REGISTER.SELECT_RANGE_VALID_TABLES');
-                            this.openDialog(this.titleMsg, '', this._message, '', this.btnAcceptLbl, false);
-                            return;
-                        }
-                    }
-
                     Users.update({ _id: this.selectUser._id }, {
                         $set: {
                             profile: {
-                                //first_name: this._collaboratorEditionForm.value.name,
-                                //last_name: this._collaboratorEditionForm.value.last_name,
                                 full_name: this._collaboratorEditionForm.value.fullName,
                                 language_code: this.selectUser.profile.language_code,
                                 image: this.selectUser.profile.image,
@@ -193,25 +125,15 @@ export class CollaboratorsEditionComponent implements OnInit, OnDestroy {
                             }
                         }
                     });
-                    if (this._collaboratorEditionForm.value.role === '200') {
-                        UserDetails.update({ _id: this.selectUserDetail._id }, {
-                            $set: {
-                                establishment_work: this._collaboratorEditionForm.value.establishment_work,
-                                birthdate: this._collaboratorEditionForm.value.birthdate,
-                                phone: this._collaboratorEditionForm.value.phone,
-                                table_assignment_init: Number.parseInt(this._collaboratorEditionForm.value.table_init.toString()),
-                                table_assignment_end: Number.parseInt(this._collaboratorEditionForm.value.table_end.toString())
-                            }
-                        });
-                    } else {
-                        UserDetails.update({ _id: this.selectUserDetail._id }, {
-                            $set: {
-                                establishment_work: this._collaboratorEditionForm.value.establishment_work,
-                                birthdate: this._collaboratorEditionForm.value.birthdate,
-                                phone: this._collaboratorEditionForm.value.phone
-                            }
-                        });
-                    }
+
+                    UserDetails.update({ _id: this.selectUserDetail._id }, {
+                        $set: {
+                            establishment_work: this._collaboratorEditionForm.value.establishment_work,
+                            birthdate: this._collaboratorEditionForm.value.birthdate,
+                            phone: this._collaboratorEditionForm.value.phone
+                        }
+                    });
+
                     if (this._collaboratorEditionForm.value.new_password !== '' && this._collaboratorEditionForm.value.confirm_new_password !== '') {
                         if (this._collaboratorEditionForm.value.new_password !== this._collaboratorEditionForm.value.confirm_new_password) {
                             this._message = this.itemNameTraduction('SIGNUP.PASSWORD_NOT_MATCH');
