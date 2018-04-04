@@ -4,18 +4,17 @@ import { TranslateService } from '@ngx-translate/core';
 import { NavController, NavParams, ModalController, LoadingController, ToastController } from 'ionic-angular';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Observable, Subscription, Subject } from 'rxjs';
-import { Country } from 'i4t_web/both/models/general/country.model';
-import { Countries } from 'i4t_web/both/collections/general/country.collection';
-import { City } from 'i4t_web/both/models/general/city.model';
-import { Cities } from 'i4t_web/both/collections/general/city.collection';
-import { PaymentMethod } from 'i4t_web/both/models/general/paymentMethod.model';
-import { PaymentMethods } from 'i4t_web/both/collections/general/paymentMethod.collection';
-import { Establishment, EstablishmentProfile, EstablishmentProfileImage } from 'i4t_web/both/models/establishment/establishment.model';
-import { Establishments, EstablishmentsProfile } from 'i4t_web/both/collections/establishment/establishment.collection';
-import { ModalSchedule } from '../../establishment-profile/modal-schedule/modal-schedule';
+import { Country } from 'cyg_web/both/models/general/country.model';
+import { Countries } from 'cyg_web/both/collections/general/country.collection';
+import { PaymentMethod } from 'cyg_web/both/models/general/paymentMethod.model';
+import { PaymentMethods } from 'cyg_web/both/collections/general/paymentMethod.collection';
+import { Establishment, EstablishmentProfile, EstablishmentProfileImage } from 'cyg_web/both/models/establishment/establishment.model';
+import { Establishments, EstablishmentsProfile } from 'cyg_web/both/collections/establishment/establishment.collection';
+import { ModalSchedule } from './modal-schedule/modal-schedule';
 import { MenuByEstablishmentPage } from "../menu-by-establishment/menu-by-establishment";
-import { TypeOfFood } from 'i4t_web/both/models/general/type-of-food.model';
-import { TypesOfFood } from 'i4t_web/both/collections/general/type-of-food.collection';
+import { TypeOfFood } from 'cyg_web/both/models/general/type-of-food.model';
+import { TypesOfFood } from 'cyg_web/both/collections/general/type-of-food.collection';
+import { RewardListComponent } from './reward-list/reward-list';
 
 @Component({
     selector: 'page-establishment-list-detail',
@@ -26,7 +25,6 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy {
     private _map: GoogleMap;
     private _establishmentSubscription: Subscription;
     private _countriesSubscription: Subscription;
-    private _citiesSubscription: Subscription;
     private _establishmentProfileSubscription: Subscription;
     private _paymentMethodsSubscription: Subscription;
     private _typesOfFoodSub: Subscription;
@@ -40,7 +38,6 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy {
     private _establishmentProfile: EstablishmentProfile = null;
 
     private _establishmentCountry: string = '';
-    private _establishmentCity: string = '';
     private _showDescription: boolean = false;
     private _profileImgs: EstablishmentProfileImage[] = [];
 
@@ -83,15 +80,6 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy {
                 let _lCountry: Country = Countries.findOne({ _id: this._establishmentParam.countryId });
                 if (_lCountry) {
                     this._establishmentCountry = this.itemNameTraduction(_lCountry.name);
-                }
-            });
-        });
-
-        this._citiesSubscription = MeteorObservable.subscribe('getCityByEstablishmentId', this._establishmentParam._id).takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                let _lCity: City = Cities.findOne({ _id: this._establishmentParam.cityId });
-                if (_lCity) {
-                    this._establishmentCity = this.itemNameTraduction(_lCity.name);
                 }
             });
         });
@@ -170,11 +158,21 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy {
     }
 
     /**
-     * Open password change modal
+     * Open schedule modal
      */
     openSchedule() {
         let contactModal = this._modalCtrl.create(ModalSchedule, {
             establishment: this._establishmentParam
+        });
+        contactModal.present();
+    }
+
+    /**
+     * Open reward list modal
+     */
+    openRewardList() {
+        let contactModal = this._modalCtrl.create(RewardListComponent, {
+            establishment: this._establishmentParam._id
         });
         contactModal.present();
     }

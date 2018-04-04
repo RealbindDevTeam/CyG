@@ -6,9 +6,7 @@ import { MeteorObservable } from 'meteor-rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Device } from '@ionic-native/device';
 import { InitialComponent } from '../pages/auth/initial/initial';
-import { HomeMenu } from '../pages/customer/home-menu/home-menu';
-import { TabsPage } from '../pages/waiter/tabs/tabs';
-import { UserLogin } from 'i4t_web/both/models/auth/user-login.model';
+import { UserLogin } from 'cyg_web/both/models/auth/user-login.model';
 import { HomePage } from '../pages/customer/home/home';
 import { Network } from '@ionic-native/network';
 
@@ -47,7 +45,7 @@ export class MyApp {
           if (role == "400") {
             this.insertUserInfo();
             this.rootPage = HomePage;
-          } else if (role == "200") {
+          } /*else if (role == "200") {
             MeteorObservable.call('validateEstablishmentIsActive').subscribe((_restaruantActive) => {
               if (_restaruantActive) {
                 MeteorObservable.call('validateUserIsActive').subscribe((active) => {
@@ -68,7 +66,7 @@ export class MyApp {
                 Meteor.logout();
               }
             });
-          }
+          }*/
         });
       } else {
         this.rootPage = InitialComponent;

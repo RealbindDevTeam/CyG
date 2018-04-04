@@ -58,9 +58,9 @@
                     </a>
                 </div>
                 <ion-list inset class="margin" no-lines>
-                    <ion-item *ngIf="_establishmentCity !== '' || _establishmentCountry !== ''">
+                    <ion-item *ngIf="_establishment?.city !== '' || _establishmentCountry !== ''">
                         <ion-icon name="map"></ion-icon>
-                        <span *ngIf="_establishmentCity !== ''">{{_establishmentCity}},</span>
+                        <span *ngIf="_establishment?.city !== ''">{{_establishment.city}},</span>
                         <span *ngIf="_establishmentCountry !== ''">{{_establishmentCountry}}</span>
                     </ion-item>
 

@@ -4,11 +4,11 @@ import { Subscription, Observable, Subject } from 'rxjs';
 import { MeteorObservable } from 'meteor-rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UserLanguageServiceProvider } from '../../../../providers/user-language-service/user-language-service';
-import { SettingsPage } from '../../options/settings/settings';
+import { SettingsPage } from './settings/settings';
 import { OrdersPage } from '../../orders/orders';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { Parameter } from 'i4t_web/both/models/general/parameter.model';
-import { Parameters } from 'i4t_web/both/collections/general/parameter.collection';
+import { Parameter } from 'cyg_web/both/models/general/parameter.model';
+import { Parameters } from 'cyg_web/both/collections/general/parameter.collection';
 
 
 @Component({

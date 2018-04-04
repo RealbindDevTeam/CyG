@@ -5,13 +5,13 @@ import { App, ViewController, NavController, AlertController, Platform, LoadingC
 import { TranslateService } from '@ngx-translate/core';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Device } from '@ionic-native/device';
-import { UserDetails } from 'i4t_web/both/collections/auth/user-detail.collection';
+import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
 import { Meteor } from 'meteor/meteor';
 //import { HomeMenu } from '../../customer/home-menu/home-menu';
 import { HomePage } from '../../customer/home/home';
 //import { Menu } from '../../waiter/menu/menu';
 import { TabsPage } from '../../waiter/tabs/tabs';
-import { UserLogin } from 'i4t_web/both/models/auth/user-login.model';
+import { UserLogin } from 'cyg_web/both/models/auth/user-login.model';
 import { Accounts } from 'meteor/accounts-base';
 import { Facebook } from '@ionic-native/facebook';
 import { Network } from '@ionic-native/network';
@@ -87,7 +87,7 @@ export class SigninComponent implements OnInit {
                                     //this.addUserDevice();
                                     this.insertUserInfo();
                                     this.navCtrl.setRoot(HomePage);
-                                } else if (role == "200") {
+                                } /*else if (role == "200") {
                                     MeteorObservable.call('validateEstablishmentIsActive').subscribe((_establishmenttActive) => {
                                         if (_establishmenttActive) {
                                             MeteorObservable.call('validateUserIsActive').subscribe((active) => {
@@ -104,7 +104,7 @@ export class SigninComponent implements OnInit {
                                             this.showComfirm(confirmMsg);
                                         }
                                     });
-                                } else {
+                                }*/ else {
                                 }
                             }, 1500);
                         }, (error) => {

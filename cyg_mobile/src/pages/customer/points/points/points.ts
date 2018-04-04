@@ -4,12 +4,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Subscription, Observable, Subject } from 'rxjs';
 import { UserLanguageServiceProvider } from '../../../../providers/user-language-service/user-language-service';
-import { Establishment } from 'i4t_web/both/models/establishment/establishment.model';
-import { Establishments } from 'i4t_web/both/collections/establishment/establishment.collection';
-import { UserDetails } from 'i4t_web/both/collections/auth/user-detail.collection';
-import { UserDetail } from 'i4t_web/both/models/auth/user-detail.model';
-import { RewardPoints } from 'i4t_web/both/collections/establishment/reward-point.collection';
-import { RewardPoint } from 'i4t_web/both/models/establishment/reward-point.model';
+import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
+import { Establishments } from 'cyg_web/both/collections/establishment/establishment.collection';
+import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
+import { UserDetail } from 'cyg_web/both/models/auth/user-detail.model';
+import { RewardPoints } from 'cyg_web/both/collections/establishment/reward-point.collection';
+import { RewardPoint } from 'cyg_web/both/models/establishment/reward-point.model';
 import { PointsDetailPage } from '../points-detail/points-detail';
 import { Network } from '@ionic-native/network';
 

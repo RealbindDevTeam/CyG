@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.iurest" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>i4t_mobile</name>
-    <description>Iurest Mobile Project</description>
-    <author email="info@realbind.com" href="https://www.iurest.com">Realbind</author>
+<widget id="com.cyg" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>cyg_mobile</name>
+    <description>comeygana Mobile Project</description>
+    <author email="leonardoespinosa@realbind.com" href="https://www.comeygana.com">comeygana</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

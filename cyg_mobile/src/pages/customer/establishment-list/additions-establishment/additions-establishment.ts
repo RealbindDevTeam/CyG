@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { Subscription } from 'rxjs';
+import { Subscription,Subject } from 'rxjs';
 import { MeteorObservable } from 'meteor-rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { Addition } from 'i4t_web/both/models/menu/addition.model';
-import { Additions } from 'i4t_web/both/collections/menu/addition.collection';
-import { OrderAddition } from 'i4t_web/both/models/establishment/order.model';
+import { Addition } from 'cyg_web/both/models/menu/addition.model';
+import { Additions } from 'cyg_web/both/collections/menu/addition.collection';
+import { OrderAddition } from 'cyg_web/both/models/establishment/order.model';
 import { UserLanguageServiceProvider } from '../../../../providers/user-language-service/user-language-service';
 
 @Component({
@@ -15,9 +15,8 @@ import { UserLanguageServiceProvider } from '../../../../providers/user-language
 })
 export class AdditionsEstablishmentPage implements OnInit, OnDestroy {
 
-    private _additionsDetailFormGroup: FormGroup = new FormGroup({});
-    private _additionsFormGroup: FormGroup = new FormGroup({});
     private _additionsSub: Subscription;
+    private _ngUnsubscribe: Subject<void> = new Subject<void>();
     private _additions: any;
     private _establishmentId: string;
 
@@ -28,10 +27,10 @@ export class AdditionsEstablishmentPage implements OnInit, OnDestroy {
         public _navParams: NavParams,
         private _translate: TranslateService,
         private _toastCtrl: ToastController,
-        private _userLanguageService: UserLanguageServiceProvider) {
+        private _userLanguageService: UserLanguageServiceProvider,
+        private _ngZone: NgZone) {
         _translate.setDefaultLang('en');
         this._establishmentId = this._navParams.get("res_id");
-        //this._tableId = this._navParams.get("table_id");
     }
 
     /**
@@ -40,30 +39,10 @@ export class AdditionsEstablishmentPage implements OnInit, OnDestroy {
     ngOnInit() {
         this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
         this.removeSubscriptions();
-        this._additionsSub = MeteorObservable.subscribe('additionsByEstablishment', this._establishmentId).subscribe(() => {
-            this._additions = Additions.find({}).zone();
-            this._additions.subscribe(() => { this.buildAdditionsForms(); });
-        });
-    }
-
-    /**
-     * Build controls in additions forms
-     */
-    buildAdditionsForms(): void {
-        Additions.collection.find({}).fetch().forEach((add) => {
-            if (this._additionsFormGroup.contains(add._id)) {
-                this._additionsFormGroup.controls[add._id].setValue(false);
-            } else {
-                let control: FormControl = new FormControl(false);
-                this._additionsFormGroup.addControl(add._id, control);
-            }
-
-            if (this._additionsDetailFormGroup.contains(add._id)) {
-                this._additionsDetailFormGroup.controls[add._id].setValue('');
-            } else {
-                let control: FormControl = new FormControl('', [Validators.minLength(1), Validators.maxLength(2)]);
-                this._additionsDetailFormGroup.addControl(add._id, control);
-            }
+        this._additionsSub = MeteorObservable.subscribe('additionsByEstablishment', this._establishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
+            this._ngZone.run(() => {
+                this._additions = Additions.find({}).zone();
+            });
         });
     }
 
@@ -73,14 +52,6 @@ export class AdditionsEstablishmentPage implements OnInit, OnDestroy {
      */
     getAdditionInformation(_pAddition: Addition): string {
         return _pAddition.name + ' - ' + _pAddition.establishments.filter(r => r.establishment_id === this._establishmentId)[0].price + ' ';
-    }
-
-    /**
-     * Return Addition price
-     * @param {Addition} _pAddition 
-     */
-    getAdditionPrice(_pAddition: Addition): number {
-        return _pAddition.establishments.filter(r => r.establishment_id === this._establishmentId)[0].price;
     }
 
     /**
@@ -106,6 +77,7 @@ export class AdditionsEstablishmentPage implements OnInit, OnDestroy {
      * Remove all subscriptions
      */
     removeSubscriptions(): void {
-        if (this._additionsSub) { this._additionsSub.unsubscribe(); }
+        this._ngUnsubscribe.next();
+        this._ngUnsubscribe.complete();
     }
 }
