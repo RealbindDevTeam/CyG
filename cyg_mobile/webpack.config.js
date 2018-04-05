@@ -76,7 +76,7 @@ var devConfig = {
     extensions: ['.ts', '.js', '.json'],
     modules: [path.resolve('node_modules')],
     alias: {
-      'i4t_web': path.resolve(__dirname, '../i4t_web')
+      'cyg_web': path.resolve(__dirname, '../cyg_web')
     }
   },
 
@@ -129,7 +129,7 @@ var prodConfig = {
     extensions: ['.ts', '.js', '.json'],
     modules: [path.resolve('node_modules')],
     alias: {
-      'i4t_web': path.resolve(__dirname, '../i4t_web')
+      'cyg_web': path.resolve(__dirname, '../cyg_web')
     }
   },
 

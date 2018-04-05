@@ -468,10 +468,10 @@
                 "2": "2. See your order cost",
                 "3": "3. Call a waiter/waitress"
             },
-            "HEADER_TITLE": "Welcome to comeygana!, go ahead and enjoy ordering",
-            "TITLE_LIST_BTN": "Look at the restaurant where you can get points",
-            "TITLE_ORDER_BTN": "Ordering in a restaurant",
-            "TITLE_POINTS_BTN": "Check your points accumulated"
+            "HEADER_TITLE": "Welcome to comeygana!, go ahead and enjoy winning",
+            "TITLE_LIST_BTN": "Look at the restaurant where you can get medals",
+            "TITLE_CODE_BTN": "Win a new medal!",
+            "TITLE_POINTS_BTN": "Check your medals accumulated"
         },
         "HOME-MENU": {
             "HOME": "Home",
@@ -567,6 +567,11 @@
             "TITLE": "Service error",
             "SUBTITLE": "In this moment the comeygana service is not available, please try again",
             "BTN": "Try again"
+        },
+        "SCAN_CODE": {
+            "TITTLE": "Scan QR Code",
+            "CONTENT": "Scan the QR code of the restaurant so you can accumulate a new medal",
+            "QR": "Scan the QR Code"
         }
     },
     "CURRENCIES": {

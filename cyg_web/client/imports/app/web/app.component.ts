@@ -2,14 +2,13 @@ import { Component, ElementRef, OnInit, HostListener, ViewEncapsulation } from '
 import { NavigationService } from './navigation/navigation.service';
 import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
 import 'hammerjs';
-import { OrderNavigationService } from './services/navigation/order-navigation.service';
 import { UserLanguageService } from './services/general/user-language.service';
 import { ImageService } from './services/general/image.service';
 import { PayuPaymentService } from './services/payment/payu-payment.service';
 
 @Component({
     selector: 'app',
-    providers: [OrderNavigationService, UserLanguageService, ImageService, PayuPaymentService],
+    providers: [UserLanguageService, ImageService, PayuPaymentService],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -20,7 +19,6 @@ export class AppComponent implements OnInit {
     constructor(private _navigation: NavigationService,
         private _router: Router,
         private _elementRef: ElementRef,
-        private _orderNavigationService: OrderNavigationService,
         private _userLanguageService: UserLanguageService,
         private _payuPaymentService: PayuPaymentService) {
         var stopStyle = ['font-family: Roboto, "Helvetica Neue", sans-serif',

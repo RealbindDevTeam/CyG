@@ -10,13 +10,13 @@
             <p>
                 {{'MOBILE.ORDERS.ADD_ADDITIONS' | translate}}
             </p>
-            <form [formGroup]="_additionsDetailFormGroup">
+            <div>
                 <div *ngFor="let add of _additions | async">
                     <ion-item>
-                        <ion-label>{{ getAdditionInformation(add) }} {{_currencyCode}}</ion-label>
+                        <ion-label>{{ getAdditionInformation(add) }}</ion-label>
                     </ion-item>
                 </div>
-            </form>
+            </div>
         </ion-card-content>
     </ion-card>
 </ion-content>
