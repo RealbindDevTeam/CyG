@@ -470,7 +470,7 @@
             },
             "HEADER_TITLE": "Welcome to comeygana!, go ahead and enjoy winning",
             "TITLE_LIST_BTN": "Look at the restaurant where you can get medals",
-            "TITLE_CODE_BTN": "Win a new medal!",
+            "TITLE_CODE_BTN": "Scan the code and win a new medal!",
             "TITLE_POINTS_BTN": "Check your medals accumulated"
         },
         "HOME-MENU": {
@@ -571,7 +571,19 @@
         "SCAN_CODE": {
             "TITTLE": "Scan QR Code",
             "CONTENT": "Scan the QR code of the restaurant so you can accumulate a new medal",
-            "QR": "Scan the QR Code"
+            "QR": "Scan the QR Code",
+            "QR_NO_ACTIVE": "The QR code is not active",
+            "QR_NO_EXISTS": "QR code does not exist. Verify that it is a QR code of comeygana.",
+            "RESTAURANT_NOT_EXISTS": "The restaurant doen't exist. It is not possible to enter.",
+            "CYG_NO_ACTIVE": "The restaurant doesn't have the comeygana service active. It is not possible to enter.",
+            "PENALTY": "At the moment you don't have available the option to accumulate medals. Try later ",
+            "ERROR": "An error has occurred. Try again."
+        },
+        "MEDAL_WON": {
+            "CONGRATULATIONS": "Congratulations!",
+            "MSG": "You have accumulated a new medal in ", 
+            "SHOW_REWARDS": "Show rewards",
+            "SHOW_MEDALS": "Show medals"
         }
     },
     "CURRENCIES": {

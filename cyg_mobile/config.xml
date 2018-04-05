@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.cyg" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>comeygana</name>
+    <name>i4t_mobile</name>
     <description>comeygana Mobile Project</description>
     <author email="leonardoespinosa@realbind.com" href="https://www.comeygana.com">comeygana</author>
     <content src="index.html" />
@@ -82,17 +82,17 @@
     </platform>
     <engine name="android" spec="6.3.0" />
     <engine name="ios" spec="4.5.4" />
-    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
-    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
-    <plugin name="cordova-plugin-splashscreen" spec="^4.1.0" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.3.0" />
-    <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.0" />
     <plugin name="cordova-plugin-googlemaps" spec="^2.1.1">
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyDUBo00GYeMdippV_w7-vQcz5dFLwmNUvg" />
         <variable name="API_KEY_FOR_IOS" value="AIzaSyA6dAn1EKKLsL6LcJ8cdGD6BOThZEO4H3Q" />
     </plugin>
     <plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />
+    <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
+    <plugin name="cordova-plugin-splashscreen" spec="^4.1.0" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.3.0" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.0" />
 </widget>
