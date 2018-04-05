@@ -10,7 +10,6 @@ import { Meteor } from 'meteor/meteor';
 //import { HomeMenu } from '../../customer/home-menu/home-menu';
 import { HomePage } from '../../customer/home/home';
 //import { Menu } from '../../waiter/menu/menu';
-import { TabsPage } from '../../waiter/tabs/tabs';
 import { UserLogin } from 'cyg_web/both/models/auth/user-login.model';
 import { Accounts } from 'meteor/accounts-base';
 import { Facebook } from '@ionic-native/facebook';

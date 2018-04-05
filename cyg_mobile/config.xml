@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.cyg" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>cyg_mobile</name>
+    <name>comeygana</name>
     <description>comeygana Mobile Project</description>
     <author email="leonardoespinosa@realbind.com" href="https://www.comeygana.com">comeygana</author>
     <content src="index.html" />

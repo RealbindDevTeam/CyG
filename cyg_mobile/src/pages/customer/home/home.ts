@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, NavParams, PopoverController, AlertController, Platform } from 'ionic-angular';
-import { SegmentsPage } from '../segments/segments';
+import { ScanCodePage } from '../scan-code/scan-code';
 import { PointsPage } from '../points/points/points';
 import { PopoverOptionsPage } from './popover-options/popover-options';
 import { EstablishmentListPage } from "../establishment-list/establishment-list";
@@ -43,10 +43,10 @@ export class HomePage implements OnInit, OnDestroy {
     }
 
     /**
-     * Go to ordering in a establishment
+     * Go to scan code page
      */
-    goToOrderInEstablishment() {
-        this._navCtrl.push(SegmentsPage);
+    goToScanCode() {
+        this._navCtrl.push(ScanCodePage);
     }
 
     /**
