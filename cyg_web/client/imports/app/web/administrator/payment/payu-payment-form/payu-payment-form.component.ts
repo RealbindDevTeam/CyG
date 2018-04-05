@@ -15,8 +15,8 @@ import { CcPaymentMethods } from '../../../../../../../both/collections/payment/
 import { CcPaymentMethod } from '../../../../../../../both/models/payment/cc-payment-method.model';
 import { Countries } from '../../../../../../../both/collections/general/country.collection';
 import { Country } from '../../../../../../../both/models/general/country.model';
-import { City } from '../../../../../../../both/models/general/city.model';
-import { Cities } from '../../../../../../../both/collections/general/city.collection';
+//import { City } from '../../../../../../../both/models/general/city.model';
+//import { Cities } from '../../../../../../../both/collections/general/city.collection';
 import { PaymentTransaction } from '../../../../../../../both/models/payment/payment-transaction.model';
 import { PaymentTransactions } from '../../../../../../../both/collections/payment/payment-transaction.collection';
 import { Parameter } from '../../../../../../../both/models/general/parameter.model';
@@ -67,7 +67,7 @@ export class PayuPaymentFormComponent implements OnInit, OnDestroy {
 
     private _cCPaymentMethods: Observable<CcPaymentMethod[]>;
     private _countries: Observable<Country[]>;
-    private _cities: Observable<City[]>;
+    //private _cities: Observable<City[]>;
     private _paymentTransactions: Observable<PaymentTransaction[]>;
     private _parameters: Observable<Parameter[]>;
     private _historyPayments: Observable<PaymentHistory[]>;
@@ -262,10 +262,10 @@ export class PayuPaymentFormComponent implements OnInit, OnDestroy {
                 this._citySub = MeteorObservable.subscribe('cities').takeUntil(this._ngUnsubscribe).subscribe(() => {
                     this._ngZone.run(() => {
                         if (auxUsrDetail.city_id !== '') {
-                            let auxCity = Cities.findOne({ _id: auxUsrDetail.city_id });
-                            this._paymentForm.get('city').setValue(auxCity.name);
-                            this._paymentForm.get('city').disable();
-                            this._selectedCity = auxCity.name;
+                            //let auxCity = Cities.findOne({ _id: auxUsrDetail.city_id });
+                            //this._paymentForm.get('city').setValue(auxCity.name);
+                            //this._paymentForm.get('city').disable();
+                            //this._selectedCity = auxCity.name;
                         } else {
                             this._paymentForm.get('city').setValue(auxUsrDetail.other_city);
                             this._paymentForm.get('city').disable();
@@ -311,7 +311,7 @@ export class PayuPaymentFormComponent implements OnInit, OnDestroy {
     *@param {Country} _country
     */
     changeCountry(_country: Country) {
-        this._cities = Cities.find({ country: _country._id }).zone();
+        //this._cities = Cities.find({ country: _country._id }).zone();
         this._countryName = _country.name;
     }
 
@@ -424,11 +424,11 @@ export class PayuPaymentFormComponent implements OnInit, OnDestroy {
 
         userDetail = UserDetails.findOne({ user_id: Meteor.userId() });
 
-        if (userDetail.city_id !== '') {
+        /*if (userDetail.city_id !== '') {
             buyerCity = Cities.findOne({ _id: userDetail.city_id }).name;
         } else {
             buyerCity = userDetail.other_city
-        }
+        }*/
 
         buyerCountry = Countries.findOne({ _id: userDetail.country_id }).alfaCode2;
 

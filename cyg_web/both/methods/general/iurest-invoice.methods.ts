@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { PaymentsHistory } from '../../collections/payment/payment-history.collection';
 import { UserDetails } from '../../collections/auth/user-detail.collection';
 import { Countries } from '../../collections/general/country.collection';
-import { Cities } from '../../collections/general/city.collection';
 import { InvoicesInfo } from '../../collections/payment/invoices-info.collection';
 import { IurestInvoices } from '../../collections/payment/iurest-invoices.collection';
 import { Parameters } from '../../collections/general/parameter.collection';
@@ -23,7 +22,6 @@ if (Meteor.isServer) {
 
             let lUserDetail = UserDetails.findOne({ user_id: _userId });
             let lCountry = Countries.findOne({ _id: lUserDetail.country_id });
-            let lCity = Cities.findOne({ _id: lUserDetail.city_id });
             let lPaymentHistory = PaymentsHistory.findOne({ _id: _paymentHistoryId });
             let invoiceInfo = InvoicesInfo.findOne({ country_id: lCountry._id });
 
@@ -122,12 +120,9 @@ if (Meteor.isServer) {
                 resolution_end_value: var_end_value.toString()
             };
 
-            let auxCity = lUserDetail.city_id === '' || lUserDetail.city_id === null || lUserDetail.city_id === undefined ? lUserDetail.other_city : lCity.name;
-
             let client_info: ClientInfo = {
                 name: Meteor.user().profile.first_name + ' ' + Meteor.user().profile.last_name,
                 address: lUserDetail.address,
-                city: auxCity,
                 country: lCountry.name,
                 identification: lUserDetail.dni_number,
                 phone: lUserDetail.contact_phone,

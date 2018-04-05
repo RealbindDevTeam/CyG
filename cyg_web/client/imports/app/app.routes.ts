@@ -3,7 +3,6 @@ import { LayoutComponent } from './web/navigation/layout/layout.component';
 import { RouteGuard } from './web/services/navigation/route-guard.service';
 import { CustomerGuard } from './web/services/navigation/customer-guard.service';
 import { AdminGuard } from './web/services/navigation/admin-guard.service';
-import { WaiterGuard } from './web/services/navigation/waiter-guard.service';
 import { SupervisorGuard } from './web/services/navigation/supervisor-guard.service';
 import { DashboardComponent } from './web/administrator/dashboard/dashboard.component';
 import { SectionComponent } from './web/administrator/menu/sections/section/section.component';

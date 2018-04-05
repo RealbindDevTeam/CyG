@@ -49,7 +49,6 @@ export interface CompanyInfo {
 export interface ClientInfo {
     name?: string;
     address?: string;
-    city?: string;
     country?: string;
     identification?: string;
     phone?: string;

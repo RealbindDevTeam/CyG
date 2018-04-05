@@ -27,7 +27,6 @@ import { ItemEditionComponent } from './administrator/menu/items/edition/item-ed
 import { EstablishmentEditionComponent } from './administrator/administration/establishment/edition/establishment-edition.component';
 import { IurestScheduleComponent } from './general/schedule/schedule.component';
 import { CollaboratorsEditionComponent } from './administrator/administration/collaborators/edition/collaborators-edition.component';
-import { EstablishmentInfoComponent } from './administrator/administration/establishment/info/establishment-info.component';
 import { NotFoundWebComponent } from './auth/notfound/notfound.web.component';
 import { IurestSliderComponent } from './general/slider/slider.component';
 import { CreateConfirmComponent } from './administrator/administration/establishment/register/create-confirm/create-confirm.component';
@@ -88,7 +87,6 @@ export const WEB_DECLARATIONS = [
     EstablishmentComponent,
     EstablishmentRegisterComponent,
     EstablishmentEditionComponent,
-    EstablishmentInfoComponent,
     IurestScheduleComponent,
     TableComponent,
     SettingsWebComponent,
