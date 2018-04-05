@@ -1,55 +1,98 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AlertController, LoadingController, NavController, ViewController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { NavController, NavParams, PopoverController, AlertController, Platform } from 'ionic-angular';
+import { Meteor } from 'meteor/meteor';
 import { MeteorObservable } from 'meteor-rxjs';
-import { Observable, Subscription, Subject } from 'rxjs';
 import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
-import { Establishments } from 'cyg_web/both/collections/establishment/establishment.collection';
-import { EstablishmentListDetailPage } from "./establishment-list-detail/establishment-list-detail";
 import { UserLanguageServiceProvider } from '../../../providers/user-language-service/user-language-service';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Network } from '@ionic-native/network';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-    templateUrl: 'establishment-list.html'
+    selector: 'scan-code',
+    templateUrl: 'scan-code.html'
 })
-export class EstablishmentListPage implements OnInit, OnDestroy {
+export class ScanCodePage implements OnInit {
 
-    private ngUnsubscribe: Subject<void> = new Subject<void>();
-    private _establishmentSubscription: Subscription;
-    private _establishments: Observable<Establishment[]>;
     private disconnectSubscription: Subscription;
 
-    constructor(public _translate: TranslateService,
-        public _navCtrl: NavController,
-        private _ngZone: NgZone,
-        private _userLanguageService: UserLanguageServiceProvider,
+    /**
+     * ScanCodePage Constructor
+     * @param {NavController} _navCtrl 
+     * @param {ViewController} _viewCtrl 
+     * @param {TranslateService} _translate 
+     * @param {AlertController} _alertCtrl 
+     * @param {LoadingController} _loadingCtrl 
+     * @param {UserLanguageServiceProvider} _userLanguageService 
+     * @param {BarcodeScanner} barcodeScanner 
+     * @param {Platform} _platform 
+     * @param {Network} _network 
+     */
+    constructor(private _navCtrl: NavController,
+        private _viewCtrl: ViewController,
+        public _translate: TranslateService,
         public _alertCtrl: AlertController,
+        public _loadingCtrl: LoadingController,
+        private _userLanguageService: UserLanguageServiceProvider,
+        private barcodeScanner: BarcodeScanner,
         public _platform: Platform,
         private _network: Network) {
         _translate.setDefaultLang('en');
     }
 
+    /**
+     * ngOnInit implementation
+     */
     ngOnInit() {
         this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
-        this.removeSubscriptions();
-        this._establishmentSubscription = MeteorObservable.subscribe('getEstablishments').takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
-            });
+    }
+
+    /**
+     * Function to scan QR Code
+     */
+    scanQRCode(): void {
+        this.barcodeScanner.scan().then((result) => {
+            this.validateQRCode(result.text);
+        }, (err) => {
+            // An error occurred
         });
     }
 
     /**
-    * Go to establishment profile
-    * @param _pEstablishment 
-    */
-    viewEstablishmentProfile(_pEstablishment: any) {
-        this._navCtrl.push(EstablishmentListDetailPage, { establishment: _pEstablishment });
+     * Function to validate QR Code
+     * @param {string} _pQRCode 
+     */
+    validateQRCode(_pQRCode: string): void {
+        var split = _pQRCode.split('qr?', 2);
+        var qr_code: string = split[1];
+    }
+
+    /**
+     * Show message confirm
+     * @param _pContent 
+     */
+    showConfirmMessage(_pContent: any) {
+        let okBtn = this.itemNameTraduction('MOBILE.OK');
+        let title = this.itemNameTraduction('MOBILE.SYSTEM_MSG');
+
+        let prompt = this._alertCtrl.create({
+            title: title,
+            message: _pContent,
+            buttons: [
+                {
+                    text: okBtn,
+                    handler: data => {
+                    }
+                }
+            ]
+        });
+        prompt.present();
     }
 
     /** 
-    * This function verify the conditions on page did enter for internet and server connection
-   */
+     * This function verify the conditions on page did enter for internet and server connection
+     */
     ionViewDidEnter() {
         this.isConnected();
         this.disconnectSubscription = this._network.onDisconnect().subscribe(data => {
@@ -62,7 +105,7 @@ export class EstablishmentListPage implements OnInit, OnDestroy {
 
     /** 
      * This function verify with network plugin if device has internet connection
-    */
+     */
     isConnected() {
         if (this._platform.is('cordova')) {
             let conntype = this._network.type;
@@ -85,7 +128,7 @@ export class EstablishmentListPage implements OnInit, OnDestroy {
 
     /**
      * Present the alert for advice to internet
-    */
+     */
     presentAlert(_pTitle: string, _pSubtitle: string, _pBtn: string) {
         let alert = this._alertCtrl.create({
             title: _pTitle,
@@ -103,27 +146,15 @@ export class EstablishmentListPage implements OnInit, OnDestroy {
         alert.present();
     }
 
+    ionViewWillLeave() {
+        this.disconnectSubscription.unsubscribe();
+    }
+
     itemNameTraduction(itemName: string): string {
         var wordTraduced: string;
         this._translate.get(itemName).subscribe((res: string) => {
             wordTraduced = res;
         });
         return wordTraduced;
-    }
-
-    ngOnDestroy() {
-        this.removeSubscriptions();
-    }
-
-    /**
-   * Remove all subscriptions
-   */
-    removeSubscriptions(): void {
-        this.ngUnsubscribe.next();
-        this.ngUnsubscribe.complete();
-    }
-
-    ionViewWillLeave() {
-        this.disconnectSubscription.unsubscribe();
     }
 }

@@ -19,12 +19,6 @@ import { Parameter } from '../../../../../../../../both/models/general/parameter
 import { Parameters } from '../../../../../../../../both/collections/general/parameter.collection';
 import { AlertConfirmComponent } from '../../../../../web/general/alert-confirm/alert-confirm.component';
 import { ImageService } from '../../../../services/general/image.service';
-import { PointValidity } from '../../../../../../../../both/models/general/point-validity.model';
-import { PointsValidity } from '../../../../../../../../both/collections/general/point-validity.collection';
-import { Points } from '../../../../../../../../both/collections/general/point.collection';
-import { Point } from '../../../../../../../../both/models/general/point.model';
-import { EstablishmentQR } from '../../../../../../../../both/models/establishment/establishment-qr.model';
-import { EstablishmentQRs } from '../../../../../../../../both/collections/establishment/establishment-qr.collection';
 
 @Component({
     selector: 'establishment-edition',
@@ -35,26 +29,20 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
 
     private _user = Meteor.userId();
     private _establishmentToEdit: Establishment;
-    private _establishmentQRToEdit: EstablishmentQR;
     private _establishmentEditionForm: FormGroup;
     private _paymentsFormGroup: FormGroup = new FormGroup({});
     private _mdDialogRef: MatDialogRef<any>;
 
     private _establishmentSub: Subscription;
-    private _establishmentQRSub: Subscription;
     private _currencySub: Subscription;
     private _countriesSub: Subscription;
     private _paymentMethodsSub: Subscription;
     private _parameterSub: Subscription;
-    private _pointValiditySub: Subscription;
-    private _pointsSub: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
 
     private _countries: Observable<Country[]>;
     private _currencies: Observable<Currency[]>;
     private _parameterDaysTrial: Observable<Parameter[]>;
-    private _pointsValidity: Observable<PointValidity[]>;
-    private _points: Observable<Point[]>;
 
     private _paymentMethods: PaymentMethod[] = [];
     private _paymentMethodsList: PaymentMethod[] = [];
@@ -124,12 +112,6 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
             });
         });
 
-        this._establishmentQRSub = MeteorObservable.subscribe('getEstablishmentQRsByAdmin', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._establishmentQRToEdit = EstablishmentQRs.findOne({ establishment_id: this._establishmentToEdit._id });
-            });
-        });
-
         this._countriesSub = MeteorObservable.subscribe('countries').takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._countries = Countries.find({}).zone();
@@ -173,18 +155,6 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
             this._parameterDaysTrial = Parameters.find({ _id: '100' });
         });
 
-        this._pointValiditySub = MeteorObservable.subscribe('pointsValidity').takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._pointsValidity = PointsValidity.find({ '_id': { $gte: '20' } }).zone();
-            });
-        });
-
-        this._pointsSub = MeteorObservable.subscribe('points').takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._points = Points.find({ _id: { $in: ['5', '10', '15'] } }).zone();
-            });
-        });
-
         this._establishmentEditionForm = new FormGroup({
             editId: new FormControl(this._establishmentToEdit._id),
             country: new FormControl(this._establishmentToEdit.countryId),
@@ -193,8 +163,6 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
             address: new FormControl(this._establishmentToEdit.address),
             phone: new FormControl(this._establishmentToEdit.phone),
             editImage: new FormControl(''),
-            pointsValidity: new FormControl(this._establishmentToEdit.points_validity),
-            rewardValue: new FormControl(this._establishmentToEdit.reward_points),
             paymentMethods: this._paymentsFormGroup
         });
 
@@ -245,17 +213,7 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
                         address: this._establishmentEditionForm.value.address,
                         phone: this._establishmentEditionForm.value.phone,
                         paymentMethods: _lPaymentMethodsToInsert,
-                        points_validity: this._establishmentEditionForm.value.pointsValidity,
-                        reward_points: this._establishmentEditionForm.value.rewardValue,
                         image: this._establishmentImageToEdit
-                    }
-                });
-
-                EstablishmentQRs.update({ _id: this._establishmentQRToEdit._id }, {
-                    $set: {
-                        modification_user: Meteor.userId(),
-                        modification_date: new Date(),
-                        reward_points: Number.parseInt(this._establishmentEditionForm.value.rewardValue)
                     }
                 });
             } else {
@@ -271,14 +229,6 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
                         paymentMethods: _lPaymentMethodsToInsert,
                         points_validity: this._establishmentEditionForm.value.pointsValidity,
                         reward_points: this._establishmentEditionForm.value.rewardValue
-                    }
-                });
-
-                EstablishmentQRs.update({ _id: this._establishmentQRToEdit._id }, {
-                    $set: {
-                        modification_user: Meteor.userId(),
-                        modification_date: new Date(),
-                        reward_points: Number.parseInt(this._establishmentEditionForm.value.rewardValue)
                     }
                 });
             }

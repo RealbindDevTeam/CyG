@@ -2,7 +2,7 @@
   "name": "cyg_mobile",
   "version": "0.0.1",
   "author": "Realbind S.A.S",
-  "homepage": "https://www.iurest.com",
+  "homepage": "https://www.comeygana.com",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -10,7 +10,7 @@
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "meteor-client:bundle": "meteor-client bundle -c meteor-client.config.json -s ../i4t_web --release 1.6.0.1"
+    "meteor-client:bundle": "meteor-client bundle -c meteor-client.config.json -s ../cyg_web --release 1.6.1"
   },
   "dependencies": {
     "@angular/common": "5.0.1",

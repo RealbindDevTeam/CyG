@@ -4,8 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Subscription, Observable, Subject } from 'rxjs';
 import { UserLanguageServiceProvider } from '../../../../providers/user-language-service/user-language-service';
-import { OrderHistory } from 'i4t_web/both/models/establishment/order-history.model';
-import { OrderHistories } from 'i4t_web/both/collections/establishment/order-history.collection';
+import { OrderHistory } from 'cyg_web/both/models/establishment/order-history.model';
+import { OrderHistories } from 'cyg_web/both/collections/establishment/order-history.collection';
 import { Network } from '@ionic-native/network';
 
 @Component({

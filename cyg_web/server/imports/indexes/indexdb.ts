@@ -13,7 +13,6 @@ import { WaiterCallDetails } from '../../../both/collections/establishment/waite
 import { CcPaymentMethods } from '../../../both/collections/payment/cc-payment-methods.collection';
 import { PaymentTransactions } from '../../../both/collections/payment/payment-transaction.collection';
 import { OrderHistories } from '../../../both/collections/establishment/order-history.collection';
-import { Cities } from '../../../both/collections/general/city.collection';
 import { Countries } from '../../../both/collections/general/country.collection';
 import { Languages } from '../../../both/collections/general/language.collection';
 import { RewardPoints } from '../../../both/collections/establishment/reward-point.collection';
@@ -91,10 +90,6 @@ export function createdbindexes() {
 
     // OrderHistories Collection Indexes
     OrderHistories.collection._ensureIndex({ customer_id: 1, establishment_id: 1 });
-
-    // Cities Collection Indexes
-    Cities.collection._ensureIndex({ country: 1 });
-    Cities.collection._ensureIndex({ is_active: 1 });
 
     // Countries Collection Indexes
     Countries.collection._ensureIndex({ is_active: 1 });

@@ -4,8 +4,8 @@ import { ViewController, NavController, AlertController, Platform } from 'ionic-
 import { TranslateService } from '@ngx-translate/core';
 import { MeteorObservable } from 'meteor-rxjs';
 import { CustomValidators } from '../../../validators/custom-validator';
-import { UserProfile } from 'i4t_web/both/models/auth/user-profile.model';
-import { UserDetails } from 'i4t_web/both/collections/auth/user-detail.collection';
+import { UserProfile } from 'cyg_web/both/models/auth/user-profile.model';
+import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
 import { SigninComponent } from '../signin/signin';
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';

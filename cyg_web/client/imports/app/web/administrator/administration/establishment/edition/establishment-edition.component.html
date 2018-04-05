@@ -42,18 +42,6 @@
                     </mat-form-field>
                 </div>
                 <div style="margin-top: 1%;">
-                    <mat-form-field style="width: 48%;">
-                        <mat-select formControlName="pointsValidity" placeholder="{{'RESTAURANT_REGISTER.POINTS_VALIDITY' | translate}}">
-                            <mat-option *ngFor="let point_validity of _pointsValidity | async" value="{{point_validity._id}}"> {{point_validity.point_validity}} {{'RESTAURANT_REGISTER.DAYS' | translate}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field style="width: 48%;margin-left: 2%;">
-                        <mat-select formControlName="rewardValue" placeholder="{{'RESTAURANT_REGISTER.POINTS_PLACEHOLER' | translate}}" required>
-                            <mat-option *ngFor="let point of _points | async" value="{{point._id}}">{{point.point}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div>
                     <div style="display: inline-block;width: 48%;">
                         <p style="display: inline-block;margin-right: 0.5rem;">{{'RESTAURANT_EDITION.UPDATE_IMAGE' | translate}}</p>
                         <input formControlName="editImage" (click)="changeImage()" style="display: none" name="file-1[]" id="file-1" class="inputfile inputfile-1"
