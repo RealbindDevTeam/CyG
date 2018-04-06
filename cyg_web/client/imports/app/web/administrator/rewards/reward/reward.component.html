@@ -64,10 +64,16 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="point">
-                <mat-select formControlName="points" placeholder="{{'REWARD.SELECT_POINTS' | translate}}">
-                    <mat-option *ngFor="let point of _points | async" value="{{point._id}}">{{point.point}}</mat-option>
+                <mat-select formControlName="points" placeholder="{{'REWARD.SELECT_MEDALS' | translate}}">
+                    <mat-option *ngFor="let point of _points | async" value="{{point._id}}" (click)="changeMedals(point.point);">{{point.point}} {{'REWARD.MEDALS' | translate}}</mat-option>
                 </mat-select>
             </mat-form-field>
+            <p *ngIf="_showMessageFirstRange" style="color:darkgoldenrod;font-weight: bold;">En promedio un cliente ira a tu restaurante entre 3 y 5 veces para reclamar esta recompensa. Recuerda verificar
+                tus cuentas, para que, lo que ofreces de recompensa no afecte tus ingresos.</p>
+            <p *ngIf="_showMessageSecondRange" style="color:#4caf50;font-weight: bold;">En promedio un cliente ira a tu restaurante entre 6 y 8 veces para reclamar esta recompensa. Es muy buena opción
+                para dar a tus clientes recompensas alcanzables y que se animen a comprarte.</p>
+            <p *ngIf="_showMessageThirdRange" style="color:#EF5350;font-weight: bold;">En promedio un cliente ira a tu restaurante entre 9 y 10 veces para reclamar esta recompensa. Procura que tu
+                recompensa sea muy atractiva, de lo contrario los clientes no se animaran a comprarte</p>
             <div>
                 <p>{{'REWARD.ESTABLISHMENTS' | translate}}</p>
                 <p>
@@ -95,7 +101,7 @@
                     <mat-card-title>{{item.name}}</mat-card-title>
                     <mat-card-subtitle>{{'REWARD.QUANTITY' | translate}}: {{reward.item_quantity}}</mat-card-subtitle>
                     <mat-chip-list>
-                        <mat-chip class="points">{{reward.points}} {{'REWARD.POINTS' | translate}}</mat-chip>
+                        <mat-chip class="points">{{reward.points}} {{'REWARD.MEDALS' | translate}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title-group>
                 <mat-card-content>
