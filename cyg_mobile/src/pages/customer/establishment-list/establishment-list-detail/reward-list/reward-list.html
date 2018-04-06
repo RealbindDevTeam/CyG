@@ -4,15 +4,20 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-card-header style="white-space: normal">
+    <h6 style="margin: 20px;text-align: center">
         {{'MOBILE.REWARD_LIST.REWARDS_MSG' | translate}}
-    </ion-card-header>
-    <ion-card-header style="white-space: normal">
-        {{'MOBILE.REWARD_LIST.AVALAIBLE_PTS' | translate}} {{getUserPoints()}} pts
-    </ion-card-header>
-    <ion-card-header style="color:red;white-space: normal;" *ngIf="!_allowAddRewardsToOrder">
+    </h6>
+    <!--ion-card-header style="white-space: normal">
+        {{'MOBILE.REWARD_LIST.REWARDS_MSG' | translate}}
+    </ion-card-header-->
+    <span *ngFor="let _establishmentMedal of _establishmentMedals | async">
+        <ion-card-header style="white-space: normal;color: #4CAF50;font-weight: bold;">
+            Medallas disponibles para redimir: {{_establishmentMedal.medals}}
+        </ion-card-header>
+    </span>
+    <!--ion-card-header style="color:red;white-space: normal;" *ngIf="!_allowAddRewardsToOrder">
         {{'MOBILE.REWARD_LIST.ORDER_ERROR' | translate}}
-    </ion-card-header>
+    </ion-card-header-->
 
     <div *ngIf="_thereRewards" padding class="content-custom">
         <div style="text-align: center;">
@@ -32,15 +37,19 @@
                             <img src="{{getItemThumb(reward.item_id)}}">
                         </ion-thumbnail>
                         <h2 style="white-space: normal"> {{reward.item_quantity}} {{getItemName(reward.item_id)}}</h2>
-                        <ion-badge class="rewardpts">{{reward.points}} pts
-                            <ion-icon name="star"></ion-icon>
+                        <ion-badge class="rewardpts">{{reward.points}} Medallas
+                            <ion-icon name="medal"></ion-icon>
                         </ion-badge>
-                        <p *ngIf="!getItemAvailability(reward.item_id)" style="color: #D50000;font-weight: bold; margin-top: 10px">{{'MOBILE.REWARD_LIST.NOT_AVAILABLE' | translate}}</p>
-                        <div *ngIf="_allowAddRewardsToOrder">
-                            <button *ngIf="isValidRewardPoints(reward.points) && getItemAvailability(reward.item_id)" ion-button small item-left outline
-                                style="color: #D50000; float:right" (click)="addRewardToOrder(reward.item_id, reward.item_quantity, reward.points)">{{'MOBILE.REWARD_LIST.REDEEM_BTN' | translate}}</button>
-                            <button *ngIf="!isValidRewardPoints(reward.points)" ion-button small item-left clear style="color: #4CAF50; float: right">{{'MOBILE.REWARD_LIST.GET_MORE_PTS' | translate}}</button>
+                        <!--p *ngIf="!getItemAvailability(reward.item_id)" style="color: #D50000;font-weight: bold; margin-top: 10px">{{'MOBILE.REWARD_LIST.NOT_AVAILABLE' | translate}}</p-->
+                        <!--p *ngIf="isValidRewardPoints(reward.points)" style="white-space: normal;">Redime esta recompensa!</p-->
+                        <div>
+                            <button *ngIf="isValidRewardPoints(reward.points)" ion-button small item-left outline style="color: #D50000; float:right"
+                                (click)="addRewardToOrder(reward.item_id, reward.item_quantity, reward.points)">{{'MOBILE.REWARD_LIST.REDEEM_BTN' | translate}}</button>
                         </div>
+                        <p *ngIf="!isValidRewardPoints(reward.points)" style="white-space: normal;color: #EF5350">Acumula mas medallas para redimir esta recompensa</p>
+                        <!--div>
+                            <button *ngIf="!isValidRewardPoints(reward.points)" ion-button small item-left clear style="color: #4CAF50; float: right">{{'MOBILE.REWARD_LIST.GET_MORE_PTS' | translate}}</button>
+                        </div-->
                     </ion-item>
                 </ion-card-content>
             </ion-card>

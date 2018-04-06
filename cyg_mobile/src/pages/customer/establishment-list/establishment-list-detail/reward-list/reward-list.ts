@@ -8,32 +8,36 @@ import { Reward } from 'cyg_web/both/models/establishment/reward.model';
 import { Rewards } from 'cyg_web/both/collections/establishment/reward.collection';
 import { Item, ItemImage } from 'cyg_web/both/models/menu/item.model';
 import { Items } from 'cyg_web/both/collections/menu/item.collection';
-import { UserDetail } from 'cyg_web/both/models/auth/user-detail.model';
-import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
-import { Order, OrderItem } from 'cyg_web/both/models/establishment/order.model';
-import { Orders } from 'cyg_web/both/collections/establishment/order.collection';
+//import { UserDetail } from 'cyg_web/both/models/auth/user-detail.model';
+//import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
+//import { Order, OrderItem } from 'cyg_web/both/models/establishment/order.model';
+//import { Orders } from 'cyg_web/both/collections/establishment/order.collection';
+import { EstablishmentMedal } from 'cyg_web/both/models/points/establishment-medal.model';
+import { EstablishmentMedals } from 'cyg_web/both/collections/points/establishment-medal.collection';
 import { Network } from '@ionic-native/network';
 
 @Component({
     templateUrl: 'reward-list.html',
     selector: 'reward-list'
 })
-
 export class RewardListComponent {
 
     private _user = Meteor.userId();
     private _itemsSub: Subscription;
     private _rewardsSub: Subscription;
-    private _userDetailSub: Subscription;
-    private _ordersSub: Subscription;
+    private _establishmentMedalSub: Subscription;
+    //private _userDetailSub: Subscription;
+    //private _ordersSub: Subscription;
     private ngUnsubscribe: Subject<void> = new Subject<void>();
 
     private _items: Observable<Item[]>;
     private _rewards: Observable<Reward[]>;
+    private _establishmentMedals: Observable<EstablishmentMedal[]>;
     private _establishmentId: string;
-    private _userDetail: UserDetail;
-    private _allowAddRewardsToOrder: boolean = true;
-    private _statusArray: string[] = ['ORDER_STATUS.SELECTING', 'ORDER_STATUS.CONFIRMED'];
+    private _establishmentMedal: EstablishmentMedal;
+    //private _userDetail: UserDetail;
+    //private _allowAddRewardsToOrder: boolean = true;
+    //private _statusArray: string[] = ['ORDER_STATUS.SELECTING', 'ORDER_STATUS.CONFIRMED'];
     private _thereRewards: boolean = true;
 
     private disconnectSubscription: Subscription;
@@ -51,14 +55,20 @@ export class RewardListComponent {
         private _network: Network) {
         _translate.setDefaultLang('en');
         this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
-
         this._establishmentId = this._navParams.get("establishment");
     }
 
     ngOnInit() {
         this.removeSubscriptions();
 
-        this._userDetailSub = MeteorObservable.subscribe('getUserDetailsByUser', this._user).takeUntil(this.ngUnsubscribe).subscribe();
+        this._establishmentMedalSub = MeteorObservable.subscribe('getEstablishmentMedalsByUserId', this._user).subscribe(() => {
+            this._ngZone.run(() => {
+                this._establishmentMedals = EstablishmentMedals.find({ user_id: this._user, establishment_id: this._establishmentId }).zone();
+                this._establishmentMedal = EstablishmentMedals.findOne({ user_id: this._user, establishment_id: this._establishmentId });
+            });
+        });
+
+        //this._userDetailSub = MeteorObservable.subscribe('getUserDetailsByUser', this._user).takeUntil(this.ngUnsubscribe).subscribe();
         this._itemsSub = MeteorObservable.subscribe('itemsByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._items = Items.find({}).zone();
@@ -68,18 +78,19 @@ export class RewardListComponent {
         this._rewardsSub = MeteorObservable.subscribe('getEstablishmentRewards', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._rewards = Rewards.find({ establishments: { $in: [this._establishmentId] } }, { sort: { points: 1 } }).zone();
-                this._rewards.subscribe(()=>{
+                this._rewards.subscribe(() => {
                     let count = Rewards.collection.find({ establishments: { $in: [this._establishmentId] } }, { sort: { points: 1 } }).count();
-                    if(count > 0){
+                    if (count > 0) {
                         this._thereRewards = false;
                     } else {
                         this._thereRewards = true;
                     }
                 });
+                
             });
         });
 
-        this._ordersSub = MeteorObservable.subscribe('getOrdersByUserId', this._user, this._statusArray).takeUntil(this.ngUnsubscribe).subscribe(() => {
+        /*this._ordersSub = MeteorObservable.subscribe('getOrdersByUserId', this._user, this._statusArray).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 Orders.collection.find({ creation_user: this._user }).fetch().forEach((order) => {
                     if (order.status === 'ORDER_STATUS.SELECTING') {
@@ -91,7 +102,7 @@ export class RewardListComponent {
                     }
                 });
             });
-        });
+        });*/
     }
 
     /**This function gets the item image or default
@@ -99,10 +110,7 @@ export class RewardListComponent {
      * @return {string}
      */
     getItemThumb(_itemId: string): string {
-
         let item: Item;
-        //let itemImage: ItemImage;
-
         item = Items.findOne({ _id: _itemId });
         if (item) {
             if (item.image) {
@@ -130,19 +138,19 @@ export class RewardListComponent {
      * This function gets if item is avalaible
      * @param {string} _itemId
      * @return {boolean}
-     */
+     
     getItemAvailability(_itemId: string) {
         let item: Item = Items.findOne({ _id: _itemId });
         if (item) {
             let aux = item.establishments.find(element => element.establishment_id === this._establishmentId);
             return aux.isAvailable;
         }
-    }
+    }*/
 
     /**
      * This function gets user establishment points
      * @return {number} 
-     */
+     
     getUserPoints(): number {
         this._userDetail = UserDetails.findOne({ user_id: this._user });
         if (this._userDetail) {
@@ -151,23 +159,23 @@ export class RewardListComponent {
                 return aux.points;
             }
         }
-    }
+    }*/
 
     /**
      * This function verify if user can redeem the reward
      */
-    isValidRewardPoints(_rewardPts: string): boolean {
-        this._userDetail = UserDetails.findOne({ user_id: this._user });
-        if (this._userDetail.reward_points) {
-            let userPoints = this._userDetail.reward_points.find(element => element.establishment_id === this._establishmentId).points;
-            if (userPoints >= Number.parseInt(_rewardPts.toString())) {
-                return true;
-            } else {
-                return false;
-            }
+    isValidRewardPoints(_rewardPts: number): boolean {
+        if (this._establishmentMedal.medals >= _rewardPts) {
+            return true;
+        } else {
+            return false;
         }
     }
 
+    /**
+     * Validate item id
+     * @param {string} _itemId 
+     */
     showReward(_itemId: string) {
         let item: Item = Items.findOne({ _id: _itemId });
         if (item) {
@@ -184,7 +192,7 @@ export class RewardListComponent {
   * @param {number} _pRewardPoints
   */
     addRewardToOrder(_pItemToInsert: string, _pItemQuantiy: number, _pRewardPoints: number): void {
-        let _lOrderItemIndex: number = 0;
+        /*let _lOrderItemIndex: number = 0;
         let _lOrder: Order = Orders.collection.find({ creation_user: this._user, establishment_id: this._establishmentId }).fetch()[0];
 
         if (_lOrder) {
@@ -224,7 +232,7 @@ export class RewardListComponent {
                     alert(`Error: ${error}`);
                 });
             }, 1500);
-        }
+        }*/
     }
 
     /**
