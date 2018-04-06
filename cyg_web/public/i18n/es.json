@@ -1681,7 +1681,10 @@
         "REWARD_REMOVED": "Recompensa removida",
         "EDIT_REWARD": "Edición de la Recompensa",
         "REWARD_EDITED": "Recompensa Editada",
-        "MEDALS": "Medallas"
+        "MEDALS": "Medallas",
+        "FIRST_RANGE_MSG": "En promedio un cliente irá a tu restaurante entre 3 y 5 veces para reclamar esta recompensa. Recuerda verificar tus cuentas, para que, lo que ofreces de recompensa no afecte tus ingresos.",
+        "SECOND_RANGE_MSG": "En promedio un cliente irá a tu restaurante entre 6 y 8 veces para reclamar esta recompensa. Es muy buena opción para dar a tus clientes recompensas alcanzables y que se animen a comprarte.",
+        "THIRD_RANGE_MSG": "En promedio un cliente irá a tu restaurante entre 9 y 10 veces para reclamar esta recompensa. Procura que tu recompensa sea muy atractiva, de lo contrario los clientes no se animaran a comprarte."
     },
     "REWARD_DETAIL": {
         "REWARD_TITLE": "Recompensas",

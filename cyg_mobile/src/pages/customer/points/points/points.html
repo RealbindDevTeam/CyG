@@ -14,7 +14,7 @@
         </div>
     </div>
     <h6 *ngIf="_showEstablishments" style="margin: 20px;text-align: center">
-        Selecciona un restaurante para consultar tus medallas
+        {{'MOBILE.POINTS.MSG' | translate}}
     </h6>
     <div *ngIf="_showEstablishments" class="main">
         <span *ngFor="let establishment_medal of _establishmentMedals | async">

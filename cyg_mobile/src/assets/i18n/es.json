@@ -480,10 +480,13 @@
             "SETTINGS": "Ajustes"
         },
         "RESTAURANT_PROFILE": {
+            "TITLE": "Perfil del restaurante",
             "MENU_BTN": "Menú",
             "PAYMENT_METHODS": "Métodos de pago",
             "NO_PROFILE": "Lo sentimos. Este restaurante no ha configurado su perfil.",
-            "SHOW_MORE": "Ver mas"
+            "SHOW_MORE": "Ver mas",
+            "SHOW_LESS": "Ver menos",
+            "REWARDS_BTN": "Recompensas"
         },
         "SCHEDULE": {
             "SCHEDULE": "Horario de atención",
@@ -529,6 +532,7 @@
         },
         "POINTS": {
             "TITLE": "Mis Puntos",
+            "MSG": "Selecciona un restaurante para consultar tus medallas",
             "NO_POINTS_MSG": "Aún no has acumulado puntos en ningún restaurante. Animate!",
             "ACCUMULATED_POINTS": "Puntos acumulados",
             "YOU_HAVE": "Tienes",
@@ -584,6 +588,10 @@
             "MSG": "Has Acumulado una nueva medalla en ", 
             "SHOW_REWARDS": "Mira las recompensas",
             "SHOW_MEDALS": "Mira tus medallas"
+        },
+        "ESTABLISHMENT_LIST": {
+            "TITLE": "Restaurantes",
+            "MSG": "Selecciona un restaurante para consultar su perfil y el menú que ofrece"
         }
     },
     "CURRENCIES": {

@@ -1,20 +1,20 @@
 <ion-header>
     <ion-navbar>
-        <ion-title *ngFor="let _establishment of _establishments | async;">{{_establishment?.name}}</ion-title>
+        <ion-title>{{'MOBILE.RESTAURANT_PROFILE.TITLE' | translate}}</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <div *ngIf="(_establishmentsProfiles | async)?.length <= 0" padding>
-        <div class="img">
-            <img src="assets/img/restaurantes.png">
+    <ion-list style="margin: 0 auto; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);" *ngFor="let establishment of _establishments | async;">
+        <div ion-item style="background-image: url(assets/img/background_waiter.png);" class="img-header">
+            <ion-thumbnail item-left>
+                <img *ngIf="establishment.image" src="{{ establishment.image.url }}">
+                <img *ngIf="!establishment.image" src="assets/img/default-restaurant.png">
+            </ion-thumbnail>
+            <h2 style="white-space: normal;">{{establishment.name}}</h2>
         </div>
-        <div style="text-align: center">
-            <h1>{{'MOBILE.RESTAURANT_PROFILE.NO_PROFILE' | translate}}</h1>
-        </div>
-    </div>
-
-    <div *ngIf="(_establishmentsProfiles | async)?.length > 0" class="initial">
+    </ion-list>
+    <div class="initial">
         <ion-fab *ngIf="_establishmentProfile?.web_page || _establishmentProfile?.social_networks?.facebook || _establishmentProfile?.social_networks?.twitter  || _establishmentProfile?.social_networks?.instagram"
             top right>
             <button ion-fab color="vibrant" mini class="custom">
@@ -36,13 +36,14 @@
             </ion-fab-list>
         </ion-fab>
 
-        <div id="map_canvas"></div>
+        <div *ngIf="_showMap" id="map_canvas"></div>
 
         <ion-card *ngFor="let _establishment of _establishments | async;" class="card-nm">
             <ion-card-content>
-                <ion-item>
-                    <button ion-button outline item-end (click)="goToMenuByEstablishment(_establishment._id)">{{'MOBILE.RESTAURANT_PROFILE.MENU_BTN' | translate}}</button>
-                </ion-item>
+                <div>
+                    <button style="width: 48%;" ion-button outline item-end (click)="openRewardList()">{{'MOBILE.RESTAURANT_PROFILE.REWARDS_BTN' | translate}}</button>
+                    <button style="width: 48%;" ion-button outline item-end (click)="goToMenuByEstablishment(_establishment._id)">{{'MOBILE.RESTAURANT_PROFILE.MENU_BTN' | translate}}</button>
+                </div>
                 <p *ngIf="_establishmentProfile?.establishment_description?.length <= 20" class="margin">
                     {{_establishmentProfile?.establishment_description}}
                 </p>
@@ -53,8 +54,11 @@
                     <p *ngIf="_showDescription" class="margin">
                         {{_establishmentProfile?.establishment_description}}
                     </p>
-                    <a *ngIf="_showDescription" (click)="showInformation()">
+                    <a *ngIf="!_showDescription" (click)="showInformation()">
                         {{'MOBILE.RESTAURANT_PROFILE.SHOW_MORE' | translate}}
+                    </a>
+                    <a *ngIf="_showDescription" (click)="showInformation()">
+                        {{'MOBILE.RESTAURANT_PROFILE.SHOW_LESS' | translate}}
                     </a>
                 </div>
                 <ion-list inset class="margin" no-lines>

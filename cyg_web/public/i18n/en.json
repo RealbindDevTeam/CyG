@@ -1681,7 +1681,10 @@
         "REWARD_REMOVED": "Reward removed",
         "EDIT_REWARD": "Reward Edition",
         "REWARD_EDITED": "Reward edited",
-        "MEDALS": "Medals"
+        "MEDALS": "Medals",
+        "FIRST_RANGE_MSG": "On average a customer will go to your restaurant between 3 and 5 times to redeem this reward. Remember to verify your accounts, so that what you offer as a reward does not affect your income.",
+        "SECOND_RANGE_MSG": "On average a customer will go to your restaurant 6 to 8 times to redeem this reward. It is a very good option to give your customers reachable rewards and to be encouraged to buy.",
+        "THIRD_RANGE_MSG": "On average a customer will go to your restaurant between 9 and 10 times to redeem this reward. Make sure your reward is very attractive, otherwise customers will not be encouraged to buy you."
     },
     "REWARD_DETAIL": {
         "REWARD_TITLE": "Rewards",
