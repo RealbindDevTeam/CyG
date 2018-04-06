@@ -36,7 +36,7 @@
                         <ion-thumbnail item-left>
                             <img src="{{getItemThumb(reward.item_id)}}">
                         </ion-thumbnail>
-                        <h2 style="white-space: normal"> {{reward.item_quantity}} {{getItemName(reward.item_id)}}</h2>
+                        <h2 style="white-space: normal;font-weight: bold;"> {{reward.item_quantity}} {{getItemName(reward.item_id)}}</h2>
                         <ion-badge class="rewardpts">{{reward.points}} Medallas
                             <ion-icon name="medal"></ion-icon>
                         </ion-badge>
@@ -44,7 +44,7 @@
                         <!--p *ngIf="isValidRewardPoints(reward.points)" style="white-space: normal;">Redime esta recompensa!</p-->
                         <div>
                             <button *ngIf="isValidRewardPoints(reward.points)" ion-button small item-left outline style="color: #D50000; float:right"
-                                (click)="addRewardToOrder(reward.item_id, reward.item_quantity, reward.points)">{{'MOBILE.REWARD_LIST.REDEEM_BTN' | translate}}</button>
+                                (click)="addRewardToOrder(reward._id, reward.points)">{{'MOBILE.REWARD_LIST.REDEEM_BTN' | translate}}</button>
                         </div>
                         <p *ngIf="!isValidRewardPoints(reward.points)" style="white-space: normal;color: #EF5350">Acumula mas medallas para redimir esta recompensa</p>
                         <!--div>

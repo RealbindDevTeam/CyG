@@ -14,6 +14,8 @@ import { Items } from 'cyg_web/both/collections/menu/item.collection';
 //import { Orders } from 'cyg_web/both/collections/establishment/order.collection';
 import { EstablishmentMedal } from 'cyg_web/both/models/points/establishment-medal.model';
 import { EstablishmentMedals } from 'cyg_web/both/collections/points/establishment-medal.collection';
+import { RewardConfirmation } from 'cyg_web/both/models/points/reward-confirmation.model';
+import { RewardsConfirmations } from 'cyg_web/both/collections/points/reward-confirmation.collection';
 import { Network } from '@ionic-native/network';
 
 @Component({
@@ -26,6 +28,7 @@ export class RewardListComponent {
     private _itemsSub: Subscription;
     private _rewardsSub: Subscription;
     private _establishmentMedalSub: Subscription;
+    private _rewardsConfirmationSub: Subscription;
     //private _userDetailSub: Subscription;
     //private _ordersSub: Subscription;
     private ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -61,7 +64,7 @@ export class RewardListComponent {
     ngOnInit() {
         this.removeSubscriptions();
 
-        this._establishmentMedalSub = MeteorObservable.subscribe('getEstablishmentMedalsByUserId', this._user).subscribe(() => {
+        this._establishmentMedalSub = MeteorObservable.subscribe('getEstablishmentMedalsByUserId', this._user).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._establishmentMedals = EstablishmentMedals.find({ user_id: this._user, establishment_id: this._establishmentId }).zone();
                 this._establishmentMedal = EstablishmentMedals.findOne({ user_id: this._user, establishment_id: this._establishmentId });
@@ -86,9 +89,10 @@ export class RewardListComponent {
                         this._thereRewards = true;
                     }
                 });
-                
             });
         });
+
+        this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentId', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe();
 
         /*this._ordersSub = MeteorObservable.subscribe('getOrdersByUserId', this._user, this._statusArray).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
@@ -186,12 +190,37 @@ export class RewardListComponent {
     }
 
     /**
-  * Add reward in order with SELECTING state
-  * @param {string} _pItemToInsert
-  * @param {number} _pItemQuantiy
-  * @param {number} _pRewardPoints
-  */
-    addRewardToOrder(_pItemToInsert: string, _pItemQuantiy: number, _pRewardPoints: number): void {
+     * Add reward in order with SELECTING state
+     * @param {string} _pRewardId
+     * @param {number} _pRewardPoints
+     */
+    addRewardToOrder(_pRewardId: string, _pRewardPoints: number): void {
+        let dialog_title = 'Estas seguro de redimir esta recompensa?';
+        let dialog_subtitle = 'El restaurante confirmara lo que estas redimiendo.'
+        let dialog_cancel_btn = 'No'
+        let dialog_accept_btn = 'Si'
+        let final_msg = 'Recompensa en proceso'
+
+        let alertConfirm = this.alertCtrl.create({
+            title: dialog_title,
+            message: dialog_subtitle,
+            buttons: [
+                {
+                    text: dialog_cancel_btn,
+                    role: 'cancel',
+                    handler: () => {
+                    }
+                },
+                {
+                    text: dialog_accept_btn,
+                    handler: () => {
+                        
+                        this.presentToast();
+                    }
+                }
+            ]
+        });
+        alertConfirm.present();
         /*let _lOrderItemIndex: number = 0;
         let _lOrder: Order = Orders.collection.find({ creation_user: this._user, establishment_id: this._establishmentId }).fetch()[0];
 
@@ -239,7 +268,7 @@ export class RewardListComponent {
   * This function present the toast to add the reward to de order
   */
     presentToast() {
-        let _lMessage: string = this.itemNameTraduction('MOBILE.REWARD_LIST.REWARD_AGGREGATED');
+        let _lMessage: string = 'Recompensa en proceso';
         let toast = this.toastCtrl.create({
             message: _lMessage,
             duration: 1500,

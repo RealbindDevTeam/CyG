@@ -13,6 +13,9 @@ function loggedIn() {
  */
 export const EstablishmentMedals = new MongoObservable.Collection<EstablishmentMedal>('establishment_medals');
 
+/**
+ * Allow EstablishmentMedals collection insert and update functions
+ */
 EstablishmentMedals.allow({
     insert: loggedIn,
     update: loggedIn
