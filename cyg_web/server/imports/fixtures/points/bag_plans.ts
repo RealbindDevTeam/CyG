@@ -13,7 +13,7 @@ export function loadBagPlans() {
                     price: 0,
                     currency: 'COP'
                 }],
-                value_points: 1500,
+                value_points: 350,
                 active: true,
             },
             {
@@ -22,10 +22,10 @@ export function loadBagPlans() {
                 label: 'BAG_PLAN.SMALL',
                 price: [{
                     country_id: "1900",
-                    price: 27900,
+                    price: 28900,
                     currency: 'COP'
                 }],
-                value_points: 500,
+                value_points: 300,
                 active: true,
             },
             {
@@ -34,10 +34,10 @@ export function loadBagPlans() {
                 label: 'BAG_PLAN.MEDIUM',
                 price: [{
                     country_id: "1900",
-                    price: 31900,
+                    price: 34900,
                     currency: 'COP'
                 }],
-                value_points: 1000,
+                value_points: 500,
                 active: true,
             },
             {
@@ -46,10 +46,10 @@ export function loadBagPlans() {
                 label: 'BAG_PLAN.LARGE',
                 price: [{
                     country_id: "1900",
-                    price: 34900,
+                    price: 38900,
                     currency: 'COP'
                 }],
-                value_points: 1500,
+                value_points: 700,
                 active: true,
             }
         ];

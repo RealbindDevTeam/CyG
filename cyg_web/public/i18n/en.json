@@ -288,8 +288,8 @@
             "MONTHLY_PAYMENT": "Monthly Payment",
             "PAYMENT_HISTORY": "Payment History",
             "REACTIVATE_RESTAURANT": "Reactivate restaurant",
-            "BAGS": "Bags",
-            "PURCHASE_BAGS": "Purchase of bags"
+            "BAGS": "Packages",
+            "PURCHASE_BAGS": "Purchase of packages"
         },
         "MENU_DEFINITION": {
             "MENU_DEFINITION": "Menu",
@@ -1816,8 +1816,8 @@
         "LARGE": "A LA CARTÉ"
     },
     "BAGS_PAYMENT": {
-        "TITLE": "Purchase of bags",
-        "SUBTITLE": "Here you can to purchase the bag of points by restaurant that you want",
+        "TITLE": "Purchase of packages",
+        "SUBTITLE": "Here you can to purchase the package of points by restaurant that you want",
         "THERE_NOT_RESTAURANTS": "There are not restaurants register yet",
         "MESSAGE": "Register at least one restaurant to enable this option",
         "RESTAURANT_REGISTER": ""

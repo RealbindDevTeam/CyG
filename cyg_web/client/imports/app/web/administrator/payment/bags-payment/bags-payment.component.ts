@@ -43,6 +43,10 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
     private _thereAreEstablishments: boolean = true;
     private _total: number = 0;
     private _tmpBagsArray: Element[] = [];
+    private _establishmentSelected: string[] = [];
+    private _indexSelected: number[] = [];
+    private _purchasePlanForm: FormGroup;
+    private _establishmentBagForm: FormGroup = new FormGroup({});
 
     /**
      * MonthlyPaymentComponent Constructor
@@ -62,12 +66,29 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.removeSubscriptions();
 
+        this._purchasePlanForm = new FormGroup({
+            establishment_bag: this._establishmentBagForm
+        });
+
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._establishments = Establishments.find({ creation_user: this._user }).zone();
                 this.countEstablishments();
                 this._establishments.subscribe(() => { this.countEstablishments(); });
                 this._establishmentsArray = Establishments.find({ creation_user: this._user }).fetch();
+
+                Establishments.find({ creation_user: this._user }).fetch().forEach((establishmentCtrl) => {
+                    let _establishmentCheckControl: FormControl = new FormControl();
+                    this._establishmentBagForm.addControl('chk_' + establishmentCtrl._id, _establishmentCheckControl);
+
+                    let _establishmentSelectControl: FormControl = new FormControl();
+                    this._establishmentBagForm.addControl('sel_' + establishmentCtrl._id, _establishmentSelectControl);
+                    _establishmentSelectControl.disable();
+
+                    let _establishmentLabelControl: FormControl = new FormControl();
+                    this._establishmentBagForm.addControl('lbl_' + establishmentCtrl._id, _establishmentLabelControl);
+                    _establishmentLabelControl.disable();
+                });
 
                 this._currencySub = MeteorObservable.subscribe('getCurrenciesByUserId', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
                     this._ngZone.run(() => {
@@ -117,34 +138,106 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
     /**
      * Function to add plan to establishment
      */
-    addPlan(_bagPlan: BagPlan, _establishmentId: string) {
+    addPlan(_bagPlan: BagPlan, _establishment: Establishment) {
         console.log(_bagPlan);
-        console.log(_establishmentId);
+        console.log(_establishment);
+        this._total = 0;
 
-        let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishmentId);
-        console.log(indexOfElement);
+        let _lBagPlan: BagPlan = BagPlans.findOne({ _id: _bagPlan._id, 'price.country_id': _establishment.countryId });
+        let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishment._id);
+        let initialPrice: number = 0;
+        let initialCurrency: string = '';
+
+        _lBagPlan.price.forEach((priceObj) => {
+            if (priceObj.country_id === _establishment.countryId) {
+                initialPrice = priceObj.price;
+                initialCurrency = priceObj.currency;
+            }
+        });
 
         if (indexOfElement > -1) {
             let obj = {
-                establishmentId: _establishmentId,
-                bagPlanPrice: _bagPlan.price.price
+                establishmentId: _establishment._id,
+                bagPlanPrice: initialPrice,
+                bagPlanCurrency: initialCurrency,
+                bagPlanPoints: _lBagPlan.value_points
             };
             this._tmpBagsArray.splice(indexOfElement, 1, obj);
 
             console.log('---');
             console.log(this._tmpBagsArray);
 
-        } else {
-            let obj = {
-                establishmentId: _establishmentId,
-                bagPlanPrice: _bagPlan.price.price
-            };
-            this._tmpBagsArray.push(obj);
+            this._tmpBagsArray.forEach((bagElement) => {
+                this._total = this._total + bagElement.bagPlanPrice;
+            });
 
-            console.log(this._tmpBagsArray);
+            this._establishmentBagForm.controls['sel_' + _establishment._id].setValue(_lBagPlan._id);
+            this._establishmentBagForm.controls['lbl_' + _establishment._id].setValue(initialPrice + ' ' + initialCurrency);
         }
+    }
 
+    /**
+     * Function to enable row
+     */
+    addToRowArray(_establishmentId: Establishment, isChecked: boolean, index: number) {
+        let _lBagPlan: BagPlan = BagPlans.findOne({ _id: "400", 'price.country_id': _establishmentId.countryId });
+        let initialPrice: number = 0;
+        let initialCurrency: string = '';
+        let initialPoints: number = _lBagPlan.value_points;
+        _lBagPlan.price.forEach((priceObj) => {
+            if (priceObj.country_id === _establishmentId.countryId) {
+                initialPrice = priceObj.price;
+                initialCurrency = priceObj.currency
+            }
+        });
 
+        this._total = 0;
+        if (isChecked) {
+            let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishmentId._id);
+            if (indexOfElement > -1) {
+                console.log('_____________________________');
+                console.log('CHECKED SEGUNDA VEZ EN ARRAY');
+                this._tmpBagsArray.forEach((bagElement) => {
+                    this._total = this._total + bagElement.bagPlanPrice;
+                });
+                console.log(this._tmpBagsArray);
+            } else {
+                console.log('_____________________________');
+                console.log('CHECKED PRIMERA VEZ EN ARRAY');
+                let obj = {
+                    establishmentId: _establishmentId._id,
+                    bagPlanPrice: initialPrice,
+                    bagPlanCurrency: initialCurrency,
+                    bagPlanPoints: _lBagPlan.value_points
+                };
+                this._tmpBagsArray.push(obj);
+                this._tmpBagsArray.forEach((bagElement) => {
+                    this._total = this._total + bagElement.bagPlanPrice;
+                });
+
+                this._establishmentBagForm.controls['sel_' + _establishmentId._id].enable();
+                this._establishmentBagForm.controls['sel_' + _establishmentId._id].setValue(_lBagPlan._id);
+                this._establishmentBagForm.controls['lbl_' + _establishmentId._id].setValue(initialPrice + ' ' + initialCurrency);
+                console.log(this._tmpBagsArray);
+            }
+        } else {
+            let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishmentId._id);
+            if (indexOfElement > -1) {
+                console.log('_____________________________');
+                console.log('UNCHECKED SEGUNDA VEZ EN ARRAY');
+                this._tmpBagsArray.splice(indexOfElement, 1);
+
+                this._tmpBagsArray.forEach((bagElement) => {
+                    this._total = this._total + bagElement.bagPlanPrice;
+                });
+
+                console.log('sel_' + index);
+                this._establishmentBagForm.controls['sel_' + _establishmentId._id].reset();
+                this._establishmentBagForm.controls['sel_' + _establishmentId._id].disable();
+                this._establishmentBagForm.controls['lbl_' + _establishmentId._id].reset();
+                console.log(this._tmpBagsArray);
+            }
+        }
     }
 
     /**
@@ -159,4 +252,7 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
 export interface Element {
     establishmentId: string;
     bagPlanPrice: number;
+    bagPlanCurrency: string;
+    bagPlanPoints: number;
+    creditPoints?: number;
 }
