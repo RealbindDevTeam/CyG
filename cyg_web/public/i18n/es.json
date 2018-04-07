@@ -312,7 +312,7 @@
         "SETTINGS": "Ajustes",
         "TABLES": "Cambiar mesa",
         "RESTAURANT_EXIT": "Salir del Restaurante",
-        "POINTS": "Mis puntos"
+        "POINTS": "Mis medallas"
     },
     "PROMOTIONS": {
         "PROMOTION_CREATION": "Creación de promociones",
@@ -402,11 +402,11 @@
         "TABLES_MSG": "En caso de necesitar más mesas para tu restaurante, en la opción Administración -> Restaurantes -> Configuración, podrás agregar las que necesites.",
         "CREATION_ERROR": "Se ha presentado un error creando el restaurante. Por favor intenta nuevamente.",
         "RESTAURANT_CREATED": "Restaurante Creado",
-        "POINTS_VALIDITY": "Selecciona la vigencia de los puntos de recompensa",
+        "POINTS_VALIDITY": "Selecciona la vigencia de las medallas de recompensa",
         "DAYS": "Días",
         "DIALOG_SENTENCE_1A": "A partir de la creación del restaurante vas a tener una bolsa de ",
-        "DIALOG_SENTENCE_1B": "puntos comeygama ",
-        "DIALOG_SENTENCE_2": "Los puntos se restan de la bolsa cada vez que un consumidor redime una recompensa",
+        "DIALOG_SENTENCE_1B": "medallas comeygama ",
+        "DIALOG_SENTENCE_2": "Las medallas se restan de la bolsa cada vez que un consumidor redime una recompensa",
         "DIALOG_SENTENCE_3": "Estas seguro que deseas crear el restaurante?"
     },
     "WEEK": {
@@ -577,7 +577,7 @@
         "RESTAURANT_INACTIVE": "Restaurante inactivo",
         "RESTAURANT_ACTIVE": "Restaurante activo",
         "WAITERS_ERROR": "Hay restaurantes que no cuentan con meseros. Por favor verifica en la opción de colaboradores",
-        "AVAILABLE_POINTS": "Puntos Disponibles"
+        "AVAILABLE_POINTS": "Medallas disponibles"
     },
     "TABLES": {
         "TABLES_CREATION": "Creación de mesas",
@@ -602,7 +602,7 @@
     },
     "GO_TO_STORE": {
         "CLIENT": {
-            "TITTLE": "Ordena desde tu celular, acumula y redime tus puntos",
+            "TITTLE": "Ordena desde tu celular, acumula y redime tus medallas",
             "SUB_TITTLE": "",
             "CONTENT": "Descarga gratis en: ",
             "BUTTON": "Descargar"
@@ -699,8 +699,8 @@
         "REMOVE_TITLE": "Remover ítem",
         "REMOVE_MSG": "Deseas remover el ítem?",
         "ITEM_REMOVED": "Ítem removido correctamente",
-        "REWARD_LABEL": "Asignar puntos de recompensa",
-        "POINTS_PLACEHOLER": "Puntos",
+        "REWARD_LABEL": "Asignar medallas de recompensa",
+        "POINTS_PLACEHOLER": "Medallas",
         "MENU_RECOMMENDED": "Menú recomendado",
         "ESTABLISHMENTS": "Establecimientos",
         "RECOMMENDED_CHANGED": "Recomendación de ítem modificada",
@@ -807,7 +807,7 @@
         "INFORMATION": "Información",
         "SCHEDULE": "Horario",
         "LOCATION": "Ubicación",
-        "POINTS": "Puntos Disponibles"
+        "POINTS": "Medallas disponibles"
     },
     "RESTAURANT_LOCATION_INFO": {
         "TITTLE": "Ubicación del establecimiento",
@@ -839,7 +839,7 @@
         "SEARCH_MENU": "Buscar Menú",
         "RECOMMENDED": "Recomendados",
         "REWARD": "Recompensa",
-        "POINTS": "puntos",
+        "POINTS": "medallas",
         "TOTAL_ITEM_POINTS": "Total",
         "MENU": "Menú",
         "GET_POINTS": "Obtienes",
@@ -1028,7 +1028,7 @@
         "IUREST_NO_ACTIVE": "El restaurante no tiene el servicio de comeygana activo. No es posible ingresar.",
         "RESTAURANT_NOT_EXISTS": "El restaurante no existe. No es posible ingresar.",
         "PENALTY": "En el momento no tienes disponible la opción para crear ordenes. Intenta de nuevo después del ",
-        "REDEEM_POINTS": "Redimir puntos"
+        "REDEEM_POINTS": "Redimir medallas"
     },
     "MONTHLY_PAYMENT": {
         "TITLE": "Pago del servicio mensual de comeygana",
@@ -1296,7 +1296,7 @@
     "ADMIN_SIGNUP": {
         "HOME_CONTENT": {
             "TITLE": "Conoce y premia a tus clientes por su fidelidad",
-            "SUB_TITLE": "Te ofrecemos un sistema rápido y sencillo que te permite crear una relación estable con tus clientes a través de un sistema de puntos personalizable"
+            "SUB_TITLE": "Te ofrecemos un sistema rápido y sencillo que te permite crear una relación estable con tus clientes a través de un sistema de medallas personalizable"
         },
         "ABOUT_CONTENT": {
             "MSG_1": "Ingresa información detallada del menú, para que los clientes puedan verlo, y ordenar desde sus celulares, tablets o computadores",
@@ -1406,7 +1406,7 @@
         "REWARDS": "Recompensas redimidas hoy",
         "ITEMS_HISTORY": "Items ordenados históricamente",
         "REWARDS_HISTORY": "Recompensas redimidas históricamente",
-        "AVAILABLE_POINTS": "Puntos Disponibles"
+        "AVAILABLE_POINTS": "Medallas disponibles"
     },
     "ITEM_UNIT_CHART": {
         "TODAY": "Hoy",
@@ -1689,16 +1689,16 @@
         "MSG_INITIAL": "Implementa una manera ordenada y fácil de visualizar tu menú",
         "CREATE_NEW_ITEM": "Crear nuevo item",
         "TITLE": "Recompensas",
-        "SUBTITLE": "Crea las recompensas para tus clientes. Ingresa cuantos items otorgaras (cantidad), el item y los puntos necesarios para redimir la recompensa",
+        "SUBTITLE": "Crea las recompensas para tus clientes. Ingresa cuantos items otorgaras (cantidad), el item y las medallas necesarios para redimir la recompensa",
         "QUANTITY": "Cantidad",
         "ESTABLISHMENTS": "Selecciona los establecimientos donde se encontrara disponible la recompensa",
         "NO_ESTABLISHMENTS_CREATED": "No se encuentran establecimientos creados",
-        "POINTS": "Puntos",
+        "POINTS": "Medallas",
         "NO_ESTABLISHMENTS": "No se encuentran establecimientos",
         "MODIFY": "MODIFICAR",
         "REMOVE": "REMOVER",
         "SELECT_ITEM": "Selecciona un ítem",
-        "SELECT_POINTS": "Selecciona los puntos",
+        "SELECT_POINTS": "Selecciona las medallas",
         "REWARD_CREATED": "Recompensa creada",
         "REMOVE_TITLE": "Remover Recompensa",
         "REMOVE_MSG": "Deseas remover la recompensa?",
@@ -1708,11 +1708,11 @@
     },
     "REWARD_DETAIL": {
         "REWARD_TITLE": "Recompensas",
-        "POINTS_TO_REDEEM": "Puntos disponibles para redimir",
-        "POINTS": "Puntos",
+        "POINTS_TO_REDEEM": "Medallas disponibles para redimir",
+        "POINTS": "Medallas",
         "UNAVAILABLE": "No disponible",
         "REDEEM": "Redimir",
-        "GET_POINTS": "Obtén puntos",
+        "GET_POINTS": "Obtén medallas",
         "REWARD_AGGREGATED": "Recompensa agregada",
         "ERROR": "Error agregando la recompensa. Intenta nuevamente",
         "ORDER_ERROR": "Puedes redimir máximo una recompensa por orden",
@@ -1720,21 +1720,21 @@
         "NO_REWARDS": "No hay recompensas"
     },
     "CUSTOMER_POINTS": {
-        "NO_POINTS_MSG": "Aún no has acumulado puntos en ningún restaurante. Animate!",
+        "NO_POINTS_MSG": "Aún no has acumulado medallas en ningún restaurante. Animate!",
         "GO_TO_ORDERS": "Ir a ordenes",
         "ADDRESS": "Dirección",
-        "ACCUMULATED_POINTS": "Puntos Acumulados",
-        "POINTS": "Puntos",
+        "ACCUMULATED_POINTS": "Medallas Acumulados",
+        "POINTS": "Medallas",
         "YOU_HAVE": "Tienes",
-        "POINTS_FOR_EXPIRING": "puntos para vencer el día",
+        "POINTS_FOR_EXPIRING": "Medallas para vencer el día",
         "DETAIL": "Detalle"
     },
     "POINTS_DETAIL": {
-        "TITLE": "Historial de ordenes y puntos",
-        "SUBTITLE": "Te presentamos las ordenes que has pedido en el restaurante, los puntos que has ganado y has redimido",
+        "TITLE": "Historial de ordenes y medallas",
+        "SUBTITLE": "Te presentamos las ordenes que has pedido en el restaurante, las medallas que has ganado y has redimido",
         "ORDER": "Orden",
         "YOU_EARNED": "Ganaste",
-        "POINTS": "Puntos",
+        "POINTS": "Medallas",
         "YOU_REDEEMED": "Redimiste",
         "QUANT": "Cant. ",
         "REWARD": "Recompensa",
@@ -1791,7 +1791,7 @@
         "NO_RECORDS_FOUND": "No se encontrarón ordenes",
         "ACCUMULATED": "acumulados",
         "REDEEMED": "redimidos",
-        "AVAILABLE_POINTS": "Puntos Disponibles"
+        "AVAILABLE_POINTS": "Medallas disponibles"
     },
     "TYPE_OF_FOOD": {
         "GERMAN_FOOD": "Comida Alemana",
@@ -1841,6 +1841,6 @@
     },
     "BAGS_PAYMENT": {
         "TITLE": "Compra de bolsas",
-        "SUBTITLE": "Aquí puedes comprar la bolsa de puntos por restaurante que desees"
+        "SUBTITLE": "Aquí puedes comprar la bolsa de medallas por restaurante que desees"
     }
 }
