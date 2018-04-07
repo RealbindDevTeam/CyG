@@ -528,7 +528,11 @@
             "REWARD_DELETED": "Reward deleted from order",
             "ORDER_ERROR": "You can redeem maximum one reward per order",
             "REWARDS_MSG": "Redeeming a reward and the item is free! Enjoy it!",
-            "NO_REWARDS": "The are no rewards"
+            "NO_REWARDS": "The are no rewards",
+            "MEDALS": "Medals",
+            "YOU_REDEEM": "In this moment you are redeeming",
+            "MEDALS_AVAILABLE": "Medals available to redeem",
+            "MORE_MEDALS": "Earn more medals to redeem this reward"
         },
         "POINTS": {
             "TITLE": "My points",

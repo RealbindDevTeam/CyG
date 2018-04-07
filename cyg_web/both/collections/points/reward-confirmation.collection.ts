@@ -18,5 +18,6 @@ export const RewardsConfirmations = new MongoObservable.Collection<RewardConfirm
  */
 RewardsConfirmations.allow({
     insert: loggedIn,
-    update: loggedIn
+    update: loggedIn,
+    remove: loggedIn
 });

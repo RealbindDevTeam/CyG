@@ -8,10 +8,6 @@ import { Reward } from 'cyg_web/both/models/establishment/reward.model';
 import { Rewards } from 'cyg_web/both/collections/establishment/reward.collection';
 import { Item, ItemImage } from 'cyg_web/both/models/menu/item.model';
 import { Items } from 'cyg_web/both/collections/menu/item.collection';
-//import { UserDetail } from 'cyg_web/both/models/auth/user-detail.model';
-//import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
-//import { Order, OrderItem } from 'cyg_web/both/models/establishment/order.model';
-//import { Orders } from 'cyg_web/both/collections/establishment/order.collection';
 import { EstablishmentMedal } from 'cyg_web/both/models/points/establishment-medal.model';
 import { EstablishmentMedals } from 'cyg_web/both/collections/points/establishment-medal.collection';
 import { RewardConfirmation } from 'cyg_web/both/models/points/reward-confirmation.model';
@@ -29,22 +25,34 @@ export class RewardListComponent {
     private _rewardsSub: Subscription;
     private _establishmentMedalSub: Subscription;
     private _rewardsConfirmationSub: Subscription;
-    //private _userDetailSub: Subscription;
-    //private _ordersSub: Subscription;
+    private disconnectSubscription: Subscription;
     private ngUnsubscribe: Subject<void> = new Subject<void>();
 
     private _items: Observable<Item[]>;
     private _rewards: Observable<Reward[]>;
     private _establishmentMedals: Observable<EstablishmentMedal[]>;
+    private _rewardsConfirmations: Observable<RewardConfirmation[]>;
+
     private _establishmentId: string;
-    private _establishmentMedal: EstablishmentMedal;
-    //private _userDetail: UserDetail;
-    //private _allowAddRewardsToOrder: boolean = true;
-    //private _statusArray: string[] = ['ORDER_STATUS.SELECTING', 'ORDER_STATUS.CONFIRMED'];
     private _thereRewards: boolean = true;
+    private _medalsInProcessToRedeem: number = 0;
+    private _showMedalsInProcessToRedeem: boolean = false;
+    private _medalsAvailableToRedeem: number = 0;
 
-    private disconnectSubscription: Subscription;
-
+    /**
+     * RewardListComponent Constructor
+     * @param {ViewController} viewCtrl 
+     * @param {TranslateService} _translate 
+     * @param {NavParams} _navParams 
+     * @param {ToastController} toastCtrl 
+     * @param {LoadingController} _loadingCtrl 
+     * @param {NavController} _navCtrl 
+     * @param {UserLanguageServiceProvider} _userLanguageService 
+     * @param {NgZone} _ngZone 
+     * @param {AlertController} alertCtrl 
+     * @param {Platform} _platform 
+     * @param {Network} _network 
+     */
     constructor(public viewCtrl: ViewController,
         public _translate: TranslateService,
         public _navParams: NavParams,
@@ -61,17 +69,35 @@ export class RewardListComponent {
         this._establishmentId = this._navParams.get("establishment");
     }
 
+    /**
+     * ngOnInit implementation
+     */
     ngOnInit() {
         this.removeSubscriptions();
 
         this._establishmentMedalSub = MeteorObservable.subscribe('getEstablishmentMedalsByUserId', this._user).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._establishmentMedals = EstablishmentMedals.find({ user_id: this._user, establishment_id: this._establishmentId }).zone();
-                this._establishmentMedal = EstablishmentMedals.findOne({ user_id: this._user, establishment_id: this._establishmentId });
+                this._establishmentMedals.subscribe(() => {
+                    this._medalsAvailableToRedeem = 0;
+                    this.validateMedalsAvailableToRedeem();
+                });
             });
         });
 
-        //this._userDetailSub = MeteorObservable.subscribe('getUserDetailsByUser', this._user).takeUntil(this.ngUnsubscribe).subscribe();
+        this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentId', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
+            this._ngZone.run(() => {
+                this._rewardsConfirmations = RewardsConfirmations.find({ establishment_id: this._establishmentId, user_id: this._user, is_confirmed: false }).zone();
+                this._rewardsConfirmations.subscribe(() => {
+                    this.verifyRewardsConfirmations();
+                    this._medalsInProcessToRedeem = 0;
+                    this.verifyMedalsInProcessToRedeem();
+                    this._medalsAvailableToRedeem = 0;
+                    this.validateMedalsAvailableToRedeem();
+                });
+            });
+        });
+
         this._itemsSub = MeteorObservable.subscribe('itemsByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._items = Items.find({}).zone();
@@ -91,22 +117,32 @@ export class RewardListComponent {
                 });
             });
         });
+    }
 
-        this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentId', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe();
+    /**
+     * Verify rewards confirmation
+     */
+    verifyRewardsConfirmations(): void {
+        RewardsConfirmations.collection.find({ establishment_id: this._establishmentId, user_id: this._user, is_confirmed: false }).count() > 0 ? this._showMedalsInProcessToRedeem = true : this._showMedalsInProcessToRedeem = false;
+    }
 
-        /*this._ordersSub = MeteorObservable.subscribe('getOrdersByUserId', this._user, this._statusArray).takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                Orders.collection.find({ creation_user: this._user }).fetch().forEach((order) => {
-                    if (order.status === 'ORDER_STATUS.SELECTING') {
-                        order.items.forEach((it) => {
-                            if (it.is_reward) {
-                                this._allowAddRewardsToOrder = false;
-                            }
-                        });
-                    }
-                });
-            });
-        });*/
+    /**
+     * Function to verify medals in process to redeem
+     */
+    verifyMedalsInProcessToRedeem(): void {
+        RewardsConfirmations.collection.find({ establishment_id: this._establishmentId, user_id: this._user, is_confirmed: false }).fetch().forEach((rc) => {
+            this._medalsInProcessToRedeem += rc.medals_to_redeem;
+        });
+    }
+
+    /**
+     * Function to validate medals available to redeem
+     */
+    validateMedalsAvailableToRedeem(): void {
+        let _lEstablishmentMedal: EstablishmentMedal = EstablishmentMedals.findOne({ user_id: this._user, establishment_id: this._establishmentId });
+        if (_lEstablishmentMedal) {
+            this._medalsAvailableToRedeem = _lEstablishmentMedal.medals - this._medalsInProcessToRedeem;
+        }
     }
 
     /**This function gets the item image or default
@@ -139,37 +175,10 @@ export class RewardListComponent {
     }
 
     /**
-     * This function gets if item is avalaible
-     * @param {string} _itemId
-     * @return {boolean}
-     
-    getItemAvailability(_itemId: string) {
-        let item: Item = Items.findOne({ _id: _itemId });
-        if (item) {
-            let aux = item.establishments.find(element => element.establishment_id === this._establishmentId);
-            return aux.isAvailable;
-        }
-    }*/
-
-    /**
-     * This function gets user establishment points
-     * @return {number} 
-     
-    getUserPoints(): number {
-        this._userDetail = UserDetails.findOne({ user_id: this._user });
-        if (this._userDetail) {
-            if (this._userDetail.reward_points) {
-                let aux = this._userDetail.reward_points.find(element => element.establishment_id === this._establishmentId);
-                return aux.points;
-            }
-        }
-    }*/
-
-    /**
      * This function verify if user can redeem the reward
      */
     isValidRewardPoints(_rewardPts: number): boolean {
-        if (this._establishmentMedal.medals >= _rewardPts) {
+        if (this._medalsAvailableToRedeem >= _rewardPts) {
             return true;
         } else {
             return false;
@@ -190,11 +199,11 @@ export class RewardListComponent {
     }
 
     /**
-     * Add reward in order with SELECTING state
+     * User redeem reward
      * @param {string} _pRewardId
      * @param {number} _pRewardPoints
      */
-    addRewardToOrder(_pRewardId: string, _pRewardPoints: number): void {
+    redeemReward(_pRewardId: string, _pRewardPoints: number): void {
         let dialog_title = 'Estas seguro de redimir esta recompensa?';
         let dialog_subtitle = 'El restaurante confirmara lo que estas redimiendo.'
         let dialog_cancel_btn = 'No'
@@ -214,59 +223,26 @@ export class RewardListComponent {
                 {
                     text: dialog_accept_btn,
                     handler: () => {
-                        
+                        RewardsConfirmations.insert({
+                            creation_user: this._user,
+                            creation_date: new Date(),
+                            establishment_id: this._establishmentId,
+                            user_id: this._user,
+                            reward_id: _pRewardId,
+                            medals_to_redeem: _pRewardPoints,
+                            is_confirmed: false
+                        });
                         this.presentToast();
                     }
                 }
             ]
         });
         alertConfirm.present();
-        /*let _lOrderItemIndex: number = 0;
-        let _lOrder: Order = Orders.collection.find({ creation_user: this._user, establishment_id: this._establishmentId }).fetch()[0];
-
-        if (_lOrder) {
-            _lOrderItemIndex = _lOrder.orderItemCount + 1;
-        } else {
-            _lOrderItemIndex = 1;
-        }
-
-        let _lOrderItem: OrderItem = {
-            index: _lOrderItemIndex,
-            itemId: _pItemToInsert,
-            quantity: _pItemQuantiy,
-            observations: '',
-            //garnishFood: [],
-            options: [],
-            additions: [],
-            paymentItem: 0,
-            reward_points: 0,
-            is_reward: true,
-            redeemed_points: _pRewardPoints
-        };
-
-        let _loadingMsg = this.itemNameTraduction('MOBILE.REWARD_LIST.LOADING_MSG');
-        let loading = this._loadingCtrl.create({
-            content: _loadingMsg
-        });
-        loading.present();
-
-        if (this._userDetail) {
-            let tableId = this._userDetail.current_table;
-            setTimeout(() => {
-                MeteorObservable.call('AddItemToOrder2', _lOrderItem, this._establishmentId, tableId, 0, 0).subscribe(() => {
-                    loading.dismiss();
-                    this._navCtrl.pop();
-                    this.presentToast();
-                }, (error) => {
-                    alert(`Error: ${error}`);
-                });
-            }, 1500);
-        }*/
     }
 
     /**
-  * This function present the toast to add the reward to de order
-  */
+     * This function present the toast to add the reward to de order
+     */
     presentToast() {
         let _lMessage: string = 'Recompensa en proceso';
         let toast = this.toastCtrl.create({
@@ -281,7 +257,7 @@ export class RewardListComponent {
 
     /** 
      * This function verify the conditions on page did enter for internet and server connection
-    */
+     */
     ionViewDidEnter() {
         this.isConnected();
         this.disconnectSubscription = this._network.onDisconnect().subscribe(data => {
@@ -294,7 +270,7 @@ export class RewardListComponent {
 
     /** 
      * This function verify with network plugin if device has internet connection
-    */
+     */
     isConnected() {
         if (this._platform.is('cordova')) {
             let conntype = this._network.type;
@@ -317,7 +293,7 @@ export class RewardListComponent {
 
     /**
      * Present the alert for advice to internet
-    */
+     */
     presentAlert(_pTitle: string, _pSubtitle: string, _pBtn: string) {
         let alert = this.alertCtrl.create({
             title: _pTitle,
@@ -340,9 +316,9 @@ export class RewardListComponent {
     }
 
     /**
-  * This function lets to tranla
-  * @param itemName 
-  */
+     * This function lets to tranla
+     * @param itemName 
+     */
     itemNameTraduction(itemName: string): string {
         var wordTraduced: string;
         this._translate.get(itemName).subscribe((res: string) => {
@@ -351,10 +327,11 @@ export class RewardListComponent {
         return wordTraduced;
     }
 
-
+    /**
+     * Remove all susbscriptions
+     */
     removeSubscriptions() {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
     }
-
 }

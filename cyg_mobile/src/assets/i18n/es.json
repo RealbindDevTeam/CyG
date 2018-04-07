@@ -528,7 +528,11 @@
             "REWARD_DELETED": "Recompensa eliminada de la orden",
             "ORDER_ERROR": "Puedes redimir máximo una recompensa por orden",
             "REWARDS_MSG": "Reclama una recompensa y el plato te sale gratis! Disfrutalo!",
-            "NO_REWARDS": "No hay recompensas"
+            "NO_REWARDS": "No hay recompensas",
+            "MEDALS": "Medallas",
+            "YOU_REDEEM": "En este momento estás redimiendo",
+            "MEDALS_AVAILABLE": "Medallas disponibles para redimir",
+            "MORE_MEDALS": "Acumula más medallas para redimir esta recompensa"
         },
         "POINTS": {
             "TITLE": "Mis Puntos",
