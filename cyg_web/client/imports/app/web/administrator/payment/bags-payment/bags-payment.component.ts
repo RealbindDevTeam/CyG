@@ -139,8 +139,6 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
      * Function to add plan to establishment
      */
     addPlan(_bagPlan: BagPlan, _establishment: Establishment) {
-        console.log(_bagPlan);
-        console.log(_establishment);
         this._total = 0;
 
         let _lBagPlan: BagPlan = BagPlans.findOne({ _id: _bagPlan._id, 'price.country_id': _establishment.countryId });
@@ -163,10 +161,6 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
                 bagPlanPoints: _lBagPlan.value_points
             };
             this._tmpBagsArray.splice(indexOfElement, 1, obj);
-
-            console.log('---');
-            console.log(this._tmpBagsArray);
-
             this._tmpBagsArray.forEach((bagElement) => {
                 this._total = this._total + bagElement.bagPlanPrice;
             });
@@ -195,15 +189,10 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
         if (isChecked) {
             let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishmentId._id);
             if (indexOfElement > -1) {
-                console.log('_____________________________');
-                console.log('CHECKED SEGUNDA VEZ EN ARRAY');
                 this._tmpBagsArray.forEach((bagElement) => {
                     this._total = this._total + bagElement.bagPlanPrice;
                 });
-                console.log(this._tmpBagsArray);
             } else {
-                console.log('_____________________________');
-                console.log('CHECKED PRIMERA VEZ EN ARRAY');
                 let obj = {
                     establishmentId: _establishmentId._id,
                     bagPlanPrice: initialPrice,
@@ -218,24 +207,18 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
                 this._establishmentBagForm.controls['sel_' + _establishmentId._id].enable();
                 this._establishmentBagForm.controls['sel_' + _establishmentId._id].setValue(_lBagPlan._id);
                 this._establishmentBagForm.controls['lbl_' + _establishmentId._id].setValue(initialPrice + ' ' + initialCurrency);
-                console.log(this._tmpBagsArray);
             }
         } else {
             let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishmentId._id);
             if (indexOfElement > -1) {
-                console.log('_____________________________');
-                console.log('UNCHECKED SEGUNDA VEZ EN ARRAY');
                 this._tmpBagsArray.splice(indexOfElement, 1);
 
                 this._tmpBagsArray.forEach((bagElement) => {
                     this._total = this._total + bagElement.bagPlanPrice;
                 });
-
-                console.log('sel_' + index);
                 this._establishmentBagForm.controls['sel_' + _establishmentId._id].reset();
                 this._establishmentBagForm.controls['sel_' + _establishmentId._id].disable();
                 this._establishmentBagForm.controls['lbl_' + _establishmentId._id].reset();
-                console.log(this._tmpBagsArray);
             }
         }
     }
