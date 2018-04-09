@@ -535,7 +535,7 @@
             "MORE_MEDALS": "Earn more medals to redeem this reward"
         },
         "POINTS": {
-            "TITLE": "My points",
+            "TITLE": "My Medals",
             "MSG": "Select a restaurant to check your medals",
             "NO_POINTS_MSG": "You have not accumulated points in any restaurant yet. Encourage!",
             "ACCUMULATED_POINTS": "Accumulated points",
@@ -548,7 +548,10 @@
             "POINTS": "Points",
             "YOU_REDEEMED": "You redeemed",
             "REWARD": "Reward",
-            "TOTAL": "Total"
+            "TOTAL": "Total",
+            "NO_USER_MEDALS_MSG": "Currently you do not have medals in",
+            "CURRENT_MEDALS": "Currently you have",
+            "MEDALS_IN": "medals in"
         },
         "POPOVER_OPTIONS": {
             "SETTINGS": "Settings",
@@ -556,9 +559,9 @@
             "POLICIES": "Privacy policy"
         },
         "SEGMENTS": {
-            "WIN_EATING": "Win eating!",
-            "ORDERS": "Orders",
-            "OPTIONS": "Options"
+            "COMEYGANA": "comeygana",
+            "MEDALS": "Medals",
+            "REWARDS": "Rewards"
         },
         "OPTIONS": {
             "WAITER_CALL": "Call a waiter to attend to your concerns",
@@ -589,7 +592,7 @@
         },
         "MEDAL_WON": {
             "CONGRATULATIONS": "Congratulations!",
-            "MSG": "You have accumulated a new medal in ", 
+            "MSG": "You have accumulated a new medal in ",
             "SHOW_REWARDS": "Show rewards",
             "SHOW_MEDALS": "Show medals"
         },

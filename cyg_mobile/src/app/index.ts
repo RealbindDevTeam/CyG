@@ -18,6 +18,9 @@ import { ItemCardEstablishmentComponent } from "../pages/customer/establishment-
 import { ItemDetailEstablishmentPage } from "../pages/customer/establishment-list/menu-by-establishment/item-detail-establishment/item-detail-establishment";
 import { AdditionsEstablishmentPage } from "../pages/customer/establishment-list/additions-establishment/additions-establishment";
 import { MedalWonPage } from '../pages/customer/medal-won/medal-won';
+import { UserRewardsPage } from '../pages/customer/points/points-detail/user-rewards/user-rewards';
+import { UserMedalsPage } from '../pages/customer/points/points-detail/user-medals/user-medals';
+import { MedalCYG } from '../pages/general/medal-cyg/medal-cyg';
 
 export const PAGES_DECLARATIONS = [
     InitialComponent,
@@ -39,5 +42,8 @@ export const PAGES_DECLARATIONS = [
     ItemCardEstablishmentComponent,
     ItemDetailEstablishmentPage,
     AdditionsEstablishmentPage,
-    MedalWonPage
+    MedalWonPage,
+    UserRewardsPage,
+    UserMedalsPage,
+    MedalCYG
 ];

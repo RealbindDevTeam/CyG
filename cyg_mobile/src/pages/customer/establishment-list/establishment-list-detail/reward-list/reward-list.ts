@@ -334,4 +334,11 @@ export class RewardListComponent {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
     }
+
+    /**
+     * ngOnDestroy implementation
+     */
+    ngOnDestroy() {
+        this.removeSubscriptions();
+    }
 }

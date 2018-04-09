@@ -535,7 +535,7 @@
             "MORE_MEDALS": "Acumula más medallas para redimir esta recompensa"
         },
         "POINTS": {
-            "TITLE": "Mis Puntos",
+            "TITLE": "Mis Medallas",
             "MSG": "Selecciona un restaurante para consultar tus medallas",
             "NO_POINTS_MSG": "Aún no has acumulado puntos en ningún restaurante. Animate!",
             "ACCUMULATED_POINTS": "Puntos acumulados",
@@ -548,7 +548,10 @@
             "POINTS": "Puntos",
             "YOU_REDEEMED": "Redimiste",
             "REWARD": "Recompensa",
-            "TOTAL": "Total"
+            "TOTAL": "Total",
+            "NO_USER_MEDALS_MSG": "Actualmente no cuentas con medallas en",
+            "CURRENT_MEDALS": "Actualmente cuentas con",
+            "MEDALS_IN": "medallas en"
         },
         "POPOVER_OPTIONS": {
             "SETTINGS": "Ajustes",
@@ -556,9 +559,9 @@
             "POLICIES": "Política de privacidad"
         },
         "SEGMENTS": {
-            "WIN_EATING": "Gana comiendo!",
-            "ORDERS": "Ordenes",
-            "OPTIONS": "Opciones"
+            "COMEYGANA": "comeygana",
+            "MEDALS": "Medallas",
+            "REWARDS": "Recompensas"
         },
         "OPTIONS": {
             "WAITER_CALL": "Llama a un mesero para que atienda tus inquietudes",
@@ -589,7 +592,7 @@
         },
         "MEDAL_WON": {
             "CONGRATULATIONS": "Felicitaciones!",
-            "MSG": "Has Acumulado una nueva medalla en ", 
+            "MSG": "Has Acumulado una nueva medalla en ",
             "SHOW_REWARDS": "Mira las recompensas",
             "SHOW_MEDALS": "Mira tus medallas"
         },
