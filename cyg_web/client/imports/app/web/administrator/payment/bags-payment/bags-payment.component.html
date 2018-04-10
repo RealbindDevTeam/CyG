@@ -9,7 +9,7 @@
                     <span>{{getCountryByCurrency(currency._id) | translate}}</span>
                     <span class="app-flex-filler"></span>
                 </mat-toolbar>
-                <table formGroupName="establishment_bag" class="striped" width="100%" style="border:0.5px solid; border-color: lightgrey">
+                <table formGroupName="establishment_bag" width="100%" style="border:0.5px solid; border-color: lightgrey">
                     <thead>
                         <tr>
                             <th data-field="select" style="width: 5%"></th>
@@ -18,13 +18,15 @@
                             <th data-field="price" style="width: 20%">Precio</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr *ngFor="let establishment of _establishments | async; let i = index" style="background-color: whitesmoke !important">
-                            <td style="text-align:center">
+                    <tbody *ngFor="let establishment of _establishments | async; let i = index" style="background-color: #F8F8F8">
+                        <tr>
+                            <td rowspan="2" style="text-align:center; border-top: 1px solid lightgrey !important; border-radius: 0px">
                                 <mat-checkbox [formControlName]="'chk_'+establishment._id" (change)="addToRowArray(establishment, $event.checked, i)"></mat-checkbox>
                             </td>
-                            <td *ngIf="establishment.currencyId === currency._id">{{establishment.name}}</td>
-                            <td>
+
+                            <td *ngIf="establishment.currencyId === currency._id" style="border-top: 1px solid lightgrey !important; border-radius: 0px">{{establishment.name}}</td>
+
+                            <td style="border-top: 1px solid lightgrey !important; border-radius: 0px">
                                 <mat-form-field style="display: inline !important">
                                     <mat-select [formControlName]="'sel_'+establishment._id">
                                         <mat-option *ngFor="let bagplan of _bagPlans | async" (click)="addPlan(bagplan, establishment);" value="{{bagplan._id}}">{{bagplan.value_points}} Medallas
@@ -35,7 +37,7 @@
                                     </mat-placeholder>
                                 </mat-form-field>
                             </td>
-                            <td>
+                            <td style="border-top: 1px solid lightgrey !important; border-radius: 0px">
                                 <mat-form-field style="text-align: right">
                                     <mat-placeholder>
                                         <mat-icon>attach_money</mat-icon>
@@ -45,6 +47,18 @@
                                 </mat-form-field>
                             </td>
                         </tr>
+                        <tr *ngIf="hasPendingMedals(establishment._id)">
+                            <td>
+                                <li style="padding-left: 20px">Medallas pendientes por pagar</li>
+                            </td>
+                            <td>
+                                {{getPendingMedals(establishment._id)}} Medallas
+                            </td>
+                            <td style="text-align: right">
+                                {{getPriceByPending(establishment)}} COP
+                            </td>
+                        </tr>
+
                     </tbody>
                 </table>
                 <div style="text-align: right">

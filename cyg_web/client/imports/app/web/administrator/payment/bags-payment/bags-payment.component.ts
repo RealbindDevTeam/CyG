@@ -17,6 +17,8 @@ import { EstablishmentPoint } from '../../../../../../../both/models/points/esta
 import { EstablishmentPoints } from '../../../../../../../both/collections/points/establishment-points.collection';
 import { BagPlan } from '../../../../../../../both/models/points/bag-plan.model';
 import { BagPlans } from '../../../../../../../both/collections/points/bag-plans.collection';
+import { NegativePoint } from '../../../../../../../both/models/points/negative-point.model';
+import { NegativePoints } from '../../../../../../../both/collections/points/negative-points.collection';
 
 @Component({
     selector: 'bags-payment',
@@ -32,13 +34,14 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
     private _countries: Observable<Country[]>;
     private _establishmentPoints: Observable<EstablishmentPoint[]>;
     private _bagPlans: Observable<BagPlan[]>;
+    private _negativePoints: Observable<NegativePoint[]>;
     private _establishmentSub: Subscription;
     private _currencySub: Subscription;
     private _countrySub: Subscription;
     private _establishmentPointSub: Subscription;
     private _bagPlansSub: Subscription;
+    private _negativePointsSub: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
-    private _establishmentsArray: Establishment[] = [];
     private dataSource: any;
     private _thereAreEstablishments: boolean = true;
     private _total: number = 0;
@@ -47,6 +50,7 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
     private _indexSelected: number[] = [];
     private _purchasePlanForm: FormGroup;
     private _establishmentBagForm: FormGroup = new FormGroup({});
+    private _establishmentsArray: string[] = [];
 
     /**
      * MonthlyPaymentComponent Constructor
@@ -75,7 +79,6 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
                 this._establishments = Establishments.find({ creation_user: this._user }).zone();
                 this.countEstablishments();
                 this._establishments.subscribe(() => { this.countEstablishments(); });
-                this._establishmentsArray = Establishments.find({ creation_user: this._user }).fetch();
 
                 Establishments.find({ creation_user: this._user }).fetch().forEach((establishmentCtrl) => {
                     let _establishmentCheckControl: FormControl = new FormControl();
@@ -88,7 +91,11 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
                     let _establishmentLabelControl: FormControl = new FormControl();
                     this._establishmentBagForm.addControl('lbl_' + establishmentCtrl._id, _establishmentLabelControl);
                     _establishmentLabelControl.disable();
+
+                    this._establishmentsArray.push(establishmentCtrl._id);
                 });
+
+                this._negativePointsSub = MeteorObservable.subscribe('getNegativePointsByEstablishmentsArray', this._establishmentsArray).takeUntil(this._ngUnsubscribe).subscribe();
 
                 this._currencySub = MeteorObservable.subscribe('getCurrenciesByUserId', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
                     this._ngZone.run(() => {
@@ -223,11 +230,71 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
         }
     }
 
+
+    /**
+     * Function to get bag plan info selected
+     */
+    getBagPlanInfo(_bagPLanId: string, _establishmentId: string) {
+
+    }
+
+
+    /**
+     * Function to validate if establishment has pending medals to pay
+     */
+    hasPendingMedals(_establishmentId: string): boolean {
+        let countOfNegative: number = NegativePoints.collection.find({ establishment_id: _establishmentId, paid: false }).count();
+        console.log(countOfNegative);
+        if (countOfNegative > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Function to get medals pending for establishment
+     */
+    getPendingMedals(_establishmentId: string): number {
+        let totalPending: number = 0;
+        NegativePoints.collection.find({ establishment_id: _establishmentId, paid: false }).map(function (negativePt) {
+            totalPending += negativePt.points;
+        });
+        return totalPending;
+    }
+
+    /**
+     * Function to get price by pending medals
+     */
+    getPriceByPending(_establishment: Establishment): number {
+        let _lBagPlan: BagPlan = BagPlans.findOne({ _id: "200", 'price.country_id': _establishment.countryId });
+        let initialPoints: number = _lBagPlan.value_points;
+        let initialPrice: number = 0;
+        let initialCurrency: string = '';
+        _lBagPlan.price.forEach((priceObj) => {
+            if (priceObj.country_id === _establishment.countryId) {
+                initialPrice = priceObj.price;
+                initialCurrency = priceObj.currency
+            }
+        });
+        let pendingMedals: number = this.getPendingMedals(_establishment._id);
+        let pedingMedalsPrice: number = (pendingMedals * initialPrice) / initialPoints;
+        return Math.round(pedingMedalsPrice);
+    }
+
     /**
      * Remove all subscriptions
      */
     removeSubscriptions(): void {
+        this._ngUnsubscribe.next();
+        this._ngUnsubscribe.complete();
+    }
 
+    /**
+    * Implements ngOnDestroy function
+    */
+    ngOnDestroy() {
+        this.removeSubscriptions();
     }
 }
 
