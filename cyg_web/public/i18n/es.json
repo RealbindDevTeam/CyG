@@ -8,7 +8,7 @@
     "HELLO": "Hola",
     "IMAGE": "Imagen",
     "MODIFICATION_DATE": "Fecha de modificación",
-    "NAME": "Nombres y Apellidos",
+    "NAME": "Nombre",
     "PASSWORD": "Contraseña",
     "PRICING": "Precio",
     "STATE": "Estado",
@@ -292,8 +292,8 @@
             "MONTHLY_PAYMENT": "Pago mensual",
             "PAYMENT_HISTORY": "Historial de Pagos",
             "REACTIVATE_RESTAURANT": "Reactivar restaurante",
-            "BAGS": "Bolsas",
-            "PURCHASE_BAGS": "Compra de bolsas"
+            "BAGS": "Paquetes",
+            "PURCHASE_BAGS": "Compra de paquetes"
         },
         "MENU_DEFINITION": {
             "MENU_DEFINITION": "Menú",
@@ -1823,7 +1823,10 @@
         "LARGE": "A LA CARTA"
     },
     "BAGS_PAYMENT": {
-        "TITLE": "Compra de bolsas",
-        "SUBTITLE": "Aquí puedes comprar la bolsa de medallas por restaurante que desees"
+        "TITLE": "Compra de paquetes",
+        "SUBTITLE": "Aquí puedes comprar los paquetes de medallas por restaurante que desees y las que tengas pendientes",
+        "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
+        "MESSAGE": "Registra uno para habilitar esta opción",
+        "RESTAURANT_REGISTER": "Registrar restaurante"
     }
 }

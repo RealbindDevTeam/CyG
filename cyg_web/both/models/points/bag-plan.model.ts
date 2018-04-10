@@ -6,7 +6,7 @@ import { CollectionObject } from '../collection-object.model';
 export interface BagPlan extends CollectionObject {
     name: string;
     label: string;
-    price: PricePoints;
+    price: PricePoints[];
     value_points: number;
     active: boolean;
 }

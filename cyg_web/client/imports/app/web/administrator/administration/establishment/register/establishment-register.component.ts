@@ -293,7 +293,8 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                     });
                 }
                 //Insert establishment points
-                let _lBagPlan: BagPlan = BagPlans.findOne({ _id: "100" });
+                let _lEstabl: Establishment = Establishments.findOne({ _id: _lNewEstablishment });
+                let _lBagPlan: BagPlan = BagPlans.findOne({ _id: "100", 'price.country_id': _lEstabl.countryId });
 
                 _lNewEstablishmentPoint = EstablishmentPoints.collection.insert({
                     establishment_id: _lNewEstablishment,
@@ -304,11 +305,17 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                     creation_date: new Date()
                 });
 
-                let pricePoints: BagPlansPoints = {
-                    country_id: _lBagPlan.price.country_id,
-                    price: _lBagPlan.price.price,
-                    currency: _lBagPlan.price.currency
-                };
+                let pricePoints: BagPlansPoints;
+
+                _lBagPlan.price.forEach((priceObj) => {
+                    if (priceObj.country_id === _lEstabl.countryId) {
+                        pricePoints = {
+                            country_id: priceObj.country_id,
+                            price: priceObj.price,
+                            currency: priceObj.currency
+                        };
+                    }
+                });
 
                 //insert first history document for establishment in history
                 BagPlanHistories.collection.insert({
@@ -322,7 +329,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                 });
 
                 //Insert tables
-                let _lEstabl: Establishment = Establishments.findOne({ _id: _lNewEstablishment });
                 let _lParameterUrl: Parameter = Parameters.collection.findOne({ _id: "50000" });
 
                 this.establishmentCode = _lEstabl.establishment_code;
