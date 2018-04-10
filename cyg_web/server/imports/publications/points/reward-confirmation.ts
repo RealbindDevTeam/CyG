@@ -10,3 +10,10 @@ Meteor.publish('getRewardsConfirmationsByEstablishmentId', function (_pEstablish
     check(_pEstablishmentId, String);
     return RewardsConfirmations.find({ establishment_id: _pEstablishmentId });
 });
+
+/**
+ * Meteor publication rewards confirmation by establishments ids
+ */
+Meteor.publish('getRewardsConfirmationsByEstablishmentsIds', function (_pEstablishmentsIds: string[]) {
+    return RewardsConfirmations.find({ establishment_id: { $in: _pEstablishmentsIds } });
+});

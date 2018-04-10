@@ -270,6 +270,7 @@
             "DASHBOARD": "Dashboard"
         },
         "REWARDS": "Rewards",
+        "APPROVE_REWARDS": "Approvals",
         "ADMINISTRATION": {
             "MANAGEMENT": "Management",
             "RESTAURANTS": "Restaurants",
