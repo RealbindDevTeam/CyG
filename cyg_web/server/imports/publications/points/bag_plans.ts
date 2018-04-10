@@ -9,3 +9,13 @@ Meteor.publish('getBagPlans', function () {
     let _lBagsPlans = BagPlans.find({});
     return _lBagsPlans;
 });
+
+
+/**
+ * Meteor publication bag plans
+ * @param {string} _userId
+ */
+Meteor.publish('getBagPlansNoFree', function () {
+    let _lBagsPlans = BagPlans.find({ name: { $nin: ['free'] } });
+    return _lBagsPlans;
+});

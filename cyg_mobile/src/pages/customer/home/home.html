@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content text-wrap>
-    <h6 style="margin: 20px">
+    <h6 style="margin: 20px;text-align: center">
         {{'MOBILE.HOME.HEADER_TITLE' | translate}}
     </h6>
 
@@ -26,13 +26,13 @@
             </ion-item>
         </ion-card-content>
     </ion-card>
-    <ion-card (click)="goToOrderInEstablishment()">
+    <ion-card (click)="goToScanCode()">
         <ion-card-content>
             <ion-item>
                 <ion-thumbnail item-end>
                     <img src="assets/img/tables.png">
                 </ion-thumbnail>
-                <h2>{{'MOBILE.HOME.TITLE_ORDER_BTN' | translate}}</h2>
+                <h2>{{'MOBILE.HOME.TITLE_CODE_BTN' | translate}}</h2>
             </ion-item>
         </ion-card-content>
     </ion-card>

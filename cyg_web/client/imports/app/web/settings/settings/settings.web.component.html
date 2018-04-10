@@ -93,21 +93,6 @@
                             <mat-option *ngFor="let country of _countries | async" value="{{country._id}}" (click)="changeCountry(country._id)">{{country.name | translate}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-
-                    <mat-form-field style="width: 100%; margin-top: 24px">
-                        <mat-select formControlName="city" placeholder="{{'ADMIN_SIGNUP.CITY' | translate}}">
-                            <mat-option *ngFor="let city of _cities | async" value="{{city._id}}" (click)="changeCity()">{{city.name}}</mat-option>
-                            <mat-option *ngIf="(_cities | async)?.length > 0" (click)="changeOtherCity('0000');" value="0000">{{'OTHER' | translate}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field *ngIf="_showOtherCity" style="width: 100%; margin-top: 15px">
-                        <input matInput formControlName="otherCity" placeholder="{{'ADMIN_SIGNUP.WHICH_ONE' | translate}}" required>
-                    </mat-form-field>
-                    <div *ngIf="_showOtherCity && _userForm.controls['otherCity'].hasError('required') && _userForm.controls['otherCity'].touched"
-                        class="error-message">{{'ADMIN_SIGNUP.REQUIRED_OTHER' | translate}}</div>
-                    <div *ngIf="_showOtherCity && _userForm.controls['otherCity'].hasError('maxlength') && _userForm.controls['otherCity'].touched"
-                        class="error-message">{{'ADMIN_SIGNUP.MAX_LENGTH_OTHER' | translate}}</div>
                 </div>
 
                 <div *ngIf="this._user.username">

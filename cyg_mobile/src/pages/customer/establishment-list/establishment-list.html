@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content text-wrap>
-    <ion-card *ngFor="let establishment of _establishments | async" (click)="viewEstablishmentProfile(establishment)">
+    <!--ion-card *ngFor="let establishment of _establishments | async" (click)="viewEstablishmentProfile(establishment)">
         <ion-card-content>
             <button ion-item detail-none>
                 <ion-thumbnail item-left>
@@ -15,9 +15,24 @@
                 <h2>{{establishment.name}}</h2>
                 <p>
                     <ion-icon name="pin" item-start></ion-icon>
-                    {{establishment.address}}{{getCityName(establishment.cityId)}}
+                    {{establishment.address}}, {{establishment.city}}
                 </p>
             </button>
         </ion-card-content>
-    </ion-card>
+    </ion-card-->
+
+    <ion-list style="margin: 0 auto; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);" *ngFor="let establishment of _establishments | async;">
+        <button ion-item (click)="viewEstablishmentProfile(establishment)" style="background-image: url(assets/img/background_waiter.png);"
+            class="img-header">
+            <ion-thumbnail item-left>
+                <img *ngIf="establishment.image" src="{{ establishment.image.url }}">
+                <img *ngIf="!establishment.image" src="assets/img/default-restaurant.png">
+            </ion-thumbnail>
+            <h2>{{establishment.name}}</h2>
+            <p>
+                <ion-icon name="pin" item-start></ion-icon>
+                {{establishment.address}}, {{establishment.city}}
+            </p>
+        </button>
+    </ion-list>
 </ion-content>

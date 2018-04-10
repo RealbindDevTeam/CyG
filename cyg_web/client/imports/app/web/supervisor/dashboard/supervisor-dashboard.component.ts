@@ -155,25 +155,6 @@ export class SupervisorDashboardComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Get GarnishFood Sold
-     * @param {string} _pEstablishmentId
-     */
-    getGarnishFoodSold(_pEstablishmentId: string): number {
-        let _lGarnishFoodCount: number = 0;
-        /*Payments.collection.find({ establishment_id: _pEstablishmentId, creation_date: { $gte: new Date(this._currentYear, this._currentMonth, this._currentDay) } }).forEach(function <Payment>(pay, index, ar) {
-            pay.orders.forEach((orderId) => {
-                let _lOrder: Order = Orders.findOne({ _id: orderId });
-                if (_lOrder) {
-                    _lOrder.items.forEach((orderItem: OrderItem) => {
-                        _lGarnishFoodCount += (orderItem.quantity * orderItem.garnishFood.length);
-                    });
-                }
-            });
-        });*/
-        return _lGarnishFoodCount;
-    }
-
-    /**
      * Get Additions Sold
      * @param {string} _pEstablishmentId
      */

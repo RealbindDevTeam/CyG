@@ -51,21 +51,6 @@
                         <mat-hint align="end">{{inputDesc.value.length}} / 200</mat-hint>
                     </mat-form-field>
                 </mat-card-content>
-                <mat-form-field style="width: 100%;">
-                    <mat-select formControlName="editCookingTime" placeholder="{{'ITEMS.COOKING_TIME' | translate}}" [(ngModel)]="_selectedTime">
-                        <mat-option value="">{{'ITEMS.NO_TIME' | translate}}</mat-option>
-                        <mat-option *ngFor="let time of _cookingTimes | async" value="{{time.cooking_time}}">{{time.cooking_time}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-checkbox formControlName="editObservations">{{'ITEMS.OBSERVATIONS' | translate}}</mat-checkbox>
-                <div>
-                    <mat-checkbox formControlName="editAcceptReward" [(ngModel)]="_rewardEnable">{{'ITEMS.REWARD_LABEL' | translate}}</mat-checkbox>
-                    <mat-form-field style="margin-left: 5%;width: 25%;">
-                        <mat-select formControlName="editRewardValue" [disabled]="!_rewardEnable" placeholder="{{'ITEMS.POINTS_PLACEHOLER' | translate}}">
-                            <mat-option *ngFor="let point of _points | async" value="{{point._id}}">{{point.point}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
                 <div style="width: 100%;display: inline-block;margin-bottom: 1%;">
                     <input formControlName="editImage" (click)="changeImage()" style="display: none" name="file-1[]" id="file-1" class="inputfile inputfile-1"
                         data-multiple-caption="{count} files selected" />

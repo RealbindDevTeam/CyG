@@ -7,8 +7,6 @@ import { Subscription, Observable, Subject } from 'rxjs';
 import { UserLanguageService } from '../../services/general/user-language.service';
 import { Countries } from '../../../../../../both/collections/general/country.collection';
 import { Country } from '../../../../../../both/models/general/country.model';
-import { City } from '../../../../../../both/models/general/city.model';
-import { Cities } from '../../../../../../both/collections/general/city.collection';
 import { Language } from '../../../../../../both/models/general/language.model';
 import { Languages } from '../../../../../../both/collections/general/language.collection';
 import { Users } from '../../../../../../both/collections/auth/user.collection';
@@ -33,11 +31,9 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
     private _userDetailSubscription: Subscription;
     private _subscription: Subscription;
     private _countrySubscription: Subscription;
-    private _citySubscription: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
 
     private _countries: Observable<Country[]>;
-    private _cities: Observable<City[]>;
     private _languages: Observable<Language[]>;
 
     private _mdDialogRef: MatDialogRef<any>;
@@ -55,7 +51,6 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
     private titleMsg: string;
     private btnAcceptLbl: string;
     private _disabled: boolean = true;
-    private _showOtherCity: boolean = false;
     private _validateChangeEmail: boolean = true;
     private _validateChangePass: boolean = true;
     private _loading: boolean = false;
@@ -97,8 +92,6 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
                 this._countries = Countries.find({}).zone();
             });
         });
-
-        this._citySubscription = MeteorObservable.subscribe('cities').takeUntil(this._ngUnsubscribe).subscribe();
 
         this._subscription = MeteorObservable.subscribe('languages').takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
@@ -143,20 +136,6 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
 
                         let country: FormControl = new FormControl({ value: this._userDetail.country_id, disabled: false });
                         this._userForm.addControl('country', country);
-
-                        this.changeCountry(this._userDetail.country_id);
-
-                        let city: FormControl = new FormControl({ value: this._userDetail.city_id, disabled: false });
-                        this._userForm.addControl('city', city);
-
-                        let otherCity: FormControl = new FormControl();
-                        this._userForm.addControl('otherCity', otherCity);
-
-                        if (this._userDetail.other_city) {
-                            this._showOtherCity = true;
-                            this._userForm.controls['city'].setValue('0000');
-                            this._userForm.controls['otherCity'].setValue(this._userDetail.other_city);
-                        }
                     } else {
                         this._userForm.controls['full_name'].disable();
                     }
@@ -176,31 +155,6 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
     removeSubscriptions(): void {
         this._ngUnsubscribe.next();
         this._ngUnsubscribe.complete();
-    }
-
-    /**
-    * This function changes de country to select
-    *@param {string} _countryId
-    */
-    changeCountry(_countryId: string) {
-        this._cities = Cities.find({ country: _countryId }).zone();
-    }
-
-    /**
-     * This function changes de city to select other city
-     * @param {string} cityId
-     */
-    changeOtherCity(cityId: string) {
-        this._showOtherCity = true;
-        this._userForm.controls['otherCity'].setValidators(Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)]));
-    }
-
-    /**
-     * This function changes de city 
-     */
-    changeCity() {
-        this._showOtherCity = false;
-        this._userForm.controls['otherCity'].clearValidators();
     }
 
     /**
