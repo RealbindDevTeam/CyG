@@ -154,6 +154,7 @@
         "SLOGAN": "Reset your Password"
     },
     "SECTIONS": {
+        "SECTION_NAME": "Section name",
         "SECTION_CREATION": "Create sections",
         "SECTION_TEXT": "Create the sections of the menu for each restaurant",
         "SECTION_EDIT": "Section edition",
@@ -179,6 +180,7 @@
         "SECTION_NOT_REMOVED": "The section have categories or items, it could not be removed"
     },
     "CATEGORIES": {
+        "CATEGORY_NAME": "Category ame",
         "CATEGORIES_CREATION": "Create Categories",
         "SECCION_SELECTION": "Select section",
         "CATEGORIES_TEXT": "Create the categories of your menu and select the section to which it belongs",
@@ -198,6 +200,7 @@
         "CATEGORY_NOT_REMOVED": "The category have subcategories or items, it could not be removed"
     },
     "SUBCATEGORIES": {
+        "SUBCATEGORY_NAME": "Category ame",
         "SUBCATEGORY_CREATION": "Create Subcategories",
         "CATEGORY_SELECTION": "Select subcategory",
         "SUBCATEGORY_TEXT": "Create the subcategories of your menu and select the category to which it belongs",
@@ -218,6 +221,7 @@
         "SUBCATEGORY_NOT_REMOVED": "The subcategory have items, it could not be removed"
     },
     "ADDITIONS": {
+        "ADDITIONS_NAME": "Nombre",
         "ADDITION_CREATION": "Create Additions",
         "RESTAURANTS": "Restaurants",
         "RESTAURANT_ADDITION": "Select the restaurants where the addition is available",
@@ -621,6 +625,7 @@
         "USER_NAME_WILL_BE": "The username will be "
     },
     "ITEMS": {
+        "ITEM_NAME": "Name",
         "ITEMS_MANAGEMENT": "Item management",
         "ITEMS_MANAGEMENT_TEXT": "Creation and management of items",
         "CREATE_NEW_ITEM": "Create a new item",
@@ -1653,9 +1658,10 @@
         "READ_LESS": "Read less"
     },
     "AFTER_RESTAURANT_CREATION": {
-        "A": "Go to Administrator/collaborators option, and create the employees of the restaurant",
-        "B": "Go to Administrator/Tables/Search tables, to select and print the QR code of the tables",
-        "C": "Charge the information of your menu from the menu option, in order to the users can see it from their devices",
+        "A": "Download the QR code the order to consumers scan it  in the moment to pay",
+        "B": "Digitalize your menu and it will be avaible for your clients",
+        "C": "Define your rewards the order to consumer to redeem them",
+        "D": "Creates collaborators with supervisor role",
         "NOT_SHOW": "Do not show again"
     },
     "REWARD": {
@@ -1717,6 +1723,7 @@
         "TOTAL": "Total"
     },
     "OPTIONS": {
+        "OPTION_NAME": "Name",
         "OPTION_CREATION": "Create options",
         "OPTION_TEXT": "Create the options you need for your items",
         "OPTION_EDIT": "Option edition",

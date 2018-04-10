@@ -154,6 +154,7 @@
         "SLOGAN": "Cambio de contraseña"
     },
     "SECTIONS": {
+        "SECTION_NAME": "Nombre",
         "SECTION_CREATION": "Creación de secciones",
         "SECTION_TEXT": "Crea las secciones del menú para cada restaurante",
         "SECTION_EDIT": "Edición de la sección",
@@ -179,6 +180,7 @@
         "SECTION_NOT_REMOVED": "La sección tiene categorias o items, no se ha podido remover"
     },
     "CATEGORIES": {
+        "CATEGORY_NAME": "Nombre",
         "CATEGORIES_CREATION": "Creación de categorías",
         "SECCION_SELECTION": "Selecciona sección",
         "CATEGORIES_TEXT": "Crea las categorías de tu menú y selecciona la sección a la que pertenece",
@@ -198,6 +200,7 @@
         "CATEGORY_NOT_REMOVED": "La categoría tiene subcategorias o items, no se ha podido remover"
     },
     "SUBCATEGORIES": {
+        "SUBCATEGORY_NAME": "Nombre",
         "SUBCATEGORY_CREATION": "Creación de subcategorías",
         "CATEGORY_SELECTION": "Selecciona categoría",
         "SUBCATEGORY_TEXT": "Crea las subcategorías de tu menú y selecciona la categoría a la que pertenece",
@@ -218,6 +221,7 @@
         "SUBCATEGORY_NOT_REMOVED": "La subcategoría tiene items, no se ha podido remover"
     },
     "ADDITIONS": {
+        "ADDITIONS_NAME": "Nombre",
         "ADDITION_CREATION": "Creación de adiciones",
         "RESTAURANTS": "Restaurantes",
         "RESTAURANT_ADDITION": "Selecciona los restaurantes en donde se encontrara disponible la adición",
@@ -621,6 +625,7 @@
         "USER_NAME_WILL_BE": "El nombre del usuario será "
     },
     "ITEMS": {
+        "ITEM_NAME": "Nombre",
         "ITEMS_MANAGEMENT": "Administración de items",
         "ITEMS_MANAGEMENT_TEXT": "Creacion y administración de items",
         "CREATE_NEW_ITEM": "Crear nuevo ítem",
@@ -1653,9 +1658,10 @@
         "READ_LESS": "Leer menos"
     },
     "AFTER_RESTAURANT_CREATION": {
-        "A": "Ingresa a la opción Administración/colaboradores, y crea los empleados del restaurante",
-        "B": "Ve a la opción Administración/Mesas/Buscar mesas, para seleccionar e imprimir los Códigos QR de tus mesas",
-        "C": "Carga la información de tu menú desde la opción Menú, así los usuarios podrán verlo desde sus dispositivos",
+        "A": "Descarga tu código QR para que los clientes lo escaneen al momento de realizar sus pagos",
+        "B": "Digitaliza tu menú y estará disponible para tus clientes",
+        "C": "Define tus recompensas para que tus clientes las rediman",
+        "D": "Crea colaboradores con el rol supervisor",
         "NOT_SHOW": "No volver a mostrar"
     },
     "REWARD": {
@@ -1717,6 +1723,7 @@
         "TOTAL": "Total"
     },
     "OPTIONS": {
+        "OPTION_NAME": "Nombre",
         "OPTION_CREATION": "Creación de opciones",
         "OPTION_TEXT": "Crea las opciones que necesitas para tus items",
         "OPTION_EDIT": "Edición de la opción",

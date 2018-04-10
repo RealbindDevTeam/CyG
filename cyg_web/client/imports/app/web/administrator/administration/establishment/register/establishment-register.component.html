@@ -71,7 +71,6 @@
                             <p>{{'RESTAURANT_REGISTER.TABLES_MSG' | translate}}</p>
                         </mat-card-content>
                         <mat-card-actions align="end">
-                            <button mat-raised-button (click)="openDialogAfterRestaurantRegister()">OPEN DIALOG</button>
                             <button mat-raised-button (click)="cancel()">{{'CANCEL' | translate}}</button>
                             <button mat-raised-button (click)="addEstablishment()" [disabled]="!_establishmentForm.valid || !validatePaymentMethod">{{'FINISH' | translate}}</button>
                         </mat-card-actions>
