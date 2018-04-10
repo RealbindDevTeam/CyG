@@ -101,6 +101,11 @@
             </div>
         </form>
     </mat-step>
+
+
+
+
+
     <mat-step [stepControl]="_optionAdditionsFormGroup">
         <form [formGroup]="_optionAdditionsFormGroup">
             <ng-template matStepLabel>{{'ITEMS.OPTION_ADDITION' | translate}}</ng-template>
@@ -173,6 +178,10 @@
             </div>
         </form>
     </mat-step>
+
+
+
+    
 </mat-horizontal-stepper>
 <div class="loading" *ngIf="_loading">
     <mat-spinner></mat-spinner>
