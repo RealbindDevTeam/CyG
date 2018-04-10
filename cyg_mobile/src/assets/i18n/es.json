@@ -532,7 +532,13 @@
             "MEDALS": "Medallas",
             "YOU_REDEEM": "En este momento estás redimiendo",
             "MEDALS_AVAILABLE": "Medallas disponibles para redimir",
-            "MORE_MEDALS": "Acumula más medallas para redimir esta recompensa"
+            "MORE_MEDALS": "Acumula más medallas para redimir esta recompensa",
+            "ESTABLISHMENT_NO_ACTIVE": "Lo sentimos, el restaurante en el momento no tiene activado el servicio de comeygana para redimir recompensas",
+            "REWARD_IN_PROCESS": "Recompensa en proceso",
+            "REWARD_CONFIRM_TITLE": "Estas seguro de redimir esta recompensa?",
+            "REWARD_CONFIRM_SUBTITLE": "El restaurante confirmara lo que estas redimiendo",
+            "YES": "Si",
+            "NO": "No"
         },
         "POINTS": {
             "TITLE": "Mis Medallas",

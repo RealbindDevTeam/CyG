@@ -7,14 +7,14 @@
                 </div>
                 <div class="card_initial-copy">
                     <div class="card_initial-tagline">
-                        {{'SECTIONS.THERE_NOT_RESTAURANTS' | translate}}
+                        {{'APPROVE_REWARDS.THERE_NOT_RESTAURANTS' | translate}}
                     </div>
                     <div class="card_initial-additional-links">
-                        {{'SECTIONS.MESSAGE' | translate}}
+                        {{'APPROVE_REWARDS.MESSAGE' | translate}}
                     </div>
                 </div>
                 <div class="card_initial-button">
-                    <button mat-raised-button (click)="goToAddEstablishment()">{{'SECTIONS.RESTAURANT_REGISTER' | translate}}</button>
+                    <button mat-raised-button (click)="goToAddEstablishment()">{{'APPROVE_REWARDS.RESTAURANT_REGISTER' | translate}}</button>
                 </div>
             </div>
         </div>
@@ -22,11 +22,11 @@
 </mat-card>
 <div *ngIf="_thereAreEstablishments">
     <mat-card>
-        <mat-card-title>Aprobacion De Recompensas</mat-card-title>
-        <mat-card-subtitle>Esta pagina te permite aprobar las recompensas que tus clientes redimen en tus restaurantes</mat-card-subtitle>
+        <mat-card-title>{{'APPROVE_REWARDS.TITLE' | translate}}</mat-card-title>
+        <mat-card-subtitle>{{'APPROVE_REWARDS.SUBTITLE' | translate}}</mat-card-subtitle>
         <mat-card-content>
             <mat-form-field style="width: 100%;">
-                <mat-select placeholder="Seleccione restaurante">
+                <mat-select placeholder="{{'APPROVE_REWARDS.SELECT_RESTAURANT' | translate}}">
                     <mat-option *ngFor="let est of _establishments | async" (click)="rewardsConfirmSearch(est._id);" value="{{est._id}}">{{est.name}} - {{est.address}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="card_initial-copy">
                         <div class="card_initial-tagline">
-                            No se han encontrado recompensas por aprobar para el restaurante seleccionado
+                            {{'APPROVE_REWARDS.NO_REWARDS_FOUND' | translate}}
                         </div>
                     </div>
                 </div>
@@ -57,10 +57,10 @@
                             <mat-list>
                                 <mat-list-item>
                                     <img mat-list-avatar style="border-radius: 50%; width: 100px; height: 100px;" src="{{getUserImage(rewardConfirmation.user_id)}}">
-                                    <p mat-line style="font-size: 1.5rem;color: #114b5f; font-weight: 500;">{{item.name}} - {{rewardConfirmation.medals_to_redeem}} Medallas</p>
-                                    <p mat-line style="font-size: 1rem;">Cliente: {{getUserName(rewardConfirmation.user_id)}}</p>
-                                    <button mat-raised-button class="primary-button card-button" style="min-width: 110px;margin-right: 10px;" (click)="disapproveRewardConfirmation(rewardConfirmation)">No Aprobar</button>
-                                    <button mat-raised-button class="primary-button card-button" style="min-width: 110px;" (click)="approveRewardConfirmation(rewardConfirmation)">Aprobar</button>
+                                    <p mat-line style="font-size: 1.5rem;color: #114b5f; font-weight: 500;">{{item.name}} - {{rewardConfirmation.medals_to_redeem}} {{'APPROVE_REWARDS.MEDALS' | translate}}</p>
+                                    <p mat-line style="font-size: 1rem;">{{'APPROVE_REWARDS.CUSTOMER' | translate}}: {{getUserName(rewardConfirmation.user_id)}}</p>
+                                    <button mat-raised-button class="primary-button card-button" style="min-width: 110px;margin-right: 10px;" (click)="disapproveRewardConfirmation(rewardConfirmation)">{{'APPROVE_REWARDS.NO_APPROVE' | translate}}</button>
+                                    <button mat-raised-button class="primary-button card-button" style="min-width: 110px;" (click)="approveRewardConfirmation(rewardConfirmation)">{{'APPROVE_REWARDS.APPROVE' | translate}}</button>
                                 </mat-list-item>
                             </mat-list>
                         </mat-card>
@@ -69,4 +69,7 @@
             </div>
         </div>
     </div>
+</div>
+<div class="loading" *ngIf="_loading">
+    <mat-spinner></mat-spinner>
 </div>

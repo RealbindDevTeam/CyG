@@ -532,7 +532,13 @@
             "MEDALS": "Medals",
             "YOU_REDEEM": "In this moment you are redeeming",
             "MEDALS_AVAILABLE": "Medals available to redeem",
-            "MORE_MEDALS": "Earn more medals to redeem this reward"
+            "MORE_MEDALS": "Earn more medals to redeem this reward",
+            "ESTABLISHMENT_NO_ACTIVE": "We are sorry, the restaurant at the moment has not activated the comeygana service to redeem rewards",
+            "REWARD_IN_PROCESS": "Reward in process",
+            "REWARD_CONFIRM_TITLE": "Are you sure you will redeem this reward?",
+            "REWARD_CONFIRM_SUBTITLE": "The restaurant will confirm what you are redeeming",
+            "YES": "Yes",
+            "NO": "No"
         },
         "POINTS": {
             "TITLE": "My Medals",

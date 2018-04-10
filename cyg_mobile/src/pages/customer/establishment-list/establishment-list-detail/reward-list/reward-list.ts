@@ -38,6 +38,7 @@ export class RewardListComponent {
     private _medalsInProcessToRedeem: number = 0;
     private _showMedalsInProcessToRedeem: boolean = false;
     private _medalsAvailableToRedeem: number = 0;
+    private _establishmentIsActive: boolean = true;
 
     /**
      * RewardListComponent Constructor
@@ -79,6 +80,7 @@ export class RewardListComponent {
             this._ngZone.run(() => {
                 this._establishmentMedals = EstablishmentMedals.find({ user_id: this._user, establishment_id: this._establishmentId }).zone();
                 this._establishmentMedals.subscribe(() => {
+                    this.verifyEstablishment();
                     this._medalsAvailableToRedeem = 0;
                     this.validateMedalsAvailableToRedeem();
                 });
@@ -117,6 +119,16 @@ export class RewardListComponent {
                 });
             });
         });
+    }
+
+    /**
+     * Function to verify establishment status
+     */
+    verifyEstablishment(): void {
+        let _lEstablishmentMedal: EstablishmentMedal = EstablishmentMedals.findOne({ user_id: this._user, establishment_id: this._establishmentId });
+        if (_lEstablishmentMedal) {
+            _lEstablishmentMedal.is_active ? this._establishmentIsActive = true : this._establishmentIsActive = false;
+        }
     }
 
     /**
@@ -204,11 +216,10 @@ export class RewardListComponent {
      * @param {number} _pRewardPoints
      */
     redeemReward(_pRewardId: string, _pRewardPoints: number): void {
-        let dialog_title = 'Estas seguro de redimir esta recompensa?';
-        let dialog_subtitle = 'El restaurante confirmara lo que estas redimiendo.'
-        let dialog_cancel_btn = 'No'
-        let dialog_accept_btn = 'Si'
-        let final_msg = 'Recompensa en proceso'
+        let dialog_title = this.itemNameTraduction('MOBILE.REWARD_LIST.REWARD_CONFIRM_TITLE');
+        let dialog_subtitle = this.itemNameTraduction('MOBILE.REWARD_LIST.REWARD_CONFIRM_SUBTITLE');
+        let dialog_cancel_btn = this.itemNameTraduction('MOBILE.REWARD_LIST.NO');
+        let dialog_accept_btn = this.itemNameTraduction('MOBILE.REWARD_LIST.YES');
 
         let alertConfirm = this.alertCtrl.create({
             title: dialog_title,
@@ -244,7 +255,7 @@ export class RewardListComponent {
      * This function present the toast to add the reward to de order
      */
     presentToast() {
-        let _lMessage: string = 'Recompensa en proceso';
+        let _lMessage: string = this.itemNameTraduction('MOBILE.REWARD_LIST.REWARD_IN_PROCESS');
         let toast = this.toastCtrl.create({
             message: _lMessage,
             duration: 1500,

@@ -47,6 +47,7 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
     private titleMsg: string;
     private btnAcceptLbl: string;
     private btnCancelLbl: string;
+    private _loading: boolean = false;
 
     /**
      * ApproveRewardsComponent Constructor
@@ -180,8 +181,8 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
      * @param {RewardConfirmation} _pRewardConfirmation 
      */
     approveRewardConfirmation(_pRewardConfirmation: RewardConfirmation): void {
-        let _lDialogTitle = "Confirmar Recompensa";
-        let _lDialogContent = "Estas seguro de confirmar la recompensa?";
+        let _lDialogTitle = this.itemNameTraduction('APPROVE_REWARDS.APPROVE_REWARD');
+        let _lDialogContent = this.itemNameTraduction('APPROVE_REWARDS.APPROVE_REWARD_MSG');
         let _lError: string = 'LOGIN_SYSTEM_OPERATIONS_MSG';
 
         if (!Meteor.userId()) {
@@ -202,9 +203,17 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
         this._mdDialogRef.afterClosed().subscribe(result => {
             this._mdDialogRef = result;
             if (result.success) {
-
-                let _lMessage = 'Recompensa confirmada';//this.itemNameTraduction('REWARD.REWARD_REMOVED');
-                this._snackBar.open(_lMessage, '', { duration: 2500 });
+                this._loading = true;
+                setTimeout(() => {
+                    MeteorObservable.call('redeemUserMedals', _pRewardConfirmation).subscribe(() => {
+                        this._loading = false;
+                        let _lMessage = this.itemNameTraduction('APPROVE_REWARDS.REWARD_APPROVED');
+                        this._snackBar.open(_lMessage, '', { duration: 2500 });
+                    }, (error) => {
+                        this._loading = false;
+                        this.openDialog(this.titleMsg, '', error.reason, '', this.btnAcceptLbl, false);
+                    });
+                }, 1500);
             }
         });
     }
@@ -214,8 +223,8 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
      * @param {RewardConfirmation} _pRewardConfirmation 
      */
     disapproveRewardConfirmation(_pRewardConfirmation: RewardConfirmation): void {
-        let _lDialogTitle = "Rechazar Recompensa";
-        let _lDialogContent = "Estas seguro de rechazar la recompensa?";
+        let _lDialogTitle = this.itemNameTraduction('APPROVE_REWARDS.REJECT_REWARD');
+        let _lDialogContent = this.itemNameTraduction('APPROVE_REWARDS.REJECT_REWARD_MSG');
         let _lError: string = 'LOGIN_SYSTEM_OPERATIONS_MSG';
 
         if (!Meteor.userId()) {
@@ -236,8 +245,8 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
         this._mdDialogRef.afterClosed().subscribe(result => {
             this._mdDialogRef = result;
             if (result.success) {
-
-                let _lMessage = 'Recompensa rechazada';//this.itemNameTraduction('REWARD.REWARD_REMOVED');
+                RewardsConfirmations.remove({ _id: _pRewardConfirmation._id });
+                let _lMessage = this.itemNameTraduction('APPROVE_REWARDS.REWARD_REJECTED');
                 this._snackBar.open(_lMessage, '', { duration: 2500 });
             }
         });

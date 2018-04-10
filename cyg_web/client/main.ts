@@ -25,6 +25,7 @@ import '../both/methods/establishment/schedule.methods';
 import '../both/methods/establishment/table.method';
 import '../both/methods/establishment/waiter-queue/waiter-queue.methods';
 import '../both/methods/establishment/waiter-queue/queues.methods';
+import '../both/methods/reward/reward.methods';
 
 function setClass(css:any) {
     if (!document.body.className) {
