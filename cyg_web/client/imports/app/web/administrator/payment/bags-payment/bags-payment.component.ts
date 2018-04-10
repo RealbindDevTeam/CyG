@@ -146,96 +146,98 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
      * Function to add plan to establishment
      */
     addPlan(_bagPlan: BagPlan, _establishment: Establishment) {
+
         this._total = 0;
+        let bagPlanInfo: Element = this.getBagPlanInfo(_bagPlan._id, _establishment);
 
-        let _lBagPlan: BagPlan = BagPlans.findOne({ _id: _bagPlan._id, 'price.country_id': _establishment.countryId });
         let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishment._id);
-        let initialPrice: number = 0;
-        let initialCurrency: string = '';
-
-        _lBagPlan.price.forEach((priceObj) => {
-            if (priceObj.country_id === _establishment.countryId) {
-                initialPrice = priceObj.price;
-                initialCurrency = priceObj.currency;
-            }
-        });
-
         if (indexOfElement > -1) {
-            let obj = {
-                establishmentId: _establishment._id,
-                bagPlanPrice: initialPrice,
-                bagPlanCurrency: initialCurrency,
-                bagPlanPoints: _lBagPlan.value_points
-            };
-            this._tmpBagsArray.splice(indexOfElement, 1, obj);
+            let pricePending: number = 0;
+            if (this.hasPendingMedals(_establishment._id)) {
+                pricePending = this.getPriceByPending(_establishment);
+            }
+            bagPlanInfo.creditPoints = pricePending;
+            this._tmpBagsArray.splice(indexOfElement, 1, bagPlanInfo);
             this._tmpBagsArray.forEach((bagElement) => {
-                this._total = this._total + bagElement.bagPlanPrice;
+                this._total = this._total + bagElement.bagPlanPrice + bagElement.creditPoints;;
             });
 
-            this._establishmentBagForm.controls['sel_' + _establishment._id].setValue(_lBagPlan._id);
-            this._establishmentBagForm.controls['lbl_' + _establishment._id].setValue(initialPrice + ' ' + initialCurrency);
+            this._establishmentBagForm.controls['sel_' + _establishment._id].setValue(bagPlanInfo.bagPlanId);
+            this._establishmentBagForm.controls['lbl_' + _establishment._id].setValue(bagPlanInfo.bagPlanPrice + ' ' + bagPlanInfo.bagPlanCurrency);
         }
     }
 
     /**
      * Function to enable row
      */
-    addToRowArray(_establishmentId: Establishment, isChecked: boolean, index: number) {
-        let _lBagPlan: BagPlan = BagPlans.findOne({ _id: "400", 'price.country_id': _establishmentId.countryId });
-        let initialPrice: number = 0;
-        let initialCurrency: string = '';
-        let initialPoints: number = _lBagPlan.value_points;
-        _lBagPlan.price.forEach((priceObj) => {
-            if (priceObj.country_id === _establishmentId.countryId) {
-                initialPrice = priceObj.price;
-                initialCurrency = priceObj.currency
-            }
-        });
+    addToRowArray(_establishment: Establishment, isChecked: boolean, index: number) {
 
         this._total = 0;
+        let bagPlanInfo: Element = this.getBagPlanInfo('400', _establishment);
         if (isChecked) {
-            let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishmentId._id);
+            let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishment._id);
             if (indexOfElement > -1) {
                 this._tmpBagsArray.forEach((bagElement) => {
                     this._total = this._total + bagElement.bagPlanPrice;
                 });
             } else {
-                let obj = {
-                    establishmentId: _establishmentId._id,
-                    bagPlanPrice: initialPrice,
-                    bagPlanCurrency: initialCurrency,
-                    bagPlanPoints: _lBagPlan.value_points
-                };
-                this._tmpBagsArray.push(obj);
+                let pricePending: number = 0;
+                if (this.hasPendingMedals(_establishment._id)) {
+                    pricePending = this.getPriceByPending(_establishment);
+                }
+                bagPlanInfo.creditPoints = pricePending;
+                this._tmpBagsArray.push(bagPlanInfo);
                 this._tmpBagsArray.forEach((bagElement) => {
-                    this._total = this._total + bagElement.bagPlanPrice;
+                    this._total = this._total + bagElement.bagPlanPrice + bagElement.creditPoints;
                 });
 
-                this._establishmentBagForm.controls['sel_' + _establishmentId._id].enable();
-                this._establishmentBagForm.controls['sel_' + _establishmentId._id].setValue(_lBagPlan._id);
-                this._establishmentBagForm.controls['lbl_' + _establishmentId._id].setValue(initialPrice + ' ' + initialCurrency);
+                this._establishmentBagForm.controls['sel_' + _establishment._id].enable();
+                this._establishmentBagForm.controls['sel_' + _establishment._id].setValue(bagPlanInfo.bagPlanId);
+                this._establishmentBagForm.controls['lbl_' + _establishment._id].setValue(bagPlanInfo.bagPlanPrice + ' ' + bagPlanInfo.bagPlanCurrency);
             }
         } else {
-            let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishmentId._id);
+            let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishment._id);
             if (indexOfElement > -1) {
                 this._tmpBagsArray.splice(indexOfElement, 1);
-
+                let pricePending: number = 0;
+                if (this.hasPendingMedals(_establishment._id)) {
+                    pricePending = this.getPriceByPending(_establishment);
+                }
+                bagPlanInfo.creditPoints = pricePending;
                 this._tmpBagsArray.forEach((bagElement) => {
-                    this._total = this._total + bagElement.bagPlanPrice;
+                    this._total = this._total + bagElement.bagPlanPrice + bagElement.creditPoints;;
                 });
-                this._establishmentBagForm.controls['sel_' + _establishmentId._id].reset();
-                this._establishmentBagForm.controls['sel_' + _establishmentId._id].disable();
-                this._establishmentBagForm.controls['lbl_' + _establishmentId._id].reset();
+                this._establishmentBagForm.controls['sel_' + _establishment._id].reset();
+                this._establishmentBagForm.controls['sel_' + _establishment._id].disable();
+                this._establishmentBagForm.controls['lbl_' + _establishment._id].reset();
             }
         }
     }
 
-
     /**
-     * Function to get bag plan info selected
+     * Function to get bag plan info selected according to establishment country
      */
-    getBagPlanInfo(_bagPLanId: string, _establishmentId: string) {
+    getBagPlanInfo(_bagPLanId: string, _establishment: Establishment): Element {
+        let _lBagPlan: BagPlan = BagPlans.findOne({ _id: _bagPLanId, 'price.country_id': _establishment.countryId });
+        let initialPrice: number = 0;
+        let initialCurrency: string = '';
+        let initialPoints: number = _lBagPlan.value_points;
 
+        _lBagPlan.price.forEach((priceObj) => {
+            if (priceObj.country_id === _establishment.countryId) {
+                initialPrice = priceObj.price;
+                initialCurrency = priceObj.currency
+            }
+        });
+
+        let obj: Element = {
+            establishmentId: _establishment._id,
+            bagPlanId: _lBagPlan._id,
+            bagPlanPrice: initialPrice,
+            bagPlanCurrency: initialCurrency,
+            bagPlanPoints: initialPoints
+        }
+        return obj;
     }
 
 
@@ -244,7 +246,6 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
      */
     hasPendingMedals(_establishmentId: string): boolean {
         let countOfNegative: number = NegativePoints.collection.find({ establishment_id: _establishmentId, paid: false }).count();
-        console.log(countOfNegative);
         if (countOfNegative > 0) {
             return true;
         } else {
@@ -267,19 +268,17 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
      * Function to get price by pending medals
      */
     getPriceByPending(_establishment: Establishment): number {
-        let _lBagPlan: BagPlan = BagPlans.findOne({ _id: "200", 'price.country_id': _establishment.countryId });
-        let initialPoints: number = _lBagPlan.value_points;
-        let initialPrice: number = 0;
-        let initialCurrency: string = '';
-        _lBagPlan.price.forEach((priceObj) => {
-            if (priceObj.country_id === _establishment.countryId) {
-                initialPrice = priceObj.price;
-                initialCurrency = priceObj.currency
-            }
-        });
+        let bagPlanInfo: Element = this.getBagPlanInfo('200', _establishment);
         let pendingMedals: number = this.getPendingMedals(_establishment._id);
-        let pedingMedalsPrice: number = (pendingMedals * initialPrice) / initialPoints;
+        let pedingMedalsPrice: number = (pendingMedals * bagPlanInfo.bagPlanPrice) / bagPlanInfo.bagPlanPoints;
         return Math.round(pedingMedalsPrice);
+    }
+
+    /**
+     * Function to go to payment form
+     */
+    goToPaymentForm() {
+        console.log(this._tmpBagsArray);
     }
 
     /**
@@ -299,10 +298,15 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
 }
 
 
+/**
+ * Temporal interface to send bag plan main properties
+ */
 export interface Element {
     establishmentId: string;
+    bagPlanId: string;
     bagPlanPrice: number;
     bagPlanCurrency: string;
     bagPlanPoints: number;
     creditPoints?: number;
+    creditPrice?: number;
 }

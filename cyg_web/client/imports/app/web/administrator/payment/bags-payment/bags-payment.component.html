@@ -64,7 +64,7 @@
                 <div style="text-align: right">
                     <h2>
                         <span style="margin-right: 10px">
-                            <button [disabled]="_total<=0" color="accent" mat-raised-button>{{'MONTHLY_PAYMENT.PAY' | translate}}</button>
+                            <button [disabled]="_total<=0" (click)="goToPaymentForm()" color="accent" mat-raised-button>{{'MONTHLY_PAYMENT.PAY' | translate}}</button>
                         </span>{{'MONTHLY_PAYMENT.TOTAL_PRICE' | translate}}{{_total}} {{currency.code}}
                     </h2>
                 </div>
