@@ -3,5 +3,5 @@
  */
 export interface Point {
     _id?: string;
-    point: string;
+    point: number;
 }

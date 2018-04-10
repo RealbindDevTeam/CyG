@@ -1,93 +1,99 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController, NavController, ViewController, Platform } from 'ionic-angular';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { AlertController, NavParams, LoadingController, NavController, ViewController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Meteor } from 'meteor/meteor';
 import { MeteorObservable } from 'meteor-rxjs';
-import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
 import { UserLanguageServiceProvider } from '../../../providers/user-language-service/user-language-service';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Network } from '@ionic-native/network';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, Subject, Observable } from 'rxjs';
+import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
+import { Establishments } from 'cyg_web/both/collections/establishment/establishment.collection';
+import { RewardListComponent } from '../establishment-list/establishment-list-detail/reward-list/reward-list';
+import { PointsDetailPage } from '../points/points-detail/points-detail';
 
 @Component({
-    selector: 'scan-code',
-    templateUrl: 'scan-code.html'
+    selector: 'medal-won',
+    templateUrl: 'medal-won.html'
 })
-export class ScanCodePage implements OnInit {
+export class MedalWonPage implements OnInit {
 
+    private _establishmentId: string = '';
+
+    private _establishmentSub: Subscription;
     private disconnectSubscription: Subscription;
+    private _ngUnsubscribe: Subject<void> = new Subject<void>();
+
+    private _establishments: Observable<Establishment[]>;
 
     /**
-     * ScanCodePage Constructor
+     * MedalWonPage Constructor
      * @param {NavController} _navCtrl 
+     * @param {NavParams} _navParams
      * @param {ViewController} _viewCtrl 
      * @param {TranslateService} _translate 
      * @param {AlertController} _alertCtrl 
-     * @param {LoadingController} _loadingCtrl 
      * @param {UserLanguageServiceProvider} _userLanguageService 
-     * @param {BarcodeScanner} barcodeScanner 
      * @param {Platform} _platform 
      * @param {Network} _network 
+     * @param {NgZone} _ngZone
      */
     constructor(private _navCtrl: NavController,
+        public _navParams: NavParams,
         private _viewCtrl: ViewController,
         public _translate: TranslateService,
         public _alertCtrl: AlertController,
-        public _loadingCtrl: LoadingController,
         private _userLanguageService: UserLanguageServiceProvider,
-        private barcodeScanner: BarcodeScanner,
         public _platform: Platform,
-        private _network: Network) {
+        private _network: Network,
+        private _ngZone: NgZone) {
         _translate.setDefaultLang('en');
+        this._establishmentId = this._navParams.get("est_id");
     }
 
     /**
      * ngOnInit implementation
      */
     ngOnInit() {
+        this.removeSubscriptions();
+        this.init();
+    }
+
+    ionViewWillEnter() {
+        this.removeSubscriptions();
+        this.init();
+    }
+
+    /**
+     * Initial function
+     */
+    init() {
+        this.removeSubscriptions();
         this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
-    }
-
-    /**
-     * Function to scan QR Code
-     */
-    scanQRCode(): void {
-        this.barcodeScanner.scan().then((result) => {
-            this.validateQRCode(result.text);
-        }, (err) => {
-            // An error occurred
+        this._establishmentSub = MeteorObservable.subscribe('getEstablishmentById', this._establishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
+            this._ngZone.run(() => {
+                this._establishments = Establishments.find({ _id: this._establishmentId }).zone();
+            });
         });
     }
 
     /**
-     * Function to validate QR Code
-     * @param {string} _pQRCode 
+     * Function to show establishment rewards
      */
-    validateQRCode(_pQRCode: string): void {
-        var split = _pQRCode.split('qr?', 2);
-        var qr_code: string = split[1];
+    showRewards(): void {
+        this._navCtrl.push(RewardListComponent, { establishment: this._establishmentId }).then(() => {
+            const index = this._viewCtrl.index;
+            this._navCtrl.remove(index);
+        });
     }
 
     /**
-     * Show message confirm
-     * @param _pContent 
+     * Show establishment points
      */
-    showConfirmMessage(_pContent: any) {
-        let okBtn = this.itemNameTraduction('MOBILE.OK');
-        let title = this.itemNameTraduction('MOBILE.SYSTEM_MSG');
-
-        let prompt = this._alertCtrl.create({
-            title: title,
-            message: _pContent,
-            buttons: [
-                {
-                    text: okBtn,
-                    handler: data => {
-                    }
-                }
-            ]
+    showEstablishmentPoints(): void {
+        this._navCtrl.push(PointsDetailPage, { _establishment_id: this._establishmentId }).then(() => {
+            const index = this._viewCtrl.index;
+            this._navCtrl.remove(index);
         });
-        prompt.present();
     }
 
     /** 
@@ -150,11 +156,27 @@ export class ScanCodePage implements OnInit {
         this.disconnectSubscription.unsubscribe();
     }
 
+    ionViewWillUnload() {
+        this.removeSubscriptions();
+    }
+
     itemNameTraduction(itemName: string): string {
         var wordTraduced: string;
         this._translate.get(itemName).subscribe((res: string) => {
             wordTraduced = res;
         });
         return wordTraduced;
+    }
+
+    ngOnDestroy() {
+        this.removeSubscriptions();
+    }
+
+    /**
+     * Remove all subscriptions
+     */
+    removeSubscriptions(): void {
+        this._ngUnsubscribe.next();
+        this._ngUnsubscribe.complete();
     }
 }

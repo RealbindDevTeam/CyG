@@ -34,7 +34,7 @@ export class EstablishmentListPage implements OnInit, OnDestroy {
         this.removeSubscriptions();
         this._establishmentSubscription = MeteorObservable.subscribe('getEstablishments').takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
+                this._establishments = Establishments.find({ isActive: true }).zone();
             });
         });
     }
