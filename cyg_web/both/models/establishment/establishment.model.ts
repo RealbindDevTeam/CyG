@@ -5,8 +5,7 @@ import { CollectionObject } from '../collection-object.model';
  */
 export interface Establishment extends CollectionObject {
     countryId: string;
-    cityId?: string;
-    other_city?: string;
+    city: string;
     name: string;
     currencyId: string;
     address: string;
@@ -14,12 +13,8 @@ export interface Establishment extends CollectionObject {
     phone: string;
     establishment_code: string;
     paymentMethods: string[];
-    points_validity: string;
     tables_quantity: number;
     image?: EstablishmentImage;
-    orderNumberCount: number;
-    max_jobs?: number;
-    queue: string[];
     isActive: boolean;
     firstPay: boolean;
     freeDays?: boolean;

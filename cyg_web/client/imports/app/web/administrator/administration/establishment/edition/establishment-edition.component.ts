@@ -3,7 +3,7 @@ import { Observable, Subscription, Subject } from 'rxjs';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MeteorObservable } from 'meteor-rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 import { Meteor } from 'meteor/meteor';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserLanguageService } from '../../../../services/general/user-language.service';
@@ -15,14 +15,10 @@ import { PaymentMethod } from '../../../../../../../../both/models/general/payme
 import { PaymentMethods } from '../../../../../../../../both/collections/general/paymentMethod.collection';
 import { Countries } from '../../../../../../../../both/collections/general/country.collection';
 import { Country } from '../../../../../../../../both/models/general/country.model';
-import { City } from '../../../../../../../../both/models/general/city.model';
-import { Cities } from '../../../../../../../../both/collections/general/city.collection';
 import { Parameter } from '../../../../../../../../both/models/general/parameter.model';
 import { Parameters } from '../../../../../../../../both/collections/general/parameter.collection';
 import { AlertConfirmComponent } from '../../../../../web/general/alert-confirm/alert-confirm.component';
 import { ImageService } from '../../../../services/general/image.service';
-import { PointValidity } from '../../../../../../../../both/models/general/point-validity.model';
-import { PointsValidity } from '../../../../../../../../both/collections/general/point-validity.collection';
 
 @Component({
     selector: 'establishment-edition',
@@ -40,17 +36,13 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
     private _establishmentSub: Subscription;
     private _currencySub: Subscription;
     private _countriesSub: Subscription;
-    private _citiesSub: Subscription;
     private _paymentMethodsSub: Subscription;
     private _parameterSub: Subscription;
-    private _pointValiditySub: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
 
     private _countries: Observable<Country[]>;
-    private _cities: Observable<City[]>;
     private _currencies: Observable<Currency[]>;
     private _parameterDaysTrial: Observable<Parameter[]>;
-    private _pointsValidity: Observable<PointValidity[]>;
 
     private _paymentMethods: PaymentMethod[] = [];
     private _paymentMethodsList: PaymentMethod[] = [];
@@ -62,19 +54,14 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
     public _selectedIndex: number = 0;
     private _establishmentEditImageUrl: string;
 
-    private _queue: string[] = [];
     private _selectedCountryValue: string = "";
-    private _selectedCityValue: string = "";
-
     private _establishmentCountryValue: string;
-    private _establishmentCityValue: string;
 
     private _establishmentCurrency: string = '';
     private _countryIndicative: string;
     private titleMsg: string;
     private btnAcceptLbl: string;
-
-    private _showOtherCity: boolean;
+    private _loading: boolean = false;
 
     /**
      * EstablishmentEditionComponent Constructor
@@ -85,6 +72,7 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
      * @param {Router} _router 
      * @param {UserLanguageService} _userLanguageService
      * @param {ImageService} _imageService
+     * @param {MatSnackBar} _snackBar
      */
     constructor(private _formBuilder: FormBuilder,
         private _translate: TranslateService,
@@ -93,7 +81,8 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
         private _router: Router,
         private _userLanguageService: UserLanguageService,
         protected _mdDialog: MatDialog,
-        private _imageService: ImageService) {
+        private _imageService: ImageService,
+        private _snackBar: MatSnackBar) {
         let _lng: string = this._userLanguageService.getLanguage(Meteor.user());
         _translate.use(_lng);
         _translate.setDefaultLang('en');
@@ -127,12 +116,6 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
             this._ngZone.run(() => {
                 this._countries = Countries.find({}).zone();
                 let _lCountry: Country = Countries.findOne({ _id: this._establishmentToEdit.countryId });
-            });
-        });
-
-        this._citiesSub = MeteorObservable.subscribe('citiesByCountry', this._establishmentToEdit.countryId).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._cities = Cities.find({}).zone();
             });
         });
 
@@ -172,40 +155,22 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
             this._parameterDaysTrial = Parameters.find({ _id: '100' });
         });
 
-        this._pointValiditySub = MeteorObservable.subscribe('pointsValidity').takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._pointsValidity = PointsValidity.find({ '_id': { $gte: '20' } }).zone();
-            });
-        });
-
         this._establishmentEditionForm = new FormGroup({
             editId: new FormControl(this._establishmentToEdit._id),
             country: new FormControl(this._establishmentToEdit.countryId),
-            city: new FormControl(this._establishmentToEdit.cityId),
+            city: new FormControl(this._establishmentToEdit.city),
             name: new FormControl(this._establishmentToEdit.name),
             address: new FormControl(this._establishmentToEdit.address),
             phone: new FormControl(this._establishmentToEdit.phone),
             editImage: new FormControl(''),
-            pointsValidity: new FormControl(this._establishmentToEdit.points_validity),
-            paymentMethods: this._paymentsFormGroup,
-            otherCity: new FormControl(this._establishmentToEdit.other_city)
+            paymentMethods: this._paymentsFormGroup
         });
 
 
         this._selectedCountryValue = this._establishmentToEdit.countryId;
         this._establishmentCountryValue = this._establishmentToEdit.countryId;
-        if ((this._establishmentToEdit.cityId === null || this._establishmentToEdit.cityId === '') && this._establishmentToEdit.other_city !== '') {
-            this._selectedCityValue = '0000';
-            this._showOtherCity = true;
-        } else {
-            this._selectedCityValue = this._establishmentToEdit.cityId;
-            this._showOtherCity = false;
-        }
-
-        this._establishmentCityValue = this._establishmentToEdit.cityId;
         this._establishmentPaymentMethods = this._establishmentToEdit.paymentMethods;
         this._countryIndicative = this._establishmentToEdit.indicative;
-        this._queue = this._establishmentToEdit.queue;
     }
 
     /**
@@ -225,71 +190,52 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
             return;
         }
 
-        let cityIdAux: string;
-        let cityAux: string;
+        this._loading = true;
+        setTimeout(() => {
+            let arrPay: any[] = Object.keys(this._establishmentEditionForm.value.paymentMethods);
+            let _lPaymentMethodsToInsert: string[] = [];
 
-        let arrPay: any[] = Object.keys(this._establishmentEditionForm.value.paymentMethods);
-        let _lPaymentMethodsToInsert: string[] = [];
+            arrPay.forEach((pay) => {
+                if (this._establishmentEditionForm.value.paymentMethods[pay]) {
+                    let _lPayment: PaymentMethod = this._paymentMethodsList.filter(p => p.name === pay)[0];
+                    _lPaymentMethodsToInsert.push(_lPayment._id);
+                }
+            });
 
-        arrPay.forEach((pay) => {
-            if (this._establishmentEditionForm.value.paymentMethods[pay]) {
-                let _lPayment: PaymentMethod = this._paymentMethodsList.filter(p => p.name === pay)[0];
-                _lPaymentMethodsToInsert.push(_lPayment._id);
-            }
-        });
-
-        if (this._selectedCityValue === '0000' || this._selectedCityValue == "") {
-            cityIdAux = '';
-            cityAux = this._establishmentEditionForm.value.otherCity;
-        } else {
-            cityIdAux = this._selectedCityValue;
-            cityAux = '';
-        }
-
-        if (this._editImage) {
-            /*let _lEstablishmentImage: EstablishmentImage = Establishments.findOne({ _id: this._establishmentToEdit._id }).image;
-            if (_lEstablishmentImage) {
-                this._imageService.client.remove(_lEstablishmentImage.handle).then((res) => {
-                    console.log(res);
-                }).catch((err) => {
-                    var error: string = this.itemNameTraduction('UPLOAD_IMG_ERROR');
-                    this.openDialog(this.titleMsg, '', error, '', this.btnAcceptLbl, false);
+            if (this._editImage) {
+                Establishments.update(this._establishmentEditionForm.value.editId, {
+                    $set: {
+                        modification_user: Meteor.userId(),
+                        modification_date: new Date(),
+                        countryId: this._establishmentEditionForm.value.country,
+                        city: this._establishmentEditionForm.value.city,
+                        name: this._establishmentEditionForm.value.name,
+                        address: this._establishmentEditionForm.value.address,
+                        phone: this._establishmentEditionForm.value.phone,
+                        paymentMethods: _lPaymentMethodsToInsert,
+                        image: this._establishmentImageToEdit
+                    }
                 });
-            }*/
-            Establishments.update(this._establishmentEditionForm.value.editId, {
-                $set: {
-                    modification_user: Meteor.userId(),
-                    modification_date: new Date(),
-                    countryId: this._establishmentEditionForm.value.country,
-                    cityId: cityIdAux,
-                    other_city: cityAux,
-                    name: this._establishmentEditionForm.value.name,
-                    address: this._establishmentEditionForm.value.address,
-                    phone: this._establishmentEditionForm.value.phone,
-                    paymentMethods: _lPaymentMethodsToInsert,
-                    points_validity: this._establishmentEditionForm.value.pointsValidity,
-                    queue: this._queue,
-                    image: this._establishmentImageToEdit
-                }
-            });
-        } else {
-            Establishments.update(this._establishmentEditionForm.value.editId, {
-                $set: {
-                    modification_user: Meteor.userId(),
-                    modification_date: new Date(),
-                    countryId: this._establishmentEditionForm.value.country,
-                    cityId: cityIdAux,
-                    other_city: cityAux,
-                    name: this._establishmentEditionForm.value.name,
-                    address: this._establishmentEditionForm.value.address,
-                    phone: this._establishmentEditionForm.value.phone,
-                    paymentMethods: _lPaymentMethodsToInsert,
-                    points_validity: this._establishmentEditionForm.value.pointsValidity,
-                    queue: this._queue
-                }
-            });
-        }
-        this.cancel();
+            } else {
+                Establishments.update(this._establishmentEditionForm.value.editId, {
+                    $set: {
+                        modification_user: Meteor.userId(),
+                        modification_date: new Date(),
+                        countryId: this._establishmentEditionForm.value.country,
+                        city: this._establishmentEditionForm.value.city,
+                        name: this._establishmentEditionForm.value.name,
+                        address: this._establishmentEditionForm.value.address,
+                        phone: this._establishmentEditionForm.value.phone,
+                        paymentMethods: _lPaymentMethodsToInsert,
+                        points_validity: this._establishmentEditionForm.value.pointsValidity,
+                        reward_points: this._establishmentEditionForm.value.rewardValue
+                    }
+                });
+            }
+            let _lMessage: string = this.itemNameTraduction('RESTAURANT_EDITION.RESTAURANT_EDITED');
+            this._snackBar.open(_lMessage, '', { duration: 2500 });
+            this.cancel();
+        }, 2500);
     }
 
     /**
@@ -306,7 +252,6 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
     changeCountry(_country) {
         this._selectedCountryValue = _country;
         this._establishmentEditionForm.controls['country'].setValue(_country);
-        this._cities = Cities.find({ country: _country }).zone();
 
         let _lCountry: Country;
         Countries.find({ _id: _country }).fetch().forEach((c) => {
@@ -318,25 +263,8 @@ export class EstablishmentEditionComponent implements OnInit, OnDestroy {
         });
         this._establishmentCurrency = _lCurrency.code + ' - ' + this.itemNameTraduction(_lCurrency.name);
         this._countryIndicative = _lCountry.indicative;
-        this._queue = _lCountry.queue;
     }
-
-    /**
-     * Function to change city
-     * @param {string} _city
-     */
-    changeCity(_city) {
-        let control = this._establishmentEditionForm.get('otherCity');
-        if (_city === '0000') {
-            this._showOtherCity = true;
-            control.setValidators(Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)]));
-        } else {
-            this._showOtherCity = false;
-            control.clearValidators();
-            control.reset();
-        }
-    }
-
+    
     /**
      * Function to insert new image
      */

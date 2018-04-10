@@ -10,15 +10,11 @@ export interface Item extends CollectionObject {
     subcategoryId?: string;
     name: string;
     description: string;
-    time: string;
     establishments: ItemEstablishment[];
     prices: ItemPrice[];
-    observations: boolean;
     image?: ItemImage;
     options: ItemOption[];
     additions: string[];
-    has_reward?: boolean;
-    reward_points?: string;
 }
 
 /**

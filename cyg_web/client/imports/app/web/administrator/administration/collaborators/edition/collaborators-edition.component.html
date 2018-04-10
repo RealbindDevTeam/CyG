@@ -54,31 +54,6 @@
                         </mat-form-field>
                     </td>
                 </tr>
-                <tr *ngIf="_showTablesSelect">
-                    <td colspan="1" style="padding-top: 10px; width: 50%">
-                        <mat-checkbox class="checkbox" (change)="pushSelectArray($event)">{{'COLLABORATORS_REGISTER.TABLES_ASSIGNMENT' | translate}}</mat-checkbox>
-
-                        <mat-form-field *ngIf="_disabledTablesAssignment" style="width: 100px">
-                            <input matInput value="{{_tableInit}}" placeholder="{{'COLLABORATORS.TABLE_INIT' | translate}}" disabled="true" />
-                        </mat-form-field>
-
-                        <mat-form-field style="width: 100px;" *ngIf="!_disabledTablesAssignment">
-                            <mat-select formControlName="table_init">
-                                <mat-option *ngFor="let index of _tablesNumber" value="{{index}}" ng-selected="_tableInit">{{index}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        &nbsp;
-                        <mat-form-field *ngIf="_disabledTablesAssignment" style="width: 100px">
-                            <input matInput matInput value="{{_tableEnd}}" placeholder="{{'COLLABORATORS.TABLE_END' | translate}}" disabled="true" />
-                        </mat-form-field>
-
-                        <mat-form-field style="width: 100px;" *ngIf="!_disabledTablesAssignment">
-                            <mat-select formControlName="table_end">
-                                <mat-option *ngFor="let index of _tablesNumber" value="{{index}}" ng-selected="_tableEnd">{{index}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </td>
-                </tr>
             </table>
             <mat-card-title>{{'COLLABORATORS.PASSWORD' | translate}}</mat-card-title>
             <mat-card-subtitle>{{'COLLABORATORS.PASSWORD_MSG' | translate}}</mat-card-subtitle>
