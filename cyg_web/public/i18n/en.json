@@ -680,6 +680,7 @@
         "REMOVE_TITLE": "Item remove",
         "REMOVE_MSG": "Do you want to remove the item?",
         "ITEM_REMOVED": "Item removed correctly",
+        "ITEM_IS_REWARD": "Item is reward, no has been deleted",
         "REWARD_LABEL": "Assigning reward medals",
         "POINTS_PLACEHOLER": "Medals",
         "MENU_RECOMMENDED": "Menu recommended",

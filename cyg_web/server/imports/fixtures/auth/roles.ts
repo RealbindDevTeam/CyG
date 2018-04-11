@@ -22,7 +22,7 @@ export function loadRoles() {
             is_active: true,
             name: "ROLE.SUPERVISOR",
             description: "establishment supervisor",
-            menus: ["910", "20000"],
+            menus: ["910", "1100", "20000"],
             user_prefix: 'sp'            
         }];
 

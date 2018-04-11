@@ -114,15 +114,15 @@ export function loadMenus() {
                         }
                     ]
             },
-            /*{
+            {
                 _id: "1100",
                 is_active: true,
-                name: "MENUS.ADMINISTRATION.COLLABORATORS",
-                url: "/app/supervisor-collaborators",
-                icon_name: "supervisor account",
+                name: "MENUS.APPROVE_REWARDS",
+                url: "/app/supervisor-approve-rewards",
+                icon_name: "assignment",
                 order: 1100
             },
-            {
+            /*{
                 _id: "1200",
                 is_active: true,
                 name: "MENUS.ADMINISTRATION.TABLES",

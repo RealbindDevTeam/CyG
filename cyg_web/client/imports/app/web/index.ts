@@ -65,6 +65,7 @@ import { OptionValueEditComponent } from './administrator/menu/options/values/op
 import { RewardHistoryChartComponent } from './administrator/dashboard/reward-history-chart/reward-history-chart.component';
 import { BagsPaymentComponent } from './administrator/payment/bags-payment/bags-payment.component';
 import { ApproveRewardsComponent } from './administrator/approve-rewards/approve-rewards.component';
+import { SupervisorApproveRewardsComponent } from "./supervisor/approve-rewards/supervisor-approve-rewards.component";
 
 export const WEB_DECLARATIONS = [
     AppComponent,
@@ -107,7 +108,8 @@ export const WEB_DECLARATIONS = [
     OptionValueComponent,
     RewardHistoryChartComponent,
     BagsPaymentComponent,
-    ApproveRewardsComponent
+    ApproveRewardsComponent,
+    SupervisorApproveRewardsComponent
 ];
 
 export const MODAL_DIALOG_DECLARATIONS = [

@@ -680,6 +680,7 @@
         "REMOVE_TITLE": "Remover ítem",
         "REMOVE_MSG": "Deseas remover el ítem?",
         "ITEM_REMOVED": "Ítem removido correctamente",
+        "ITEM_IS_REWARD": "El item es una recompensa, no se ha eliminado",
         "REWARD_LABEL": "Asignar medallas de recompensa",
         "POINTS_PLACEHOLER": "Medallas",
         "MENU_RECOMMENDED": "Menú recomendado",
