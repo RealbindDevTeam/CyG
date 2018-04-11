@@ -30,14 +30,12 @@ import { CollaboratorsEditionComponent } from './administrator/administration/co
 import { NotFoundWebComponent } from './auth/notfound/notfound.web.component';
 import { IurestSliderComponent } from './general/slider/slider.component';
 import { CreateConfirmComponent } from './administrator/administration/establishment/register/create-confirm/create-confirm.component';
-import { MonthlyPaymentComponent } from './administrator/payment/monthly-payment/monthly-payment.component';
 import { SupervisorDashboardComponent } from './supervisor/dashboard/supervisor-dashboard.component';
 import { EstablishmentListComponent } from './administrator/administration/establishment/monthly-config/establishment-list/establishment-list.component';
 import { EnableDisableComponent } from './administrator/administration/establishment/monthly-config/enable-disable/enable-disable.component';
 import { DisableConfirmComponent } from './administrator/administration/establishment//monthly-config/disable-confirm/disable-confirm.component';
 import { PayuPaymentFormComponent } from './administrator/payment/payu-payment-form/payu-payment-form.component';
 import { PaymentHistoryComponent } from './administrator/payment/payment-history/payment-history.component';
-import { ReactivateEstablishmentComponent } from './administrator/payment/reactivate-establishment/reactivate-establishment.component';
 import { CcPaymentConfirmComponent } from './administrator/payment/payu-payment-form/cc-payment-confirm/cc-payment-confirm.component';
 import { TrnResponseConfirmComponent } from './administrator/payment/payu-payment-form/transaction-response-confirm/trn-response-confirm.component';
 import { VerifyResultComponent } from './administrator/payment/payment-history/verify-result/verify-result.component';
@@ -70,6 +68,8 @@ import { OptionValueComponent } from './administrator/menu/options/values/option
 import { OptionValueEditComponent } from './administrator/menu/options/values/option-value-edit/option-value-edit.component';
 import { RewardHistoryChartComponent } from './administrator/dashboard/reward-history-chart/reward-history-chart.component';
 import { BagsPaymentComponent } from './administrator/payment/bags-payment/bags-payment.component';
+import { PaymentFormComponent } from './administrator/payment/payment-form/payment-form.component';
+import { PackageMedalService } from './services/payment/package-medal.service';
 
 export const WEB_DECLARATIONS = [
     AppComponent,
@@ -95,13 +95,11 @@ export const WEB_DECLARATIONS = [
     GoToStoreComponent,
     NotFoundWebComponent,
     IurestSliderComponent,
-    MonthlyPaymentComponent,
     SupervisorDashboardComponent,
     EstablishmentListComponent,
     EnableDisableComponent,
     PayuPaymentFormComponent,
     PaymentHistoryComponent,
-    ReactivateEstablishmentComponent,
     AdminSignupComponent,
     ItemEnableSupComponent,
     SupervisorCollaboratorsComponent,
@@ -117,7 +115,8 @@ export const WEB_DECLARATIONS = [
     OptionsComponent,
     OptionValueComponent,
     RewardHistoryChartComponent,
-    BagsPaymentComponent
+    BagsPaymentComponent,
+    PaymentFormComponent
 ];
 
 export const MODAL_DIALOG_DECLARATIONS = [
@@ -150,5 +149,6 @@ export const MODAL_DIALOG_DECLARATIONS = [
 export const SERVICES_DECLARATIONS = [
     UserLanguageService,
     ImageService,
-    PayuPaymentService
+    PayuPaymentService,
+    PackageMedalService
 ];
