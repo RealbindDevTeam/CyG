@@ -23,14 +23,3 @@ Meteor.publish('getUsersByEstablishment', function (_establishment_work: string)
         return Users.find({ _id: { $in: _lUserDetails } });
     }
 });
-
-/**
- * Get users with role '200' by current establishment.
- * @param { string } _usrId
- */;
-Meteor.publish('getWaitersByCurrentEstablishment', function (_usrId: string) {
-    let _lUserDetail = UserDetails.find({ user_id: _usrId }).fetch()[0];
-    if (_lUserDetail) {
-        return UserDetails.find({ establishment_work: _lUserDetail.current_establishment, role_id: '200' });
-    }
-});
