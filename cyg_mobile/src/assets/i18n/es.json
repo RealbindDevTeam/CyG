@@ -543,7 +543,7 @@
         "POINTS": {
             "TITLE": "Mis Medallas",
             "MSG": "Selecciona un restaurante para consultar tus medallas",
-            "NO_POINTS_MSG": "Aún no has acumulado puntos en ningún restaurante. Animate!",
+            "NO_POINTS_MSG": "Aún no has acumulado medallas en ningún restaurante. Animate!",
             "ACCUMULATED_POINTS": "Puntos acumulados",
             "YOU_HAVE": "Tienes",
             "POINTS_FOR_EXPIRING": "puntos para vencer el día"
