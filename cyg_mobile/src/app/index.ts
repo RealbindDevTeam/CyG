@@ -17,7 +17,10 @@ import { MenuByEstablishmentPage } from "../pages/customer/establishment-list/me
 import { ItemCardEstablishmentComponent } from "../pages/customer/establishment-list/menu-by-establishment/item-card-establishment";
 import { ItemDetailEstablishmentPage } from "../pages/customer/establishment-list/menu-by-establishment/item-detail-establishment/item-detail-establishment";
 import { AdditionsEstablishmentPage } from "../pages/customer/establishment-list/additions-establishment/additions-establishment";
-import { ScanCodePage } from '../pages/customer/scan-code/scan-code';
+import { MedalWonPage } from '../pages/customer/medal-won/medal-won';
+import { UserRewardsPage } from '../pages/customer/points/points-detail/user-rewards/user-rewards';
+import { UserMedalsPage } from '../pages/customer/points/points-detail/user-medals/user-medals';
+import { MedalCYG } from '../pages/general/medal-cyg/medal-cyg';
 
 export const PAGES_DECLARATIONS = [
     InitialComponent,
@@ -39,5 +42,8 @@ export const PAGES_DECLARATIONS = [
     ItemCardEstablishmentComponent,
     ItemDetailEstablishmentPage,
     AdditionsEstablishmentPage,
-    ScanCodePage
+    MedalWonPage,
+    UserRewardsPage,
+    UserMedalsPage,
+    MedalCYG
 ];

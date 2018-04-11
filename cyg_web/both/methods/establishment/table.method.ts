@@ -25,7 +25,7 @@ if (Meteor.isServer) {
             }
         },
 
-        changeCurrentTable: function (_pUserId: string, _pEstablishmentId: string, _pQRCodeCurrentTable: string, _pQRCodeDestinationTable: string) {
+        /*changeCurrentTable: function (_pUserId: string, _pEstablishmentId: string, _pQRCodeCurrentTable: string, _pQRCodeDestinationTable: string) {
             if (_pQRCodeCurrentTable === _pQRCodeDestinationTable) {
                 throw new Meteor.Error('207');
             }
@@ -88,6 +88,6 @@ if (Meteor.isServer) {
             } else {
                 throw new Meteor.Error('200');
             }
-        }
+        }*/
     });
 }

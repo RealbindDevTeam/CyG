@@ -70,6 +70,7 @@ import { RewardHistoryChartComponent } from './administrator/dashboard/reward-hi
 import { BagsPaymentComponent } from './administrator/payment/bags-payment/bags-payment.component';
 import { PaymentFormComponent } from './administrator/payment/payment-form/payment-form.component';
 import { PackageMedalService } from './services/payment/package-medal.service';
+import { ApproveRewardsComponent } from './administrator/approve-rewards/approve-rewards.component';
 
 export const WEB_DECLARATIONS = [
     AppComponent,
@@ -116,7 +117,8 @@ export const WEB_DECLARATIONS = [
     OptionValueComponent,
     RewardHistoryChartComponent,
     BagsPaymentComponent,
-    PaymentFormComponent
+    PaymentFormComponent,
+    ApproveRewardsComponent
 ];
 
 export const MODAL_DIALOG_DECLARATIONS = [

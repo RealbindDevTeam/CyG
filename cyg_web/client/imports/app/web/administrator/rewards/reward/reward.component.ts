@@ -50,6 +50,9 @@ export class RewardComponent implements OnInit, OnDestroy {
     private btnAcceptLbl: string;
     private btnCancelLbl: string;
     public _dialogRef: MatDialogRef<any>;
+    private _showMessageFirstRange: boolean = false;
+    private _showMessageSecondRange: boolean = false;
+    private _showMessageThirdRange: boolean = false;
 
     /**
      * RewardComponent constructor
@@ -108,7 +111,7 @@ export class RewardComponent implements OnInit, OnDestroy {
         });
         this._pointSub = MeteorObservable.subscribe('points').takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._points = Points.find({ _id: { $gte: '50' } }).zone();
+                this._points = Points.find({ point: { $gte: 4 } }, { sort: { point: 1 } }).zone();
             });
         });
     }
@@ -180,7 +183,7 @@ export class RewardComponent implements OnInit, OnDestroy {
                 modification_date: new Date(),
                 item_id: this._rewardForm.value.item,
                 item_quantity: this._quantityCount,
-                points: this._rewardForm.value.points,
+                points: Number.parseInt(this._rewardForm.value.points),
                 establishments: _create_establishments,
                 is_active: true
             });
@@ -269,6 +272,9 @@ export class RewardComponent implements OnInit, OnDestroy {
     cancel(): void {
         this._rewardForm.reset();
         this._quantityCount = 1;
+        this._showMessageFirstRange = false;
+        this._showMessageSecondRange = false;
+        this._showMessageThirdRange = false;
     }
 
     /**
@@ -298,6 +304,26 @@ export class RewardComponent implements OnInit, OnDestroy {
      */
     goToItems(): void {
         this._router.navigate(['app/items']);
+    }
+
+    /**
+     * Function to validate message to show
+     * @param {number} _pPoints 
+     */
+    changeMedals(_pPoints: number): void {
+        if (_pPoints >= 4 && _pPoints <= 5) {
+            this._showMessageFirstRange = true;
+            this._showMessageSecondRange = false;
+            this._showMessageThirdRange = false;
+        } else if (_pPoints >= 6 && _pPoints <= 8) {
+            this._showMessageFirstRange = false;
+            this._showMessageSecondRange = true;
+            this._showMessageThirdRange = false;
+        } else if (_pPoints >= 9 && _pPoints <= 10) {
+            this._showMessageFirstRange = false;
+            this._showMessageSecondRange = false;
+            this._showMessageThirdRange = true;
+        }
     }
 
     /**

@@ -40,7 +40,7 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy {
     private _establishmentCountry: string = '';
     private _showDescription: boolean = false;
     private _profileImgs: EstablishmentProfileImage[] = [];
-
+    private _showMap: boolean = false;
 
     /**
      * Constructor implementation
@@ -89,7 +89,10 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy {
                 this._establishmentsProfiles = EstablishmentsProfile.find({ establishment_id: this._establishmentParam._id }).zone();
                 this._establishmentProfile = EstablishmentsProfile.findOne({ establishment_id: this._establishmentParam._id });
                 if (this._establishmentProfile) {
-                    this.loadMap();
+                    if (this._establishmentProfile.location.lat !== 4.5981 && this._establishmentProfile.location.lng !== -74.0758) {
+                        this.loadMap();
+                        this._showMap = true;
+                    }
                 }
             });
         });
@@ -171,10 +174,7 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy {
      * Open reward list modal
      */
     openRewardList() {
-        let contactModal = this._modalCtrl.create(RewardListComponent, {
-            establishment: this._establishmentParam._id
-        });
-        contactModal.present();
+        this._navCtrl.push(RewardListComponent, { establishment: this._establishmentParam._id });
     }
 
     /**

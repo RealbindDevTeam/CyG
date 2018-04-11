@@ -13,6 +13,9 @@ function loggedIn(){
  */
 export const EstablishmentPoints = new MongoObservable.Collection<EstablishmentPoint>('establishment_points');
 
+/**
+ * Allow EstablishmentPoints collection insert, update and remove functions
+ */
 EstablishmentPoints.allow({
     insert: loggedIn,
     update: loggedIn,

@@ -31,6 +31,14 @@ export function loadMenus() {
                 order: 10000
             },
             {
+                _id: "15000",
+                is_active: true,
+                name: "MENUS.APPROVE_REWARDS",
+                url: "/app/approve-rewards",
+                icon_name: "assignment",
+                order: 15000
+            },
+            {
                 _id: "1000",
                 is_active: true,
                 name: "MENUS.ADMINISTRATION.MANAGEMENT",
