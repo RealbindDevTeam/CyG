@@ -14,29 +14,6 @@ Meteor.publish('tables', function (_userId: string) {
 });
 
 /**
- * Meteor publication tables
- * @param {string} _tableId
- */
-Meteor.publish('getTableById', function (_tableId: string) {
-    check(_tableId, String);
-    return Tables.find({ _id: _tableId });
-});
-
-/**
- * Meteor publication table by current_table
- */
-Meteor.publish('getTableByCurrentTable', function (_userId: string) {
-    check(_userId, String);
-
-    var user_detail = UserDetails.findOne({ user_id: _userId });
-    if (user_detail) {
-        return Tables.find({ _id: user_detail.current_table });
-    } else {
-        return;
-    }
-});
-
-/**
  * Meteor publication return all tables
  */
 Meteor.publish('getAllTables', function () {
@@ -64,13 +41,4 @@ Meteor.publish('getTablesByEstablishmentWork', function (_userId: string) {
     } else {
         return;
     }
-});
-
-/**
- * Meteor publication tables by QR Code
- * @param {string} _lQRCode
- */
-Meteor.publish('getTableByQRCode', function (_lQRCode: string) {
-    check(_lQRCode, String);
-    return Tables.find({ QR_code: _lQRCode });
 });

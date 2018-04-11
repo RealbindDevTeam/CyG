@@ -24,29 +24,6 @@ Meteor.publish('additionsByEstablishment', function (_establishmentId: string) {
 });
 
 /**
- * Meteor publication return additions with id condition
- * @param {string} _pId
- */
-Meteor.publish('additionsById', function ( _pId: string) {
-    check(_pId, String);
-    return Additions.find({ _id : _pId });
-});
-
-/**
- * Meteor publication return additions with userId condition
- * @param {string} _userId
- */
-Meteor.publish('additionsByCurrentEstablishment', function ( _userId : string ) {
-    check(_userId, String);
-    let _lUserDetail: UserDetail = UserDetails.findOne({ user_id: _userId });
-    if( _lUserDetail ){
-        return Additions.find({ 'establishments.establishment_id': { $in: [_lUserDetail.current_establishment] }, is_active: true });
-    } else {
-        return;
-    }
-});
-
-/**
  * Meteor publication return addtions by itemId  condition
  * @param {string} _itemId
 */
@@ -59,19 +36,5 @@ Meteor.publish('additionsByItem', function (_itemId: string) {
         return Additions.find({ _id: { $in: item.additions } });
     }else{
         return Additions.find({ _id: { $in: [] } });
-    }
-});
-
-/**
- * Meteor publication additions by establishment work
- * @param {string} _userId
- */
-Meteor.publish('additionsByEstablishmentWork', function (_userId: string) {
-    check(_userId, String);
-    let _lUserDetail: UserDetail = UserDetails.findOne({ user_id: _userId });
-    if( _lUserDetail ){
-        return Additions.find({ 'establishments.establishment_id': { $in: [_lUserDetail.establishment_work] }, is_active: true });
-    } else {
-        return;
     }
 });

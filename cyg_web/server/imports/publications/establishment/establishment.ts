@@ -17,21 +17,6 @@ Meteor.publish('establishments', function (_userId: string) {
 });
 
 /**
- * Meteor publications establishmentByCurrentUser
- * @param {string} _userId
- */
-
-Meteor.publish('getEstablishmentByCurrentUser', function (_userId: string) {
-    check(_userId, String);
-    var user_detail = UserDetails.findOne({ user_id: _userId });
-    if (user_detail) {
-        return Establishments.find({ _id: user_detail.current_establishment });
-    } else {
-        return;
-    }
-});
-
-/**
  * Meteor publications establishmentByEstablishmentWork
  * @param {string} _userId
  */

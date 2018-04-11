@@ -24,17 +24,3 @@ Meteor.publish('sectionsByEstablishment', function (_establishmentId: string) {
 Meteor.publish('getSections', function () {
     return Sections.find({});
 });
-
-/**
- * Meteor publication establishments sections by establishment work
- * @param {string} _userId
-*/
-Meteor.publish('getSectionsByEstablishmentWork', function (_userId: string) {
-    check(_userId, String);
-    let user_detail = UserDetails.findOne({ user_id: _userId });
-    if( user_detail ){
-        return Sections.find({ establishments: { $in: [user_detail.establishment_work] }, is_active: true });
-    } else {
-        return;
-    }
-});

@@ -28,7 +28,7 @@
     <form [formGroup]="_additionForm" (ngSubmit)="addAddition();">
       <div>
         <mat-form-field class="name">
-          <input matInput required formControlName="name" placeholder="{{'NAME' | translate}}" minlength="1" maxlength="30" #inputName>
+          <input matInput required formControlName="name" placeholder="{{'ADDITIONS.ADDITIONS_NAME' | translate}}" minlength="1" maxlength="30" #inputName>
           <mat-hint align="end">{{inputName.value.length}} / 30</mat-hint>
         </mat-form-field>
       </div>

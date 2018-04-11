@@ -78,6 +78,7 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
     private _showTaxes: boolean = false;
     private _showGeneralError: boolean = false;
     private _showOptions: boolean = false;
+    private _loading: boolean = false;
 
     private _itemSection: string;
     private _itemCategory: string;
@@ -868,149 +869,153 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
             return;
         }
 
-        let arrCur: any[] = Object.keys(this._generalFormGroup.value.editCurrencies);
-        let _lItemEstablishmentsToInsert: ItemEstablishment[] = [];
-        let _lItemPricesToInsert: ItemPrice[] = [];
+        this._loading = true;
+        setTimeout(() => {
+            let arrCur: any[] = Object.keys(this._generalFormGroup.value.editCurrencies);
+            let _lItemEstablishmentsToInsert: ItemEstablishment[] = [];
+            let _lItemPricesToInsert: ItemPrice[] = [];
 
-        arrCur.forEach((cur) => {
-            let find: Establishment[] = this._establishmentList.filter(r => r.currencyId === cur);
-            for (let res of find) {
-                if (this._generalFormGroup.value.editEstablishments[res._id]) {
-                    let _lItemEstablishment: ItemEstablishment = { establishment_id: '', price: 0, isAvailable: true, recommended: false };
-                    _lItemEstablishment.establishment_id = res._id;
-                    _lItemEstablishment.price = this._generalFormGroup.value.editCurrencies[cur];
+            arrCur.forEach((cur) => {
+                let find: Establishment[] = this._establishmentList.filter(r => r.currencyId === cur);
+                for (let res of find) {
+                    if (this._generalFormGroup.value.editEstablishments[res._id]) {
+                        let _lItemEstablishment: ItemEstablishment = { establishment_id: '', price: 0, isAvailable: true, recommended: false };
+                        _lItemEstablishment.establishment_id = res._id;
+                        _lItemEstablishment.price = this._generalFormGroup.value.editCurrencies[cur];
 
+                        if (this._generalFormGroup.value.editTaxes[cur] !== undefined) {
+                            _lItemEstablishment.itemTax = this._generalFormGroup.value.editTaxes[cur];
+                        }
+
+                        _lItemEstablishmentsToInsert.push(_lItemEstablishment);
+                    }
+                }
+                if (cur !== null && this._generalFormGroup.value.editCurrencies[cur] !== null) {
+                    let _lItemPrice: ItemPrice = { currencyId: '', price: 0 };
+                    _lItemPrice.currencyId = cur;
+                    _lItemPrice.price = this._generalFormGroup.value.editCurrencies[cur];
                     if (this._generalFormGroup.value.editTaxes[cur] !== undefined) {
-                        _lItemEstablishment.itemTax = this._generalFormGroup.value.editTaxes[cur];
+                        _lItemPrice.itemTax = this._generalFormGroup.value.editTaxes[cur];
                     }
-
-                    _lItemEstablishmentsToInsert.push(_lItemEstablishment);
+                    _lItemPricesToInsert.push(_lItemPrice);
                 }
-            }
-            if (cur !== null && this._generalFormGroup.value.editCurrencies[cur] !== null) {
-                let _lItemPrice: ItemPrice = { currencyId: '', price: 0 };
-                _lItemPrice.currencyId = cur;
-                _lItemPrice.price = this._generalFormGroup.value.editCurrencies[cur];
-                if (this._generalFormGroup.value.editTaxes[cur] !== undefined) {
-                    _lItemPrice.itemTax = this._generalFormGroup.value.editTaxes[cur];
-                }
-                _lItemPricesToInsert.push(_lItemPrice);
-            }
-        });
+            });
 
-        let arrOptions: any[] = Object.keys(this._optionAdditionsFormGroup.value.options);
-        let _optionsToInsert: ItemOption[] = [];
-        let _lItemOption: ItemOption = { option_id: '', is_required: false, values: [] };
+            let arrOptions: any[] = Object.keys(this._optionAdditionsFormGroup.value.options);
+            let _optionsToInsert: ItemOption[] = [];
+            let _lItemOption: ItemOption = { option_id: '', is_required: false, values: [] };
 
-        arrOptions.forEach((opt) => {
-            if (this._optionAdditionsFormGroup.value.options[opt]) {
-                let _lControl: string[] = opt.split('_');
+            arrOptions.forEach((opt) => {
+                if (this._optionAdditionsFormGroup.value.options[opt]) {
+                    let _lControl: string[] = opt.split('_');
 
-                if (_lItemOption.option_id !== _lControl[1]) {
-                    _lItemOption = { option_id: '', is_required: false, values: [] };
-                    _optionsToInsert.push(_lItemOption);
+                    if (_lItemOption.option_id !== _lControl[1]) {
+                        _lItemOption = { option_id: '', is_required: false, values: [] };
+                        _optionsToInsert.push(_lItemOption);
 
-                    if (_lControl[0] === 'av' && this._optionsFormGroup.controls[opt].value) {
-                        _lItemOption.option_id = _lControl[1];
-                    }
+                        if (_lControl[0] === 'av' && this._optionsFormGroup.controls[opt].value) {
+                            _lItemOption.option_id = _lControl[1];
+                        }
 
-                    let arrOptionValues: any[] = Object.keys(this._optionAdditionsFormGroup.value.option_values);
-                    let _valuesToInsert: ItemOptionValue[] = [];
-                    let _lItemOptionValue: ItemOptionValue = { option_value_id: '', have_price: false };
+                        let arrOptionValues: any[] = Object.keys(this._optionAdditionsFormGroup.value.option_values);
+                        let _valuesToInsert: ItemOptionValue[] = [];
+                        let _lItemOptionValue: ItemOptionValue = { option_value_id: '', have_price: false };
 
-                    arrOptionValues.forEach((val) => {
-                        if (this._optionAdditionsFormGroup.value.option_values[val]) {
-                            let _lvalueControl: string[] = val.split('_');
-                            let _optionValue: OptionValue = OptionValues.findOne({ _id: _lvalueControl[1] });
+                        arrOptionValues.forEach((val) => {
+                            if (this._optionAdditionsFormGroup.value.option_values[val]) {
+                                let _lvalueControl: string[] = val.split('_');
+                                let _optionValue: OptionValue = OptionValues.findOne({ _id: _lvalueControl[1] });
 
-                            if (_optionValue.option_id === _lItemOption.option_id) {
-                                if (_lItemOptionValue.option_value_id !== _lvalueControl[1]) {
-                                    _lItemOptionValue = { option_value_id: '', have_price: false };
-                                    _valuesToInsert.push(_lItemOptionValue);
+                                if (_optionValue.option_id === _lItemOption.option_id) {
+                                    if (_lItemOptionValue.option_value_id !== _lvalueControl[1]) {
+                                        _lItemOptionValue = { option_value_id: '', have_price: false };
+                                        _valuesToInsert.push(_lItemOptionValue);
 
-                                    if (_lvalueControl[0] === 'val') {
-                                        _lItemOptionValue.option_value_id = _optionValue._id;
-                                    }
-                                } else {
-                                    if (_lvalueControl[0] === 'havPri' && this._optionValuesFormGroup.controls[val].value === true) {
-                                        _lItemOptionValue.have_price = true;
-                                    }
-                                    if (_lvalueControl[0] === 'pri') {
-                                        _lItemOptionValue.price = Number.parseInt(this._optionValuesFormGroup.controls[val].value.toString());
+                                        if (_lvalueControl[0] === 'val') {
+                                            _lItemOptionValue.option_value_id = _optionValue._id;
+                                        }
+                                    } else {
+                                        if (_lvalueControl[0] === 'havPri' && this._optionValuesFormGroup.controls[val].value === true) {
+                                            _lItemOptionValue.have_price = true;
+                                        }
+                                        if (_lvalueControl[0] === 'pri') {
+                                            _lItemOptionValue.price = Number.parseInt(this._optionValuesFormGroup.controls[val].value.toString());
+                                        }
                                     }
                                 }
                             }
+                        });
+                        _lItemOption.values = _valuesToInsert;
+                    } else {
+                        if (_lControl[0] === 'req' && this._optionsFormGroup.controls[opt].value === true) {
+                            _lItemOption.is_required = true;
                         }
-                    });
-                    _lItemOption.values = _valuesToInsert;
-                } else {
-                    if (_lControl[0] === 'req' && this._optionsFormGroup.controls[opt].value === true) {
-                        _lItemOption.is_required = true;
                     }
                 }
-            }
-        });
+            });
 
-        let arrAdd: any[] = Object.keys(this._optionAdditionsFormGroup.value.editAdditions);
-        let _lAdditionsToInsert: string[] = [];
-        arrAdd.forEach((add) => {
-            if (this._optionAdditionsFormGroup.value.editAdditions[add]) {
-                _lAdditionsToInsert.push(add);
-            }
-        });
+            let arrAdd: any[] = Object.keys(this._optionAdditionsFormGroup.value.editAdditions);
+            let _lAdditionsToInsert: string[] = [];
+            arrAdd.forEach((add) => {
+                if (this._optionAdditionsFormGroup.value.editAdditions[add]) {
+                    _lAdditionsToInsert.push(add);
+                }
+            });
 
-        if (_lItemEstablishmentsToInsert.length > 0) {
-            if (this._editImage) {
-                /*let _lItemImage: ItemImage = Items.findOne({ _id: this._itemToEdit._id }).image;
-               if (_lItemImage) {
-                   this._imageService.client.remove(_lItemImage.handle).then((res) => {
-                       console.log(res);
-                   }).catch((err) => {
-                       var error: string = this.itemNameTraduction('UPLOAD_IMG_ERROR');
-                       this.openDialog(this.titleMsg, '', error, '', this.btnAcceptLbl, false);
-                   });
-               }*/
-                Items.update(this._sectionsFormGroup.value.editId, {
-                    $set: {
-                        modification_user: this._user,
-                        modification_date: new Date(),
-                        is_active: this._sectionsFormGroup.value.editIsActive,
-                        sectionId: this._sectionsFormGroup.value.editSectionId,
-                        categoryId: this._sectionsFormGroup.value.editCategoryId,
-                        subcategoryId: this._sectionsFormGroup.value.editSubcategoryId,
-                        name: this._generalFormGroup.value.editName,
-                        description: this._generalFormGroup.value.editDescription,
-                        establishments: _lItemEstablishmentsToInsert,
-                        prices: _lItemPricesToInsert,
-                        image: this._editItemImageToInsert,
-                        options: _optionsToInsert,
-                        additions: _lAdditionsToInsert
-                    }
-                });
+            if (_lItemEstablishmentsToInsert.length > 0) {
+                if (this._editImage) {
+                    /*let _lItemImage: ItemImage = Items.findOne({ _id: this._itemToEdit._id }).image;
+                   if (_lItemImage) {
+                       this._imageService.client.remove(_lItemImage.handle).then((res) => {
+                           console.log(res);
+                       }).catch((err) => {
+                           var error: string = this.itemNameTraduction('UPLOAD_IMG_ERROR');
+                           this.openDialog(this.titleMsg, '', error, '', this.btnAcceptLbl, false);
+                       });
+                   }*/
+                    Items.update(this._sectionsFormGroup.value.editId, {
+                        $set: {
+                            modification_user: this._user,
+                            modification_date: new Date(),
+                            is_active: this._sectionsFormGroup.value.editIsActive,
+                            sectionId: this._sectionsFormGroup.value.editSectionId,
+                            categoryId: this._sectionsFormGroup.value.editCategoryId,
+                            subcategoryId: this._sectionsFormGroup.value.editSubcategoryId,
+                            name: this._generalFormGroup.value.editName,
+                            description: this._generalFormGroup.value.editDescription,
+                            establishments: _lItemEstablishmentsToInsert,
+                            prices: _lItemPricesToInsert,
+                            image: this._editItemImageToInsert,
+                            options: _optionsToInsert,
+                            additions: _lAdditionsToInsert
+                        }
+                    });
+                } else {
+                    Items.update(this._sectionsFormGroup.value.editId, {
+                        $set: {
+                            modification_user: this._user,
+                            modification_date: new Date(),
+                            is_active: this._sectionsFormGroup.value.editIsActive,
+                            sectionId: this._sectionsFormGroup.value.editSectionId,
+                            categoryId: this._sectionsFormGroup.value.editCategoryId,
+                            subcategoryId: this._sectionsFormGroup.value.editSubcategoryId,
+                            name: this._generalFormGroup.value.editName,
+                            description: this._generalFormGroup.value.editDescription,
+                            establishments: _lItemEstablishmentsToInsert,
+                            prices: _lItemPricesToInsert,
+                            options: _optionsToInsert,
+                            additions: _lAdditionsToInsert
+                        }
+                    });
+                }
+                let _lMessage: string = this.itemNameTraduction('ITEMS.ITEM_EDITED');
+                this.snackBar.open(_lMessage, '', { duration: 2500 });
+                this._router.navigate(['app/items']);
             } else {
-                Items.update(this._sectionsFormGroup.value.editId, {
-                    $set: {
-                        modification_user: this._user,
-                        modification_date: new Date(),
-                        is_active: this._sectionsFormGroup.value.editIsActive,
-                        sectionId: this._sectionsFormGroup.value.editSectionId,
-                        categoryId: this._sectionsFormGroup.value.editCategoryId,
-                        subcategoryId: this._sectionsFormGroup.value.editSubcategoryId,
-                        name: this._generalFormGroup.value.editName,
-                        description: this._generalFormGroup.value.editDescription,
-                        establishments: _lItemEstablishmentsToInsert,
-                        prices: _lItemPricesToInsert,
-                        options: _optionsToInsert,
-                        additions: _lAdditionsToInsert
-                    }
-                });
+                this._showGeneralError = true;
             }
-            let _lMessage: string = this.itemNameTraduction('ITEMS.ITEM_EDITED');
-            this.snackBar.open(_lMessage, '', { duration: 2500 });
-            this._router.navigate(['app/items']);
-        } else {
-            this._showGeneralError = true;
-        }
+            this._loading = false;
+        }, 3500);
     }
 
     /**
