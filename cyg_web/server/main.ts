@@ -39,6 +39,7 @@ import './imports/publications/points/establishment_points';
 import './imports/publications/points/negative-point';
 import './imports/publications/points/establishment-medals';
 import './imports/publications/points/reward-confirmation';
+import './imports/publications/points/reward-history';
 
 import '../both/methods/menu/item.methods';
 import '../both/methods/auth/collaborators.methods';

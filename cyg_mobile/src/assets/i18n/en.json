@@ -605,6 +605,11 @@
         "ESTABLISHMENT_LIST": {
             "TITLE": "Restaurants",
             "MSG": "Select a restaurant to check the profile and menu offered"
+        },
+        "USER_REWARDS": {
+            "NO_REWARDS": "You have not redeemed rewards in this restaurant yet",
+            "TITLE": "Congratulations! These are the rewards that you have earned in",
+            "MEDALS_REDEEMED": "Medals Redeemed"
         }
     },
     "CURRENCIES": {
