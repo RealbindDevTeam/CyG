@@ -1122,7 +1122,7 @@
         "CANCEL_ORDER_CONFIRM": "Orden Cancelada",
         "ITEM_REDEEMED": "Item Redimido"
     },
-    "PAYU_PAYMENT_FORM": {
+    "PAYMENT_FORM": {
         "TITLE": "Medio de pago",
         "SUBTITLE": "Por favor diligencia todos los campos para realizar el pago",
         "SELECT_METHOD": "Medio de pago *",

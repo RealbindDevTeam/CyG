@@ -1122,7 +1122,7 @@
         "CANCEL_ORDER_CONFIRM": "Order Canceled",
         "ITEM_REDEEMED": "Item Redeemed"
     },
-    "PAYU_PAYMENT_FORM": {
+    "PAYMENT_FORM": {
         "TITLE": "Payment method",
         "SUBTITLE": "Please, fill all the fields to do the payment ",
         "SELECT_METHOD": "Payment method *",

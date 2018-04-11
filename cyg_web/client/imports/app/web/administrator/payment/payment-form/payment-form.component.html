@@ -1,4 +1,45 @@
-<div *ngFor="let data of dataArray">
-    {{data.establishmentId}} {{data.bagPlanPoints}}
-    <mat-divider></mat-divider>
+<div class="global-div">
+    <div class="div-whitout-overflow">
+        <div class="cards-div">
+            <mat-card style="margin: 24px">
+                <mat-card-title-group>
+                    <img *ngIf="_paymentLogoName != ''" mat-card-sm-image src="{{_paymentLogoName}}" style="margin-right: 15px">
+                    <mat-card-title>{{'PAYMENT_FORM.TITLE' | translate }}</mat-card-title>
+                    <mat-card-subtitle>{{'PAYMENT_FORM.SUBTITLE' | translate}}</mat-card-subtitle>
+                </mat-card-title-group>
+
+                <mat-card-content>
+
+                    <form [formGroup]="_paymentForm" (ngSubmit)="openConfirmDialog()">
+
+                        <div style="margin-top: 2%">
+                            <mat-form-field style="width: 43%">
+                                <mat-select formControlName="paymentMethod" [(ngModel)]="_selectedPaymentMethod" placeholder="{{'PAYMENT_FORM.SELECT_METHOD' | translate}}">
+                                    <mat-option *ngFor="let cCPaymentMethod of _cCPaymentMethods | async" value="{{cCPaymentMethod.payu_code}}" (click)="changeCcPaymentLogo(cCPaymentMethod.logo_name)">{{cCPaymentMethod.name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field style="width: 54%; margin-left: 2%;">
+                                <input matInput formControlName="fullName" placeholder="{{'PAYMENT_FORM.PAYER_FULLNAME' | translate}}">
+                            </mat-form-field>
+                        </div>
+
+                        <div style="margin-top: 1%">
+                            <mat-form-field style="width: 43%">
+                                <input matInput formControlName="cardNumber" placeholder="{{'PAYMENT_FORM.CARD_NUMBER' | translate}}">
+                            </mat-form-field>
+                        </div>
+
+
+                        <div *ngFor="let data of dataArray">
+                            {{data.establishmentId}} {{data.bagPlanPoints}}
+                            <mat-divider></mat-divider>
+                        </div>
+
+                    </form>
+
+                </mat-card-content>
+
+            </mat-card>
+        </div>
+    </div>
 </div>

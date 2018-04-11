@@ -34,6 +34,16 @@ let md5 = require('md5');
 
 export class PaymentFormComponent implements OnInit, OnDestroy {
 
+    private _paymentLogoName: string = "";
+    private _paymentForm: FormGroup = new FormGroup({});
+    private _ngUnsubscribe: Subject<void> = new Subject<void>();
+    private _selectedPaymentMethod: string;
+    private _ccMethodPayment: string;
+
+    private _cCPaymentMethodSub: Subscription;
+    private _cCPaymentMethods: Observable<CcPaymentMethod[]>;
+
+
     /**
      * PayuPaymentFormComponent Constructor
      * @param {Router} _router 
@@ -57,6 +67,28 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
         private _userLanguageService: UserLanguageService,
         private _packageMedalService: PackageMedalService) {
 
+        _translate.use(this._userLanguageService.getLanguage(Meteor.user()));
+        _translate.setDefaultLang('en');
+
+    }
+
+    /**
+    * ngOnInit Implementation
+    */
+    ngOnInit() {
+
+        this.removeSubscriptions();
+        this._paymentForm = new FormGroup({
+            paymentMethod: new FormControl('', [Validators.required]),
+            fullName: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(150)]),
+            cardNumber: new FormControl('', [Validators.required, Validators.minLength(13), Validators.maxLength(20), CustomValidators.numericValidator])
+        });
+
+        this._cCPaymentMethodSub = MeteorObservable.subscribe('getCcPaymentMethods').takeUntil(this._ngUnsubscribe).subscribe(() => {
+            this._ngZone.run(() => {
+                this._cCPaymentMethods = CcPaymentMethods.find({}).zone();
+            });
+        });
     }
 
     /**
@@ -64,6 +96,30 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
      */
     get dataArray(): Element[] {
         return this._packageMedalService.bagPlanArray;
+    }
+
+    /**
+    * This function changes de credit card payment method to select
+    *@param {string} _paymentName
+    */
+    changeCcPaymentLogo(_paymentName: string) {
+        this._paymentLogoName = 'images/' + _paymentName + '.png';
+        this._ccMethodPayment = _paymentName;
+    }
+
+    /**
+     * Remove all subscriptions
+     */
+    removeSubscriptions(): void {
+        this._ngUnsubscribe.next();
+        this._ngUnsubscribe.complete();
+    }
+
+    /**
+    * ngOnDestroy Implementation
+    */
+    ngOnDestroy() {
+        this.removeSubscriptions();
     }
 
 }
