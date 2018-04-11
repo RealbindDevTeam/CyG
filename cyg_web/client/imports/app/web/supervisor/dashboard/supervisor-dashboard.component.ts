@@ -3,6 +3,7 @@ import { Observable, Subscription, Subject } from 'rxjs';
 import { MeteorObservable } from 'meteor-rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Meteor } from 'meteor/meteor';
+import { Router } from '@angular/router';
 import { UserLanguageService } from '../../services/general/user-language.service';
 import { Establishment } from '../../../../../../both/models/establishment/establishment.model';
 import { Establishments } from '../../../../../../both/collections/establishment/establishment.collection';
@@ -10,12 +11,12 @@ import { UserDetail } from '../../../../../../both/models/auth/user-detail.model
 import { UserDetails } from '../../../../../../both/collections/auth/user-detail.collection';
 import { Tables } from '../../../../../../both/collections/establishment/table.collection';
 import { Items } from '../../../../../../both/collections/menu/item.collection';
-//import { Payment } from '../../../../../../both/models/establishment/payment.model';
-//import { Payments } from '../../../../../../both/collections/establishment/payment.collection';
 import { Order, OrderItem, OrderAddition } from '../../../../../../both/models/establishment/order.model';
 import { Orders } from '../../../../../../both/collections/establishment/order.collection';
 import { Currency } from '../../../../../../both/models/general/currency.model';
 import { Currencies } from '../../../../../../both/collections/general/currency.collection';
+import { EstablishmentPoint } from '../../../../../../both/models/points/establishment-point.model';
+import { EstablishmentPoints } from '../../../../../../both/collections/points/establishment-points.collection';
 
 @Component({
     selector: 'supervisor-dashboard',
@@ -34,6 +35,7 @@ export class SupervisorDashboardComponent implements OnInit, OnDestroy {
     private _ordersSub: Subscription;
     private _currenciesSub: Subscription;
     private _tablesSub: Subscription;
+    private _establishmentPointsSub: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
 
     private _currentDate: Date = new Date();
@@ -49,6 +51,7 @@ export class SupervisorDashboardComponent implements OnInit, OnDestroy {
      */
     constructor(private _translate: TranslateService,
         private _ngZone: NgZone,
+        private _router: Router,
         private _userLanguageService: UserLanguageService) {
         _translate.use(this._userLanguageService.getLanguage(Meteor.user()));
         _translate.setDefaultLang('en');
@@ -70,6 +73,7 @@ export class SupervisorDashboardComponent implements OnInit, OnDestroy {
                 this._itemsSub = MeteorObservable.subscribe('getItemsByEstablishmentIds', _lEstablishmentsId).takeUntil(this._ngUnsubscribe).subscribe();
                 this._ordersSub = MeteorObservable.subscribe('getOrdersByEstablishmentIds', _lEstablishmentsId, ['ORDER_STATUS.CLOSED']).takeUntil(this._ngUnsubscribe).subscribe();
                 this._currenciesSub = MeteorObservable.subscribe('getCurrenciesByEstablishmentsId', _lEstablishmentsId).takeUntil(this._ngUnsubscribe).subscribe();
+                this._establishmentPointsSub = MeteorObservable.subscribe('getEstablishmentPointsByIds', _lEstablishmentsId).takeUntil(this._ngUnsubscribe).subscribe();
             });
         });
         this._tablesSub = MeteorObservable.subscribe('getTablesByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe();
@@ -185,6 +189,35 @@ export class SupervisorDashboardComponent implements OnInit, OnDestroy {
         if (_lCurrency) {
             return _lCurrency.code;
         }
+    }
+
+    /**
+   * Get Establishment Points
+   * @param {string} _pEstablishmentId 
+   */
+    getEstablishmentPoints(_pEstablishmentId: string): number {
+        let _establishmentPoint: EstablishmentPoint = EstablishmentPoints.findOne({ establishment_id: _pEstablishmentId });
+        if (_establishmentPoint) {
+            return _establishmentPoint.current_points;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+   * Go to rewards history chart
+   * @param _pEstablishmentId
+   */
+    goToRewardUnitsCharts(_pEstablishment: string) {
+        this._router.navigate(['/app/supervisor-reward-units-chart', _pEstablishment], { skipLocationChange: true });
+    }
+
+    /**
+     * Go to rewards history chart
+     * @param _pEstablishmentId
+     */
+    goToRewardHistoryCharts(_pEstablishment: string) {
+        this._router.navigate(['/app/supervisor-reward-history-chart', _pEstablishment], { skipLocationChange: true });
     }
 
     /**

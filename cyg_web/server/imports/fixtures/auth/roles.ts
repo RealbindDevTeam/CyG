@@ -10,7 +10,7 @@ export function loadRoles() {
             is_active: true,
             name: "ROLE.ADMINISTRATOR",
             description: "establishment administrator",
-            menus: ["900", "1000","2000", "3000", "10000", "20000"]
+            menus: ["900", "1000","2000", "3000", "10000", "15000", "20000"]
         },{
             _id: "400",
             is_active: true,
@@ -22,7 +22,7 @@ export function loadRoles() {
             is_active: true,
             name: "ROLE.SUPERVISOR",
             description: "establishment supervisor",
-            menus: ["910","1100","3100", "1200", "1300", "20000"],
+            menus: ["910", "20000"],
             user_prefix: 'sp'            
         }];
 

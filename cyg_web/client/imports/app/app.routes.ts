@@ -30,13 +30,11 @@ import { PaymentHistoryComponent } from './web/administrator/payment/payment-his
 import { ReactivateEstablishmentComponent } from './web/administrator/payment/reactivate-establishment/reactivate-establishment.component';
 import { TrnResponseConfirmComponent } from './web/administrator/payment/payu-payment-form/transaction-response-confirm/trn-response-confirm.component';
 import { AdminSignupComponent } from './web/auth/admin-signup/admin-signup.component';
-import { ItemEnableSupComponent } from './web/supervisor/items-enable/items-enable-sup.component';
-import { SupervisorCollaboratorsComponent } from './web/supervisor/collaborators/collaborators/supervisor-collaborators.component';
-import { SupervisorCollaboratorsRegisterComponent } from './web/supervisor/collaborators/register/supervisor-collaborators-register.component';
-import { SupervisorTableComponent } from './web/supervisor/tables/supervisor-tables.component';
+//import { ItemEnableSupComponent } from './web/supervisor/items-enable/items-enable-sup.component';
+//import { SupervisorTableComponent } from './web/supervisor/tables/supervisor-tables.component';
 //import { EstablishmentTableControlComponent } from './web/administrator/administration/tables/table-control/establishment-table-control.component';
 import { TableDetailComponent } from './web/administrator/administration/tables/table-control/table-detail/table-detail.component';
-import { SupervisorEstablishmentTableControlComponent } from './web/supervisor/establishment-table-control/supervisor-establishment-table-control.component';
+//import { SupervisorEstablishmentTableControlComponent } from './web/supervisor/establishment-table-control/supervisor-establishment-table-control.component';
 import { EstablishmentProfileComponent } from './web/administrator/administration/establishment/profile/establishment-profile.component';
 import { RewardComponent } from './web/administrator/rewards/reward/reward.component';
 import { RewardUnitsChartComponent } from 'client/imports/app/web/administrator/dashboard/reward-units-chart/reward-units-chart.component';
@@ -46,6 +44,7 @@ import { RewardHistoryChartComponent } from './web/administrator/dashboard/rewar
 //import { EstablishmentListComponent } from './web/administrator/administration/establishment/monthly-config/establishment-list/establishment-list.component';
 import { EnableDisableComponent } from './web/administrator/administration/establishment/monthly-config/enable-disable/enable-disable.component';
 import { BagsPaymentComponent } from './web/administrator/payment/bags-payment/bags-payment.component';
+import { ApproveRewardsComponent } from './web/administrator/approve-rewards/approve-rewards.component';
 
 export const routes: Route[] = [
     {
@@ -72,21 +71,22 @@ export const routes: Route[] = [
             { path: 'payment-form/:param1/:param2/:param3', component: PayuPaymentFormComponent, canActivate: [AdminGuard] },
             { path: 'payment-history', component: PaymentHistoryComponent, canActivate: [AdminGuard] },
             { path: 'reactivate-establishment', component: ReactivateEstablishmentComponent, canActivate: [AdminGuard] },
-            { path: 'items-enable-sup', component: ItemEnableSupComponent, canActivate: [SupervisorGuard] },
-            { path: 'supervisor-collaborators', component: SupervisorCollaboratorsComponent, canActivate: [SupervisorGuard] },
-            { path: 'supervisor-collaborators-register', component: SupervisorCollaboratorsRegisterComponent, canActivate: [SupervisorGuard] },
-            { path: 'supervisor-tables', component: SupervisorTableComponent, canActivate: [SupervisorGuard] },
+            //{ path: 'items-enable-sup', component: ItemEnableSupComponent, canActivate: [SupervisorGuard] },
+            //{ path: 'supervisor-tables', component: SupervisorTableComponent, canActivate: [SupervisorGuard] },
             //{ path: 'establishment-table-control', component: EstablishmentTableControlComponent, canActivate: [AdminGuard] },
             { path: 'table-detail/:param1/:param2/:param3/:param4/:param5', component: TableDetailComponent, canActivate: [SupervisorGuard] },
-            { path: 'supervisor-establishment-table-control', component: SupervisorEstablishmentTableControlComponent, canActivate: [SupervisorGuard] },
+            //{ path: 'supervisor-establishment-table-control', component: SupervisorEstablishmentTableControlComponent, canActivate: [SupervisorGuard] },
             { path: 'establishment-profile', component: EstablishmentProfileComponent, canActivate: [AdminGuard] },
             { path: 'rewards', component: RewardComponent, canActivate: [AdminGuard] },
             { path: 'reward-units-chart/:param1', component: RewardUnitsChartComponent, canActivate: [AdminGuard] },
+            { path: 'supervisor-reward-units-chart/:param1', component: RewardUnitsChartComponent, canActivate: [SupervisorGuard] },
             { path: 'reward-history-chart/:param1', component: RewardHistoryChartComponent, canActivate: [AdminGuard] },
+            { path: 'supervisor-reward-history-chart/:param1', component: RewardHistoryChartComponent, canActivate: [SupervisorGuard] },
             { path: 'options', component: OptionsComponent, canActivate: [AdminGuard] },
             { path: 'option-values', component: OptionValueComponent, canActivate: [AdminGuard] },
             { path: 'reward-history-chart/:param1', component: RewardHistoryChartComponent, canActivate: [AdminGuard] },
-            { path: 'bags-payment', component: BagsPaymentComponent, canActivate: [AdminGuard] }
+            { path: 'bags-payment', component: BagsPaymentComponent, canActivate: [AdminGuard] },
+            { path: 'approve-rewards', component: ApproveRewardsComponent, canActivate: [AdminGuard] }
         ]
     },
     { path: '', component: SigninWebComponent },

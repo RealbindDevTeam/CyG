@@ -44,16 +44,10 @@ import { VerifyResultComponent } from './administrator/payment/payment-history/v
 import { AdminSignupComponent } from './auth/admin-signup/admin-signup.component';
 import { AlertConfirmComponent } from './general/alert-confirm/alert-confirm.component';
 import { UserLanguageService } from './services/general/user-language.service';
-import { ItemEnableSupComponent } from './supervisor/items-enable/items-enable-sup.component';
-import { SupervisorCollaboratorsComponent } from './supervisor/collaborators/collaborators/supervisor-collaborators.component';
-import { SupervisorCollaboratorsEditionComponent } from './supervisor/collaborators/edition/supervisor-collaborators-edition.component';
-import { SupervisorCollaboratorsRegisterComponent } from './supervisor/collaborators/register/supervisor-collaborators-register.component';
-import { SupervisorTableComponent } from './supervisor/tables/supervisor-tables.component';
 import { RecoverConfirmComponent } from './auth/recover-password/recover-confirm/recover-confirm.component';
 import { EstablishmentTableControlComponent } from './administrator/administration/tables/table-control/establishment-table-control.component';
 import { TableDetailComponent } from './administrator/administration/tables/table-control/table-detail/table-detail.component';
 import { PenalizeCustomerComponent } from './administrator/administration/tables/table-control/table-detail/penalize-customer/penalize-customer.component';
-import { SupervisorEstablishmentTableControlComponent } from './supervisor/establishment-table-control/supervisor-establishment-table-control.component';
 import { EstablishmentProfileComponent } from './administrator/administration/establishment/profile/establishment-profile.component';
 import { PaymentPlanInfo } from './auth/payment-plan-info/payment-plan-info.component';
 import { ImageService } from './services/general/image.service';
@@ -70,6 +64,7 @@ import { OptionValueComponent } from './administrator/menu/options/values/option
 import { OptionValueEditComponent } from './administrator/menu/options/values/option-value-edit/option-value-edit.component';
 import { RewardHistoryChartComponent } from './administrator/dashboard/reward-history-chart/reward-history-chart.component';
 import { BagsPaymentComponent } from './administrator/payment/bags-payment/bags-payment.component';
+import { ApproveRewardsComponent } from './administrator/approve-rewards/approve-rewards.component';
 
 export const WEB_DECLARATIONS = [
     AppComponent,
@@ -103,13 +98,7 @@ export const WEB_DECLARATIONS = [
     PaymentHistoryComponent,
     ReactivateEstablishmentComponent,
     AdminSignupComponent,
-    ItemEnableSupComponent,
-    SupervisorCollaboratorsComponent,
-    SupervisorCollaboratorsRegisterComponent,
-    SupervisorTableComponent,
-    EstablishmentTableControlComponent,
     TableDetailComponent,
-    SupervisorEstablishmentTableControlComponent,
     EstablishmentProfileComponent,
     RewardComponent,
     RewardUnitsChartComponent,
@@ -117,7 +106,8 @@ export const WEB_DECLARATIONS = [
     OptionsComponent,
     OptionValueComponent,
     RewardHistoryChartComponent,
-    BagsPaymentComponent
+    BagsPaymentComponent,
+    ApproveRewardsComponent
 ];
 
 export const MODAL_DIALOG_DECLARATIONS = [
@@ -135,7 +125,6 @@ export const MODAL_DIALOG_DECLARATIONS = [
     TrnResponseConfirmComponent,
     VerifyResultComponent,
     AlertConfirmComponent,
-    SupervisorCollaboratorsEditionComponent,
     RecoverConfirmComponent,
     PenalizeCustomerComponent,
     PaymentPlanInfo,

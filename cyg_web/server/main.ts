@@ -37,6 +37,8 @@ import './imports/publications/establishment/order-history';
 import './imports/publications/points/bag_plans';
 import './imports/publications/points/establishment_points';
 import './imports/publications/points/negative-point';
+import './imports/publications/points/establishment-medals';
+import './imports/publications/points/reward-confirmation';
 
 import '../both/methods/menu/item.methods';
 import '../both/methods/auth/collaborators.methods';
@@ -59,6 +61,7 @@ import '../both/methods/establishment/schedule.methods';
 import '../both/methods/establishment/table.method';
 import '../both/methods/establishment/waiter-queue/waiter-queue.methods';
 import '../both/methods/establishment/waiter-queue/queues.methods';
+import '../both/methods/reward/reward.methods';
 
 import './imports/fixtures/auth/account-creation';
 import './imports/fixtures/auth/email-config';

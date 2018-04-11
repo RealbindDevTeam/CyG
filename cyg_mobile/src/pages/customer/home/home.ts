@@ -1,12 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavController, NavParams, PopoverController, AlertController, Platform } from 'ionic-angular';
-import { ScanCodePage } from '../scan-code/scan-code';
+import { NavController, NavParams, PopoverController, AlertController, Platform, ViewController } from 'ionic-angular';
 import { PointsPage } from '../points/points/points';
 import { PopoverOptionsPage } from './popover-options/popover-options';
 import { EstablishmentListPage } from "../establishment-list/establishment-list";
 import { Network } from '@ionic-native/network';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs/Subscription';
+import { MeteorObservable } from 'meteor-rxjs';
+import { UserLanguageServiceProvider } from '../../../providers/user-language-service/user-language-service';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
+import { EstablishmentQR } from 'cyg_web/both/models/establishment/establishment-qr.model';
+import { EstablishmentQRs } from 'cyg_web/both/collections/establishment/establishment-qr.collection';
+import { MedalWonPage } from '../medal-won/medal-won';
 
 @Component({
     templateUrl: 'home.html'
@@ -17,15 +23,33 @@ export class HomePage implements OnInit, OnDestroy {
 
     /**
      * HomePage constructor
+     * @param {NavController} _navCtrl 
+     * @param {ViewController} _viewCtrl 
+     * @param {PopoverController} popoverCtrl 
+     * @param {AlertController} _alertCtrl 
+     * @param {Platform} _platform 
+     * @param {Network} _network 
+     * @param {TranslateService} translate 
+     * @param {UserLanguageServiceProvider} _userLanguageService 
+     * @param {BarcodeScanner} barcodeScanner 
      */
-    constructor(public _navCtrl: NavController, public popoverCtrl: PopoverController, public _alertCtrl: AlertController,
-        public _platform: Platform, private _network: Network, public translate: TranslateService) {
+    constructor(public _navCtrl: NavController,
+        private _viewCtrl: ViewController,
+        public popoverCtrl: PopoverController,
+        public _alertCtrl: AlertController,
+        public _platform: Platform,
+        private _network: Network,
+        public translate: TranslateService,
+        private _userLanguageService: UserLanguageServiceProvider,
+        private barcodeScanner: BarcodeScanner) {
+        translate.setDefaultLang('en');
     }
 
     /**
     * ngOnInit implementation
     */
     ngOnInit() {
+        this.translate.use(this._userLanguageService.getLanguage(Meteor.user()));
     }
 
     presentPopover(myEvent) {
@@ -46,7 +70,77 @@ export class HomePage implements OnInit, OnDestroy {
      * Go to scan code page
      */
     goToScanCode() {
-        this._navCtrl.push(ScanCodePage);
+        this.barcodeScanner.scan().then((result) => {
+            this.validateQRCode(result.text);
+        }, (err) => {
+            this.showConfirmMessage(this.itemNameTraduction('MOBILE.SCAN_CODE.ERROR'));
+        });
+    }
+
+    /**
+     * Function to validate QR Code
+     * @param {string} _pQRCode 
+     */
+    validateQRCode(_pQRCode: string): void {
+        var split = _pQRCode.split('qr?', 2);
+        var qr_code: string = split[1];
+        MeteorObservable.call('verifyEstablishmentQRCode', qr_code).subscribe((establishmentQR: EstablishmentQR) => {
+            if (establishmentQR) {
+                if (establishmentQR.is_active) {
+                    this.fordwardToMedalWon(qr_code);
+                } else {
+                    this.showConfirmMessage(this.itemNameTraduction('MOBILE.SCAN_CODE.QR_NO_ACTIVE'));
+                }
+            } else {
+                this.showConfirmMessage(this.itemNameTraduction('MOBILE.SCAN_CODE.QR_NO_EXISTS'));
+            }
+        });
+    }
+
+    /**
+     * Fordward to medal won page when user accumlate a new medal
+     * @param {string} _pQRCode 
+     */
+    fordwardToMedalWon(_pQRCode: string): void {
+        MeteorObservable.call('getEstablishmentByQRCode', _pQRCode, Meteor.userId()).subscribe((establishment: Establishment) => {
+            if (establishment) {
+                this._navCtrl.push(MedalWonPage, { est_id: establishment._id });
+            } else {
+                this.showConfirmMessage(this.itemNameTraduction('MOBILE.SCAN_CODE.ERROR'));
+            }
+        }, (error) => {
+            if (error.error === '400') {
+                this.showConfirmMessage(this.itemNameTraduction('MOBILE.SCAN_CODE.QR_NO_EXISTS'));
+            } else if (error.error === '300') {
+                this.showConfirmMessage(this.itemNameTraduction('MOBILE.SCAN_CODE.RESTAURANT_NOT_EXISTS'));
+            } else if (error.error === '200') {
+                this.showConfirmMessage(this.itemNameTraduction('MOBILE.SCAN_CODE.CYG_NO_ACTIVE'));
+            } else if (error.error === '500') {
+                this.showConfirmMessage(this.itemNameTraduction('MOBILE.SCAN_CODE.PENALTY') + error.reason);
+            }
+        });
+    }
+
+    /**
+     * Show message confirm
+     * @param _pContent 
+     */
+    showConfirmMessage(_pContent: any) {
+        let okBtn = this.itemNameTraduction('MOBILE.OK');
+        let title = this.itemNameTraduction('MOBILE.SYSTEM_MSG');
+
+        let prompt = this._alertCtrl.create({
+            title: title,
+            message: _pContent,
+            buttons: [
+                {
+                    text: okBtn,
+                    handler: data => {
+                    }
+                }
+            ]
+        });
+        prompt.present();
     }
 
     /**
@@ -119,7 +213,7 @@ export class HomePage implements OnInit, OnDestroy {
         });
         return wordTraduced;
     }
-    
+
     ionViewWillLeave() {
         this.disconnectSubscription.unsubscribe();
     }

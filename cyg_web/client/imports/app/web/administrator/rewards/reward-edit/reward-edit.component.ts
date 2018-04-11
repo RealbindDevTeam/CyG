@@ -60,7 +60,7 @@ export class RewardEditComponent implements OnInit {
 
     ngOnInit() {
         this._editRewardForm = new FormGroup({
-            points: new FormControl(this._rewardToEdit.points),
+            points: new FormControl(this._rewardToEdit.points.toString()),
             isActive: new FormControl(this._rewardToEdit.is_active),
             establishments: this._establishmentsFormGroup
         });
@@ -70,7 +70,7 @@ export class RewardEditComponent implements OnInit {
         this._rewardEstablishments = this._rewardToEdit.establishments;
         this._establishments = Establishments.find({}).zone();
         this._establishments.subscribe(() => { this.createEstablishmentForm(); });
-        this._points = Points.find({ _id: { $gte: '50' } }).zone();
+        this._points = Points.find({ point: { $gte: 4 } }, { sort: { point: 1 } }).zone();
     }
 
     /**
@@ -107,7 +107,7 @@ export class RewardEditComponent implements OnInit {
                 $set: {
                     modification_user: this._user,
                     modification_date: new Date(),
-                    points: this._editRewardForm.value.points,
+                    points: Number.parseInt(this._editRewardForm.value.points),
                     establishments: _edition_establishments,
                     is_active: this._editRewardForm.value.isActive
                 }

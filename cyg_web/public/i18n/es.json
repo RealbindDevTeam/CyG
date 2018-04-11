@@ -274,6 +274,7 @@
             "DASHBOARD": "Tablero de control"
         },
         "REWARDS": "Recompensas",
+        "APPROVE_REWARDS": "Aprobaciones",
         "ADMINISTRATION": {
             "MANAGEMENT": "Administración",
             "RESTAURANTS": "Restaurantes",
@@ -1668,10 +1669,10 @@
         "THERE_NOT_ESTABLISHMENTS": "Aún no hay restaurantes registrados",
         "MESSAGE": "Registra uno para habilitar esta opción",
         "ESTABLISHMENT_REGISTER": "Registrar restaurante",
-        "MSG_INITIAL": "Implementa una manera ordenada y fácil de visualizar tu menú",
+        "MSG_INITIAL": "Crea items para poder crear tus recompensas",
         "CREATE_NEW_ITEM": "Crear nuevo item",
         "TITLE": "Recompensas",
-        "SUBTITLE": "Crea las recompensas para tus clientes. Ingresa cuantos items otorgaras (cantidad), el item y las medallas necesarios para redimir la recompensa",
+        "SUBTITLE": "Crea las recompensas para tus clientes. Ingresa cuantos items otorgaras (cantidad), el item y las medallas necesarias para redimir la recompensa",
         "QUANTITY": "Cantidad",
         "ESTABLISHMENTS": "Selecciona los establecimientos donde se encontrara disponible la recompensa",
         "NO_ESTABLISHMENTS_CREATED": "No se encuentran establecimientos creados",
@@ -1680,13 +1681,17 @@
         "MODIFY": "MODIFICAR",
         "REMOVE": "REMOVER",
         "SELECT_ITEM": "Selecciona un ítem",
-        "SELECT_POINTS": "Selecciona las medallas",
+        "SELECT_MEDALS": "Selecciona las medallas",
         "REWARD_CREATED": "Recompensa creada",
         "REMOVE_TITLE": "Remover Recompensa",
         "REMOVE_MSG": "Deseas remover la recompensa?",
         "REWARD_REMOVED": "Recompensa removida",
         "EDIT_REWARD": "Edición de la Recompensa",
-        "REWARD_EDITED": "Recompensa Editada"
+        "REWARD_EDITED": "Recompensa Editada",
+        "MEDALS": "Medallas",
+        "FIRST_RANGE_MSG": "En promedio un cliente irá a tu restaurante entre 3 y 5 veces para reclamar esta recompensa. Recuerda verificar tus cuentas, para que, lo que ofreces de recompensa no afecte tus ingresos.",
+        "SECOND_RANGE_MSG": "En promedio un cliente irá a tu restaurante entre 6 y 8 veces para reclamar esta recompensa. Es muy buena opción para dar a tus clientes recompensas alcanzables y que se animen a comprarte.",
+        "THIRD_RANGE_MSG": "En promedio un cliente irá a tu restaurante entre 9 y 10 veces para reclamar esta recompensa. Procura que tu recompensa sea muy atractiva, de lo contrario los clientes no se animaran a comprarte."
     },
     "REWARD_DETAIL": {
         "REWARD_TITLE": "Recompensas",
@@ -1828,5 +1833,24 @@
         "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
         "MESSAGE": "Registra uno para habilitar esta opción",
         "RESTAURANT_REGISTER": "Registrar restaurante"
+    },
+    "APPROVE_REWARDS": {
+        "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
+        "MESSAGE": "Registra uno para habilitar esta opción",
+        "RESTAURANT_REGISTER": "Registrar restaurante",
+        "TITLE": "Aprobación De Recompensas",
+        "SUBTITLE": "Esta página te permite aprobar las recompensas que los clientes redimen en tus restaurantes",
+        "SELECT_RESTAURANT": "Selecciona restaurante",
+        "NO_REWARDS_FOUND": "No se han encontrado recompensas por aprobar para el restaurante seleccionado",
+        "MEDALS": "Medallas",
+        "CUSTOMER": "Cliente",
+        "NO_APPROVE": "No Aprobar",
+        "APPROVE": "Aprobar",
+        "APPROVE_REWARD": "Aprobar Recompensa",
+        "APPROVE_REWARD_MSG": "Estas seguro de aprobar la recompensa?",
+        "REWARD_APPROVED": "Recompensa Aprobada",
+        "REJECT_REWARD": "Rechazar Recompensa",
+        "REJECT_REWARD_MSG": "Estas seguro de rechazar la recompensa?",
+        "REWARD_REJECTED": "Recompensa Rechazada"
     }
 }

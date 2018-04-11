@@ -31,6 +31,14 @@ export function loadMenus() {
                 order: 10000
             },
             {
+                _id: "15000",
+                is_active: true,
+                name: "MENUS.APPROVE_REWARDS",
+                url: "/app/approve-rewards",
+                icon_name: "assignment",
+                order: 15000
+            },
+            {
                 _id: "1000",
                 is_active: true,
                 name: "MENUS.ADMINISTRATION.MANAGEMENT",
@@ -106,7 +114,7 @@ export function loadMenus() {
                         }
                     ]
             },
-            {
+            /*{
                 _id: "1100",
                 is_active: true,
                 name: "MENUS.ADMINISTRATION.COLLABORATORS",
@@ -129,7 +137,7 @@ export function loadMenus() {
                 url: "/app/supervisor-establishment-table-control",
                 icon_name: "list",
                 order: 1300
-            },
+            },*/
             {
                 _id: "2000",
                 is_active: true,
@@ -229,14 +237,14 @@ export function loadMenus() {
                         }
                     ]
             },
-            {
+            /*{
                 _id: "3100",
                 is_active: true,
                 name: "MENUS.MENU_DEFINITION.ITEMS_ENABLE",
                 url: "/app/items-enable-sup",
                 icon_name: "done all",
                 order: 3100
-            },
+            },*/
             {
                 _id: "4000",
                 is_active: true,

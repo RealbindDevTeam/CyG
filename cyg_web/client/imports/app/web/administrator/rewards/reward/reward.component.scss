@@ -20,6 +20,21 @@
     .point {
         width: 25%;
     }
+
+    .first-range {
+        color:darkgoldenrod;
+        font-weight: bold;
+    }
+
+    .second-range {
+        color:#4caf50;
+        font-weight: bold;
+    }
+
+    .third-range {
+        color:#EF5350;
+        font-weight: bold;
+    }
 }
 
 .reward {
@@ -27,6 +42,11 @@
     display: inline-block;
     vertical-align: top;
     margin-right: 1%;
+
+    .subtitle {
+        font-weight: bold;
+        color: black;
+    }
 
     .points {
         background-color: #4caf50;
