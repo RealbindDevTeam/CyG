@@ -154,6 +154,7 @@
         "SLOGAN": "Reset your Password"
     },
     "SECTIONS": {
+        "SECTION_NAME": "Section name",
         "SECTION_CREATION": "Create sections",
         "SECTION_TEXT": "Create the sections of the menu for each restaurant",
         "SECTION_EDIT": "Section edition",
@@ -179,6 +180,7 @@
         "SECTION_NOT_REMOVED": "The section have categories or items, it could not be removed"
     },
     "CATEGORIES": {
+        "CATEGORY_NAME": "Category ame",
         "CATEGORIES_CREATION": "Create Categories",
         "SECCION_SELECTION": "Select section",
         "CATEGORIES_TEXT": "Create the categories of your menu and select the section to which it belongs",
@@ -198,6 +200,7 @@
         "CATEGORY_NOT_REMOVED": "The category have subcategories or items, it could not be removed"
     },
     "SUBCATEGORIES": {
+        "SUBCATEGORY_NAME": "Category ame",
         "SUBCATEGORY_CREATION": "Create Subcategories",
         "CATEGORY_SELECTION": "Select subcategory",
         "SUBCATEGORY_TEXT": "Create the subcategories of your menu and select the category to which it belongs",
@@ -218,6 +221,7 @@
         "SUBCATEGORY_NOT_REMOVED": "The subcategory have items, it could not be removed"
     },
     "ADDITIONS": {
+        "ADDITIONS_NAME": "Nombre",
         "ADDITION_CREATION": "Create Additions",
         "RESTAURANTS": "Restaurants",
         "RESTAURANT_ADDITION": "Select the restaurants where the addition is available",
@@ -312,7 +316,7 @@
         "SETTINGS": "Settings",
         "TABLES": "Change table",
         "RESTAURANT_EXIT": "Leave Restaurant",
-        "POINTS": "My points"
+        "POINTS": "My medals"
     },
     "PROMOTIONS": {
         "PROMOTION_CREATION": "Creation promotion",
@@ -373,13 +377,13 @@
         "TABLES_MSG": "In case you need more tables for your restaurant, in the option Management -> Restaurants -> Configuration, you can add more.",
         "CREATION_ERROR": "An error has occurred creating the restaurant. Please try again.",
         "RESTAURANT_CREATED": "Restaurant created",
-        "POINTS_VALIDITY": "Select the validity of the reward points",
+        "POINTS_VALIDITY": "Select the validity of the reward medals",
         "DAYS": "Days",
         "DIALOG_SENTENCE_1A": "Since the restaurant creation you are going to have a bag of ",
-        "DIALOG_SENTENCE_1B": "comeygana points ",
-        "DIALOG_SENTENCE_2": "The points are subtracted from the bag every time when a consumer redeem a reward",
+        "DIALOG_SENTENCE_1B": "comeygana medals ",
+        "DIALOG_SENTENCE_2": "The medals are subtracted from the bag every time when a consumer redeem a reward",
         "DIALOG_SENTENCE_3": "Are you sure to create the restaurant?",
-        "POINTS_PLACEHOLER": "Reward points"
+        "POINTS_PLACEHOLER": "Reward medals"
     },
     "WEEK": {
         "MONDAY": "Monday",
@@ -549,7 +553,7 @@
         "RESTAURANT_INACTIVE": "Inactive Restaurant",
         "RESTAURANT_ACTIVE": "Active Restaurant",
         "WAITERS_ERROR": "There are restaurants that don't have waiters/waitress. please check the collaborators option",
-        "AVAILABLE_POINTS": "Available Points",
+        "AVAILABLE_POINTS": "Available medals",
         "QR_CODE": "QR_Code",
         "QR_CODE_DOWNLOADED": "QR Code Downloaded",
         "QR_CODE_ERROR": "QR Code Download Error",
@@ -578,7 +582,7 @@
     },
     "GO_TO_STORE": {
         "CLIENT": {
-            "TITTLE": "Order from your smartphone, accumulate and redeem your points",
+            "TITTLE": "Order from your smartphone, accumulate and redeem your medals",
             "SUB_TITTLE": "",
             "CONTENT": "Free download: ",
             "BUTTON": "Download"
@@ -622,6 +626,7 @@
         "USER_NAME_WILL_BE": "The username will be "
     },
     "ITEMS": {
+        "ITEM_NAME": "Name",
         "ITEMS_MANAGEMENT": "Item management",
         "ITEMS_MANAGEMENT_TEXT": "Creation and management of items",
         "CREATE_NEW_ITEM": "Create a new item",
@@ -675,8 +680,9 @@
         "REMOVE_TITLE": "Item remove",
         "REMOVE_MSG": "Do you want to remove the item?",
         "ITEM_REMOVED": "Item removed correctly",
-        "REWARD_LABEL": "Assigning reward points",
-        "POINTS_PLACEHOLER": "Points",
+        "ITEM_IS_REWARD": "Item is reward, no has been deleted",
+        "REWARD_LABEL": "Assigning reward medals",
+        "POINTS_PLACEHOLER": "Medals",
         "MENU_RECOMMENDED": "Menu recommended",
         "ESTABLISHMENTS": "Establishments",
         "RECOMMENDED_CHANGED": "Item recommendation changed",
@@ -784,7 +790,7 @@
         "INFORMATION": "Information",
         "SCHEDULE": "Schedule",
         "LOCATION": "Location",
-        "POINTS": "Available points"
+        "POINTS": "Available medals"
     },
     "RESTAURANT_LOCATION_INFO": {
         "TITTLE": "Location of the establishment",
@@ -816,7 +822,7 @@
         "SEARCH_MENU": "Search menu",
         "RECOMMENDED": "Recommended",
         "REWARD": "Reward",
-        "POINTS": "points",
+        "POINTS": "medals",
         "TOTAL_ITEM_POINTS": "Total",
         "MENU": "Menu",
         "GET_POINTS": "You get",
@@ -1005,7 +1011,7 @@
         "IUREST_NO_ACTIVE": "The restaurant does not have the comeygana service active. It is not possible to enter.",
         "RESTAURANT_NOT_EXISTS": "The restaurant does not exist. It is not possible to enter.",
         "PENALTY": "At the moment you do not have available the option to create orders. Try later",
-        "REDEEM_POINTS": "Redeem points"
+        "REDEEM_POINTS": "Redeem medals"
     },
     "MONTHLY_PAYMENT": {
         "TITLE": "comeygana services",
@@ -1273,7 +1279,7 @@
     "ADMIN_SIGNUP": {
         "HOME_CONTENT": {
             "TITLE": "Know and reward your customers for their loyalty",
-            "SUB_TITLE": "It reduces time receiving and delivering the orders of your dinersWe offer you a quick and easy system that allows you to create a stable relationship with your customers through a customizable points system"
+            "SUB_TITLE": "It reduces time receiving and delivering the orders of your dinersWe offer you a quick and easy system that allows you to create a stable relationship with your customers through a customizable medals system"
         },
         "ABOUT_CONTENT": {
             "MSG_1": "Add the detailed information of the menu, in order to the clients can see it, and ordering from his phones, tablets or computers",
@@ -1383,7 +1389,7 @@
         "REWARDS": "Rewards redeemed today",
         "ITEMS_HISTORY": "Items ordered historically",
         "REWARDS_HISTORY": "Rewards redeemed historically",
-        "AVAILABLE_POINTS": "Available Points"
+        "AVAILABLE_POINTS": "Available medals"
     },
     "ITEM_UNIT_CHART": {
         "TODAY": "Today",
@@ -1654,9 +1660,10 @@
         "READ_LESS": "Read less"
     },
     "AFTER_RESTAURANT_CREATION": {
-        "A": "Go to Administrator/collaborators option, and create the employees of the restaurant",
-        "B": "Go to Administrator/Tables/Search tables, to select and print the QR code of the tables",
-        "C": "Charge the information of your menu from the menu option, in order to the users can see it from their devices",
+        "A": "Download the QR code the order to consumers scan it  in the moment to pay",
+        "B": "Digitalize your menu and it will be avaible for your clients",
+        "C": "Define your rewards the order to consumer to redeem them",
+        "D": "Creates collaborators with supervisor role",
         "NOT_SHOW": "Do not show again"
     },
     "REWARD": {
@@ -1670,7 +1677,7 @@
         "QUANTITY": "Quantity",
         "ESTABLISHMENTS": "Select the establishments where the reward is available",
         "NO_ESTABLISHMENTS_CREATED": "There are not establishments created on the platform",
-        "POINTS": "Points",
+        "POINTS": "Medals",
         "NO_ESTABLISHMENTS": "There are not establishments",
         "MODIFY": "MODIFY",
         "REMOVE": "REMOVE",
@@ -1689,11 +1696,11 @@
     },
     "REWARD_DETAIL": {
         "REWARD_TITLE": "Rewards",
-        "POINTS_TO_REDEEM": "Available points to redeem",
-        "POINTS": "Points",
+        "POINTS_TO_REDEEM": "Available medals to redeem",
+        "POINTS": "Medals",
         "UNAVAILABLE": "Unavailable",
         "REDEEM": "Redeem",
-        "GET_POINTS": "Get points",
+        "GET_POINTS": "Get medals",
         "REWARD_AGGREGATED": "Reward aggregated",
         "ERROR": "Error aggregating reward. Try again",
         "ORDER_ERROR": "You can redeem maximum one reward per order",
@@ -1701,27 +1708,28 @@
         "NO_REWARDS": "The are no rewards"
     },
     "CUSTOMER_POINTS": {
-        "NO_POINTS_MSG": "You have not accumulated points in any restaurant yet. Encourage!",
+        "NO_POINTS_MSG": "You have not accumulated medals in any restaurant yet. Encourage!",
         "GO_TO_ORDERS": "Go to orders",
         "ADDRESS": "Address",
-        "ACCUMULATED_POINTS": "Accumulated points",
-        "POINTS": "Points",
+        "ACCUMULATED_POINTS": "Accumulated medals",
+        "POINTS": "Medals",
         "YOU_HAVE": "You have",
-        "POINTS_FOR_EXPIRING": "points for expiring the day",
+        "POINTS_FOR_EXPIRING": "medals for expiring the day",
         "DETAIL": "Detail"
     },
     "POINTS_DETAIL": {
-        "TITLE": "Orders and points history",
-        "SUBTITLE": "We present the orders you have ordered in the restaurant, the points you have earned and redeemed",
+        "TITLE": "Orders and medals history",
+        "SUBTITLE": "We present the orders you have ordered in the restaurant, the medals you have earned and redeemed",
         "ORDER": "Order",
         "YOU_EARNED": "You earned",
-        "POINTS": "Points",
+        "POINTS": "Medals",
         "YOU_REDEEMED": "You redeemed",
         "QUANT": "Quant. ",
         "REWARD": "Reward",
         "TOTAL": "Total"
     },
     "OPTIONS": {
+        "OPTION_NAME": "Name",
         "OPTION_CREATION": "Create options",
         "OPTION_TEXT": "Create the options you need for your items",
         "OPTION_EDIT": "Option edition",
@@ -1772,7 +1780,7 @@
         "NO_RECORDS_FOUND": "No orders found",
         "ACCUMULATED": "accumulated",
         "REDEEMED": "Redeemed",
-        "AVAILABLE_POINTS": "Available Points"
+        "AVAILABLE_POINTS": "Available medals"
     },
     "TYPE_OF_FOOD": {
         "GERMAN_FOOD": "German food",
