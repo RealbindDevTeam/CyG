@@ -34,16 +34,3 @@ Meteor.publish('getCountriesByEstablishmentsId', function (_establishmentsId: st
     });
     return Countries.find({ _id: { $in: _ids } });
 });
-
-
-/**
- * Meteor publicaation return countries by admin user Id
- */
-Meteor.publish('getCountriesByAdminUser', function () {
-    let _countriesIds: string[] = [];
-    Establishments.collection.find({ creation_user: this.userId }).forEach(function <Establishment>(establishment, index, ar) {
-        _countriesIds.push(establishment.countryId);
-    });
-
-    return Countries.find({ _id: { $in: _countriesIds }, is_active: true });
-});

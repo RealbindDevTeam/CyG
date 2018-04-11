@@ -131,6 +131,7 @@ export class AdditionComponent implements OnInit, OnDestroy {
      */
     buildControls(): void {
         let _lEstablishmentsId: string[] = [];
+        let _lCurrenciesIds: string[] = [];
         this._establishmentCurrencies = [];
         this._establishmentTaxes = [];
 
@@ -139,24 +140,15 @@ export class AdditionComponent implements OnInit, OnDestroy {
 
         Establishments.collection.find({}).fetch().forEach((res) => {
             _lEstablishmentsId.push(res._id);
+            _lCurrenciesIds.push(res.currencyId);
         });
         this._countriesSub = MeteorObservable.subscribe('getCountriesByEstablishmentsId', _lEstablishmentsId).takeUntil(this._ngUnsubscribe).subscribe();
         this._currenciesSub = MeteorObservable.subscribe('getCurrenciesByEstablishmentsId', _lEstablishmentsId).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                Establishments.collection.find({}).fetch().forEach((establishment) => {
+                Establishments.collection.find({ _id: { $in: _lEstablishmentsId } }).fetch().forEach((establishment) => {
                     let _lCountry: Country = Countries.findOne({ _id: establishment.countryId });
                     if (this._establishmentCurrencies.indexOf(establishment.currencyId) <= -1) {
-                        let _lCurrency: Currency = Currencies.findOne({ _id: establishment.currencyId });
-                        let _initValue: string = '';
-                        if (_lCurrency.decimal !== 0) {
-                            for (let i = 0; i < (_lCurrency.decimal).toString().slice((_lCurrency.decimal.toString().indexOf('.')), (_lCurrency.decimal.toString().length)).length - 1; i++) {
-                                _initValue += '0';
-                            }
-                            _initValue = '0.' + _initValue;
-                        } else {
-                            _initValue = '0';
-                        }
-                        let control: FormControl = new FormControl(_initValue, [Validators.required]);
+                        let control: FormControl = new FormControl('', [Validators.required]);
                         this._currenciesFormGroup.addControl(establishment.currencyId, control);
                         this._establishmentCurrencies.push(establishment.currencyId);
 
@@ -169,7 +161,7 @@ export class AdditionComponent implements OnInit, OnDestroy {
                 });
                 this._establishmentCurrencies.length > 0 ? this._showCurrencies = true : this._showCurrencies = false;
                 this._establishmentTaxes.length > 0 ? this._showTaxes = true : this._showTaxes = false;
-                this._currencies = Currencies.find({}).zone();
+                this._currencies = Currencies.find({ _id: { $in: _lCurrenciesIds } }).zone();
             });
         });
     }

@@ -13,18 +13,11 @@ import '../both/methods/auth/user-login.methods';
 import '../both/methods/auth/user.methods';
 import '../both/methods/general/cron.methods';
 import '../both/methods/general/email.methods';
-import '../both/methods/general/parameter.methods';
 import '../both/methods/general/change-email.methods';
 import '../both/methods/general/country.methods';
 import '../both/methods/general/iurest-invoice.methods';
 import '../both/methods/general/push-notifications.methods';
 import '../both/methods/establishment/establishment.methods';
-import '../both/methods/establishment/order-history.methods';
-import '../both/methods/establishment/order.methods';
-import '../both/methods/establishment/schedule.methods';
-import '../both/methods/establishment/table.method';
-import '../both/methods/establishment/waiter-queue/waiter-queue.methods';
-import '../both/methods/establishment/waiter-queue/queues.methods';
 import '../both/methods/reward/reward.methods';
 
 function setClass(css:any) {
