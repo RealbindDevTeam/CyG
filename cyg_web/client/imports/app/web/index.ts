@@ -109,7 +109,8 @@ export const WEB_DECLARATIONS = [
     RewardHistoryChartComponent,
     BagsPaymentComponent,
     ApproveRewardsComponent,
-    SupervisorApproveRewardsComponent
+    SupervisorApproveRewardsComponent,
+    EstablishmentTableControlComponent
 ];
 
 export const MODAL_DIALOG_DECLARATIONS = [
