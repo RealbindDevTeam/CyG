@@ -170,10 +170,7 @@ export class SigninComponent implements OnInit {
                         user_id: Meteor.userId(),
                         role_id: '400',
                         is_active: true,
-                        establishment_work: '',
-                        penalties: [],
-                        current_establishment: '',
-                        current_table: ''
+                        penalties: []
                     });
                 }
                 this.navCtrl.push(HomePage);

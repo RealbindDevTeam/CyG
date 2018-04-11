@@ -90,11 +90,8 @@ export class SignupComponent implements OnInit {
                                 user_id: Meteor.userId(),
                                 role_id: '400',
                                 is_active: true,
-                                establishment_work: '',
                                 grant_start_points: true,
-                                penalties: [],
-                                current_establishment: '',
-                                current_table: ''
+                                penalties: []
                             });
                             confirmMsg = 'MOBILE.SIGNUP.SUCCESS';
                             this.showComfirm(this.itemNameTraduction(confirmMsg));
@@ -158,11 +155,8 @@ export class SignupComponent implements OnInit {
                     user_id: Meteor.userId(),
                     role_id: '400',
                     is_active: true,
-                    establishment_work: '',
                     penalties: [],
-                    grant_start_points: true,
-                    current_establishment: '',
-                    current_table: ''
+                    grant_start_points: true
                 });
             }
 

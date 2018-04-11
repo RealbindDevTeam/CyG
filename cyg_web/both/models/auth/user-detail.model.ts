@@ -18,13 +18,10 @@ export interface UserDetail extends CollectionObject {
     establishment_work?: string;
     penalties?: UserDetailPenalty[];
     grant_start_points?: boolean;
-    current_establishment?: string;
-    current_table?: string;
     birthdate?: Date;
     phone?: string;
     enabled?: boolean;
     image?: UserDetailImage;
-    reward_points?: UserRewardPoints[];
 }
 
 export interface UserDetailPenalty {
@@ -49,10 +46,4 @@ export class UserDetailImage {
     key?: string;
     container?: string;
     uploadId: string;
-}
-
-export interface UserRewardPoints {
-    index: number;
-    establishment_id: string;
-    points: number;
 }
