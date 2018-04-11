@@ -60,8 +60,6 @@ import '../both/methods/establishment/order-history.methods';
 import '../both/methods/establishment/order.methods';
 import '../both/methods/establishment/schedule.methods';
 import '../both/methods/establishment/table.method';
-import '../both/methods/establishment/waiter-queue/waiter-queue.methods';
-import '../both/methods/establishment/waiter-queue/queues.methods';
 import '../both/methods/reward/reward.methods';
 
 import './imports/fixtures/auth/account-creation';

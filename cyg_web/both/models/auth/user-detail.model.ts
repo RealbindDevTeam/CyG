@@ -25,7 +25,6 @@ export interface UserDetail extends CollectionObject {
 }
 
 export interface UserDetailPenalty {
-    establishment_id: string;
     date: Date;
 }
 

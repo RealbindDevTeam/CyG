@@ -24,7 +24,6 @@ accounts-google@1.3.1
 check@1.3.0
 email@1.2.3
 astrocoders:one-signal
-vsivsi:job-collection
 btafel:accounts-facebook-cordova
 percolate:synced-cron
 meteorhacks:ssr
