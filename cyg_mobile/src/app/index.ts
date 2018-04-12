@@ -21,6 +21,8 @@ import { MedalWonPage } from '../pages/customer/medal-won/medal-won';
 import { UserRewardsPage } from '../pages/customer/points/points-detail/user-rewards/user-rewards';
 import { UserMedalsPage } from '../pages/customer/points/points-detail/user-medals/user-medals';
 import { MedalCYG } from '../pages/general/medal-cyg/medal-cyg';
+import { TabsPage } from "../pages/administrator/tabs/tabs";
+import { ApproveRewardsPage } from "../pages/administrator/approve-rewards/approve-rewards";
 
 export const PAGES_DECLARATIONS = [
     InitialComponent,
@@ -45,5 +47,7 @@ export const PAGES_DECLARATIONS = [
     MedalWonPage,
     UserRewardsPage,
     UserMedalsPage,
-    MedalCYG
+    MedalCYG,
+    TabsPage,
+    ApproveRewardsPage
 ];

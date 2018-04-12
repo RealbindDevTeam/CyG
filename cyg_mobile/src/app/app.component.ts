@@ -9,6 +9,7 @@ import { InitialComponent } from '../pages/auth/initial/initial';
 import { UserLogin } from 'cyg_web/both/models/auth/user-login.model';
 import { HomePage } from '../pages/customer/home/home';
 import { Network } from '@ionic-native/network';
+import { TabsPage } from "../pages/administrator/tabs/tabs";
 
 @Component({
   templateUrl: 'app.html'
@@ -45,7 +46,11 @@ export class MyApp {
           if (role == "400") {
             this.insertUserInfo();
             this.rootPage = HomePage;
-          } /*else if (role == "200") {
+          } else if (role == "100"){
+            this.insertUserInfo();
+            this.rootPage = TabsPage;
+          }
+          /*else if (role == "200") {
             MeteorObservable.call('validateEstablishmentIsActive').subscribe((_restaruantActive) => {
               if (_restaruantActive) {
                 MeteorObservable.call('validateUserIsActive').subscribe((active) => {
