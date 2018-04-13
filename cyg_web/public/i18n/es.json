@@ -1129,9 +1129,9 @@
         "ITEM_REDEEMED": "Item Redimido"
     },
     "PAYMENT_FORM": {
-        "TITLE": "Medio de pago",
+        "TITLE": "Medio de pago - Tarjeta de crédito",
         "SUBTITLE": "Por favor diligencia todos los campos para realizar el pago",
-        "SELECT_METHOD": "Medio de pago *",
+        "SELECT_METHOD": "Selecciona tarjeta *",
         "CARD_NUMBER": "Número de tarjeta (Sin espacio, ni guiones) *",
         "EXPIRATION_YEAR": "Año de caducidad *",
         "EXPIRATION_MONTH": "Mes de caducidad *",
@@ -1186,7 +1186,10 @@
         "LAST_NAME": "Apellidos",
         "UNAVAILABLE_PAYMENT": "La opción de pago no esta disponible por el momento, por favor intenta mas tarde",
         "CC_PAYMENT_METHOD": "Tarjeta de crédito",
-        "DESCRIPTION": "Servicio mensual de comeygana"
+        "DESCRIPTION": "Servicio mensual de comeygana",
+        "FULL_NAME": "Nombre",
+        "SYSTEM_MSG": "Mensaje del sistema",
+        "ACCEPT": "Aceptar"
     },
     "RES_PAYMENT_HISTORY": {
         "TITLE": "Historial de pagos",
@@ -1309,7 +1312,7 @@
         "LASTNAME": "Apellidos",
         "FULLNAME": "Nombre completo",
         "REQUIRED_FULLNAME": "El nombre no puede estar vacío",
-        "MAX_LENGTH_FULLNAME": "El nombre debe tener máximo 200 caracteres",
+        "MAX_LENGTH_FULLNAME": "El nombre debe tener máximo 150 caracteres",
         "REQUIRED_LASTNAME": "El apellido no puede estar vacío",
         "MIN_LENGTH_LASTNAME": "",
         "MAX_LENGTH_LASTNAME": "El apellido debe tener máximo 70 caracteres",

@@ -9,36 +9,114 @@
                 </mat-card-title-group>
 
                 <mat-card-content>
+                    <div *ngIf="_user">
+                        <form [formGroup]="_paymentForm" (ngSubmit)="openConfirmDialog()">
 
-                    <form [formGroup]="_paymentForm" (ngSubmit)="openConfirmDialog()">
+                            <div style="margin-top: 2%">
+                                <mat-form-field style="width: 48%">
+                                    <mat-select formControlName="paymentMethod" [(ngModel)]="_selectedPaymentMethod" placeholder="{{'PAYMENT_FORM.SELECT_METHOD' | translate}}">
+                                        <mat-option *ngFor="let cCPaymentMethod of _cCPaymentMethods | async" value="{{cCPaymentMethod.payu_code}}" (click)="changeCcPaymentLogo(cCPaymentMethod.logo_name)">{{cCPaymentMethod.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field style="width: 49%; margin-left: 2%;">
+                                    <input matInput formControlName="payerName" placeholder="{{'PAYMENT_FORM.PAYER_FULLNAME' | translate}}">
+                                </mat-form-field>
+                            </div>
+                            <div style="margin-top: 1%">
+                                <mat-form-field style="width: 48%">
+                                    <input matInput formControlName="cardNumber" placeholder="{{'PAYMENT_FORM.CARD_NUMBER' | translate}}">
+                                </mat-form-field>
+                                <mat-form-field style="width: 16%; margin-left: 2%;">
+                                    <mat-select formControlName="expirationMonth" [(ngModel)]="_selectedCardMonth" placeholder="{{'PAYMENT_FORM.EXPIRATION_MONTH' | translate}}">
+                                        <mat-option *ngFor="let month of _monthsArray" value="{{month.value}}">{{month.viewValue}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field style="width: 16%;">
+                                    <mat-select formControlName="expirationYear" [(ngModel)]="_selectedCardYear" placeholder="{{'PAYMENT_FORM.EXPIRATION_YEAR' | translate}}">
+                                        <mat-option *ngFor="let year of _yearsArray" value="{{year.value}}">{{year.viewValue}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field style="width: 14%; margin-left: 2%;">
+                                    <input matInput formControlName="securityCode" placeholder="{{'PAYMENT_FORM.SECURITY_CODE' | translate}}">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <div style="width: 48%; display: inline-block;">
+                                    <div *ngIf="_paymentForm.controls['cardNumber'].hasError('required') && _paymentForm.controls['cardNumber'].touched" class="error-msg">{{'PAYMENT_FORM.CARD_NUMBER_REQUIRED' | translate}}</div>
+                                    <div *ngIf="_paymentForm.controls['cardNumber'].hasError('minlength') && _paymentForm.controls['cardNumber'].touched" class="error-msg">{{'PAYMENT_FORM.CARD_NUMBER_MIN' | translate}}</div>
+                                    <div *ngIf="_paymentForm.controls['cardNumber'].hasError('maxlength') && _paymentForm.controls['cardNumber'].touched" class="error-msg">{{'PAYMENT_FORM.CARD_NUMBER_MAX' | translate}}</div>
+                                    <div *ngIf="_paymentForm.controls['cardNumber'].hasError('invalidNumericField') && _paymentForm.controls['cardNumber'].touched"
+                                        class="error-msg">{{'PAYMENT_FORM.CARD_ONLY_NUMBER' | translate}}</div>
+                                </div>
+                                <div style="width: 16%; margin-left: 2%; display: inline-block;">
+                                </div>
+                                <div style="width: 16%; display: inline-block;">
+                                </div>
+                                <div style="width: 14%; margin-left: 2%; display: inline-block;">
+                                    <div *ngIf="_paymentForm.controls['securityCode'].hasError('required') && _paymentForm.controls['securityCode'].touched"
+                                        class="error-msg">{{'PAYMENT_FORM.SECURITY_CODE_REQUIRED' | translate}}</div>
+                                    <div *ngIf="_paymentForm.controls['securityCode'].hasError('minlength') && _paymentForm.controls['securityCode'].touched"
+                                        class="error-msg">{{'PAYMENT_FORM.SECURITY_CODE_MIN' | translate}}</div>
+                                    <div *ngIf="_paymentForm.controls['securityCode'].hasError('maxlength') && _paymentForm.controls['securityCode'].touched"
+                                        class="error-msg">{{'PAYMENT_FORM.SECURITY_CODE_MAX' | translate}}</div>
+                                    <div *ngIf="_paymentForm.controls['securityCode'].hasError('invalidNumericField') && _paymentForm.controls['securityCode'].touched"
+                                        class="error-msg">{{'PAYMENT_FORM.CODE_ONLY_NUMBER' | translate}}</div>
+                                </div>
+                            </div>
+                            <mat-card-title style="margin-top: 10px">{{'PAYMENT_FORM.BILLING_INFORMATION' | translate}}</mat-card-title>
 
-                        <div style="margin-top: 2%">
-                            <mat-form-field style="width: 43%">
-                                <mat-select formControlName="paymentMethod" [(ngModel)]="_selectedPaymentMethod" placeholder="{{'PAYMENT_FORM.SELECT_METHOD' | translate}}">
-                                    <mat-option *ngFor="let cCPaymentMethod of _cCPaymentMethods | async" value="{{cCPaymentMethod.payu_code}}" (click)="changeCcPaymentLogo(cCPaymentMethod.logo_name)">{{cCPaymentMethod.name}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <mat-form-field style="width: 54%; margin-left: 2%;">
-                                <input matInput formControlName="fullName" placeholder="{{'PAYMENT_FORM.PAYER_FULLNAME' | translate}}">
-                            </mat-form-field>
-                        </div>
+                            <div style="margin-top: 1%">
+                                <mat-form-field style="width: 48%">
+                                    <input matInput formControlName="buyerName" placeholder="{{'PAYMENT_FORM.FULL_NAME' | translate}}">
+                                </mat-form-field>
+                                <mat-form-field style="width: 49%; margin-left: 2%">
+                                    <input matInput formControlName="email" placeholder="{{'PAYMENT_FORM.PAYER_EMAIL' | translate}}">
+                                </mat-form-field>
+                            </div>
 
-                        <div style="margin-top: 1%">
-                            <mat-form-field style="width: 43%">
-                                <input matInput formControlName="cardNumber" placeholder="{{'PAYMENT_FORM.CARD_NUMBER' | translate}}">
-                            </mat-form-field>
-                        </div>
+                            <div>
+                                <mat-form-field style="width: 48%">
+                                    <input matInput formControlName="dniNumber" placeholder="{{'PAYMENT_FORM.DNI_NUMBER' | translate}}">
+                                </mat-form-field>
+                                <mat-form-field style="width: 49%; margin-left: 2%">
+                                    <mat-select formControlName="country" placeholder="{{'ADMIN_SIGNUP.COUNTRY' | translate}}">
+                                        <mat-option *ngFor="let country of _countries | async" value="{{country._id}}" (click)="changeCountry(country._id)">{{country.name | translate}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
 
+                            <div style="width: 48%">
+                                <div *ngIf="_paymentForm.controls['dniNumber'].hasError('maxlength') && _paymentForm.controls['dniNumber'].touched" class="error-msg">{{'PAYMENT_FORM.DNI_NUMBER_MAX' | translate}}</div>
+                            </div>
 
-                        <div *ngFor="let data of dataArray">
-                            {{data.establishmentId}} {{data.bagPlanPoints}}
-                            <mat-divider></mat-divider>
-                        </div>
+                            <div style="margin-top: 1%">
+                                <mat-form-field style="width: 48%">
+                                    <input matInput formControlName="streetOne" placeholder="{{'PAYMENT_FORM.ADDRESS' | translate}}">
+                                </mat-form-field>
+                                <mat-form-field style="width: 49%; margin-left: 2%;">
+                                    <input matInput formControlName="contactPhone" placeholder="{{'PAYMENT_FORM.PHONE_NUMBER' | translate}}">
+                                </mat-form-field>
+                            </div>
 
-                    </form>
+                            <div>
+                                <div style="width: 48%; display: inline-block;">
+                                    <div *ngIf="_paymentForm.controls['streetOne'].hasError('maxlength') && _paymentForm.controls['streetOne'].touched" class="error-msg">{{'PAYMENT_FORM.ADDRESS_MAX' | translate}}</div>
+                                </div>
+                                <div style="width: 48%; margin-left: 2%; display: inline-block">
+                                    <div *ngIf="_paymentForm.controls['contactPhone'].hasError('maxlength') && _paymentForm.controls['contactPhone'].touched"
+                                        class="error-msg">{{'PAYMENT_FORM.PHONE_NUMBER_MAX' | translate}}</div>
+                                </div>
+                            </div>
+                            <div style="width: 43%; display: inline-block">
+                                {{'PAYMENT_FORM.SECURITY_MSG' | translate}}
+                            </div>
+                            <div style="width: 54%; margin-left: 2%; display: inline-block">
+                                <button style="float: right" color="accent" mat-raised-button type="submit" [disabled]="!_paymentForm.valid">{{'PAYMENT_FORM.CONTINUE_PAYMENT' | translate}}</button>
+                            </div>
+                        </form>
+                    </div>
 
                 </mat-card-content>
-
             </mat-card>
         </div>
     </div>

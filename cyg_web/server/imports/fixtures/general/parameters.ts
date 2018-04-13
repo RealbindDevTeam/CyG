@@ -9,9 +9,9 @@ export function loadParameters() {
             { _id: '300', name: 'from_email', value: 'comeygana <no-reply@comeygana.com>', description: 'default from account email to send messages' },
             { _id: '400', name: 'first_pay_discount', value: '50', description: 'discount in percent to service first pay' },
             { _id: '500', name: 'colombia_tax_iva', value: '19', description: 'Colombia tax iva to monthly comeygana payment' },
-            { _id: '600', name: 'payu_script_p_tag', value: 'url(https://maf.pagosonline.net/ws/fp?id=', description: 'url for security script for payu form in <p> tag' },
-            { _id: '700', name: 'payu_script_img_tag', value: 'https://maf.pagosonline.net/ws/fp/clear.png?id=', description: 'url for security script for payu form in <img> tag' },
-            { _id: '800', name: 'payu_script_script_tag', value: 'https://maf.pagosonline.net/ws/fp/check.js?id=', description: 'url for security script for payu form in <script> tag' },
+            { _id: '600', name: 'payu_script_tag', value: 'https://maf.pagosonline.net/ws/fp/tags.js?id=', description: 'url for security script for payu form in <script> tag' },
+            { _id: '700', name: 'payu_noscript_tag', value: 'https://maf.pagosonline.net/ws/fp/tags.js?id=', description: 'url for security script for payu form in <noscript> tag' },
+            { _id: '800', name: 'payu_script_code', value: '80200', description: 'url ended code for security tag for payu form in <script> and <noscript> tag' },
             { _id: '900', name: 'payu_script_object_tag', value: 'https://maf.pagosonline.net/ws/fp/fp.swf?id=', description: 'url for security script for payu form in <object> tag' },
             { _id: '1000', name: 'payu_payments_url_test', value: 'https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi', description: 'url for connect test payu payments API' },
             { _id: '2000', name: 'payu_reports_url_test', value: 'https://sandbox.api.payulatam.com/reports-api/4.0/service.cgi', description: 'url for connect test payu reports API' },
@@ -45,8 +45,8 @@ export function loadParameters() {
             { _id: '20000', name: 'payu_reports_url_prod', value: 'https://api.payulatam.com/reports-api/4.0/service.cgi', description: 'url for connect prod payu reports API' },
             { _id: '8500', name: 'date_test_reactivate', value: 'January 6, 2018', description: 'Date test for reactivate restaurant for pay' },
             { _id: '30000', name: 'terms_url', value: 'http://www.tsti4t-1935943095.com/signin/', description: 'url to see terms and conditions' },
-            { _id: '40000', name: 'policy_url', value: 'http://www.tsti4t-1935943095.com/signup/', description: 'url to see privacy policy'},
-            { _id: '50000', name: 'QR_code_url', value: 'http://www.tsti4t-1935943095.com/qr?', description: 'This url redirect to page the comeygana/download when scanned QR code from other application'},
+            { _id: '40000', name: 'policy_url', value: 'http://www.tsti4t-1935943095.com/signup/', description: 'url to see privacy policy' },
+            { _id: '50000', name: 'QR_code_url', value: 'http://www.tsti4t-1935943095.com/qr?', description: 'This url redirect to page the comeygana/download when scanned QR code from other application' },
             { _id: '2300', name: 'user_start_points', value: '1', description: 'User start points' },
         ];
         parameters.forEach((parameter: Parameter) => Parameters.insert(parameter));

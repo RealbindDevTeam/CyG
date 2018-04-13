@@ -1129,9 +1129,9 @@
         "ITEM_REDEEMED": "Item Redeemed"
     },
     "PAYMENT_FORM": {
-        "TITLE": "Payment method",
+        "TITLE": "Payment method - Credit card",
         "SUBTITLE": "Please, fill all the fields to do the payment ",
-        "SELECT_METHOD": "Payment method *",
+        "SELECT_METHOD": "Select card *",
         "CARD_NUMBER": "Card number (Only numbers)*",
         "EXPIRATION_YEAR": "Expiration year *",
         "EXPIRATION_MONTH": "Expiration month *",
@@ -1186,7 +1186,10 @@
         "LAST_NAME": "Lastname",
         "UNAVAILABLE_PAYMENT": "The payment option is not available at this moment, please try later",
         "CC_PAYMENT_METHOD": "Credit card",
-        "DESCRIPTION": "Monthly comeygana service"
+        "DESCRIPTION": "Monthly comeygana service",
+        "FULL_NAME": "Fullname",
+        "SYSTEM_MSG": "System alert",
+        "ACCEPT": "Accept"
     },
     "RES_PAYMENT_HISTORY": {
         "TITLE": "Payment history",
@@ -1309,7 +1312,7 @@
         "LASTNAME": "Lastname",
         "FULLNAME": "Fullname",
         "REQUIRED_FULLNAME": "You must include a fullname",
-        "MAX_LENGTH_FULLNAME": "Your fullname cannot exceed 200 characters long",
+        "MAX_LENGTH_FULLNAME": "Your fullname cannot exceed 150 characters long",
         "REQUIRED_LASTNAME": "You must include a lastname",
         "MIN_LENGTH_LASTNAME": "",
         "MAX_LENGTH_LASTNAME": "Your lastame cannot exceed 70 characters long",
