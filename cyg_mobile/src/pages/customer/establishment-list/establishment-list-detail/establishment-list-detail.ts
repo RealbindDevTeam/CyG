@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, AfterViewInit } from '@angular/core';
 import { GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
 import { TranslateService } from '@ngx-translate/core';
-import { NavController, NavParams, ModalController, LoadingController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, LoadingController, ToastController, Platform } from 'ionic-angular';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { Country } from 'cyg_web/both/models/general/country.model';
@@ -20,7 +20,7 @@ import { RewardListComponent } from './reward-list/reward-list';
     selector: 'page-establishment-list-detail',
     templateUrl: 'establishment-list-detail.html'
 })
-export class EstablishmentListDetailPage implements OnInit, OnDestroy {
+export class EstablishmentListDetailPage implements OnInit, OnDestroy, AfterViewInit {
 
     private _map: GoogleMap;
     private _establishmentSubscription: Subscription;
@@ -54,7 +54,8 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy {
         public _translate: TranslateService,
         public _modalCtrl: ModalController,
         private googleMaps: GoogleMaps,
-        private _ngZone: NgZone) {
+        private _ngZone: NgZone,
+        private _platform: Platform) {
         this._establishmentParam = this._navParams.get("establishment");
     }
 
@@ -102,6 +103,20 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy {
             this._ngZone.run(() => {
                 this._typesOfFood = TypesOfFood.find({}).zone();
             });
+        });
+    }
+
+    /**
+     * ngAfterViewInit implementation
+     */
+    ngAfterViewInit() {
+        this._platform.ready().then(() => {
+            if (this._establishmentProfile) {
+                if (this._establishmentProfile.location.lat !== 4.5981 && this._establishmentProfile.location.lng !== -74.0758) {
+                    this._showMap = true;
+                    this.loadMap();
+                }
+            }
         });
     }
 
