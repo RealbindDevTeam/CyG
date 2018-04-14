@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { User } from '../../models/auth/user.model';
+import { Users } from '../../collections/auth/user.collection';
 import { UserDetail, UserDetailPenalty } from '../../models/auth/user-detail.model';
 import { UserDetails } from '../../collections/auth/user-detail.collection';
 import { WaiterCallDetails } from '../../collections/establishment/waiter-call-detail.collection';
@@ -28,6 +29,22 @@ if (Meteor.isServer) {
                 });
                 UserDetails.update({ _id: _lUserDetail._id }, { $set: { penalties: [] } });
             }
+        },
+
+        findUsers(_pUserFilter: string): any {
+            let _lUsersId: string[] = new Array();
+            let _lUserFilter = Users.collection.find({
+                $or: [{ "username": { $regex: _pUserFilter },
+                    { "emails.address": { $regex: _pUserFilter } },
+                { "profile.name": { $regex: _pUserFilter } }
+                ]
+            });
+            if (_lUserFilter.count() > 0) {
+                _lUserFilter.forEach(user => {
+                    _lUsersId.push(user._id);
+                });
+            }
+            return _lUsersId;
         }
     });
 }

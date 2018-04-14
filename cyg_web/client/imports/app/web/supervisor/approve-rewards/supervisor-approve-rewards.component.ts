@@ -48,6 +48,7 @@ export class SupervisorApproveRewardsComponent implements OnInit, OnDestroy {
     private btnAcceptLbl: string;
     private btnCancelLbl: string;
     private _establishmentSelect: string;
+    private _userFilter: string = "";
     private _loading: boolean = false;
 
     /**
@@ -89,12 +90,12 @@ export class SupervisorApproveRewardsComponent implements OnInit, OnDestroy {
                 this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', _establishmentIds).takeUntil(this._ngUnsubscribe).subscribe();
             });
         });
-        this._rewardSub = MeteorObservable.subscribe('getRewards', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+        this._rewardSub = MeteorObservable.subscribe('getRewardsByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._rewards = Rewards.find({ creation_user: this._user }).zone();
+                this._rewards = Rewards.find({}).zone();
             });
         });
-        this._itemsSub = MeteorObservable.subscribe('getAdminActiveItems', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+        this._itemsSub = MeteorObservable.subscribe('getItemsByUserEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._items = Items.find({}).zone();
             });
@@ -116,14 +117,6 @@ export class SupervisorApproveRewardsComponent implements OnInit, OnDestroy {
      */
     countEstablishments(): void {
         Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
-    }
-
-    /**
-     * Function to search establishment rewards confirm
-     * @param {string} _pEstablishmentId 
-     */
-    rewardsConfirmSearch(_pEstablishmentId: string) {
-        this._rewardsConfirmations = RewardsConfirmations.find({ establishment_id: _pEstablishmentId, is_confirmed: false }).zone();
     }
 
     /**
@@ -300,6 +293,38 @@ export class SupervisorApproveRewardsComponent implements OnInit, OnDestroy {
 
             }
         });
+    }
+
+    /**
+     * Do filter by username or email address
+     */
+    doFilter() {
+        let _lUsersId: string[] = new Array();
+        this._loading = true;
+        setTimeout(() => {
+            this._rewardsConfirmations = null;
+            if (this._userFilter) {
+                let _lUserFilter = Users.collection.find({
+                    $or: [
+                        { "username": { $regex: this._userFilter }, 
+                        { "emails.address": { $regex: this._userFilter } },
+                        { "profile.name": { $regex: this._userFilter } }
+                    ]
+                });
+
+                if (_lUserFilter.count() > 0) {
+                    _lUserFilter.forEach(user => {
+                        _lUsersId.push(user._id);
+                    });
+                    this._rewardsConfirmations = RewardsConfirmations.find({
+                        establishment_id: this._establishmentSelect,
+                        creation_user: { $in: _lUsersId },
+                        is_confirmed: false
+                    }).zone();
+                }
+            }
+            this._loading = false;
+        }, 1000);
     }
 
     /**
