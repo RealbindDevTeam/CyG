@@ -87,13 +87,15 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy {
         this._establishmentProfileSubscription = MeteorObservable.subscribe('getEstablishmentProfile', this._establishmentParam._id).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._establishmentsProfiles = EstablishmentsProfile.find({ establishment_id: this._establishmentParam._id }).zone();
-                this._establishmentProfile = EstablishmentsProfile.findOne({ establishment_id: this._establishmentParam._id });
-                if (this._establishmentProfile) {
-                    if (this._establishmentProfile.location.lat !== 4.5981 && this._establishmentProfile.location.lng !== -74.0758) {
-                        this.loadMap();
-                        this._showMap = true;
+                this._establishmentsProfiles.subscribe(() => {
+                    this._establishmentProfile = EstablishmentsProfile.findOne({ establishment_id: this._establishmentParam._id });
+                    if (this._establishmentProfile) {
+                        if (this._establishmentProfile.location.lat !== 4.5981 && this._establishmentProfile.location.lng !== -74.0758) {
+                            this._showMap = true;
+                            this.loadMap();
+                        }
                     }
-                }
+                });
             });
         });
         this._typesOfFoodSub = MeteorObservable.subscribe('typesOfFood').takeUntil(this.ngUnsubscribe).subscribe(() => {
