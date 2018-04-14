@@ -18,10 +18,10 @@ import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collectio
 import { UserLanguageServiceProvider } from '../../../providers/user-language-service/user-language-service';
 
 @Component({
-    selector: 'approve-rewards',
-    templateUrl: 'approve-rewards.html'
+    selector: 'supervisor-approve-rewards',
+    templateUrl: 'supervisor-approve-rewards.html'
 })
-export class ApproveRewardsPage implements OnInit, OnDestroy {
+export class SupervisorApproveRewardsPage implements OnInit, OnDestroy {
 
     @ViewChild('select1') select1: Select;
 
@@ -54,7 +54,7 @@ export class ApproveRewardsPage implements OnInit, OnDestroy {
         this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
 
         let _establishmentIds: string[] = [];
-        this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+        this._establishmentSub = MeteorObservable.subscribe('getEstablishmentByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._establishments = Establishments.find({}).zone();
                 Establishments.collection.find({}).fetch().forEach((est) => {
@@ -63,12 +63,12 @@ export class ApproveRewardsPage implements OnInit, OnDestroy {
                 this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', _establishmentIds).takeUntil(this._ngUnsubscribe).subscribe();
             });
         });
-        this._rewardSub = MeteorObservable.subscribe('getRewards', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+        this._rewardSub = MeteorObservable.subscribe('getRewardsByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._rewards = Rewards.find({ creation_user: this._user }).zone();
+                this._rewards = Rewards.find({}).zone();
             });
         });
-        this._itemsSub = MeteorObservable.subscribe('getAdminActiveItems', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+        this._itemsSub = MeteorObservable.subscribe('getItemsByUserEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._items = Items.find({}).zone();
             });

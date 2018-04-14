@@ -10,6 +10,7 @@ import { UserLogin } from 'cyg_web/both/models/auth/user-login.model';
 import { HomePage } from '../pages/customer/home/home';
 import { Network } from '@ionic-native/network';
 import { TabsPage } from "../pages/administrator/tabs/tabs";
+import { SupervisorTabsPage } from "../pages/supervisor/tabs/supervisor-tabs";
 
 @Component({
   templateUrl: 'app.html'
@@ -46,9 +47,12 @@ export class MyApp {
           if (role == "400") {
             this.insertUserInfo();
             this.rootPage = HomePage;
-          } else if (role == "100"){
+          } else if (role == "100") {
             this.insertUserInfo();
             this.rootPage = TabsPage;
+          } else if (role==="600") {
+            this.insertUserInfo();
+            this.rootPage = SupervisorTabsPage;
           }
           /*else if (role == "200") {
             MeteorObservable.call('validateEstablishmentIsActive').subscribe((_restaruantActive) => {

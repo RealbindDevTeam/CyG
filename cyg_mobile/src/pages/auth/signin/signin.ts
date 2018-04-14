@@ -16,6 +16,7 @@ import { Facebook } from '@ionic-native/facebook';
 import { Network } from '@ionic-native/network';
 import { Subscription } from 'rxjs/Subscription';
 import { TabsPage } from "../../administrator/tabs/tabs";
+import { SupervisorTabsPage } from "../../supervisor/tabs/supervisor-tabs";
 
 /*
   Generated class for the Signin page.
@@ -106,8 +107,9 @@ export class SigninComponent implements OnInit {
                                             this.showComfirm(confirmMsg);
                                         }
                                     });*/
-                                } else {
-                                    
+                                } else if (role==="600") {
+                                    this.insertUserInfo();
+                                    this.navCtrl.setRoot(SupervisorTabsPage);
                                 }
                             }, 1500);
                         }, (error) => {
