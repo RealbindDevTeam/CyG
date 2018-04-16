@@ -34,10 +34,10 @@ import { SupervisorDashboardComponent } from './supervisor/dashboard/supervisor-
 import { EstablishmentListComponent } from './administrator/administration/establishment/monthly-config/establishment-list/establishment-list.component';
 import { EnableDisableComponent } from './administrator/administration/establishment/monthly-config/enable-disable/enable-disable.component';
 import { DisableConfirmComponent } from './administrator/administration/establishment//monthly-config/disable-confirm/disable-confirm.component';
-import { PayuPaymentFormComponent } from './administrator/payment/payu-payment-form/payu-payment-form.component';
+//import { PayuPaymentFormComponent } from './administrator/payment/payu-payment-form/payu-payment-form.component';
 import { PaymentHistoryComponent } from './administrator/payment/payment-history/payment-history.component';
-import { CcPaymentConfirmComponent } from './administrator/payment/payu-payment-form/cc-payment-confirm/cc-payment-confirm.component';
-import { TrnResponseConfirmComponent } from './administrator/payment/payu-payment-form/transaction-response-confirm/trn-response-confirm.component';
+import { CcPaymentConfirmComponent } from './administrator/payment/payment-form/cc-payment-confirm/cc-payment-confirm.component';
+import { TrnResponseConfirmComponent } from './administrator/payment/payment-form/transaction-response-confirm/trn-response-confirm.component';
 import { VerifyResultComponent } from './administrator/payment/payment-history/verify-result/verify-result.component';
 import { AdminSignupComponent } from './auth/admin-signup/admin-signup.component';
 import { AlertConfirmComponent } from './general/alert-confirm/alert-confirm.component';
@@ -94,7 +94,7 @@ export const WEB_DECLARATIONS = [
     SupervisorDashboardComponent,
     EstablishmentListComponent,
     EnableDisableComponent,
-    PayuPaymentFormComponent,
+    //PayuPaymentFormComponent,
     PaymentHistoryComponent,
     AdminSignupComponent,
     TableDetailComponent,

@@ -24,7 +24,7 @@ import { ItemComponent } from './web/administrator/menu/items/item/item.componen
 import { EstablishmentEditionComponent } from './web/administrator/administration/establishment/edition/establishment-edition.component';
 import { NotFoundWebComponent } from './web/auth/notfound/notfound.web.component';
 import { SupervisorDashboardComponent } from './web/supervisor/dashboard/supervisor-dashboard.component';
-import { PayuPaymentFormComponent } from './web/administrator/payment/payu-payment-form/payu-payment-form.component';
+//import { PayuPaymentFormComponent } from './web/administrator/payment/payu-payment-form/payu-payment-form.component';
 import { PaymentHistoryComponent } from './web/administrator/payment/payment-history/payment-history.component';
 import { TrnResponseConfirmComponent } from './web/administrator/payment/payu-payment-form/transaction-response-confirm/trn-response-confirm.component';
 import { AdminSignupComponent } from './web/auth/admin-signup/admin-signup.component';
@@ -67,7 +67,7 @@ export const routes: Route[] = [
             { path: 'dashboards', component: SupervisorDashboardComponent, canActivate: [SupervisorGuard] },
             //{ path: 'establishment-list', component: EstablishmentListComponent, canActivate: [AdminGuard] },
             { path: 'enable-disable/:param1', component: EnableDisableComponent, canActivate: [AdminGuard] },
-            { path: 'payu-payment-form/:param1/:param2/:param3', component: PayuPaymentFormComponent, canActivate: [AdminGuard] },
+            //{ path: 'payu-payment-form/:param1/:param2/:param3', component: PayuPaymentFormComponent, canActivate: [AdminGuard] },
             { path: 'payment-history', component: PaymentHistoryComponent, canActivate: [AdminGuard] },
             { path: 'table-detail/:param1/:param2/:param3/:param4/:param5', component: TableDetailComponent, canActivate: [SupervisorGuard] },
             //{ path: 'supervisor-establishment-table-control', component: SupervisorEstablishmentTableControlComponent, canActivate: [SupervisorGuard] },

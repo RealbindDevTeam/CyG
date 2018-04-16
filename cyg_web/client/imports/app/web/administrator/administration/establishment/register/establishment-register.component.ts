@@ -19,7 +19,6 @@ import { createEstablishmentCode, generateQRCode, createTableCode, createCodeToE
 import { CreateConfirmComponent } from './create-confirm/create-confirm.component';
 import { Table } from '../../../../../../../../both/models/establishment/table.model';
 import { Tables } from '../../../../../../../../both/collections/establishment/table.collection';
-import { PaymentsHistory } from '../../../../../../../../both/collections/payment/payment-history.collection';
 import { AlertConfirmComponent } from '../../../../../web/general/alert-confirm/alert-confirm.component';
 import { ImageService } from '../../../../services/general/image.service';
 import { Addition, AdditionPrice, AdditionEstablishment } from '../../../../../../../../both/models/menu/addition.model';
@@ -369,20 +368,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                 let _lCurrency: Currency;
                 Currencies.find({ _id: _lEstabl.currencyId }).fetch().forEach((cu) => {
                     _lCurrency = cu;
-                });
-
-                PaymentsHistory.collection.insert({
-                    establishment_ids: [_lNewEstablishment],
-                    startDate: this._firstMonthDay,
-                    endDate: this._lastMonthDay,
-                    month: (this._currentDate.getMonth() + 1).toString(),
-                    year: (this._currentDate.getFullYear()).toString(),
-                    status: 'TRANSACTION_STATUS.APPROVED',
-                    creation_user: Meteor.userId(),
-                    creation_date: new Date(),
-                    paymentValue: 0,
-                    currency: _lCurrency.code,
-                    isInitial: true
                 });
 
                 if (Additions.collection.find({ creation_user: this._user }).count() > 0) {
