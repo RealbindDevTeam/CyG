@@ -4,16 +4,21 @@ import { MeteorObservable } from "meteor-rxjs";
 import { Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { UserLanguageService } from '../../../../services/general/user-language.service';
+import { Establishments } from '../../../../../../../../both/collections/establishment/establishment.collection';
+import { Establishment } from '../../../../../../../../both/models/establishment/establishment.model';
+import { Element } from '../../../../../../../../both/models/points/establishment-point.model';
 
 @Component({
     selector: 'cc-payment-confirm',
     templateUrl: './cc-payment-confirm.component.html',
-    styleUrls: [ './cc-payment-confirm.component.scss' ],
+    styleUrls: ['./cc-payment-confirm.component.scss'],
     providers: [UserLanguageService]
 })
 export class CcPaymentConfirmComponent implements OnInit, OnDestroy {
 
     private _cardNumber: string;
+    private _totalPrice: number = 0;
+    private _totalCurrency: string;
 
     /**
      * CcPaymentConfirmComponent Constructor
@@ -30,12 +35,29 @@ export class CcPaymentConfirmComponent implements OnInit, OnDestroy {
         private _userLanguageService: UserLanguageService) {
         translate.use(this._userLanguageService.getLanguage(Meteor.user()));
         translate.setDefaultLang('en');
-        
-        this._cardNumber = data.cardnumber.substring(data.cardnumber.length - 4);
+
+        this._cardNumber = this.data.cardnumber.substring(this.data.cardnumber.length - 4);
+
+        this.data.establishmentarray.forEach((establishment) => {
+            this._totalPrice = this._totalPrice + establishment.bagPlanPrice;
+            if (establishment.creditPrice > 0) {
+                this._totalPrice = this._totalPrice + establishment.creditPrice;
+            }
+            this._totalCurrency = establishment.bagPlanCurrency;
+        });
     }
 
     ngOnInit() {
+    }
 
+    /**
+     * Function to gets establishment name
+     */
+    getEstablishmentName(_establishmentId: string): string {
+        let establishmentSelected: Establishment = Establishments.collection.findOne({ _id: _establishmentId });
+        if (establishmentSelected) {
+            return establishmentSelected.name
+        }
     }
 
     /**

@@ -53,7 +53,7 @@ export class AdminSignupComponent extends AuthClass implements OnInit, OnDestroy
     ngOnInit() {
         this.removeSubscriptions();
         this.signupForm = new FormGroup({
-            fullName: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
+            fullName: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(150)]),
             username: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), CustomValidators.noSpacesValidator]),
             email: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(255), CustomValidators.emailValidator]),
             password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
