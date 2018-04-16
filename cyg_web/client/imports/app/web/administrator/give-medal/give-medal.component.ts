@@ -9,53 +9,41 @@ import { UserLanguageService } from '../../services/general/user-language.servic
 import { AlertConfirmComponent } from '../../general/alert-confirm/alert-confirm.component';
 import { Establishment } from '../../../../../../both/models/establishment/establishment.model';
 import { Establishments } from '../../../../../../both/collections/establishment/establishment.collection';
-import { Reward } from '../../../../../../both/models/establishment/reward.model';
-import { Rewards } from '../../../../../../both/collections/establishment/reward.collection';
-import { RewardConfirmation } from '../../../../../../both/models/points/reward-confirmation.model';
-import { RewardsConfirmations } from '../../../../../../both/collections/points/reward-confirmation.collection';
 import { User } from '../../../../../../both/models/auth/user.model';
 import { Users } from '../../../../../../both/collections/auth/user.collection';
 import { UserDetail, UserDetailImage } from '../../../../../../both/models/auth/user-detail.model';
 import { UserDetails } from '../../../../../../both/collections/auth/user-detail.collection';
-import { Item } from '../../../../../../both/models/menu/item.model';
-import { Items } from '../../../../../../both/collections/menu/item.collection';
 
 @Component({
-    selector: 'approve-rewards',
-    templateUrl: './approve-rewards.component.html',
-    styleUrls: ['./approve-rewards.component.scss']
+    selector: 'give-medal',
+    templateUrl: './give-medal.component.html',
+    styleUrls: ['./give-medal.component.scss']
 })
-export class ApproveRewardsComponent implements OnInit, OnDestroy {
+export class GiveMedalComponent implements OnInit, OnDestroy {
 
     private _user = Meteor.userId();
     private _mdDialogRef: MatDialogRef<any>;
 
     private _establishmentSub: Subscription;
-    private _usersSubscription: Subscription;
-    private _rewardSub: Subscription;
-    private _rewardsConfirmationSub: Subscription;
     private _usersSub: Subscription;
     private _userDetailsSub: Subscription;
-    private _itemsSub: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
 
     private _establishments: Observable<Establishment[]>;
-    private _rewards: Observable<Reward[]>;
-    private _rewardsConfirmations: Observable<RewardConfirmation[]>;
-    private _items: Observable<Item[]>;
+    private _users: Observable<User[]>;
 
     private _thereAreEstablishments: boolean = true;
     private titleMsg: string;
     private btnAcceptLbl: string;
     private btnCancelLbl: string;
-    private _userFilter: string = "";
-    private _establishmentFilter: string = "";
+    private _userFilter: string = '';
+    private _establishmentFilter: string = '';
     private _loading: boolean = false;
 
     /**
-     * ApproveRewardsComponent Constructor
+     * GiveMedalComponent Constructor
      * @param {MatSnackBar} _snackBar 
-     * @param {MatDialog} _dialog
+     * @param {MatDialog} _dialog 
      * @param {TranslateService} _translate 
      * @param {NgZone} _ngZone 
      * @param {Router} _router 
@@ -78,27 +66,11 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
      * ngOnInit implementation
      */
     ngOnInit() {
-        let _establishmentIds: string[] = [];
         this.removeSubscriptions();
-        this._usersSubscription = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._establishments = Establishments.find({}).zone();
-                Establishments.collection.find({}).fetch().forEach((est) => {
-                    _establishmentIds.push(est._id);
-                });
                 this._establishments.subscribe(() => { this.countEstablishments(); });
-                this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', _establishmentIds).takeUntil(this._ngUnsubscribe).subscribe();
-            });
-        });
-        this._rewardSub = MeteorObservable.subscribe('getRewards', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._rewards = Rewards.find({ creation_user: this._user }).zone();
-            });
-        });
-        this._itemsSub = MeteorObservable.subscribe('getAdminActiveItems', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._items = Items.find({}).zone();
             });
         });
         this._usersSub = MeteorObservable.subscribe('getUsers').subscribe();
@@ -106,13 +78,21 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Do filter by username or email address
+     * Validate if establishments exists
      */
-    doFilter() {
+    countEstablishments(): void {
+        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+    }
+
+    /**
+     * Function to filter users
+     */
+    doFilter(): void {
         let _lUsersId: string[] = new Array();
+        let _lUserDetailsId: string[] = new Array();
         this._loading = true;
         setTimeout(() => {
-            this._rewardsConfirmations = null;
+            this._users = null;
             if (this._userFilter) {
                 let _lUserFilter = Users.collection.find({
                     $or: [
@@ -127,11 +107,11 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
                         _lUsersId.push(user._id);
                     });
 
-                    this._rewardsConfirmations = RewardsConfirmations.find({
-                        establishment_id: this._establishmentFilter,
-                        creation_user: { $in: _lUsersId },
-                        is_confirmed: false
-                    }).zone();
+                    UserDetails.collection.find({ user_id: { $in: _lUsersId }, role_id: '400' }).fetch().forEach((us) => {
+                        _lUserDetailsId.push(us.user_id);
+                    });
+
+                    this._users = Users.find({ _id: { $in: _lUserDetailsId } }).zone();
                 }
             }
             this._loading = false;
@@ -139,26 +119,52 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Remove all suscriptions
+     * Function to give medal to specific user
+     * @param {string} _pUserId 
      */
-    removeSubscriptions(): void {
-        this._ngUnsubscribe.next();
-        this._ngUnsubscribe.complete();
-    }
+    giveMedalToUser(_pUserId: string) {
+        let _lDialogTitle = this.itemNameTraduction('GIVE_MEDAL.GIVE_MEDAL_TITLE');
+        let _lDialogContent = this.itemNameTraduction('GIVE_MEDAL.GIVE_MEDAL_SUBTITLE') + this.getUserName(_pUserId);
+        let _lError: string = 'LOGIN_SYSTEM_OPERATIONS_MSG';
 
-    /**
-     * Validate if establishments exists
-     */
-    countEstablishments(): void {
-        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
-    }
+        if (!Meteor.userId()) {
+            this.openDialog(this.titleMsg, '', _lError, '', this.btnAcceptLbl, false);
+            return;
+        }
 
-    /**
-     * Function to search establishment rewards confirm
-     * @param {string} _pEstablishmentId 
-     */
-    rewardsConfirmSearch(_pEstablishmentId: string) {
-        this._rewardsConfirmations = RewardsConfirmations.find({ establishment_id: _pEstablishmentId, is_confirmed: false }).zone();
+        this._mdDialogRef = this._dialog.open(AlertConfirmComponent, {
+            disableClose: true,
+            data: {
+                title: _lDialogTitle,
+                subtitle: '',
+                content: _lDialogContent,
+                buttonCancel: this.btnCancelLbl,
+                buttonAccept: this.btnAcceptLbl,
+                showCancel: true
+            }
+        });
+        this._mdDialogRef.afterClosed().subscribe(result => {
+            this._mdDialogRef = result;
+            if (result.success) {
+                this._loading = true;
+                setTimeout(() => {
+                    MeteorObservable.call('giveMedalToUser', this._establishmentFilter, _pUserId).subscribe(() => {
+                        this._loading = false;
+                        let _lMessage = this.itemNameTraduction('GIVE_MEDAL.MEDAL_GIVEN');
+                        this._snackBar.open(_lMessage, '', { duration: 2500 });
+                        this._users = null;
+                        this._establishmentFilter = '';
+                        this._userFilter = '';
+                    }, (error) => {
+                        this._users = null;
+                        this._establishmentFilter = '';
+                        this._userFilter = '';
+                        this._loading = false;
+                        this.openDialog(this.titleMsg, '', error.reason, '', this.btnAcceptLbl, false);
+                    });
+                }, 1500);
+            }
+        });
     }
 
     /**
@@ -213,79 +219,11 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Function to approve reward confirmation 
-     * @param {RewardConfirmation} _pRewardConfirmation 
+     * Remove all suscriptions
      */
-    approveRewardConfirmation(_pRewardConfirmation: RewardConfirmation): void {
-        let _lDialogTitle = this.itemNameTraduction('APPROVE_REWARDS.APPROVE_REWARD');
-        let _lDialogContent = this.itemNameTraduction('APPROVE_REWARDS.APPROVE_REWARD_MSG');
-        let _lError: string = 'LOGIN_SYSTEM_OPERATIONS_MSG';
-
-        if (!Meteor.userId()) {
-            this.openDialog(this.titleMsg, '', _lError, '', this.btnAcceptLbl, false);
-            return;
-        }
-        this._mdDialogRef = this._dialog.open(AlertConfirmComponent, {
-            disableClose: true,
-            data: {
-                title: _lDialogTitle,
-                subtitle: '',
-                content: _lDialogContent,
-                buttonCancel: this.btnCancelLbl,
-                buttonAccept: this.btnAcceptLbl,
-                showCancel: true
-            }
-        });
-        this._mdDialogRef.afterClosed().subscribe(result => {
-            this._mdDialogRef = result;
-            if (result.success) {
-                this._loading = true;
-                setTimeout(() => {
-                    MeteorObservable.call('redeemUserMedals', _pRewardConfirmation).subscribe(() => {
-                        this._loading = false;
-                        let _lMessage = this.itemNameTraduction('APPROVE_REWARDS.REWARD_APPROVED');
-                        this._snackBar.open(_lMessage, '', { duration: 2500 });
-                    }, (error) => {
-                        this._loading = false;
-                        this.openDialog(this.titleMsg, '', error.reason, '', this.btnAcceptLbl, false);
-                    });
-                }, 1500);
-            }
-        });
-    }
-
-    /**
-     * Function to disapprove reward confirmation
-     * @param {RewardConfirmation} _pRewardConfirmation 
-     */
-    disapproveRewardConfirmation(_pRewardConfirmation: RewardConfirmation): void {
-        let _lDialogTitle = this.itemNameTraduction('APPROVE_REWARDS.REJECT_REWARD');
-        let _lDialogContent = this.itemNameTraduction('APPROVE_REWARDS.REJECT_REWARD_MSG');
-        let _lError: string = 'LOGIN_SYSTEM_OPERATIONS_MSG';
-
-        if (!Meteor.userId()) {
-            this.openDialog(this.titleMsg, '', _lError, '', this.btnAcceptLbl, false);
-            return;
-        }
-        this._mdDialogRef = this._dialog.open(AlertConfirmComponent, {
-            disableClose: true,
-            data: {
-                title: _lDialogTitle,
-                subtitle: '',
-                content: _lDialogContent,
-                buttonCancel: this.btnCancelLbl,
-                buttonAccept: this.btnAcceptLbl,
-                showCancel: true
-            }
-        });
-        this._mdDialogRef.afterClosed().subscribe(result => {
-            this._mdDialogRef = result;
-            if (result.success) {
-                RewardsConfirmations.remove({ _id: _pRewardConfirmation._id });
-                let _lMessage = this.itemNameTraduction('APPROVE_REWARDS.REWARD_REJECTED');
-                this._snackBar.open(_lMessage, '', { duration: 2500 });
-            }
-        });
+    removeSubscriptions(): void {
+        this._ngUnsubscribe.next();
+        this._ngUnsubscribe.complete();
     }
 
     /**
@@ -338,7 +276,7 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Implements ngOnDestroy
+     * ngOnDestroy implementation
      */
     ngOnDestroy() {
         this.removeSubscriptions();

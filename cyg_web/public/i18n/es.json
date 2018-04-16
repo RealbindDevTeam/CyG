@@ -275,6 +275,7 @@
         },
         "REWARDS": "Recompensas",
         "APPROVE_REWARDS": "Aprobaciones",
+        "GIVE_MEDAL": "Dar Medallas",
         "ADMINISTRATION": {
             "MANAGEMENT": "Administración",
             "RESTAURANTS": "Restaurantes",
@@ -1859,6 +1860,21 @@
         "REWARD_APPROVED": "Recompensa Aprobada",
         "REJECT_REWARD": "Rechazar Recompensa",
         "REJECT_REWARD_MSG": "Estas seguro de rechazar la recompensa?",
-        "REWARD_REJECTED": "Recompensa Rechazada"
+        "REWARD_REJECTED": "Recompensa Rechazada",
+        "NAME_FILTER": "Buscar usuario por nombre o correo eléctronico"
+    },
+    "GIVE_MEDAL": {
+        "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
+        "MESSAGE": "Registra uno para habilitar esta opción",
+        "RESTAURANT_REGISTER": "Registrar restaurante",
+        "TITLE": "Otorgar Medallas",
+        "SUBTITLE": "Esta opción te permite otorgar medallas a un usuario específico. Selecciona el restaurante y busca al usuario por su nombre o correo electrónico para darle una medalla",
+        "SELECT_RESTAURANT": "Selecciona restaurante",
+        "NAME_FILTER": "Buscar usuario por nombre o correo eléctronico",
+        "NO_USERS_FOUND": "No se han encontrado usuarios con la búsqueda realizada",
+        "GIVE_MEDAL": "Dar Medalla",
+        "GIVE_MEDAL_TITLE": "Otorgar Medalla",
+        "GIVE_MEDAL_SUBTITLE": "Estas seguro de dar una (1) medalla a ",
+        "MEDAL_GIVEN": "Medalla Entregada"
     }
 }

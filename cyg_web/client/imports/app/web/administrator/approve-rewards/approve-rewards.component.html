@@ -27,11 +27,11 @@
         <mat-card-content>
             <mat-form-field style="width: 45%;">
                 <mat-select placeholder="{{'APPROVE_REWARDS.SELECT_RESTAURANT' | translate}}" [(ngModel)]="_establishmentFilter">
-                    <mat-option *ngFor="let est of _establishments | async" value="{{est._id}}">{{est.name}} - {{est.address}}</mat-option>
+                    <mat-option *ngFor="let est of _establishments | async" (click)="rewardsConfirmSearch(est._id);" value="{{est._id}}">{{est.name}} - {{est.address}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field style="width: 30%">
-                <input matInput type="text" placeholder="{{'ORDERS_TODAY.NAME_FILTER' | translate}}" [(ngModel)]="_userFilter" (change)="doFilter()"
+            <mat-form-field style="width: 35%;margin-left: 1rem;">
+                <input matInput type="text" placeholder="{{'APPROVE_REWARDS.NAME_FILTER' | translate}}" [(ngModel)]="_userFilter" (change)="doFilter()"
                     [disabled]="_establishmentFilter===''" />
                 <button mat-button *ngIf="_userFilter" matSuffix mat-icon-button (click)="_userFilter=''; doFilter(null)">
                     <mat-icon>close</mat-icon>
