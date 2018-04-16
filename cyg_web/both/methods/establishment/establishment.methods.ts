@@ -159,6 +159,45 @@ if (Meteor.isServer) {
         },
 
         /**
+         * This method allow restaurant give medal to specific user
+         */
+        giveMedalToUser: function (_establishmentId: string, _userId: string) {
+            let _establishment: Establishment;
+            let _lUserDetail: UserDetail = UserDetails.findOne({ user_id: _userId });
+
+            _establishment = Establishments.collection.findOne({ _id: _establishmentId });
+            if (_establishment) {
+                if (_establishment.isActive) {
+                    let _lEstablishmentMedal: EstablishmentMedal = EstablishmentMedals.findOne({ user_id: _userId, establishment_id: _establishment._id });
+
+                    if (_lEstablishmentMedal) {
+                        let _lNewQuantity: number = _lEstablishmentMedal.medals + 1;
+                        EstablishmentMedals.update({ _id: _lEstablishmentMedal._id }, {
+                            $set: {
+                                modification_date: new Date(),
+                                modification_user: _userId,
+                                medals: _lNewQuantity
+                            }
+                        });
+                    } else {
+                        EstablishmentMedals.insert({
+                            creation_user: _userId,
+                            creation_date: new Date(),
+                            user_id: _userId,
+                            establishment_id: _establishment._id,
+                            medals: 1,
+                            is_active: true
+                        });
+                    }
+                } else {
+                    throw new Meteor.Error('160');
+                }
+            } else {
+                throw new Meteor.Error('150');
+            }
+        },
+
+        /**
          * This method return establishment if exist o null if not
          */
 

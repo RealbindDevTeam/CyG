@@ -46,6 +46,7 @@ import { EnableDisableComponent } from './web/administrator/administration/estab
 import { BagsPaymentComponent } from './web/administrator/payment/bags-payment/bags-payment.component';
 import { ApproveRewardsComponent } from './web/administrator/approve-rewards/approve-rewards.component';
 import { SupervisorApproveRewardsComponent } from "./web/supervisor/approve-rewards/supervisor-approve-rewards.component";
+import { GiveMedalComponent } from './web/administrator/give-medal/give-medal.component';
 
 export const routes: Route[] = [
     {
@@ -88,7 +89,8 @@ export const routes: Route[] = [
             { path: 'reward-history-chart/:param1', component: RewardHistoryChartComponent, canActivate: [AdminGuard] },
             { path: 'bags-payment', component: BagsPaymentComponent, canActivate: [AdminGuard] },
             { path: 'approve-rewards', component: ApproveRewardsComponent, canActivate: [AdminGuard] },
-            { path: 'supervisor-approve-rewards', component: SupervisorApproveRewardsComponent, canActivate: [SupervisorGuard] }
+            { path: 'supervisor-approve-rewards', component: SupervisorApproveRewardsComponent, canActivate: [SupervisorGuard] },
+            { path: 'give-medals', component: GiveMedalComponent, canActivate: [AdminGuard] },
         ]
     },
     { path: '', component: SigninWebComponent },
