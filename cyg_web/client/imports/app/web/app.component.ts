@@ -5,10 +5,11 @@ import 'hammerjs';
 import { UserLanguageService } from './services/general/user-language.service';
 import { ImageService } from './services/general/image.service';
 import { PayuPaymentService } from './services/payment/payu-payment.service';
+import { PackageMedalService } from './services/payment/package-medal.service';
 
 @Component({
     selector: 'app',
-    providers: [UserLanguageService, ImageService, PayuPaymentService],
+    providers: [UserLanguageService, ImageService, PayuPaymentService, PackageMedalService],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     encapsulation: ViewEncapsulation.None
@@ -20,7 +21,9 @@ export class AppComponent implements OnInit {
         private _router: Router,
         private _elementRef: ElementRef,
         private _userLanguageService: UserLanguageService,
-        private _payuPaymentService: PayuPaymentService) {
+        private _payuPaymentService: PayuPaymentService,
+        private _packageMedalService: PackageMedalService) {
+
         var stopStyle = ['font-family: Roboto, "Helvetica Neue", sans-serif',
             'font-size: 1.7rem',
             'color: Red',

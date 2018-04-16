@@ -102,7 +102,7 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
         this._userDetailSubscription = MeteorObservable.subscribe('getUserDetailsByUser', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
 
-                this._user = Users.findOne({ _id: Meteor.userId() });;
+                this._user = Users.findOne({ _id: Meteor.userId() });
                 this._userDetail = UserDetails.findOne({ user_id: Meteor.userId() });
 
                 if (this._user.services.facebook) {
@@ -116,7 +116,7 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
                 if (this._user.username) {
                     this._userForm = new FormGroup({
                         username: new FormControl({ value: this._user.username, disabled: true }),
-                        full_name: new FormControl({ value: this._user.profile.full_name, disabled: false }, [Validators.maxLength(50)]),
+                        full_name: new FormControl({ value: this._user.profile.full_name, disabled: false }, [Validators.maxLength(150)]),
                         language_code: new FormControl({ value: this._user.profile.language_code, disabled: false }),
                         gender: new FormControl({ value: this._user.profile.gender, disabled: false }, [Validators.required])
                     });
@@ -131,7 +131,7 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
                         let contactPhone: FormControl = new FormControl({ value: this._userDetail.contact_phone, disabled: false }, [Validators.maxLength(20)]);
                         this._userForm.addControl('contactPhone', contactPhone);
 
-                        let shippingAddress: FormControl = new FormControl({ value: this._userDetail.address, disabled: false }, [Validators.maxLength(150)]);
+                        let shippingAddress: FormControl = new FormControl({ value: this._userDetail.address, disabled: false }, [Validators.maxLength(100)]);
                         this._userForm.addControl('shippingAddress', shippingAddress);
 
                         let country: FormControl = new FormControl({ value: this._userDetail.country_id, disabled: false });

@@ -13,12 +13,13 @@ import { Currency } from '../../../../../../../both/models/general/currency.mode
 import { Currencies } from '../../../../../../../both/collections/general/currency.collection';
 import { Country } from '../../../../../../../both/models/general/country.model';
 import { Countries } from '../../../../../../../both/collections/general/country.collection';
-import { EstablishmentPoint } from '../../../../../../../both/models/points/establishment-point.model';
+import { EstablishmentPoint, Element } from '../../../../../../../both/models/points/establishment-point.model';
 import { EstablishmentPoints } from '../../../../../../../both/collections/points/establishment-points.collection';
 import { BagPlan } from '../../../../../../../both/models/points/bag-plan.model';
 import { BagPlans } from '../../../../../../../both/collections/points/bag-plans.collection';
 import { NegativePoint } from '../../../../../../../both/models/points/negative-point.model';
 import { NegativePoints } from '../../../../../../../both/collections/points/negative-points.collection';
+import { PackageMedalService } from '../../../services/payment/package-medal.service';
 
 @Component({
     selector: 'bags-payment',
@@ -62,7 +63,8 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
     constructor(private router: Router,
         private translate: TranslateService,
         private _ngZone: NgZone,
-        private _userLanguageService: UserLanguageService) {
+        private _userLanguageService: UserLanguageService,
+        private _packageMedalService: PackageMedalService) {
         translate.use(this._userLanguageService.getLanguage(Meteor.user()));
         translate.setDefaultLang('en');
     }
@@ -153,13 +155,16 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
         let indexOfElement: number = this._tmpBagsArray.map(function (element) { return element.establishmentId }).indexOf(_establishment._id);
         if (indexOfElement > -1) {
             let pricePending: number = 0;
+            let pointsPending: number = 0;
             if (this.hasPendingMedals(_establishment._id)) {
                 pricePending = this.getPriceByPending(_establishment);
+                pointsPending = this.getPendingMedals(_establishment._id);
             }
-            bagPlanInfo.creditPoints = pricePending;
+            bagPlanInfo.creditPrice = pricePending;
+            bagPlanInfo.creditPoints = pointsPending;
             this._tmpBagsArray.splice(indexOfElement, 1, bagPlanInfo);
             this._tmpBagsArray.forEach((bagElement) => {
-                this._total = this._total + bagElement.bagPlanPrice + bagElement.creditPoints;;
+                this._total = this._total + bagElement.bagPlanPrice + bagElement.creditPrice;;
             });
 
             this._establishmentBagForm.controls['sel_' + _establishment._id].setValue(bagPlanInfo.bagPlanId);
@@ -182,13 +187,16 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
                 });
             } else {
                 let pricePending: number = 0;
+                let pointsPending: number = 0;
                 if (this.hasPendingMedals(_establishment._id)) {
                     pricePending = this.getPriceByPending(_establishment);
+                    pointsPending = this.getPendingMedals(_establishment._id);
                 }
-                bagPlanInfo.creditPoints = pricePending;
+                bagPlanInfo.creditPrice = pricePending;
+                bagPlanInfo.creditPoints = pointsPending;
                 this._tmpBagsArray.push(bagPlanInfo);
                 this._tmpBagsArray.forEach((bagElement) => {
-                    this._total = this._total + bagElement.bagPlanPrice + bagElement.creditPoints;
+                    this._total = this._total + bagElement.bagPlanPrice + bagElement.creditPrice;
                 });
 
                 this._establishmentBagForm.controls['sel_' + _establishment._id].enable();
@@ -200,12 +208,15 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
             if (indexOfElement > -1) {
                 this._tmpBagsArray.splice(indexOfElement, 1);
                 let pricePending: number = 0;
+                let pointsPending: number = 0;
                 if (this.hasPendingMedals(_establishment._id)) {
                     pricePending = this.getPriceByPending(_establishment);
+                    pointsPending = this.getPendingMedals(_establishment._id);
                 }
-                bagPlanInfo.creditPoints = pricePending;
+                bagPlanInfo.creditPrice = pricePending;
+                bagPlanInfo.creditPoints = pointsPending;
                 this._tmpBagsArray.forEach((bagElement) => {
-                    this._total = this._total + bagElement.bagPlanPrice + bagElement.creditPoints;;
+                    this._total = this._total + bagElement.bagPlanPrice + bagElement.creditPrice;;
                 });
                 this._establishmentBagForm.controls['sel_' + _establishment._id].reset();
                 this._establishmentBagForm.controls['sel_' + _establishment._id].disable();
@@ -239,7 +250,6 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
         }
         return obj;
     }
-
 
     /**
      * Function to validate if establishment has pending medals to pay
@@ -278,7 +288,15 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
      * Function to go to payment form
      */
     goToPaymentForm() {
-        console.log(this._tmpBagsArray);
+        this.dataArray = this._tmpBagsArray;
+        this.router.navigate(['/app/payment-form'], { skipLocationChange: true })
+    }
+
+    /**
+     * Set de bag plans to pay array
+     */
+    set dataArray(value: Element[]) {
+        this._packageMedalService.bagPlanArray = value;
     }
 
     /**
@@ -295,18 +313,4 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.removeSubscriptions();
     }
-}
-
-
-/**
- * Temporal interface to send bag plan main properties
- */
-export interface Element {
-    establishmentId: string;
-    bagPlanId: string;
-    bagPlanPrice: number;
-    bagPlanCurrency: string;
-    bagPlanPoints: number;
-    creditPoints?: number;
-    creditPrice?: number;
 }
