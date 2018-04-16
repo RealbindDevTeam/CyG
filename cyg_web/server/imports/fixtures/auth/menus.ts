@@ -39,6 +39,14 @@ export function loadMenus() {
                 order: 15000
             },
             {
+                _id: "16000",
+                is_active: true,
+                name: "MENUS.GIVE_MEDAL",
+                url: "/app/give-medals",
+                icon_name: "card_giftcard",
+                order: 16000
+            },
+            {
                 _id: "1000",
                 is_active: true,
                 name: "MENUS.ADMINISTRATION.MANAGEMENT",

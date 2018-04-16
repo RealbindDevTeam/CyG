@@ -45,6 +45,7 @@ import { BagsPaymentComponent } from './web/administrator/payment/bags-payment/b
 import { PaymentFormComponent } from './web/administrator/payment/payment-form/payment-form.component';
 import { ApproveRewardsComponent } from './web/administrator/approve-rewards/approve-rewards.component';
 import { SupervisorApproveRewardsComponent } from "./web/supervisor/approve-rewards/supervisor-approve-rewards.component";
+import { GiveMedalComponent } from './web/administrator/give-medal/give-medal.component';
 
 export const routes: Route[] = [
     {
@@ -83,7 +84,8 @@ export const routes: Route[] = [
             { path: 'bags-payment', component: BagsPaymentComponent, canActivate: [AdminGuard] },
             { path: 'payment-form', component: PaymentFormComponent, canActivate: [AdminGuard] },
             { path: 'approve-rewards', component: ApproveRewardsComponent, canActivate: [AdminGuard] },
-            { path: 'supervisor-approve-rewards', component: SupervisorApproveRewardsComponent, canActivate: [SupervisorGuard] }
+            { path: 'supervisor-approve-rewards', component: SupervisorApproveRewardsComponent, canActivate: [SupervisorGuard] },
+            { path: 'give-medals', component: GiveMedalComponent, canActivate: [AdminGuard] },
         ]
     },
     { path: '', component: SigninWebComponent },

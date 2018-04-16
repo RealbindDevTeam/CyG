@@ -66,6 +66,7 @@ import { PaymentFormComponent } from './administrator/payment/payment-form/payme
 import { PackageMedalService } from './services/payment/package-medal.service';
 import { ApproveRewardsComponent } from './administrator/approve-rewards/approve-rewards.component';
 import { SupervisorApproveRewardsComponent } from "./supervisor/approve-rewards/supervisor-approve-rewards.component";
+import { GiveMedalComponent } from './administrator/give-medal/give-medal.component';
 
 export const WEB_DECLARATIONS = [
     AppComponent,
@@ -109,7 +110,8 @@ export const WEB_DECLARATIONS = [
     PaymentFormComponent,
     ApproveRewardsComponent,
     SupervisorApproveRewardsComponent,
-    EstablishmentTableControlComponent
+    EstablishmentTableControlComponent,
+    GiveMedalComponent
 ];
 
 export const MODAL_DIALOG_DECLARATIONS = [
