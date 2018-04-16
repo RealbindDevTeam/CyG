@@ -32,6 +32,7 @@ import { PaymentTransactions } from '../../../../../../../both/collections/payme
 import { TrnResponseConfirmComponent } from './transaction-response-confirm/trn-response-confirm.component';
 import { PaymentsHistory } from '../../../../../../../both/collections/payment/payment-history.collection';
 import { NegativePoints } from '../../../../../../../both/collections/points/negative-points.collection';
+import { NegativePoint } from '../../../../../../../both/models/points/negative-point.model';
 
 let md5 = require('md5');
 
@@ -80,6 +81,8 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
     private _totalPrice: number = 0;
     private _totalCurrency: string;
     private _establishmentPointSub: Subscription;
+    private _establishmentsArray: string[] = [];
+    private _negativePointsSub: Subscription;
 
     /**
      * PaymentFormComponent Constructor
@@ -232,7 +235,10 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
                 this._totalPrice = this._totalPrice + establishment.creditPrice;
             }
             this._totalCurrency = establishment.bagPlanCurrency;
+
+            this._establishmentsArray.push(establishment.establishmentId);
         });
+        this._negativePointsSub = MeteorObservable.subscribe('getNegativePointsByEstablishmentsArray', this._establishmentsArray).takeUntil(this._ngUnsubscribe).subscribe();
         this._userAgent = navigator.userAgent;
     }
 
@@ -602,21 +608,28 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
         if (_response.transactionResponse.state == 'APPROVED') {
 
             this.dataArray.forEach((establishmentPaid) => {
-                let establishmentPoint: EstablishmentPoint = EstablishmentPoints.findOne({ _id: establishmentPaid.establishmentId });
+                let establishmentPoint: EstablishmentPoint = EstablishmentPoints.findOne({ establishment_id: establishmentPaid.establishmentId });
                 let pointsToAdd: number = establishmentPaid.bagPlanPoints + establishmentPaid.creditPoints;
 
-                EstablishmentPoints.update({ _id: establishmentPaid.establishmentId }, {
+                EstablishmentPoints.update({ _id: establishmentPoint._id }, {
                     $set: {
                         current_points: establishmentPoint.current_points + pointsToAdd,
                         negative_balance: false,
-                        negative_advice_counter: 0
+                        negative_advice_counter: 0,
+                        modification_user: Meteor.userId(),
+                        modification_date: new Date()
                     }
                 });
 
-                NegativePoints.update({ _id: establishmentPaid.establishmentId, paid: false }, {
-                    $set: {
-                        paid: true
-                    }
+                NegativePoints.collection.find({ establishment_id: establishmentPaid.establishmentId, paid: false }).forEach(function <NegativePoint>(negativePoint, index, ar) {
+                    NegativePoints.update({ _id: negativePoint._id }, {
+                        $set: {
+                            paid: true,
+                            bag_plans_history_id: payment_history,
+                            modification_user: Meteor.userId(),
+                            modification_date: new Date()
+                        }
+                    });
                 });
             });
 
