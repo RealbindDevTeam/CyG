@@ -15,6 +15,8 @@ import { Accounts } from 'meteor/accounts-base';
 import { Facebook } from '@ionic-native/facebook';
 import { Network } from '@ionic-native/network';
 import { Subscription } from 'rxjs/Subscription';
+import { TabsPage } from "../../administrator/tabs/tabs";
+import { SupervisorTabsPage } from "../../supervisor/tabs/supervisor-tabs";
 
 /*
   Generated class for the Signin page.
@@ -86,8 +88,10 @@ export class SigninComponent implements OnInit {
                                     //this.addUserDevice();
                                     this.insertUserInfo();
                                     this.navCtrl.setRoot(HomePage);
-                                } /*else if (role == "200") {
-                                    MeteorObservable.call('validateEstablishmentIsActive').subscribe((_establishmenttActive) => {
+                                } else if (role == "100") {
+                                    this.insertUserInfo();
+                                    this.navCtrl.setRoot(TabsPage);
+                                    /*MeteorObservable.call('validateEstablishmentIsActive').subscribe((_establishmenttActive) => {
                                         if (_establishmenttActive) {
                                             MeteorObservable.call('validateUserIsActive').subscribe((active) => {
                                                 if (active) {
@@ -102,8 +106,10 @@ export class SigninComponent implements OnInit {
                                             let confirmMsg = this.itemNameTraduction('MOBILE.SIGNIN.RESTAURANT_NO_ACTIVE');
                                             this.showComfirm(confirmMsg);
                                         }
-                                    });
-                                }*/ else {
+                                    });*/
+                                } else if (role==="600") {
+                                    this.insertUserInfo();
+                                    this.navCtrl.setRoot(SupervisorTabsPage);
                                 }
                             }, 1500);
                         }, (error) => {

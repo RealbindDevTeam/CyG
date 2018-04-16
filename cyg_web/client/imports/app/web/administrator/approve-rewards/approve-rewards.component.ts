@@ -31,6 +31,7 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
     private _mdDialogRef: MatDialogRef<any>;
 
     private _establishmentSub: Subscription;
+    private _usersSubscription: Subscription;
     private _rewardSub: Subscription;
     private _rewardsConfirmationSub: Subscription;
     private _usersSub: Subscription;
@@ -47,6 +48,8 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
     private titleMsg: string;
     private btnAcceptLbl: string;
     private btnCancelLbl: string;
+    private _userFilter: string = "";
+    private _establishmentFilter: string = "";
     private _loading: boolean = false;
 
     /**
@@ -77,13 +80,13 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         let _establishmentIds: string[] = [];
         this.removeSubscriptions();
+        this._usersSubscription = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._establishments = Establishments.find({}).zone();
                 Establishments.collection.find({}).fetch().forEach((est) => {
                     _establishmentIds.push(est._id);
                 });
-                this.countEstablishments();
                 this._establishments.subscribe(() => { this.countEstablishments(); });
                 this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', _establishmentIds).takeUntil(this._ngUnsubscribe).subscribe();
             });
@@ -100,6 +103,39 @@ export class ApproveRewardsComponent implements OnInit, OnDestroy {
         });
         this._usersSub = MeteorObservable.subscribe('getUsers').subscribe();
         this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').subscribe();
+    }
+
+    /**
+     * Do filter by username or email address
+     */
+    doFilter() {
+        let _lUsersId: string[] = new Array();
+        this._loading = true;
+        setTimeout(() => {
+            this._rewardsConfirmations = null;
+            if (this._userFilter) {
+                let _lUserFilter = Users.collection.find({
+                    $or: [
+                        { "username": { $regex: this._userFilter }, 
+                        { "emails.address": { $regex: this._userFilter } },
+                        { "profile.name": { $regex: this._userFilter } }
+                    ]
+                });
+
+                if (_lUserFilter.count() > 0) {
+                    _lUserFilter.forEach(user => {
+                        _lUsersId.push(user._id);
+                    });
+                    
+                    this._rewardsConfirmations = RewardsConfirmations.find({
+                        establishment_id: this._establishmentFilter,
+                        creation_user: { $in: _lUsersId },
+                        is_confirmed: false
+                    }).zone();
+                }
+            }
+            this._loading = false;
+        }, 1000);
     }
 
     /**

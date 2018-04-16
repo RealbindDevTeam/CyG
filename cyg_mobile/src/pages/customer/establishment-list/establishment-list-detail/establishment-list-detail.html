@@ -5,37 +5,16 @@
 </ion-header>
 
 <ion-content>
-    <ion-list style="margin: 0 auto; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);" *ngFor="let establishment of _establishments | async;">
-        <div ion-item style="background-image: url(assets/img/background_waiter.png);" class="img-header">
-            <ion-thumbnail item-left>
-                <img *ngIf="establishment.image" src="{{ establishment.image.url }}">
-                <img *ngIf="!establishment.image" src="assets/img/default-restaurant.png">
-            </ion-thumbnail>
-            <h2 style="white-space: normal;">{{establishment.name}}</h2>
-        </div>
-    </ion-list>
     <div class="initial">
-        <ion-fab *ngIf="_establishmentProfile?.web_page || _establishmentProfile?.social_networks?.facebook || _establishmentProfile?.social_networks?.twitter  || _establishmentProfile?.social_networks?.instagram"
-            top right>
-            <button ion-fab color="vibrant" mini class="custom">
-                <ion-icon name="more"></ion-icon>
-            </button>
-            <ion-fab-list side="bottom">
-                <a ion-fab *ngIf="_establishmentProfile?.web_page" href="{{_establishmentProfile?.web_page}}">
-                    <ion-icon name="navigate"></ion-icon>
-                </a>
-                <a ion-fab *ngIf="_establishmentProfile?.social_networks?.facebook" href="{{_establishmentProfile?.social_networks?.facebook}}">
-                    <ion-icon name="logo-facebook" class="fb"></ion-icon>
-                </a>
-                <a ion-fab *ngIf="_establishmentProfile?.social_networks?.twitter" href="{{_establishmentProfile?.social_networks?.twitter}}">
-                    <ion-icon name="logo-twitter" class="tw"></ion-icon>
-                </a>
-                <a ion-fab *ngIf="_establishmentProfile?.social_networks?.instagram" href="{{_establishmentProfile?.social_networks?.instagram}}">
-                    <ion-icon name="logo-instagram" class="im"></ion-icon>
-                </a>
-            </ion-fab-list>
-        </ion-fab>
-
+        <ion-list style="margin: 0 auto; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);" *ngFor="let establishment of _establishments | async;">
+            <div ion-item style="background-image: url(assets/img/background_waiter.png);" class="img-header">
+                <ion-thumbnail item-left>
+                    <img *ngIf="establishment.image" src="{{ establishment.image.url }}">
+                    <img *ngIf="!establishment.image" src="assets/img/default-restaurant.png">
+                </ion-thumbnail>
+                <h2 style="white-space: normal;">{{establishment.name}}</h2>
+            </div>
+        </ion-list>
         <div *ngIf="_showMap" id="map_canvas"></div>
 
         <ion-card *ngFor="let _establishment of _establishments | async;" class="card-nm">
@@ -59,6 +38,20 @@
                     </a>
                     <a *ngIf="_showDescription" (click)="showInformation()">
                         {{'MOBILE.RESTAURANT_PROFILE.SHOW_LESS' | translate}}
+                    </a>
+                </div>
+                <div style="text-align: center;" *ngIf="_establishmentProfile?.web_page || _establishmentProfile?.social_networks?.facebook || _establishmentProfile?.social_networks?.twitter  || _establishmentProfile?.social_networks?.instagram">
+                    <a *ngIf="_establishmentProfile?.web_page" href="{{_establishmentProfile?.web_page}}" style="text-decoration: none;">
+                        <ion-icon name="navigate" class="web"></ion-icon>
+                    </a>
+                    <a *ngIf="_establishmentProfile?.social_networks?.facebook" href="{{_establishmentProfile?.social_networks?.facebook}}" style="text-decoration: none;">
+                        <ion-icon name="logo-facebook" class="fb"></ion-icon>
+                    </a>
+                    <a *ngIf="_establishmentProfile?.social_networks?.twitter" href="{{_establishmentProfile?.social_networks?.twitter}}" style="text-decoration: none;">
+                        <ion-icon name="logo-twitter" class="tw"></ion-icon>
+                    </a>
+                    <a *ngIf="_establishmentProfile?.social_networks?.instagram" href="{{_establishmentProfile?.social_networks?.instagram}}" style="text-decoration: none;">
+                        <ion-icon name="logo-instagram" class="im"></ion-icon>
                     </a>
                 </div>
                 <ion-list inset class="margin" no-lines>

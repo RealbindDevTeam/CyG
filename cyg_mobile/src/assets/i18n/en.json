@@ -543,7 +543,7 @@
         "POINTS": {
             "TITLE": "My Medals",
             "MSG": "Select a restaurant to check your medals",
-            "NO_POINTS_MSG": "You have not accumulated points in any restaurant yet. Encourage!",
+            "NO_POINTS_MSG": "You have not accumulated medals in any restaurant yet. Encourage!",
             "ACCUMULATED_POINTS": "Accumulated points",
             "YOU_HAVE": "You have",
             "POINTS_FOR_EXPIRING": "points for expiring the day"
@@ -779,5 +779,26 @@
         "SANDWICHES": "Sándwiches",
         "SUSHI": "Sushi",
         "VEGANISM": "Veganism"
+    },
+    "APPROVE_REWARDS": {
+        "SEARCH_BY_NAME": "Search by name or email",
+        "THERE_NOT_RESTAURANTS": "There are not restaurants register yet",
+        "MESSAGE": "Register at least one restaurant to enable this option",
+        "RESTAURANT_REGISTER": "Register Restaurant",
+        "TITLE": "Reward Approval",
+        "SUBTITLE": "This page allows you to approve the rewards that customers redeem in your restaurants",
+        "SELECT_RESTAURANT": "Select Restaurant",
+        "NO_REWARDS_FOUND": "No rewards have been found for approving the selected restaurant",
+        "MEDALS": "Medals",
+        "CUSTOMER": "Customer",
+        "NO_APPROVE": "No Approve",
+        "APPROVE": "Approve",
+        "APPROVE_REWARD": "Approve Reward",
+        "APPROVE_REWARD_MSG": "Are you sure you approve the reward?",
+        "REWARD_APPROVED": "Reward Approved",
+        "REJECT_REWARD": "Reject Reward",
+        "REJECT_REWARD_MSG": "Are you sure you reject the reward?",
+        "REWARD_REJECTED": "Reward Rejected",
+        "MSG_SELECT_EST": "Select an establishment and check again"
     }
 }
