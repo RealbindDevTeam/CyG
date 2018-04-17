@@ -67,6 +67,7 @@ import { PackageMedalService } from './services/payment/package-medal.service';
 import { ApproveRewardsComponent } from './administrator/approve-rewards/approve-rewards.component';
 import { SupervisorApproveRewardsComponent } from "./supervisor/approve-rewards/supervisor-approve-rewards.component";
 import { GiveMedalComponent } from './administrator/give-medal/give-medal.component';
+import { SupervisorGiveMedalComponent } from './supervisor/give-medal/supervisor-give-medal.component';
 
 export const WEB_DECLARATIONS = [
     AppComponent,
@@ -111,7 +112,8 @@ export const WEB_DECLARATIONS = [
     ApproveRewardsComponent,
     SupervisorApproveRewardsComponent,
     EstablishmentTableControlComponent,
-    GiveMedalComponent
+    GiveMedalComponent,
+    SupervisorGiveMedalComponent
 ];
 
 export const MODAL_DIALOG_DECLARATIONS = [
