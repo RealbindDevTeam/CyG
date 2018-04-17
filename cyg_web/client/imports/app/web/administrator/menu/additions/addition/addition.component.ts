@@ -95,8 +95,8 @@ export class AdditionComponent implements OnInit, OnDestroy {
 
         this._establishmentsSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._estalishments = Establishments.find({}).zone();
-                Establishments.collection.find({}).fetch().forEach((establishment: Establishment) => {
+                this._estalishments = Establishments.find({ creation_user: this._user }).zone();
+                Establishments.collection.find({ creation_user: this._user }).fetch().forEach((establishment: Establishment) => {
                     this._lEstablishmentsId.push(establishment._id);
                 });
                 this.countEstablishments();
@@ -106,7 +106,7 @@ export class AdditionComponent implements OnInit, OnDestroy {
 
         this._additionsSub = MeteorObservable.subscribe('additions', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._additions = Additions.find({}).zone();
+                this._additions = Additions.find({ creation_user: this._user }).zone();
             });
         });
     }
@@ -115,7 +115,7 @@ export class AdditionComponent implements OnInit, OnDestroy {
      * Validate if establishments exists
      */
     countEstablishments(): void {
-        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**

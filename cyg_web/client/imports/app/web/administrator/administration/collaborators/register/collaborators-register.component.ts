@@ -23,6 +23,7 @@ import { AlertConfirmComponent } from '../../../../../web/general/alert-confirm/
 })
 export class CollaboratorsRegisterComponent implements OnInit, OnDestroy {
 
+    private _user = Meteor.userId();
     private _collaboratorRegisterForm: FormGroup;
     private _mdDialogRef: MatDialogRef<any>;
     private _establishmentSub: Subscription;
@@ -82,14 +83,14 @@ export class CollaboratorsRegisterComponent implements OnInit, OnDestroy {
             gender: new FormControl('', [Validators.required]),
             fullName: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)])
         });
-        this._establishmentSub = MeteorObservable.subscribe('establishments', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe(() => {
+        this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._zone.run(() => {
-                this._establishments = Establishments.find({}).zone();
+                this._establishments = Establishments.find({ creation_user: this._user }).zone();
             });
         });
         this._roleSub = MeteorObservable.subscribe('getRoleCollaborators').takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._zone.run(() => {
-                this._roles = Roles.find({}).zone();
+                this._roles = Roles.find({ _id: { $in: ["600"] } }).zone();
             });
         });
         this._genderArray = [{ value: "SIGNUP.MALE_GENDER", label: "SIGNUP.MALE_GENDER" },
