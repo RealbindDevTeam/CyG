@@ -1240,7 +1240,11 @@
         "IDENTIFICATION_NUMBER": "Identificación: ",
         "TELEPHONE_NUMBER": "Teléfono: ",
         "EMAIL": "Email: ",
-        "CC_PAYMENT_METHOD": "Tarjeta de crédito"
+        "CC_PAYMENT_METHOD": "Tarjeta de crédito",
+        "PACKAGE_MEDALS": "Package of medals:",
+        "PENDING_MEDALS": "Pending medals:",
+        "MEDALS": "Medals",
+        "PRICE": "Price: "
     },
     "TRANSACTION_STATUS": {
         "APPROVED": "Approved",

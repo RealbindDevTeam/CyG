@@ -3,9 +3,9 @@ import { PaymentsHistory } from '../../collections/payment/payment-history.colle
 import { UserDetails } from '../../collections/auth/user-detail.collection';
 import { Countries } from '../../collections/general/country.collection';
 import { InvoicesInfo } from '../../collections/payment/invoices-info.collection';
-import { IurestInvoices } from '../../collections/payment/iurest-invoices.collection';
+import { CygInvoices } from '../../collections/payment/cyg-invoices.collection';
 import { Parameters } from '../../collections/general/parameter.collection';
-import { CompanyInfo, ClientInfo } from '../../models/payment/iurest-invoice.model';
+import { CompanyInfo, ClientInfo } from '../../models/payment/cyg-invoice.model';
 
 if (Meteor.isServer) {
     Meteor.methods({
@@ -129,7 +129,7 @@ if (Meteor.isServer) {
                 email: Meteor.user().emails[0].address
             };
 
-            IurestInvoices.collection.insert({
+            CygInvoices.collection.insert({
                 creation_user: Meteor.userId(),
                 creation_date: new Date(),
                 payment_history_id: lPaymentHistory._id,

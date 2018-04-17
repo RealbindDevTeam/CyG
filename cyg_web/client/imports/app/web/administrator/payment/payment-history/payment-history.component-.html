@@ -5,12 +5,12 @@
                 <mat-card-title>{{'RES_PAYMENT_HISTORY.TITLE' | translate }}</mat-card-title>
                 <mat-card-subtitle>{{'RES_PAYMENT_HISTORY.SUBTITLE' | translate}}</mat-card-subtitle>
                 <mat-card-content style="background: #FFF">
-                    <mat-form-field style="width: 25%;">
+                    <mat-form-field  style="width: 25%;">
                         <mat-select [(ngModel)]="_selectedYear" placeholder="{{'RES_PAYMENT_HISTORY.YEAR_FILTER' | translate}}">
                             <mat-option *ngFor="let year of _yearsArray" value="{{year.value}}" (click)="changeHistoryPaymentYear()">{{year.viewValue}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field style="width: 25%; margin-left: 2%;">
+                    <mat-form-field  style="width: 25%; margin-left: 2%;">
                         <mat-select [(ngModel)]="_selectedMonth" placeholder="{{'RES_PAYMENT_HISTORY.MONTH_FILTER' | translate}}" [disabled]="_activateMonth">
                             <mat-option value="0" (click)="changeHistoryPaymentMonth()">{{'RES_PAYMENT_HISTORY.ALL_FILTER' | translate}}</mat-option>
                             <mat-option *ngFor="let month of _monthsArray" value="{{month.value}}" (click)="changeHistoryPaymentMonth()">{{month.viewValue}}</mat-option>
@@ -31,21 +31,7 @@
                                 <td>{{historyPayment.creation_date | date: 'd/M/y'}}</td>
                                 <td>{{historyPayment.paymentValue}} {{historyPayment.currency}}</td>
                                 <td>
-                                    <div *ngFor="let establishment of historyPayment.establishment_ids">
-                                        <tr>- {{getEstablishmentName(establishment.establishmentId)}}</tr>
-                                        <ul>
-                                            <li>
-                                                {{'RES_PAYMENT_HISTORY.PACKAGE_MEDALS' | translate}} {{establishment.bagPlanPoints}} {{'RES_PAYMENT_HISTORY.MEDALS' | translate}}
-                                                - {{'RES_PAYMENT_HISTORY.PRICE' | translate}} {{establishment.bagPlanPrice}}
-                                                {{establishment.bagPlanCurrency}}
-                                            </li>
-                                            <li *ngIf="establishment.creditPoints > 0 && establishment.creditPrice > 0">
-                                                {{'RES_PAYMENT_HISTORY.PENDING_MEDALS' | translate}} {{establishment.creditPoints}} {{'RES_PAYMENT_HISTORY.MEDALS' | translate}}
-                                                - {{'RES_PAYMENT_HISTORY.PRICE' | translate}} {{establishment.creditPrice}}
-                                                {{establishment.bagPlanCurrency}}
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <tr *ngFor="let establishmentId of historyPayment.establishment_ids">- {{getEstablishmentName(establishmentId)}}</tr>
                                 </td>
                                 <td class="cust-center-align">
                                     <div>

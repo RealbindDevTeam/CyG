@@ -1,9 +1,9 @@
 import { CollectionObject } from '../collection-object.model';
 
 /**
- * Iurest Invoice Model
+ * CyG Invoice Model
  */
-export interface IurestInvoice extends CollectionObject {
+export interface CygInvoice extends CollectionObject {
     payment_history_id?: string;
     country_id?: string;
     number?: string;

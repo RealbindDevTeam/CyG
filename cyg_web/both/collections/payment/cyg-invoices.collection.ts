@@ -1,8 +1,8 @@
 import { MongoObservable } from 'meteor-rxjs';
 import { Meteor } from 'meteor/meteor';
-import { IurestInvoice } from '../../models/payment/iurest-invoice.model';
+import { CygInvoice } from '../../models/payment/cyg-invoice.model';
 
-export const IurestInvoices = new MongoObservable.Collection<IurestInvoice>('iurest_invoice');
+export const CygInvoices = new MongoObservable.Collection<CygInvoice>('cyg_invoices');
 
 /**
  * Function to validate if user exists
@@ -14,7 +14,7 @@ function loggedIn() {
 /**
  * Allow HistoryPaymentCollection collecion insert and update functions
  */
-IurestInvoices.allow({
+CygInvoices.allow({
     insert: loggedIn,
     update: loggedIn
 });

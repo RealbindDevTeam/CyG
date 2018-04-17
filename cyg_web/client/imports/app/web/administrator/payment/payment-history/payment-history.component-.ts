@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { MeteorObservable } from 'meteor-rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,6 +14,8 @@ import { Establishment } from '../../../../../../../both/models/establishment/es
 import { ResponseQuery, Merchant, Details } from '../../../../../../../both/models/payment/response-query.model';
 import { PaymentTransactions } from '../../../../../../../both/collections/payment/payment-transaction.collection';
 import { PaymentTransaction } from '../../../../../../../both/models/payment/payment-transaction.model';
+import { Tables } from '../../../../../../../both/collections/establishment/table.collection';
+import { Table } from '../../../../../../../both/models/establishment/table.model';
 import { AlertConfirmComponent } from '../../../../web/general/alert-confirm/alert-confirm.component';
 import { Parameter } from '../../../../../../../both/models/general/parameter.model';
 import { Parameters } from '../../../../../../../both/collections/general/parameter.collection';
@@ -68,7 +72,9 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
      * @param {PayuPaymenteService} _payuPaymentService 
      * @param {UserLanguageService} _userLanguageService 
      */
-    constructor(private _translate: TranslateService,
+    constructor(private _router: Router,
+        private _formBuilder: FormBuilder,
+        private _translate: TranslateService,
         public _mdDialog: MatDialog,
         private _payuPaymentService: PayuPaymentService,
         private _ngZone: NgZone,
@@ -107,7 +113,7 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
             });
         });
 
-        this._iurestInvoiceSub = MeteorObservable.subscribe('getCygInvoiceByUser', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
+        this._iurestInvoiceSub = MeteorObservable.subscribe('getIurestInvoiceByUser', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
         this._establishmentSub = MeteorObservable.subscribe('establishments', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
         this._paymentTransactionSub = MeteorObservable.subscribe('getTransactionsByUser', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
 
@@ -369,10 +375,14 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
         if (_response.result.payload.state == 'APPROVED') {
             _historyPayment.establishment_ids.forEach((establishmentId) => {
                 Establishments.collection.update({ _id: establishmentId }, { $set: { isActive: true, firstPay: false } });
+
+                Tables.collection.find({ establishment_id: establishmentId }).forEach(function <Table>(table, index, ar) {
+                    Tables.collection.update({ _id: table._id }, { $set: { is_active: true } });
+                });
             });
 
             //Call meteor method for generate iurest invoice
-            //MeteorObservable.call('generateInvoiceInfo', _historyPayment._id, Meteor.userId()).subscribe();
+            MeteorObservable.call('generateInvoiceInfo', _historyPayment._id, Meteor.userId()).subscribe();
         }
     }
 
