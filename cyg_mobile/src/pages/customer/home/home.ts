@@ -15,6 +15,7 @@ import { EstablishmentQRs } from 'cyg_web/both/collections/establishment/establi
 import { MedalWonPage } from '../medal-won/medal-won';
 
 @Component({
+    selector: 'page-home',
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit, OnDestroy {

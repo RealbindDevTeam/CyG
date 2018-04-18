@@ -36,6 +36,13 @@ $white_color-text: White;
     -moz-osx-font-smoothing: grayscale;
 }
 
-ion-slide {
+/*ion-slide {
     background-color: #fff;
+}*/
+
+page-home {
+    .profile-header {
+        height: 100px;
+        margin: -16px -16px 16px;
+    }
 }
