@@ -25,6 +25,7 @@ import { TabsPage } from "../pages/administrator/tabs/tabs";
 import { ApproveRewardsPage } from "../pages/administrator/approve-rewards/approve-rewards";
 import { SupervisorTabsPage } from "../pages/supervisor/tabs/supervisor-tabs";
 import { SupervisorApproveRewardsPage } from "../pages/supervisor/approve-rewards/supervisor-approve-rewards";
+import { CustomerTabsPage } from "../pages/customer/tabs/customer-tabs";
 
 
 export const PAGES_DECLARATIONS = [
@@ -54,5 +55,6 @@ export const PAGES_DECLARATIONS = [
     TabsPage,
     ApproveRewardsPage,
     SupervisorTabsPage,
-    SupervisorApproveRewardsPage
+    SupervisorApproveRewardsPage,
+    CustomerTabsPage
 ];

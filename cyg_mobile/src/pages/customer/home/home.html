@@ -11,10 +11,34 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content text-wrap>
-    <h6 style="margin: 20px;text-align: center">
+<ion-content text-wrap padding>
+    <!--div class="profile-header">
+        <ion-item no-lines>
+            <ion-avatar item-start>
+                <img src="img/avatar-cher.png">
+            </ion-avatar>
+            <h2>Cher</h2>
+            <p>Ugh. As if.</p>
+        </ion-item>
+    </div-->
+    <!--h6 style="margin: 20px;text-align: center">
         {{'MOBILE.HOME.HEADER_TITLE' | translate}}
-    </h6>
+    </h6-->
+
+    <ion-card (click)="goToScanCode()">
+        <ion-card-content>
+            <ion-item>
+                <ion-thumbnail item-end>
+                    <img src="assets/img/scan.png">
+                </ion-thumbnail>
+                <h2>{{'MOBILE.HOME.TITLE_CODE_BTN' | translate}}</h2>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+
+    <!--button ion-button block (click)="goToScanCode()">
+        Escanear código QR
+    </button-->
 
     <ion-card (click)="goToMyAccumulatedPoints()">
         <ion-card-content>
@@ -26,16 +50,7 @@
             </ion-item>
         </ion-card-content>
     </ion-card>
-    <ion-card (click)="goToScanCode()">
-        <ion-card-content>
-            <ion-item>
-                <ion-thumbnail item-end>
-                    <img src="assets/img/scan.png">
-                </ion-thumbnail>
-                <h2>{{'MOBILE.HOME.TITLE_CODE_BTN' | translate}}</h2>
-            </ion-item>
-        </ion-card-content>
-    </ion-card>
+
     <ion-card (click)="goToEstablishmentList()">
         <ion-card-content>
             <ion-item>
