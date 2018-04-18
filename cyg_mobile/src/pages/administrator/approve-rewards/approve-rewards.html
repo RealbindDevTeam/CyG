@@ -5,25 +5,23 @@
 </ion-header>
 
 <ion-content text-wrap>
-    <ion-card>
-        <p padding>{{'APPROVE_REWARDS.SUBTITLE' | translate}}</p>
-        <ion-list style="margin-bottom: 0px" no-lines>
-            <ion-item>
-                <ion-label>{{'MOBILE.SECTIONS.SELECTION' | translate}}</ion-label>
-                <ion-select [(ngModel)]="_establishmentFilter" interface="action-sheet" cancelText="{{'MOBILE.SECTIONS.CANCEL'| translate}}">
-                    <ion-label>{{'MOBILE.SECTIONS.SELECTION' | translate}}</ion-label>
-                    <ion-option *ngFor="let est of _establishments | async" value="{{est._id}}" selected="true">{{est.name}} - {{est.address}}</ion-option>
-                </ion-select>
-            </ion-item>
+    <h6 style="margin: 20px;text-align: center">
+        {{'APPROVE_REWARDS.SUBTITLE' | translate}}
+    </h6>
 
-            <ion-item>
-                <ion-icon name="person"></ion-icon>
-                <ion-input placeholder="{{'APPROVE_REWARDS.SEARCH_BY_NAME' | translate}}" [(ngModel)]="_userFilter" (ionChange)="doFilter()"
-                    clearInput></ion-input>
-            </ion-item>
-        </ion-list>
+    <ion-item>
+        <ion-label>{{'APPROVE_REWARDS.SELECT_RESTAURANT' | translate}}</ion-label>
+        <ion-select [(ngModel)]="_establishmentFilter" interface="action-sheet" cancelText="{{'MOBILE.SECTIONS.CANCEL'| translate}}"
+            (ionChange)="rewardsConfirmSearch(_establishmentFilter)">
+            <ion-option *ngFor="let est of _establishments | async" value="{{est._id}}" selected="true">{{est.name}} - {{est.address}}</ion-option>
+        </ion-select>
+    </ion-item>
 
-    </ion-card>
+    <ion-item>
+        <ion-icon name="person"></ion-icon>
+        <ion-input placeholder="{{'APPROVE_REWARDS.SEARCH_BY_NAME' | translate}}" [(ngModel)]="_userFilter" (ionChange)="doFilter()"
+            clearInput></ion-input>
+    </ion-item>
 
     <div *ngFor="let rewardConfirmation of _rewardsConfirmations | async" class="cards">
         <div *ngFor="let reward of _rewards | async">

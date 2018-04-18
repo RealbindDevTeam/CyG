@@ -35,7 +35,6 @@ export class CollaboratorsComponent implements OnInit, OnDestroy {
     private _usersSub: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
 
-    //private _form                   : FormGroup;
     public _dialogRef: MatDialogRef<any>;
     private _mdDialogRef: MatDialogRef<any>;
     private titleMsg: string;
@@ -69,14 +68,14 @@ export class CollaboratorsComponent implements OnInit, OnDestroy {
         this.removeSubscriptions();
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
+                this._establishments = Establishments.find({ creation_user: this._user }).zone();
                 this.countEstablishments();
                 this._establishments.subscribe(() => { this.countEstablishments(); });
             });
         });
         this._roleSub = MeteorObservable.subscribe('getRoleCollaborators').subscribe(() => {
             this._ngZone.run(() => {
-                this._roles = Roles.find({}).zone();
+                this._roles = Roles.find({ _id: { $in: ["600"] } }).zone();
             });
         });
     }
@@ -85,7 +84,7 @@ export class CollaboratorsComponent implements OnInit, OnDestroy {
      * Validate if establishments exists
      */
     countEstablishments(): void {
-        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**
@@ -100,12 +99,19 @@ export class CollaboratorsComponent implements OnInit, OnDestroy {
      * This method allow search collaborators by establishment id
      */
     collaboratorsSearch(_pEstablishmentId: string) {
+        let _lUserDetails: string[] = [];
         this._userDetailsSub = MeteorObservable.subscribe('getUsersDetailsForEstablishment', _pEstablishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._userDetails = UserDetails.find({ establishment_work: _pEstablishmentId }).zone();
-        });
-
-        this._usersSub = MeteorObservable.subscribe('getUsersByEstablishment', _pEstablishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._users = Users.find({}).zone();
+            this._ngZone.run(() => {
+                this._userDetails = UserDetails.find({ establishment_work: _pEstablishmentId }).zone();
+                UserDetails.collection.find({ establishment_work: _pEstablishmentId }).fetch().forEach(function <UserDetail>(usdet, index, arr) {
+                    _lUserDetails.push(usdet.user_id);
+                });
+                this._usersSub = MeteorObservable.subscribe('getUsersByEstablishment', _pEstablishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
+                    this._ngZone.run(() => {
+                        this._users = Users.find({ _id: { $in: _lUserDetails } }).zone();
+                    });
+                });
+            });
         });
     }
 

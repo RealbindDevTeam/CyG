@@ -193,12 +193,12 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
 
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                Establishments.collection.find({}).fetch().forEach((res) => {
+                Establishments.collection.find({ creation_user: this._user }).fetch().forEach((res) => {
                     _establishmentsId.push(res._id);
                 });
                 this._sectionsSub = MeteorObservable.subscribe('sections', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
                     this._ngZone.run(() => {
-                        this._sections = Sections.find({ is_active: true }).zone();
+                        this._sections = Sections.find({ creation_user: this._user, is_active: true }).zone();
                         let _lSection: Section = Sections.findOne({ _id: this._itemToEdit.sectionId })
                         Establishments.collection.find({ _id: { $in: _lSection.establishments } }).fetch().forEach((r) => {
                             _currenciesId.push(r.currencyId);
@@ -335,7 +335,7 @@ export class ItemEditionComponent implements OnInit, OnDestroy {
 
         this._additionSub = MeteorObservable.subscribe('additions', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                Additions.collection.find().fetch().forEach((add) => {
+                Additions.collection.find({ creation_user: this._user }).fetch().forEach((add) => {
                     let addition: Addition = add;
                     let findAdd = this._itemAdditions.filter(d => d == addition._id);
 
