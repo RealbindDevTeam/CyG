@@ -48,10 +48,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     let _lEstablishmentsId: string[] = [];
     this._establishmentsSub = MeteorObservable.subscribe('getActiveEstablishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
       this._ngZone.run(() => {
-        this._establishments = Establishments.find({}).zone();
+        this._establishments = Establishments.find({ creation_user: this._user, isActive: true }).zone();
         this.countResturants();
         this._establishments.subscribe(() => { this.countResturants(); });
-        Establishments.collection.find({}).fetch().forEach((establishment: Establishment) => {
+        Establishments.collection.find({ creation_user: this._user, isActive: true }).fetch().forEach((establishment: Establishment) => {
           _lEstablishmentsId.push(establishment._id);
         });
         this._establishmentPointsSub = MeteorObservable.subscribe('getEstablishmentPointsByIds', _lEstablishmentsId).takeUntil(this._ngUnsubscribe).subscribe();
@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
    * Validate if establishments exists
    */
   countResturants(): void {
-    Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+    Establishments.collection.find({ creation_user: this._user, isActive: true }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
   }
 
   /**

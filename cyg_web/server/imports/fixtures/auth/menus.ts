@@ -130,6 +130,14 @@ export function loadMenus() {
                 icon_name: "assignment",
                 order: 1100
             },
+            {
+                _id: "1200",
+                is_active: true,
+                name: "MENUS.GIVE_MEDAL",
+                url: "/app/supervisor-give-medals",
+                icon_name: "card_giftcard",
+                order: 1200
+            },
             /*{
                 _id: "1200",
                 is_active: true,

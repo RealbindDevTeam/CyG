@@ -102,7 +102,7 @@ export class RewardListComponent {
 
         this._itemsSub = MeteorObservable.subscribe('itemsByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._items = Items.find({}).zone();
+                this._items = Items.find({ 'establishments.establishment_id': { $in: [this._establishmentId] }, is_active: true }).zone();
             });
         });
 

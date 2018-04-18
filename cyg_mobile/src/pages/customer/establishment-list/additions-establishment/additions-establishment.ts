@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { Subscription,Subject } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { MeteorObservable } from 'meteor-rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Addition } from 'cyg_web/both/models/menu/addition.model';
@@ -41,7 +41,7 @@ export class AdditionsEstablishmentPage implements OnInit, OnDestroy {
         this.removeSubscriptions();
         this._additionsSub = MeteorObservable.subscribe('additionsByEstablishment', this._establishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._additions = Additions.find({}).zone();
+                this._additions = Additions.find({ 'establishments.establishment_id': { $in: [this._establishmentId] }, is_active: true }).zone();
             });
         });
     }

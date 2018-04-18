@@ -34,13 +34,13 @@ if (Meteor.isServer) {
         findUsers(_pUserFilter: string): any {
             let _lUsersId: string[] = new Array();
             let _lUserFilter = Users.collection.find({
-                $or: [{ "username": { $regex: _pUserFilter },
-                    { "emails.address": { $regex: _pUserFilter } },
+                $or: [{ "username": { $regex: _pUserFilter } },
+                { "emails.address": { $regex: _pUserFilter } },
                 { "profile.name": { $regex: _pUserFilter } }
                 ]
             });
             if (_lUserFilter.count() > 0) {
-                _lUserFilter.forEach(user => {
+                _lUserFilter.forEach((user: User) => {
                     _lUsersId.push(user._id);
                 });
             }

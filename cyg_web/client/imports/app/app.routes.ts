@@ -26,7 +26,7 @@ import { NotFoundWebComponent } from './web/auth/notfound/notfound.web.component
 import { SupervisorDashboardComponent } from './web/supervisor/dashboard/supervisor-dashboard.component';
 //import { PayuPaymentFormComponent } from './web/administrator/payment/payu-payment-form/payu-payment-form.component';
 import { PaymentHistoryComponent } from './web/administrator/payment/payment-history/payment-history.component';
-import { TrnResponseConfirmComponent } from './web/administrator/payment/payu-payment-form/transaction-response-confirm/trn-response-confirm.component';
+//import { TrnResponseConfirmComponent } from './web/administrator/payment/payu-payment-form/transaction-response-confirm/trn-response-confirm.component';
 import { AdminSignupComponent } from './web/auth/admin-signup/admin-signup.component';
 //import { ItemEnableSupComponent } from './web/supervisor/items-enable/items-enable-sup.component';
 //import { SupervisorTableComponent } from './web/supervisor/tables/supervisor-tables.component';
@@ -46,6 +46,7 @@ import { PaymentFormComponent } from './web/administrator/payment/payment-form/p
 import { ApproveRewardsComponent } from './web/administrator/approve-rewards/approve-rewards.component';
 import { SupervisorApproveRewardsComponent } from "./web/supervisor/approve-rewards/supervisor-approve-rewards.component";
 import { GiveMedalComponent } from './web/administrator/give-medal/give-medal.component';
+import { SupervisorGiveMedalComponent } from './web/supervisor/give-medal/supervisor-give-medal.component';
 
 export const routes: Route[] = [
     {
@@ -86,6 +87,7 @@ export const routes: Route[] = [
             { path: 'approve-rewards', component: ApproveRewardsComponent, canActivate: [AdminGuard] },
             { path: 'supervisor-approve-rewards', component: SupervisorApproveRewardsComponent, canActivate: [SupervisorGuard] },
             { path: 'give-medals', component: GiveMedalComponent, canActivate: [AdminGuard] },
+            { path: 'supervisor-give-medals', component: SupervisorGiveMedalComponent, canActivate: [SupervisorGuard] },
         ]
     },
     { path: '', component: SigninWebComponent },

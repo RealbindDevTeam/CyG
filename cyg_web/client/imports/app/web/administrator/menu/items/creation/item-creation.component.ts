@@ -158,7 +158,7 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
 
         this._sectionsSub = MeteorObservable.subscribe('sections', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._sections = Sections.find({ is_active: true }).zone();
+                this._sections = Sections.find({ creation_user: this._user, is_active: true }).zone();
             });
         });
 
@@ -166,7 +166,7 @@ export class ItemCreationComponent implements OnInit, OnDestroy {
         this._subcategorySub = MeteorObservable.subscribe('subcategories', this._user).takeUntil(this._ngUnsubscribe).subscribe();
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                Establishments.collection.find({}).fetch().forEach((res) => {
+                Establishments.collection.find({ creation_user: this._user }).fetch().forEach((res) => {
                     _establishmentsId.push(res._id);
                     _currenciesIds.push(res.currencyId);
                 });

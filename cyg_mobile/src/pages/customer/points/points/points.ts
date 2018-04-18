@@ -59,7 +59,7 @@ export class PointsPage implements OnInit, OnDestroy {
                 });
                 this._establishmentsSub = MeteorObservable.subscribe('getEstablishmentsByIds', _lEstablishmentsIds).takeUntil(this.ngUnsubscribe).subscribe(() => {
                     this._ngZone.run(() => {
-                        this._establishments = Establishments.find({}).zone();
+                        this._establishments = Establishments.find({ _id: { $in: _lEstablishmentsIds } }).zone();
                     });
                 });
             });

@@ -88,8 +88,8 @@ export class SubcategoryComponent implements OnInit, OnDestroy {
         });
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
-                Establishments.collection.find({}).fetch().forEach((establishment: Establishment) => {
+                this._establishments = Establishments.find({ creation_user: this._user }).zone();
+                Establishments.collection.find({ creation_user: this._user }).fetch().forEach((establishment: Establishment) => {
                     this._lEstablishmentsId.push(establishment._id);
                 });
                 this.countEstablishments();
@@ -98,12 +98,12 @@ export class SubcategoryComponent implements OnInit, OnDestroy {
         });
         this._categoriesSub = MeteorObservable.subscribe('categories', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._categories = Categories.find({}).zone();
+                this._categories = Categories.find({ creation_user: this._user }).zone();
             });
         });
         this._subcategorySub = MeteorObservable.subscribe('subcategories', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._subcategories = Subcategories.find({}).zone();
+                this._subcategories = Subcategories.find({ creation_user: this._user }).zone();
             });
         });
         this._itemsSubscription = MeteorObservable.subscribe('items', this._user).takeUntil(this._ngUnsubscribe).subscribe();
@@ -113,7 +113,7 @@ export class SubcategoryComponent implements OnInit, OnDestroy {
      * Validate if establishments exists
      */
     countEstablishments(): void {
-        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**

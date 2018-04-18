@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { MeteorObservable } from 'meteor-rxjs';
 import { MatSnackBar, MatDialog, MatDialogRef } from '@angular/material';
@@ -15,11 +14,11 @@ import { UserDetail, UserDetailImage } from '../../../../../../both/models/auth/
 import { UserDetails } from '../../../../../../both/collections/auth/user-detail.collection';
 
 @Component({
-    selector: 'give-medal',
-    templateUrl: './give-medal.component.html',
-    styleUrls: ['./give-medal.component.scss']
+    selector: 'sup-give-medal',
+    templateUrl: './supervisor-give-medal.component.html',
+    styleUrls: ['./supervisor-give-medal.component.scss']
 })
-export class GiveMedalComponent implements OnInit, OnDestroy {
+export class SupervisorGiveMedalComponent implements OnInit, OnDestroy {
 
     private _user = Meteor.userId();
     private _mdDialogRef: MatDialogRef<any>;
@@ -32,28 +31,26 @@ export class GiveMedalComponent implements OnInit, OnDestroy {
     private _establishments: Observable<Establishment[]>;
     private _users: Observable<User[]>;
 
-    private _thereAreEstablishments: boolean = true;
+    private _establishmentWorkId: string;
     private titleMsg: string;
     private btnAcceptLbl: string;
     private btnCancelLbl: string;
     private _userFilter: string = '';
-    private _establishmentFilter: string = '';
+    private _establishmentSelect: string;
     private _loading: boolean = false;
 
     /**
-     * GiveMedalComponent Constructor
+     * SupervisorGiveMedalComponent Constructor
      * @param {MatSnackBar} _snackBar 
      * @param {MatDialog} _dialog 
      * @param {TranslateService} _translate 
      * @param {NgZone} _ngZone 
-     * @param {Router} _router 
      * @param {UserLanguageService} _userLanguageService 
      */
     constructor(public _snackBar: MatSnackBar,
         public _dialog: MatDialog,
         private _translate: TranslateService,
         private _ngZone: NgZone,
-        private _router: Router,
         private _userLanguageService: UserLanguageService) {
         _translate.use(this._userLanguageService.getLanguage(Meteor.user()));
         _translate.setDefaultLang('en');
@@ -67,21 +64,18 @@ export class GiveMedalComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
         this.removeSubscriptions();
-        this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+        this._usersSub = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
+        this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({ creation_user: this._user }).zone();
-                this._establishments.subscribe(() => { this.countEstablishments(); });
+                this._establishmentWorkId = UserDetails.findOne({ user_id: this._user }).establishment_work;
+                this._establishmentSelect = this._establishmentWorkId;
+                this._establishmentSub = MeteorObservable.subscribe('getEstablishmentByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+                    this._ngZone.run(() => {
+                        this._establishments = Establishments.find({ _id: this._establishmentWorkId }).zone();
+                    });
+                });
             });
         });
-        this._usersSub = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
-        this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').takeUntil(this._ngUnsubscribe).subscribe();
-    }
-
-    /**
-     * Validate if establishments exists
-     */
-    countEstablishments(): void {
-        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**
@@ -148,16 +142,14 @@ export class GiveMedalComponent implements OnInit, OnDestroy {
             if (result.success) {
                 this._loading = true;
                 setTimeout(() => {
-                    MeteorObservable.call('giveMedalToUser', this._establishmentFilter, _pUserId).subscribe(() => {
+                    MeteorObservable.call('giveMedalToUser', this._establishmentWorkId, _pUserId).subscribe(() => {
                         this._loading = false;
                         let _lMessage = this.itemNameTraduction('GIVE_MEDAL.MEDAL_GIVEN');
                         this._snackBar.open(_lMessage, '', { duration: 2500 });
                         this._users = null;
-                        this._establishmentFilter = '';
                         this._userFilter = '';
                     }, (error) => {
                         this._users = null;
-                        this._establishmentFilter = '';
                         this._userFilter = '';
                         this._loading = false;
                         this.openDialog(this.titleMsg, '', error.reason, '', this.btnAcceptLbl, false);
@@ -224,13 +216,6 @@ export class GiveMedalComponent implements OnInit, OnDestroy {
     removeSubscriptions(): void {
         this._ngUnsubscribe.next();
         this._ngUnsubscribe.complete();
-    }
-
-    /**
-     * Go to add new Establishment
-     */
-    goToAddEstablishment() {
-        this._router.navigate(['/app/establishment-register']);
     }
 
     /**

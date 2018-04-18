@@ -90,7 +90,7 @@ export class EstablishmentProfileComponent implements OnInit, OnDestroy {
         this.removeSubscriptions();
         this._establishmentsSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
+                this._establishments = Establishments.find({ creation_user: this._user }).zone();
                 this.countEstablishments();
                 this._establishments.subscribe(() => { this.countEstablishments(); });
             });
@@ -156,7 +156,7 @@ export class EstablishmentProfileComponent implements OnInit, OnDestroy {
      * Validate if establishments exists
      */
     countEstablishments(): void {
-        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**
