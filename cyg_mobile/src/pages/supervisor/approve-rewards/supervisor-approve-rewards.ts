@@ -52,31 +52,33 @@ export class SupervisorApproveRewardsPage implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
-
-        let _establishmentIds: string[] = [];
-        this._establishmentSub = MeteorObservable.subscribe('getEstablishmentByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+        let _establishmentWorkId: string;
+        this._usersSub = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
+        this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
-                Establishments.collection.find({}).fetch().forEach((est) => {
-                    _establishmentIds.push(est._id);
+                _establishmentWorkId = UserDetails.findOne({ user_id: this._user }).establishment_work;
+                this._establishmentSub = MeteorObservable.subscribe('getEstablishmentByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+                    this._ngZone.run(() => {
+                        this._establishments = Establishments.find({ _id: _establishmentWorkId }).zone();
+                        this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', [_establishmentWorkId]).takeUntil(this._ngUnsubscribe).subscribe(() => {
+                            this._ngZone.run(() => {
+                                this._rewardsConfirmations = RewardsConfirmations.find({ establishment_id: _establishmentWorkId, is_confirmed: false }).zone();
+                            });
+                        });
+                    });
                 });
-                this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', _establishmentIds).takeUntil(this._ngUnsubscribe).subscribe();
             });
         });
         this._rewardSub = MeteorObservable.subscribe('getRewardsByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._rewards = Rewards.find({}).zone();
+                this._rewards = Rewards.find({ establishments: { $in: [_establishmentWorkId] } }).zone();
             });
         });
         this._itemsSub = MeteorObservable.subscribe('getItemsByUserEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._items = Items.find({}).zone();
+                this._items = Items.find({ 'establishments.establishment_id': { $in: [_establishmentWorkId] }, is_active: true }).zone();
             });
         });
-
-        this._usersSub = MeteorObservable.subscribe('getUsers').subscribe();
-        this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').subscribe();
-
     }
 
     /**

@@ -56,8 +56,8 @@ export class ApproveRewardsPage implements OnInit, OnDestroy {
         let _establishmentIds: string[] = [];
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
-                Establishments.collection.find({}).fetch().forEach((est) => {
+                this._establishments = Establishments.find({ creation_user: this._user }).zone();
+                Establishments.collection.find({ creation_user: this._user }).fetch().forEach((est) => {
                     _establishmentIds.push(est._id);
                 });
                 this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', _establishmentIds).takeUntil(this._ngUnsubscribe).subscribe();
@@ -70,13 +70,11 @@ export class ApproveRewardsPage implements OnInit, OnDestroy {
         });
         this._itemsSub = MeteorObservable.subscribe('getAdminActiveItems', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._items = Items.find({}).zone();
+                this._items = Items.find({ creation_user: this._user, is_active: true }).zone();
             });
         });
-
-        this._usersSub = MeteorObservable.subscribe('getUsers').subscribe();
-        this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').subscribe();
-
+        this._usersSub = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
+        this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').takeUntil(this._ngUnsubscribe).subscribe();
     }
 
     /**
