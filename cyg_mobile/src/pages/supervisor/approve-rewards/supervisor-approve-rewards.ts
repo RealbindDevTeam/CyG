@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, NgZone } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Select, AlertController, ToastController } from 'ionic-angular';
+import { Select, AlertController, ToastController, Platform } from 'ionic-angular';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
@@ -16,6 +16,7 @@ import { Items } from 'cyg_web/both/collections/menu/item.collection';
 import { UserDetail, UserDetailImage } from 'cyg_web/both/models/auth/user-detail.model';
 import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
 import { UserLanguageServiceProvider } from '../../../providers/user-language-service/user-language-service';
+import { Network } from '@ionic-native/network';
 
 @Component({
     selector: 'supervisor-approve-rewards',
@@ -33,6 +34,8 @@ export class SupervisorApproveRewardsPage implements OnInit, OnDestroy {
     private _itemsSub: Subscription;
     private _usersSub: Subscription;
     private _userDetailsSub: Subscription;
+    private disconnectSubscription: Subscription;
+
     private _establishments: Observable<Establishment[]>;
     private _rewardsConfirmations: Observable<RewardConfirmation[]>;
     private _rewards: Observable<Reward[]>;
@@ -41,17 +44,33 @@ export class SupervisorApproveRewardsPage implements OnInit, OnDestroy {
     private _userFilter: string = "";
     private _establishmentFilter: string = "";
 
+    /**
+     * SupervisorApproveRewardsPage Constructor
+     * @param {NgZone} _ngZone 
+     * @param {UserLanguageServiceProvider} _userLanguageService 
+     * @param {TranslateService} _translate 
+     * @param {AlertController} _alertCtrl 
+     * @param {ToastController} toastCtrl 
+     * @param {Platform} _platform 
+     * @param {Network} _network 
+     */
     constructor(private _ngZone: NgZone,
         private _userLanguageService: UserLanguageServiceProvider,
         public _translate: TranslateService,
         public _alertCtrl: AlertController,
-        public toastCtrl: ToastController) {
+        public toastCtrl: ToastController,
+        public _platform: Platform,
+        private _network: Network) {
         _translate.setDefaultLang('en');
         this._establishmentFilter = this.itemNameTraduction('MOBILE.SECTIONS.SELECTION');
     }
 
+    /**
+     * ngOnInit implementation
+     */
     ngOnInit() {
         this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
+        this.removeSubscriptions();
         let _establishmentWorkId: string;
         this._usersSub = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
         this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').takeUntil(this._ngUnsubscribe).subscribe(() => {
@@ -78,15 +97,58 @@ export class SupervisorApproveRewardsPage implements OnInit, OnDestroy {
     }
 
     /**
-   * This function allow translate strings
-   * @param itemName 
-   */
+     * This function allow translate strings
+     * @param itemName 
+     */
     itemNameTraduction(itemName: string): string {
         var wordTraduced: string;
         this._translate.get(itemName).subscribe((res: string) => {
             wordTraduced = res;
         });
         return wordTraduced;
+    }
+
+    /** 
+     * This function verify the conditions on page did enter for internet and server connection
+     */
+    ionViewDidEnter() {
+        this.isConnected();
+        this.disconnectSubscription = this._network.onDisconnect().subscribe(data => {
+            let title = this.itemNameTraduction('MOBILE.CONNECTION_ALERT.TITLE');
+            let subtitle = this.itemNameTraduction('MOBILE.CONNECTION_ALERT.SUBTITLE');
+            let btn = this.itemNameTraduction('MOBILE.CONNECTION_ALERT.BTN');
+            this.presentAlert(title, subtitle, btn);
+        }, error => console.error(error));
+    }
+
+    /** 
+     * This function verify with network plugin if device has internet connection
+     */
+    isConnected() {
+        if (this._platform.is('cordova')) {
+            let conntype = this._network.type;
+            let validateConn = conntype && conntype !== 'unknown' && conntype !== 'none';
+            if (!validateConn) {
+                let title = this.itemNameTraduction('MOBILE.CONNECTION_ALERT.TITLE');
+                let subtitle = this.itemNameTraduction('MOBILE.CONNECTION_ALERT.SUBTITLE');
+                let btn = this.itemNameTraduction('MOBILE.CONNECTION_ALERT.BTN');
+                this.presentAlert(title, subtitle, btn);
+            } else {
+                if (!Meteor.status().connected) {
+                    let title2 = this.itemNameTraduction('MOBILE.SERVER_ALERT.TITLE');
+                    let subtitle2 = this.itemNameTraduction('MOBILE.SERVER_ALERT.SUBTITLE');
+                    let btn2 = this.itemNameTraduction('MOBILE.SERVER_ALERT.BTN');
+                    this.presentAlert(title2, subtitle2, btn2);
+                }
+            }
+        }
+    }
+
+    /**
+     * ionViewWillLeave implementation
+     */
+    ionViewWillLeave() {
+        this.disconnectSubscription.unsubscribe();
     }
 
     /**
@@ -164,7 +226,7 @@ export class SupervisorApproveRewardsPage implements OnInit, OnDestroy {
 
     /**
      * Present the alert for advice to internet
-    */
+     */
     presentAlert(_pTitle: string, _pSubtitle: string, _pBtn: string) {
         let alert = this._alertCtrl.create({
             title: _pTitle,
@@ -255,6 +317,15 @@ export class SupervisorApproveRewardsPage implements OnInit, OnDestroy {
         toast.present();
     }
 
+    /**
+     * Remove all subscriptions
+     */
+    removeSubscriptions(): void {
+        this._ngUnsubscribe.next();
+        this._ngUnsubscribe.complete();
+    }
+
     ngOnDestroy() {
+        this.removeSubscriptions();
     }
 }
