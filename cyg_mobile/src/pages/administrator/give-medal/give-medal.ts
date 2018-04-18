@@ -5,47 +5,34 @@ import { MeteorObservable } from 'meteor-rxjs';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
 import { Establishments } from 'cyg_web/both/collections/establishment/establishment.collection';
-import { RewardConfirmation } from 'cyg_web/both/models/points/reward-confirmation.model';
-import { RewardsConfirmations } from 'cyg_web/both/collections/points/reward-confirmation.collection';
-import { Reward } from 'cyg_web/both/models/establishment/reward.model';
-import { Rewards } from 'cyg_web/both/collections/establishment/reward.collection';
+import { UserLanguageServiceProvider } from '../../../providers/user-language-service/user-language-service';
 import { User } from 'cyg_web/both/models/auth/user.model';
 import { Users } from 'cyg_web/both/collections/auth/user.collection';
-import { Item } from 'cyg_web/both/models/menu/item.model';
-import { Items } from 'cyg_web/both/collections/menu/item.collection';
 import { UserDetail, UserDetailImage } from 'cyg_web/both/models/auth/user-detail.model';
 import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
-import { UserLanguageServiceProvider } from '../../../providers/user-language-service/user-language-service';
 import { Network } from '@ionic-native/network';
 
 @Component({
-    selector: 'approve-rewards',
-    templateUrl: 'approve-rewards.html'
+    selector: 'give-medal',
+    templateUrl: 'give-medal.html'
 })
-export class ApproveRewardsPage implements OnInit, OnDestroy {
-
-    @ViewChild('select1') select1: Select;
+export class GiveMedalPage implements OnInit, OnDestroy {
 
     private _user = Meteor.userId();
-    private _ngUnsubscribe: Subject<void> = new Subject<void>();
-    private _rewardSub: Subscription;
     private _establishmentSub: Subscription;
-    private _rewardsConfirmationSub: Subscription;
-    private _itemsSub: Subscription;
     private _usersSub: Subscription;
     private _userDetailsSub: Subscription;
+    private _ngUnsubscribe: Subject<void> = new Subject<void>();
     private disconnectSubscription: Subscription;
 
     private _establishments: Observable<Establishment[]>;
-    private _rewardsConfirmations: Observable<RewardConfirmation[]>;
-    private _rewards: Observable<Reward[]>;
-    private _items: Observable<Item[]>;
+    private _users: Observable<User[]>;
 
     private _userFilter: string = "";
     private _establishmentFilter: string = "";
 
     /**
-     * ApproveRewardsPage Constructor
+     * GiveMedalPage Constructor
      * @param {NgZone} _ngZone 
      * @param {UserLanguageServiceProvider} _userLanguageService 
      * @param {TranslateService} _translate 
@@ -71,24 +58,10 @@ export class ApproveRewardsPage implements OnInit, OnDestroy {
     ngOnInit() {
         this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
         this.removeSubscriptions();
-        let _establishmentIds: string[] = [];
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._establishments = Establishments.find({ creation_user: this._user }).zone();
-                Establishments.collection.find({ creation_user: this._user }).fetch().forEach((est) => {
-                    _establishmentIds.push(est._id);
-                });
-                this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', _establishmentIds).takeUntil(this._ngUnsubscribe).subscribe();
-            });
-        });
-        this._rewardSub = MeteorObservable.subscribe('getRewards', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._rewards = Rewards.find({ creation_user: this._user }).zone();
-            });
-        });
-        this._itemsSub = MeteorObservable.subscribe('getAdminActiveItems', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._items = Items.find({ creation_user: this._user, is_active: true }).zone();
+                //this._establishments.subscribe(() => { this.countEstablishments(); });
             });
         });
         this._usersSub = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
@@ -96,39 +69,60 @@ export class ApproveRewardsPage implements OnInit, OnDestroy {
     }
 
     /**
-     * Function to search establishment rewards confirm
-     * @param {string} _pEstablishmentId 
+     * Function to give medal to specific user
+     * @param {string} _pUserId 
      */
-    rewardsConfirmSearch(_pEstablishmentId: string) {
-        this._rewardsConfirmations = RewardsConfirmations.find({ establishment_id: _pEstablishmentId, is_confirmed: false }).zone();
-    }
+    giveMedalToUser(_pUserId: string) {
+        let _lDialogTitle = this.itemNameTraduction('GIVE_MEDAL.GIVE_MEDAL_TITLE');
+        let _lDialogContent = this.itemNameTraduction('GIVE_MEDAL.GIVE_MEDAL_SUBTITLE') + this.getUserName(_pUserId);
+        let _lError: string = 'LOGIN_SYSTEM_OPERATIONS_MSG';
 
-    /**
-     * This function allow translate strings
-     * @param itemName 
-     */
-    itemNameTraduction(itemName: string): string {
-        var wordTraduced: string;
-        this._translate.get(itemName).subscribe((res: string) => {
-            wordTraduced = res;
+        let confirm = this._alertCtrl.create({
+            title: _lDialogTitle,
+            message: _lDialogContent,
+            buttons: [
+                {
+                    text: this.itemNameTraduction('MOBILE.CANCEL'),
+                    handler: () => {
+
+                    }
+                },
+                {
+                    text: this.itemNameTraduction('MOBILE.ACCEPT'),
+                    handler: () => {
+                        MeteorObservable.call('giveMedalToUser', this._establishmentFilter, _pUserId).subscribe(() => {
+                            let _lMessage = this.itemNameTraduction('GIVE_MEDAL.MEDAL_GIVEN');
+                            this._users = null;
+                            this._establishmentFilter = '';
+                            this._userFilter = '';
+                            this.presentToast(_lMessage);
+                        }, (error) => {
+                            this._users = null;
+                            this._establishmentFilter = '';
+                            this._userFilter = '';
+                            this.presentToast(error);
+                        });
+                    }
+                }
+            ]
         });
-        return wordTraduced;
+        confirm.present();
     }
 
     /**
      * Do filter by username or email address
      */
     doFilter() {
-        this._rewardsConfirmations = null;
+        this._users = null;
+        let _lUserDetailsId: string[] = new Array();
         if (this._establishmentFilter !== this.itemNameTraduction('MOBILE.SECTIONS.SELECTION')) {
             if (this._userFilter) {
                 MeteorObservable.call('findUsers', this._userFilter).subscribe((userIds) => {
                     if (userIds) {
-                        this._rewardsConfirmations = RewardsConfirmations.find({
-                            establishment_id: this._establishmentFilter,
-                            creation_user: { $in: userIds },
-                            is_confirmed: false
-                        }).zone();
+                        UserDetails.collection.find({ user_id: { $in: userIds }, role_id: '400' }).fetch().forEach((us) => {
+                            _lUserDetailsId.push(us.user_id);
+                        });
+                        this._users = Users.find({ _id: { $in: _lUserDetailsId } }).zone();
                     }
                 });
             }
@@ -206,73 +200,6 @@ export class ApproveRewardsPage implements OnInit, OnDestroy {
     }
 
     /**
-     * Function to disapprove reward confirmation
-     * @param {RewardConfirmation} _pRewardConfirmation 
-     */
-    disapproveRewardConfirmation(_pRewardConfirmation: RewardConfirmation): void {
-        let _lDialogTitle = this.itemNameTraduction('APPROVE_REWARDS.REJECT_REWARD');
-        let _lDialogContent = this.itemNameTraduction('APPROVE_REWARDS.REJECT_REWARD_MSG');
-        let _lError: string = 'LOGIN_SYSTEM_OPERATIONS_MSG';
-
-        let confirm = this._alertCtrl.create({
-            title: _lDialogTitle,
-            message: _lDialogContent,
-            buttons: [
-                {
-                    text: this.itemNameTraduction('MOBILE.CANCEL'),
-                    handler: () => {
-
-                    }
-                },
-                {
-                    text: this.itemNameTraduction('APPROVE_REWARDS.NO_APPROVE'),
-                    handler: () => {
-                        RewardsConfirmations.remove({ _id: _pRewardConfirmation._id });
-                        let _lMessage = this.itemNameTraduction('APPROVE_REWARDS.REWARD_REJECTED');
-                        this.presentToast(_lMessage);
-                    }
-                }
-            ]
-        });
-        confirm.present();
-    }
-
-    /**
-     * Function to approve reward confirmation 
-     * @param {RewardConfirmation} _pRewardConfirmation 
-     */
-    approveRewardConfirmation(_pRewardConfirmation: RewardConfirmation): void {
-        let _lDialogTitle = this.itemNameTraduction('APPROVE_REWARDS.APPROVE_REWARD');
-        let _lDialogContent = this.itemNameTraduction('APPROVE_REWARDS.APPROVE_REWARD_MSG');
-        let _lError: string = 'LOGIN_SYSTEM_OPERATIONS_MSG';
-
-        let confirm = this._alertCtrl.create({
-            title: _lDialogTitle,
-            message: _lDialogContent,
-            buttons: [
-                {
-                    text: this.itemNameTraduction('MOBILE.CANCEL'),
-                    handler: () => {
-
-                    }
-                },
-                {
-                    text: this.itemNameTraduction('APPROVE_REWARDS.APPROVE'),
-                    handler: () => {
-                        MeteorObservable.call('redeemUserMedals', _pRewardConfirmation).subscribe(() => {
-                            let _lMessage = this.itemNameTraduction('APPROVE_REWARDS.REWARD_APPROVED');
-                            this.presentToast(_lMessage);
-                        }, (error) => {
-                            this.presentToast(error);
-                        });
-                    }
-                }
-            ]
-        });
-        confirm.present();
-    }
-
-    /**
      * Present toast with message
      * @param {string} _pMessage 
      */
@@ -326,6 +253,18 @@ export class ApproveRewardsPage implements OnInit, OnDestroy {
      */
     ionViewWillLeave() {
         this.disconnectSubscription.unsubscribe();
+    }
+
+    /**
+     * This function allow translate strings
+     * @param itemName 
+     */
+    itemNameTraduction(itemName: string): string {
+        var wordTraduced: string;
+        this._translate.get(itemName).subscribe((res: string) => {
+            wordTraduced = res;
+        });
+        return wordTraduced;
     }
 
     /**

@@ -40,16 +40,16 @@ export class EstablishmentListPage implements OnInit, OnDestroy {
     }
 
     /**
-    * Go to establishment profile
-    * @param _pEstablishment 
-    */
+     * Go to establishment profile
+     * @param _pEstablishment 
+     */
     viewEstablishmentProfile(_pEstablishment: any) {
         this._navCtrl.push(EstablishmentListDetailPage, { establishment: _pEstablishment });
     }
 
     /** 
-    * This function verify the conditions on page did enter for internet and server connection
-   */
+     * This function verify the conditions on page did enter for internet and server connection
+     */
     ionViewDidEnter() {
         this.isConnected();
         this.disconnectSubscription = this._network.onDisconnect().subscribe(data => {

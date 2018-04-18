@@ -60,11 +60,7 @@ export class SupervisorApproveRewardsPage implements OnInit, OnDestroy {
                 this._establishmentSub = MeteorObservable.subscribe('getEstablishmentByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
                     this._ngZone.run(() => {
                         this._establishments = Establishments.find({ _id: _establishmentWorkId }).zone();
-                        this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', [_establishmentWorkId]).takeUntil(this._ngUnsubscribe).subscribe(() => {
-                            this._ngZone.run(() => {
-                                this._rewardsConfirmations = RewardsConfirmations.find({ establishment_id: _establishmentWorkId, is_confirmed: false }).zone();
-                            });
-                        });
+                        this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', [_establishmentWorkId]).takeUntil(this._ngUnsubscribe).subscribe();
                     });
                 });
             });

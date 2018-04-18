@@ -25,7 +25,7 @@ import { TabsPage } from "../pages/administrator/tabs/tabs";
 import { ApproveRewardsPage } from "../pages/administrator/approve-rewards/approve-rewards";
 import { SupervisorTabsPage } from "../pages/supervisor/tabs/supervisor-tabs";
 import { SupervisorApproveRewardsPage } from "../pages/supervisor/approve-rewards/supervisor-approve-rewards";
-
+import { GiveMedalPage } from '../pages/administrator/give-medal/give-medal';
 
 export const PAGES_DECLARATIONS = [
     InitialComponent,
@@ -54,5 +54,6 @@ export const PAGES_DECLARATIONS = [
     TabsPage,
     ApproveRewardsPage,
     SupervisorTabsPage,
-    SupervisorApproveRewardsPage
+    SupervisorApproveRewardsPage,
+    GiveMedalPage
 ];
