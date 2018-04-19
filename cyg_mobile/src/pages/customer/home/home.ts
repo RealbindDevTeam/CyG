@@ -1,25 +1,34 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { NavController, NavParams, PopoverController, AlertController, Platform, ViewController } from 'ionic-angular';
-import { PointsPage } from '../points/points/points';
-import { PopoverOptionsPage } from './popover-options/popover-options';
+import { RewardsPage } from '../rewards/rewards';
 import { EstablishmentListPage } from "../establishment-list/establishment-list";
+import { MedalWonPage } from '../medal-won/medal-won';
 import { Network } from '@ionic-native/network';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription, Subject } from 'rxjs';
 import { MeteorObservable } from 'meteor-rxjs';
 import { UserLanguageServiceProvider } from '../../../providers/user-language-service/user-language-service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
 import { EstablishmentQR } from 'cyg_web/both/models/establishment/establishment-qr.model';
 import { EstablishmentQRs } from 'cyg_web/both/collections/establishment/establishment-qr.collection';
-import { MedalWonPage } from '../medal-won/medal-won';
+import { Users } from 'cyg_web/both/collections/auth/user.collection';
+import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
+import { UserDetail, UserDetailImage } from 'cyg_web/both/models/auth/user-detail.model';
+import { User } from 'cyg_web/both/models/auth/user.model';
 
 @Component({
+    selector: 'page-home',
     templateUrl: 'home.html'
 })
 export class HomePage implements OnInit, OnDestroy {
 
+    private _userSub: Subscription;
+    private _userDetailSub: Subscription;
+    private _ngUnsubscribe: Subject<void> = new Subject<void>();
     private disconnectSubscription: Subscription;
+
+    private _users: Observable<User[]>;
 
     /**
      * HomePage constructor
@@ -32,6 +41,7 @@ export class HomePage implements OnInit, OnDestroy {
      * @param {TranslateService} translate 
      * @param {UserLanguageServiceProvider} _userLanguageService 
      * @param {BarcodeScanner} barcodeScanner 
+     * @param {NgZone} _ngZone
      */
     constructor(public _navCtrl: NavController,
         private _viewCtrl: ViewController,
@@ -41,7 +51,8 @@ export class HomePage implements OnInit, OnDestroy {
         private _network: Network,
         public translate: TranslateService,
         private _userLanguageService: UserLanguageServiceProvider,
-        private barcodeScanner: BarcodeScanner) {
+        private barcodeScanner: BarcodeScanner,
+        private _ngZone: NgZone) {
         translate.setDefaultLang('en');
     }
 
@@ -50,15 +61,85 @@ export class HomePage implements OnInit, OnDestroy {
     */
     ngOnInit() {
         this.translate.use(this._userLanguageService.getLanguage(Meteor.user()));
-    }
-
-    presentPopover(myEvent) {
-        let popover = this.popoverCtrl.create(PopoverOptionsPage);
-        popover.present({
-            ev: myEvent
+        this.removeSubscriptions();
+        this._userSub = MeteorObservable.subscribe('getUserByUserId', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe(() => {
+            this._ngZone.run(() => {
+                this._users = Users.find({ _id: Meteor.userId() }).zone();
+                this._userDetailSub = MeteorObservable.subscribe('getUserDetailsByUser', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
+            });
         });
     }
 
+    /**
+     * Return user image
+     * @param {string} _pUserId 
+     */
+    getUserImage(_pUserId: string): string {
+        let _lUser: User = Users.findOne({ _id: _pUserId });
+        if (_lUser) {
+            if (_lUser.services) {
+                if (_lUser.services.facebook) {
+                    return "http://graph.facebook.com/" + _lUser.services.facebook.id + "/picture/?type=large";
+                } else {
+                    let _lUserDetail: UserDetail = UserDetails.findOne({ user_id: _pUserId });
+                    if (_lUserDetail) {
+                        let _lUserDetailImage: UserDetailImage = _lUserDetail.image;
+                        if (_lUserDetailImage) {
+                            return _lUserDetailImage.url;
+                        } else {
+                            return 'assets/img/user_default_image.png';
+                        }
+                    }
+                    else {
+                        return 'assets/img/user_default_image.png';
+                    }
+                }
+            } else {
+                return 'assets/img/user_default_image.png';
+            }
+        } else {
+            return 'assets/img/user_default_image.png';
+        }
+    }
+
+    /**
+     * Return user name
+     * @param {string} _pUserId 
+     */
+    getUserName(_pUserId: string): string {
+        let _lUser: User = Users.findOne({ _id: _pUserId });
+        if (_lUser) {
+            if (_lUser.username) {
+                return _lUser.username;
+            } else {
+                if (_lUser.services) {
+                    if (_lUser.services.facebook) {
+                        return _lUser.services.facebook.name;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Return user email
+     * @param {string} _pUserId 
+     */
+    getUserEmail(_pUserId: string): string {
+        let _lUser: User = Users.findOne({ _id: _pUserId });
+        if (_lUser) {
+            if (_lUser.emails) {
+                return _lUser.emails[0].address;
+            } else {
+                if (_lUser.services) {
+                    if (_lUser.services.facebook) {
+                        return _lUser.services.facebook.email;
+                    }
+                }
+            }
+        }
+    }
+    
     /**
      * Function to go to establishments 
      */
@@ -144,15 +225,15 @@ export class HomePage implements OnInit, OnDestroy {
     }
 
     /**
-     * Function to go my acumulated points
+     * Function to go rewards page
      */
-    goToMyAccumulatedPoints() {
-        this._navCtrl.push(PointsPage);
+    goToRewards() {
+        this._navCtrl.push(RewardsPage);
     }
 
     /** 
      * This function verify the conditions on page did enter for internet and server connection
-    */
+     */
     ionViewDidEnter() {
         this.isConnected();
         this.disconnectSubscription = this._network.onDisconnect().subscribe(data => {
@@ -165,7 +246,7 @@ export class HomePage implements OnInit, OnDestroy {
 
     /** 
      * This function verify with network plugin if device has internet connection
-    */
+     */
     isConnected() {
         if (this._platform.is('cordova')) {
             let conntype = this._network.type;
@@ -188,7 +269,7 @@ export class HomePage implements OnInit, OnDestroy {
 
     /**
      * Present the alert for advice to internet
-    */
+     */
     presentAlert(_pTitle: string, _pSubtitle: string, _pBtn: string) {
         let alert = this._alertCtrl.create({
             title: _pTitle,
@@ -219,8 +300,17 @@ export class HomePage implements OnInit, OnDestroy {
     }
 
     /**
+     * Remove all subscriptions
+     */
+    removeSubscriptions(): void {
+        this._ngUnsubscribe.next();
+        this._ngUnsubscribe.complete();
+    }
+
+    /**
      * ngOnDestroy Implementation
      */
     ngOnDestroy() {
+        this.removeSubscriptions();
     }
 }

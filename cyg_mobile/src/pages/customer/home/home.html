@@ -3,48 +3,27 @@
         <ion-title>
             <img class="nav-logo" src="assets/img/logo_iurest_1000_x_260.png">
         </ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="presentPopover($event)">
-                <ion-icon name="more"></ion-icon>
-            </button>
-        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
-<ion-content text-wrap>
-    <h6 style="margin: 20px;text-align: center">
-        {{'MOBILE.HOME.HEADER_TITLE' | translate}}
-    </h6>
+<ion-content text-wrap padding>
+    <div *ngFor="let user of _users | async">
+        <div class="profile-header">
+            <ion-item no-lines>
+                <ion-avatar item-start>
+                    <img src="{{getUserImage(user._id)}}">
+                </ion-avatar>
+                <h2>{{getUserName(user._id)}}</h2>
+                <p>{{getUserEmail(user._id)}}</p>
+            </ion-item>
+        </div>
+    </div>
 
-    <ion-card (click)="goToMyAccumulatedPoints()">
-        <ion-card-content>
-            <ion-item>
-                <ion-thumbnail item-start>
-                    <img src="assets/img/orders-detail.png">
-                </ion-thumbnail>
-                <h2>{{'MOBILE.HOME.TITLE_POINTS_BTN' | translate}}</h2>
-            </ion-item>
-        </ion-card-content>
-    </ion-card>
-    <ion-card (click)="goToScanCode()">
-        <ion-card-content>
-            <ion-item>
-                <ion-thumbnail item-end>
-                    <img src="assets/img/scan.png">
-                </ion-thumbnail>
-                <h2>{{'MOBILE.HOME.TITLE_CODE_BTN' | translate}}</h2>
-            </ion-item>
-        </ion-card-content>
-    </ion-card>
-    <ion-card (click)="goToEstablishmentList()">
-        <ion-card-content>
-            <ion-item>
-                <ion-thumbnail item-start>
-                    <img src="assets/img/restaurante.png">
-                </ion-thumbnail>
-                <h2>{{'MOBILE.HOME.TITLE_LIST_BTN' | translate}}</h2>
-            </ion-item>
-        </ion-card-content>
-    </ion-card>
+    <button ion-button block (click)="goToScanCode()">
+        Escanear código QR
+    </button>
 
+    <button ion-button block (click)="goToRewards()">
+        Redimir Medallas
+    </button>
 </ion-content>

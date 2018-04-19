@@ -8,7 +8,8 @@ import { Device } from '@ionic-native/device';
 import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
 import { Meteor } from 'meteor/meteor';
 //import { HomeMenu } from '../../customer/home-menu/home-menu';
-import { HomePage } from '../../customer/home/home';
+//import { HomePage } from '../../customer/home/home';
+import { CustomerTabsPage } from "../../customer/tabs/customer-tabs";
 //import { Menu } from '../../waiter/menu/menu';
 import { UserLogin } from 'cyg_web/both/models/auth/user-login.model';
 import { Accounts } from 'meteor/accounts-base';
@@ -87,7 +88,7 @@ export class SigninComponent implements OnInit {
                                     //role 400 customer
                                     //this.addUserDevice();
                                     this.insertUserInfo();
-                                    this.navCtrl.setRoot(HomePage);
+                                    this.navCtrl.setRoot(CustomerTabsPage);
                                 } else if (role == "100") {
                                     this.insertUserInfo();
                                     this.navCtrl.setRoot(TabsPage);
@@ -179,7 +180,7 @@ export class SigninComponent implements OnInit {
                         penalties: []
                     });
                 }
-                this.navCtrl.push(HomePage);
+                this.navCtrl.push(CustomerTabsPage);
             }, (error) => {
                 this.error;
             });

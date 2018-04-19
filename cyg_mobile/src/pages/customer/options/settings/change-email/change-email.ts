@@ -3,8 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertController, NavController, NavParams, ViewController } from 'ionic-angular';
 import { MeteorObservable } from 'meteor-rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { UserLanguageServiceProvider } from '../../../../../../providers/user-language-service/user-language-service';
-import { CustomValidators } from '../../../../../../validators/custom-validator';
+import { UserLanguageServiceProvider } from '../../../../../providers/user-language-service/user-language-service';
+import { CustomValidators } from '../../../../../validators/custom-validator';
 
 @Component({
   selector: 'page-change-email',

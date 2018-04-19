@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription, Observable, Subject } from 'rxjs';
 import { ViewController, NavParams, ToastController, LoadingController, NavController, AlertController, Platform } from 'ionic-angular';
-import { UserLanguageServiceProvider } from '../../../../../providers/user-language-service/user-language-service';
+import { UserLanguageServiceProvider } from '../../../../providers/user-language-service/user-language-service';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Reward } from 'cyg_web/both/models/establishment/reward.model';
 import { Rewards } from 'cyg_web/both/collections/establishment/reward.collection';
@@ -102,7 +102,7 @@ export class RewardListComponent {
 
         this._itemsSub = MeteorObservable.subscribe('itemsByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._items = Items.find({}).zone();
+                this._items = Items.find({ 'establishments.establishment_id': { $in: [this._establishmentId] }, is_active: true }).zone();
             });
         });
 

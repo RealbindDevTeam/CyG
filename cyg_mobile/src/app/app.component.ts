@@ -7,7 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Device } from '@ionic-native/device';
 import { InitialComponent } from '../pages/auth/initial/initial';
 import { UserLogin } from 'cyg_web/both/models/auth/user-login.model';
-import { HomePage } from '../pages/customer/home/home';
+//import { HomePage } from '../pages/customer/home/home';
+import { CustomerTabsPage } from "../pages/customer/tabs/customer-tabs";
 import { Network } from '@ionic-native/network';
 import { TabsPage } from "../pages/administrator/tabs/tabs";
 import { SupervisorTabsPage } from "../pages/supervisor/tabs/supervisor-tabs";
@@ -46,7 +47,7 @@ export class MyApp {
         MeteorObservable.call('getRole').subscribe((role) => {
           if (role == "400") {
             this.insertUserInfo();
-            this.rootPage = HomePage;
+            this.rootPage = CustomerTabsPage;
           } else if (role == "100") {
             this.insertUserInfo();
             this.rootPage = TabsPage;

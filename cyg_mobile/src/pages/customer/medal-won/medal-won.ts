@@ -8,7 +8,7 @@ import { Network } from '@ionic-native/network';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
 import { Establishments } from 'cyg_web/both/collections/establishment/establishment.collection';
-import { RewardListComponent } from '../establishment-list/establishment-list-detail/reward-list/reward-list';
+import { RewardListComponent } from '../rewards/reward-list/reward-list';
 import { PointsDetailPage } from '../points/points-detail/points-detail';
 
 @Component({

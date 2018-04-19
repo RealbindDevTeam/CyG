@@ -97,7 +97,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
         this._sectionSub = MeteorObservable.subscribe('sections', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._sections = Sections.find({}).zone();
+                this._sections = Sections.find({ creation_user: this._user }).zone();
             });
         });
 
@@ -109,7 +109,7 @@ export class SectionComponent implements OnInit, OnDestroy {
      * Validate if establishments exists
      */
     countEstablishments(): void {
-        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**

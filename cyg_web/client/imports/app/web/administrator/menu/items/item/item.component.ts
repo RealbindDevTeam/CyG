@@ -77,7 +77,7 @@ export class ItemComponent implements OnInit, OnDestroy {
         this.removeSubscriptions();
         this._itemsSub = MeteorObservable.subscribe('items', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._items = Items.find({}).zone();
+                this._items = Items.find({ creation_user: this._user }).zone();
                 this.countItems();
                 this._items.subscribe(() => { this.countItems(); });
             });
@@ -85,8 +85,8 @@ export class ItemComponent implements OnInit, OnDestroy {
         this._currenciesSub = MeteorObservable.subscribe('currencies').takeUntil(this._ngUnsubscribe).subscribe();
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
-                Establishments.collection.find({}).fetch().forEach((establishment: Establishment) => {
+                this._establishments = Establishments.find({ creation_user: this._user }).zone();
+                Establishments.collection.find({ creation_user: this._user }).fetch().forEach((establishment: Establishment) => {
                     this._lEstablishmentsId.push(establishment._id);
                 });
                 this.countEstablishments();
@@ -100,14 +100,14 @@ export class ItemComponent implements OnInit, OnDestroy {
      * Validate if establishments exists
      */
     countEstablishments(): void {
-        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**
      * Validate if items exists
      */
     countItems(): void {
-        Items.collection.find({}).count() > 0 ? this._thereAreItems = true : this._thereAreItems = false;
+        Items.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreItems = true : this._thereAreItems = false;
     }
 
     /**

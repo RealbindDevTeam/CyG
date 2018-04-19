@@ -17,6 +17,7 @@
     },
     "MOBILE": {
         "CANCEL": "Cancel",
+        "ACCEPT": "Accept",
         "CATEGORY": "Category",
         "CONFIRM_PASSWORD": "Confirm password",
         "CREATE": "Create",
@@ -608,8 +609,15 @@
         },
         "USER_REWARDS": {
             "NO_REWARDS": "You have not redeemed rewards in this restaurant yet",
-            "TITLE": "Congratulations! These are the rewards that you have earned in",
+            "TITLE": "Awards",
+            "MSG": "Congratulations! These are the rewards that you have won",
             "MEDALS_REDEEMED": "Medals Redeemed"
+        },
+        "REWARDS": {
+            "TITLE": "Redeem Medals",
+            "MSG": "Select a restaurant to check the rewards it has for you",
+            "NO_REWARDS_MSG": "You have not accumulated medals in any restaurant yet. Encourage!",
+            "ACCUMULATED_MEDALS": "Accumulated Medals"
         }
     },
     "CURRENCIES": {
@@ -800,5 +808,19 @@
         "REJECT_REWARD_MSG": "Are you sure you reject the reward?",
         "REWARD_REJECTED": "Reward Rejected",
         "MSG_SELECT_EST": "Select an establishment and check again"
+    },
+    "GIVE_MEDAL": {
+        "THERE_NOT_RESTAURANTS": "There are not restaurants register yet",
+        "MESSAGE": "Register at least one restaurant to enable this option",
+        "RESTAURANT_REGISTER": "Register Restaurant",
+        "TITLE": "Give Medals",
+        "SUBTITLE": "This option allows you to award medals to a specific user. Select the restaurant and search the user by name or email to give him a medal",
+        "SELECT_RESTAURANT": "Select Restaurant",
+        "NAME_FILTER": "Search user by name or email",
+        "NO_USERS_FOUND": "No users found with the search",
+        "GIVE_MEDAL": "Give Medal",
+        "GIVE_MEDAL_TITLE": "Give Medal",
+        "GIVE_MEDAL_SUBTITLE": "Are you sure to give one (1) medal to ",
+        "MEDAL_GIVEN": "Medal Given"
     }
 }

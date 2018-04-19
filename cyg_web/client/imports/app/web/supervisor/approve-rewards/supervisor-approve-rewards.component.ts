@@ -77,31 +77,36 @@ export class SupervisorApproveRewardsComponent implements OnInit, OnDestroy {
      * ngOnInit implementation
      */
     ngOnInit() {
-        let _establishmentIds: string[] = [];
+        let _establishmentWorkId: string;
         this.removeSubscriptions();
-        this._establishmentSub = MeteorObservable.subscribe('getEstablishmentByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+        this._usersSub = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
+        this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
-                Establishments.collection.find({}).fetch().forEach((est) => {
-                    _establishmentIds.push(est._id);
-                    this._establishmentSelect = est._id;
+                _establishmentWorkId = UserDetails.findOne({ user_id: this._user }).establishment_work;
+                this._establishmentSelect = _establishmentWorkId;
+                this._establishmentSub = MeteorObservable.subscribe('getEstablishmentByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+                    this._ngZone.run(() => {
+                        this._establishments = Establishments.find({ _id: _establishmentWorkId }).zone();
+                        this._establishments.subscribe(() => { this.countEstablishments(); });
+                        this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', [_establishmentWorkId]).takeUntil(this._ngUnsubscribe).subscribe(() => {
+                            this._ngZone.run(() => {
+                                this._rewardsConfirmations = RewardsConfirmations.find({ establishment_id: _establishmentWorkId, is_confirmed: false }).zone();
+                            });
+                        });
+                    });
                 });
-                this._establishments.subscribe(() => { this.countEstablishments(); });
-                this._rewardsConfirmationSub = MeteorObservable.subscribe('getRewardsConfirmationsByEstablishmentsIds', _establishmentIds).takeUntil(this._ngUnsubscribe).subscribe();
+                this._rewardSub = MeteorObservable.subscribe('getRewardsByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+                    this._ngZone.run(() => {
+                        this._rewards = Rewards.find({ establishments: { $in: [_establishmentWorkId] } }).zone();
+                    });
+                });
+                this._itemsSub = MeteorObservable.subscribe('getItemsByUserEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
+                    this._ngZone.run(() => {
+                        this._items = Items.find({ 'establishments.establishment_id': { $in: [_establishmentWorkId] }, is_active: true }).zone();
+                    });
+                });
             });
         });
-        this._rewardSub = MeteorObservable.subscribe('getRewardsByEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._rewards = Rewards.find({}).zone();
-            });
-        });
-        this._itemsSub = MeteorObservable.subscribe('getItemsByUserEstablishmentWork', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._items = Items.find({}).zone();
-            });
-        });
-        this._usersSub = MeteorObservable.subscribe('getUsers').subscribe();
-        this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').subscribe();
     }
 
     /**
@@ -247,13 +252,6 @@ export class SupervisorApproveRewardsComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Go to add new Establishment
-     */
-    goToAddEstablishment() {
-        this._router.navigate(['/app/establishment-register']);
-    }
-
-    /**
      * Return traduction
      * @param {string} itemName 
      */
@@ -306,14 +304,14 @@ export class SupervisorApproveRewardsComponent implements OnInit, OnDestroy {
             if (this._userFilter) {
                 let _lUserFilter = Users.collection.find({
                     $or: [
-                        { "username": { $regex: this._userFilter }, 
+                        { "username": { $regex: this._userFilter } },
                         { "emails.address": { $regex: this._userFilter } },
                         { "profile.name": { $regex: this._userFilter } }
                     ]
                 });
 
                 if (_lUserFilter.count() > 0) {
-                    _lUserFilter.forEach(user => {
+                    _lUserFilter.forEach((user: User) => {
                         _lUsersId.push(user._id);
                     });
                     this._rewardsConfirmations = RewardsConfirmations.find({

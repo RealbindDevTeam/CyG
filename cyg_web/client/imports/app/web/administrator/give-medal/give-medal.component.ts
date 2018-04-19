@@ -69,19 +69,19 @@ export class GiveMedalComponent implements OnInit, OnDestroy {
         this.removeSubscriptions();
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
+                this._establishments = Establishments.find({ creation_user: this._user }).zone();
                 this._establishments.subscribe(() => { this.countEstablishments(); });
             });
         });
-        this._usersSub = MeteorObservable.subscribe('getUsers').subscribe();
-        this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').subscribe();
+        this._usersSub = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
+        this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').takeUntil(this._ngUnsubscribe).subscribe();
     }
 
     /**
      * Validate if establishments exists
      */
     countEstablishments(): void {
-        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**
@@ -96,7 +96,7 @@ export class GiveMedalComponent implements OnInit, OnDestroy {
             if (this._userFilter) {
                 let _lUserFilter = Users.collection.find({
                     $or: [
-                        { "username": { $regex: this._userFilter }, 
+                        { "username": { $regex: this._userFilter } },
                         { "emails.address": { $regex: this._userFilter } },
                         { "profile.name": { $regex: this._userFilter } }
                     ]
