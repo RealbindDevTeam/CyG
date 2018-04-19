@@ -10,3 +10,11 @@ Meteor.publish('getRewardHistoriesByEstablishmentId', function (_pEstablishmentI
     check(_pEstablishmentId, String);
     return RewardHistories.find({ establishment_id: _pEstablishmentId });
 });
+
+/**
+ * Meteor publication rewards histories by user id
+ */
+Meteor.publish('getRewardHistoriesByUserId', function (_pUserId: string) {
+    check(_pUserId, String);
+    return RewardHistories.find({ creation_user: _pUserId });
+});

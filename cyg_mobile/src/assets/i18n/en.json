@@ -366,7 +366,8 @@
             "FOOD_ACCOMPANIMENT": "Food accompaniment",
             "ADDITION_LBL": "Addition",
             "CONFIRM": "Confirm",
-            "OPTIONS_ERROR": "Please complete the information to add the item to the order"
+            "OPTIONS_ERROR": "Please complete the information to add the item to the order",
+            "MSG": "We're sorry, this restaurant has not registered it's menu in comeygana yet"
         },
         "ITEM_EDIT": {
             "MODIFY": "Modify",
@@ -539,7 +540,8 @@
             "REWARD_CONFIRM_TITLE": "Are you sure you will redeem this reward?",
             "REWARD_CONFIRM_SUBTITLE": "The restaurant will confirm what you are redeeming",
             "YES": "Yes",
-            "NO": "No"
+            "NO": "No",
+            "REWARDS_MSG_2": "We present you the rewards of the restaurant"
         },
         "POINTS": {
             "TITLE": "My Medals",
@@ -609,8 +611,15 @@
         },
         "USER_REWARDS": {
             "NO_REWARDS": "You have not redeemed rewards in this restaurant yet",
-            "TITLE": "Congratulations! These are the rewards that you have earned in",
+            "TITLE": "Awards",
+            "MSG": "Congratulations! These are the rewards that you have won",
             "MEDALS_REDEEMED": "Medals Redeemed"
+        },
+        "REWARDS": {
+            "TITLE": "Redeem Medals",
+            "MSG": "Select a restaurant to check the rewards it has for you",
+            "NO_REWARDS_MSG": "You have not accumulated medals in any restaurant yet. Encourage!",
+            "ACCUMULATED_MEDALS": "Accumulated Medals"
         }
     },
     "CURRENCIES": {

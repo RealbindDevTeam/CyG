@@ -1,104 +1,97 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { AlertController, NavParams, LoadingController, NavController, ViewController, Platform } from 'ionic-angular';
+import { Component, NgZone, OnInit, OnDestroy } from '@angular/core';
+import { NavController, AlertController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Meteor } from 'meteor/meteor';
 import { MeteorObservable } from 'meteor-rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { UserLanguageServiceProvider } from '../../../providers/user-language-service/user-language-service';
-import { Network } from '@ionic-native/network';
-import { Subscription, Subject, Observable } from 'rxjs';
 import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
 import { Establishments } from 'cyg_web/both/collections/establishment/establishment.collection';
-import { RewardListComponent } from '../rewards/reward-list/reward-list';
-import { PointsDetailPage } from '../points/points-detail/points-detail';
+import { EstablishmentMedal } from 'cyg_web/both/models/points/establishment-medal.model';
+import { EstablishmentMedals } from 'cyg_web/both/collections/points/establishment-medal.collection';
+import { Network } from '@ionic-native/network';
+import { RewardListComponent } from './reward-list/reward-list';
 
 @Component({
-    selector: 'medal-won',
-    templateUrl: 'medal-won.html'
+    selector: 'rewards',
+    templateUrl: 'rewards.html'
 })
-export class MedalWonPage implements OnInit {
+export class RewardsPage implements OnInit, OnDestroy {
 
-    private _establishmentId: string = '';
+    private _user = Meteor.userId();
+    private _establishmentsSub: Subscription;
+    private _establishmentMedalSub: Subscription;
+    private ngUnsubscribe: Subject<void> = new Subject<void>();
 
-    private _establishmentSub: Subscription;
-    private disconnectSubscription: Subscription;
-    private _ngUnsubscribe: Subject<void> = new Subject<void>();
-
+    private _establishmentMedals: Observable<EstablishmentMedal[]>;
     private _establishments: Observable<Establishment[]>;
 
+    private _showEstablishments: boolean = true;
+    private disconnectSubscription: Subscription;
+
     /**
-     * MedalWonPage Constructor
-     * @param {NavController} _navCtrl 
-     * @param {NavParams} _navParams
-     * @param {ViewController} _viewCtrl 
+     * RewardsPage constructor
+     * @param {NavController} _navCtrl
      * @param {TranslateService} _translate 
-     * @param {AlertController} _alertCtrl 
      * @param {UserLanguageServiceProvider} _userLanguageService 
-     * @param {Platform} _platform 
-     * @param {Network} _network 
-     * @param {NgZone} _ngZone
+     * @param {NgZone} _ngZone 
      */
-    constructor(private _navCtrl: NavController,
-        public _navParams: NavParams,
-        private _viewCtrl: ViewController,
+    constructor(public _navCtrl: NavController,
         public _translate: TranslateService,
-        public _alertCtrl: AlertController,
         private _userLanguageService: UserLanguageServiceProvider,
-        public _platform: Platform,
-        private _network: Network,
-        private _ngZone: NgZone) {
+        private _ngZone: NgZone, public _alertCtrl: AlertController,
+        public _platform: Platform, private _network: Network) {
         _translate.setDefaultLang('en');
-        this._establishmentId = this._navParams.get("est_id");
     }
 
     /**
      * ngOnInit implementation
      */
     ngOnInit() {
-        this.removeSubscriptions();
-        this.init();
-    }
-
-    ionViewWillEnter() {
-        this.removeSubscriptions();
-        this.init();
-    }
-
-    /**
-     * Initial function
-     */
-    init() {
-        this.removeSubscriptions();
         this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
-        this._establishmentSub = MeteorObservable.subscribe('getEstablishmentById', this._establishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
+        this.removeSubscriptions();
+        let _lEstablishmentsIds: string[] = [];
+        this._establishmentMedalSub = MeteorObservable.subscribe('getEstablishmentMedalsByUserId', this._user).takeUntil(this.ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({ _id: this._establishmentId }).zone();
+                this._establishmentMedals = EstablishmentMedals.find({ user_id: this._user }).zone();
+                this._establishmentMedals.subscribe(() => { this.validateEstablishmentMedals(); });
+                EstablishmentMedals.collection.find({ user_id: this._user }).fetch().forEach((est) => {
+                    _lEstablishmentsIds.push(est.establishment_id);
+                });
+                this._establishmentsSub = MeteorObservable.subscribe('getEstablishmentsByIds', _lEstablishmentsIds).takeUntil(this.ngUnsubscribe).subscribe(() => {
+                    this._ngZone.run(() => {
+                        this._establishments = Establishments.find({ _id: { $in: _lEstablishmentsIds } }).zone();
+                    });
+                });
             });
         });
     }
 
     /**
-     * Function to show establishment rewards
+     * Validate establishment medals count
      */
-    showRewards(): void {
-        this._navCtrl.push(RewardListComponent, { establishment: this._establishmentId }).then(() => {
-            const index = this._viewCtrl.index;
-            this._navCtrl.remove(index);
-        });
+    validateEstablishmentMedals(): void {
+        EstablishmentMedals.collection.find({ user_id: this._user }).count() > 0 ? this._showEstablishments = true : this._showEstablishments = false;
     }
 
     /**
-     * Show establishment points
+     * Remove all subscriptions
      */
-    showEstablishmentPoints(): void {
-        this._navCtrl.push(PointsDetailPage, { _establishment_id: this._establishmentId }).then(() => {
-            const index = this._viewCtrl.index;
-            this._navCtrl.remove(index);
-        });
+    removeSubscriptions(): void {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
+    }
+
+    /**
+     * Open reward list
+     * @param {string} _establishmentId 
+     */
+    openRewardList(_establishmentId: string): void {
+        this._navCtrl.push(RewardListComponent, { establishment: _establishmentId });
     }
 
     /** 
      * This function verify the conditions on page did enter for internet and server connection
-     */
+    */
     ionViewDidEnter() {
         this.isConnected();
         this.disconnectSubscription = this._network.onDisconnect().subscribe(data => {
@@ -111,7 +104,7 @@ export class MedalWonPage implements OnInit {
 
     /** 
      * This function verify with network plugin if device has internet connection
-     */
+    */
     isConnected() {
         if (this._platform.is('cordova')) {
             let conntype = this._network.type;
@@ -134,7 +127,7 @@ export class MedalWonPage implements OnInit {
 
     /**
      * Present the alert for advice to internet
-     */
+    */
     presentAlert(_pTitle: string, _pSubtitle: string, _pBtn: string) {
         let alert = this._alertCtrl.create({
             title: _pTitle,
@@ -152,14 +145,6 @@ export class MedalWonPage implements OnInit {
         alert.present();
     }
 
-    ionViewWillLeave() {
-        this.disconnectSubscription.unsubscribe();
-    }
-
-    ionViewWillUnload() {
-        this.removeSubscriptions();
-    }
-
     itemNameTraduction(itemName: string): string {
         var wordTraduced: string;
         this._translate.get(itemName).subscribe((res: string) => {
@@ -168,15 +153,14 @@ export class MedalWonPage implements OnInit {
         return wordTraduced;
     }
 
-    ngOnDestroy() {
-        this.removeSubscriptions();
+    ionViewWillLeave() {
+        this.disconnectSubscription.unsubscribe();
     }
 
     /**
-     * Remove all subscriptions
+     * ngOnDestroy implementation
      */
-    removeSubscriptions(): void {
-        this._ngUnsubscribe.next();
-        this._ngUnsubscribe.complete();
+    ngOnDestroy() {
+        this.removeSubscriptions();
     }
 }

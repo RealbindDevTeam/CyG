@@ -1,15 +1,14 @@
 import { InitialComponent } from '../pages/auth/initial/initial';
 import { SignupComponent } from '../pages/auth/signup/signup';
 import { SigninComponent } from '../pages/auth/signin/signin';
-import { SettingsPage } from '../pages/customer/home/popover-options/settings/settings';
-import { ChangeEmailPage } from '../pages/customer/home/popover-options/settings/change-email/change-email';
-import { ChangePasswordPage } from '../pages/customer/home/popover-options/settings/change-password/change-password';
+import { SettingsPage } from '../pages/customer/options/settings/settings';
+import { ChangeEmailPage } from '../pages/customer/options/settings/change-email/change-email';
+import { ChangePasswordPage } from '../pages/customer/options/settings/change-password/change-password';
 import { HomePage } from '../pages/customer/home/home';
 import { ModalSchedule } from '../pages/customer/establishment-list/establishment-list-detail/modal-schedule/modal-schedule';
-import { RewardListComponent } from '../pages/customer/establishment-list/establishment-list-detail/reward-list/reward-list';
+import { RewardListComponent } from '../pages/customer/rewards/reward-list/reward-list';
 import { PointsPage } from '../pages/customer/points/points/points';
 import { PointsDetailPage } from '../pages/customer/points/points-detail/points-detail';
-import { PopoverOptionsPage } from '../pages/customer/home/popover-options/popover-options';
 import { LightboxPage } from "../pages/general/lightbox/lightbox";
 import { EstablishmentListPage } from "../pages/customer/establishment-list/establishment-list";
 import { EstablishmentListDetailPage } from "../pages/customer/establishment-list/establishment-list-detail/establishment-list-detail";
@@ -26,9 +25,12 @@ import { ApproveRewardsPage } from "../pages/administrator/approve-rewards/appro
 import { SupervisorTabsPage } from "../pages/supervisor/tabs/supervisor-tabs";
 import { SupervisorApproveRewardsPage } from "../pages/supervisor/approve-rewards/supervisor-approve-rewards";
 import { CustomerTabsPage } from "../pages/customer/tabs/customer-tabs";
-
+import { OptionsPage } from '../pages/customer/options/options';
 import { GiveMedalPage } from '../pages/administrator/give-medal/give-medal';
 import { SupervisorGiveMedalPage } from '../pages/supervisor/give-medal/supervisor-give-medal';
+import { RewardsPage } from '../pages/customer/rewards/rewards';
+import { RewardsHistoryPage } from '../pages/customer/options/rewards-history/rewards-history';
+import { RewardsInfoPage } from '../pages/customer/establishment-list/rewards-info/rewards-info';
 
 export const PAGES_DECLARATIONS = [
     InitialComponent,
@@ -42,7 +44,6 @@ export const PAGES_DECLARATIONS = [
     RewardListComponent,
     PointsPage,
     PointsDetailPage,
-    PopoverOptionsPage,
     LightboxPage,
     EstablishmentListPage,
     EstablishmentListDetailPage,
@@ -60,5 +61,9 @@ export const PAGES_DECLARATIONS = [
     SupervisorApproveRewardsPage,
     CustomerTabsPage,
     GiveMedalPage,
-    SupervisorGiveMedalPage
+    SupervisorGiveMedalPage,
+    RewardsPage,
+    OptionsPage,
+    RewardsHistoryPage,
+    RewardsInfoPage
 ];

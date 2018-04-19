@@ -14,7 +14,7 @@ import { ModalSchedule } from './modal-schedule/modal-schedule';
 import { MenuByEstablishmentPage } from "../menu-by-establishment/menu-by-establishment";
 import { TypeOfFood } from 'cyg_web/both/models/general/type-of-food.model';
 import { TypesOfFood } from 'cyg_web/both/collections/general/type-of-food.collection';
-import { RewardListComponent } from './reward-list/reward-list';
+import { RewardsInfoPage } from '../rewards-info/rewards-info';
 
 @Component({
     selector: 'page-establishment-list-detail',
@@ -121,6 +121,14 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy, AfterView
     }
 
     /**
+     * Open rewards info
+     * @param {string} _establishmentId 
+     */
+    openRewardsInfo(_establishmentId: string): void {
+        this._navCtrl.push(RewardsInfoPage, { establishment: _establishmentId });
+    }
+
+    /**
      * Function to translate information
      * @param {string} _itemName
      */
@@ -185,13 +193,6 @@ export class EstablishmentListDetailPage implements OnInit, OnDestroy, AfterView
             establishment: this._establishmentParam
         });
         contactModal.present();
-    }
-
-    /**
-     * Open reward list modal
-     */
-    openRewardList() {
-        this._navCtrl.push(RewardListComponent, { establishment: this._establishmentParam._id });
     }
 
     /**

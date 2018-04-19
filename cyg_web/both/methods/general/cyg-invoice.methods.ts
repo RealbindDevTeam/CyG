@@ -3,9 +3,11 @@ import { PaymentsHistory } from '../../collections/payment/payment-history.colle
 import { UserDetails } from '../../collections/auth/user-detail.collection';
 import { Countries } from '../../collections/general/country.collection';
 import { InvoicesInfo } from '../../collections/payment/invoices-info.collection';
-import { IurestInvoices } from '../../collections/payment/iurest-invoices.collection';
+import { CygInvoices } from '../../collections/payment/cyg-invoices.collection';
 import { Parameters } from '../../collections/general/parameter.collection';
-import { CompanyInfo, ClientInfo } from '../../models/payment/iurest-invoice.model';
+import { CompanyInfo, ClientInfo, EstablishmentInfo } from '../../models/payment/cyg-invoice.model';
+import { Establishments } from '../../collections/establishment/establishment.collection';
+import { BagPlans } from '../../collections/points/bag-plans.collection';
 
 if (Meteor.isServer) {
     Meteor.methods({
@@ -46,6 +48,8 @@ if (Meteor.isServer) {
             let company_retainer = Parameters.findOne({ name: 'company_retainer' }).value;
             let company_agent_retainer = Parameters.findOne({ name: 'company_agent_retainer' }).value;
             let invoice_generated_msg = Parameters.findOne({ name: 'invoice_generated_msg' }).value;
+
+            let establishmentsInfoArray: EstablishmentInfo[] = [];
 
             //Generate consecutive
             if (invoiceInfo.enable_two == false) {
@@ -121,15 +125,29 @@ if (Meteor.isServer) {
             };
 
             let client_info: ClientInfo = {
-                name: Meteor.user().profile.first_name + ' ' + Meteor.user().profile.last_name,
+                name: Meteor.user().profile.full_name,
                 address: lUserDetail.address,
                 country: lCountry.name,
+                city: lUserDetail.city_id,
                 identification: lUserDetail.dni_number,
                 phone: lUserDetail.contact_phone,
                 email: Meteor.user().emails[0].address
             };
 
-            IurestInvoices.collection.insert({
+            lPaymentHistory.establishment_ids.forEach((establishmentElement) => {
+                let establishmentInfo: EstablishmentInfo = {
+                    establishment_name: Establishments.findOne({ _id: establishmentElement.establishmentId }).name,
+                    bag_plan_name: BagPlans.findOne({ _id: establishmentElement.bagPlanId }).name,
+                    bag_plan_currency: establishmentElement.bagPlanCurrency,
+                    bag_plan_points: establishmentElement.bagPlanPoints.toString(),
+                    bag_plan_price: establishmentElement.bagPlanPrice.toString(),
+                    credit_points: establishmentElement.creditPoints.toString(),
+                    credit_price: establishmentElement.creditPrice.toString()
+                };
+                establishmentsInfoArray.push(establishmentInfo);
+            });
+
+            CygInvoices.collection.insert({
                 creation_user: Meteor.userId(),
                 creation_date: new Date(),
                 payment_history_id: lPaymentHistory._id,
@@ -147,7 +165,8 @@ if (Meteor.isServer) {
                 currency: lPaymentHistory.currency,
                 company_info: company_info,
                 client_info: client_info,
-                generated_computer_msg: invoice_generated_msg
+                generated_computer_msg: invoice_generated_msg,
+                establishmentsInfo: establishmentsInfoArray
             });
         },
         /**
