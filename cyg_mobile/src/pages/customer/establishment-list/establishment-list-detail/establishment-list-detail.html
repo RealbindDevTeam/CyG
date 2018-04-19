@@ -19,9 +19,9 @@
 
         <ion-card *ngFor="let _establishment of _establishments | async;" class="card-nm">
             <ion-card-content>
-                <div>
-                    <button style="width: 48%;" ion-button outline item-end>{{'MOBILE.RESTAURANT_PROFILE.REWARDS_BTN' | translate}}</button>
-                    <button style="width: 48%;" ion-button outline item-end (click)="goToMenuByEstablishment(_establishment._id)">{{'MOBILE.RESTAURANT_PROFILE.MENU_BTN' | translate}}</button>
+                <div style="text-align: center;">
+                    <button style="width: 45%;" ion-button outline>{{'MOBILE.RESTAURANT_PROFILE.REWARDS_BTN' | translate}}</button>
+                    <button style="width: 45%;" ion-button outline (click)="goToMenuByEstablishment(_establishment._id)">{{'MOBILE.RESTAURANT_PROFILE.MENU_BTN' | translate}}</button>
                 </div>
                 <p *ngIf="_establishmentProfile?.establishment_description?.length <= 20" class="margin">
                     {{_establishmentProfile?.establishment_description}}

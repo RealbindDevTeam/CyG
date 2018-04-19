@@ -62,7 +62,9 @@ export class ItemCardEstablishmentComponent implements OnInit, OnDestroy {
    * @param {Item} _pItem 
    */
   getItemPrice(_pItem: Item): number {
-    return _pItem.establishments.filter(r => r.establishment_id === this.resCode)[0].price;
+    if(_pItem){
+      return _pItem.establishments.filter(r => r.establishment_id === this.resCode)[0].price;
+    }
   }
 
   /**

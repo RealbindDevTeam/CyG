@@ -7,10 +7,10 @@
 <ion-content>
   <div *ngFor="let item of _items | async">
     <div class="crop">
-      <img *ngIf="item.image" src="{{item.image.url}}" style="display:inline-block">
+      <img *ngIf="item.image" src="{{item.image.url}}" style="display:inline-block" (click)="openItemImage(item.image.url)">
       <img *ngIf="!item.image" src="assets/img/default-plate.png" style="display:inline-block">
     </div>
-    <ion-card class="ion-card-custom">
+    <ion-card class="ion-card-custom" style="margin: 0px !important">
       <ion-card-content>
         <ion-card-title>{{item.name}}</ion-card-title>
         <p *ngIf='item.description != ""' class="item-paragraph-custom" style="margin-bottom: 10px">{{item.description}}</p>
