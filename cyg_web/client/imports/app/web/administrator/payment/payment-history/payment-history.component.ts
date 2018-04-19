@@ -58,6 +58,7 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
     private _thereArePaymentsHistory: boolean = true;
     private is_prod_flag: string;
     private isProd: boolean;
+    private cygImage: string;
 
     /**
      * PaymentHistoryComponent Constructor
@@ -131,6 +132,8 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
         { value: '04', viewValue: '04' }, { value: '05', viewValue: '05' }, { value: '06', viewValue: '06' },
         { value: '07', viewValue: '07' }, { value: '08', viewValue: '08' }, { value: '09', viewValue: '09' },
         { value: '10', viewValue: '10' }, { value: '11', viewValue: '11' }, { value: '12', viewValue: '12' }];
+
+        this.cygImage = '/images/logo_iurest.png';
     }
 
     /**
@@ -372,7 +375,7 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
             });
 
             //Call meteor method for generate iurest invoice
-            //MeteorObservable.call('generateInvoiceInfo', _historyPayment._id, Meteor.userId()).subscribe();
+            MeteorObservable.call('generateInvoiceInfo', _historyPayment._id, Meteor.userId()).subscribe();
         }
     }
 
@@ -393,7 +396,7 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
      * This function generates de invoice
      */
     generateInvoice(_paymentHistory: PaymentHistory) {
-        let iurest_invoice: CygInvoice = CygInvoices.findOne({ payment_history_id: _paymentHistory._id });
+        let cyg_invoice: CygInvoice = CygInvoices.findOne({ payment_history_id: _paymentHistory._id });
         let invoice_lbl = this.itemNameTraduction('RES_PAYMENT_HISTORY.INVOICE_LBL');
         let number_lbl = this.itemNameTraduction('RES_PAYMENT_HISTORY.NUMBER_LBL');
         let date_lbl = this.itemNameTraduction('RES_PAYMENT_HISTORY.DATE_LBL');
@@ -415,89 +418,138 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
         let identication_lbl = this.itemNameTraduction('RES_PAYMENT_HISTORY.IDENTIFICATION_NUMBER');
         let phone_lbl = this.itemNameTraduction('RES_PAYMENT_HISTORY.TELEPHONE_NUMBER');
         let email_lbl = this.itemNameTraduction('RES_PAYMENT_HISTORY.EMAIL');
-        let aux_payment_method = this.itemNameTraduction(iurest_invoice.payment_method);
-        let aux_country = this.itemNameTraduction(iurest_invoice.client_info.country);
-        let aux_description = this.itemNameTraduction(iurest_invoice.description);
+        let aux_payment_method = this.itemNameTraduction(cyg_invoice.payment_method);
+        let aux_country = this.itemNameTraduction(cyg_invoice.client_info.country);
+        let aux_description = this.itemNameTraduction(cyg_invoice.description);
+        let package_of_medal = this.itemNameTraduction('RES_PAYMENT_HISTORY.PACKAGE_MEDALS');
+        let pending_medals = this.itemNameTraduction('RES_PAYMENT_HISTORY.PENDING_MEDALS');
+        let medals = this.itemNameTraduction('RES_PAYMENT_HISTORY.MEDALS');
 
-        let qr_pdf = new jsPDF("portrait", "mm", "a4");
-        var myImage = new Image();
-        myImage.src = '/images/logo_iurest.png';
+        let initialHeight: number;
+        initialHeight = this.calculateHeight(cyg_invoice);
+        let y: number = 130;
 
-        myImage.onload = function () {
-            qr_pdf.addImage(myImage, 'png', 13, 13, 35, 10);
+        let qr_pdf = new jsPDF("p", "mm", [210, initialHeight]);
+        var imgData = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIsAAAAmCAYAAAD0m2jPAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAACORJREFUeNrsW11sFFUUPrO/3f7QrfxHqlsgQiDiNjFR/qSNGokJoX3wDcPuA2gkBirRRGNoa2KID6Ylxgd9sG3gTQ1LTIiKpKtBxBDoAoZUgnRJo7YIdKDdtrvdH++5c6bcDvOzCwVtd04yndm5c+fcOfe753znzBTAFlvyFMk2AcC6La/U0WH85DdfxvPsE2Q7Px6zPlEbLLMfJAG262ZbQDgdZpPfadGvhe2ahVMxttWzfvJstpejyJ1KGwJlnc8F2yo9k+fIaxgBpQGBUu6Q4HW/F9Z4nXgarw/NdmMVO1h4GNk3rwS2zfHwyadzHSaeqEPt01Dhhma2J9lqg6UI5FIyw/c4+ehl0FMwYLTpXIpA8aMXIo8CxxJptS1ug2V2ywH88+HNJCSyOX5i7yNeWOjiZtlDIUfkKXUIEvRCKFcmsnDodmrKvWyCO7tJbhsHBvMo+yiknGee5p1rY3iIhLWGOEk38pRPF5YyMClm2zUwCn8wwDBpYuS2fbbbylnsYKlesfpXttvcn84uQo+yzONQPIvEQYPoeZbIq//duSWwksLPZ3ISTo7x8BVhQGkqBlsVPWehdDeMXgQBcEXxFDzUEC/BGkygkfGZtQqfgV/G0nB4eELlKeFisVXRexaU/ksXB5iHSaZysLmXhaC6Uhd4JImBxQU/jKahmnmaffN8/NrBdA7evz4OKYXiNDKw9dpgKT7AnGKACQ5lcyvRZzxd4gLkKNVuB7xY7oYqp8JTPmBAYSELD1utinezTVw6hA/d7na4U9VEN33EzDBUf9hNRNCyD7terWXgvotqFH5qxmroASy7G9y3i7VF8iCu2r4oR9jWaVJpxZASZCEmgCEIw44aelAw8zmvpNlRdo+WQu1BYQsrvzEjnmMw7i6yS5teX5qzZrrmqlDzsZw7i/FO0SlpJvAwxWg90S1p65S+RYmSq5Z1Hq7bZPx4PQKiQQCRKDjhYZOHD4FBYY3ujc8RM+iLBuvRZj7aDMkIcBa6Ra4kGfRtM3hmUWrEd1isX7fJvBnOQyE6cbwiwbVSeFdJmxQ1m/SpIwAWKn41AzFoDxFI9SarQTNZcTKWLNy7m1aTnlEQRK0j2RzPeCa9yq3Jekr4foFi0LdO8LZWEijw9nV64ypQp5INkeFFF4RurorQHyaDy2R00ROJVc52qklUqdmFOlAyopk0ka4a8mBaj1ZD7aL73W1wL9EoOLHYt57u3SoAptlkFXEgjlChTtMWMQmtoj0iwrhFe0Ae4xb71ufRVy8CaPU26CyQgnSqAXm7cK5RfOVO8U4v5okhQltr6GQDkwWvstXgHmr8byddyFNwoENC+2Tow+tY+yZVN64McazkVdQxTSGgdI8Wds3j5LVC05z2irrxmRpFGzK9caPQS6FPnci4pm+UbNKT5zhaVZuQ3oCwMOrUebgXnQ6NW4sV8G3GUxoCprcCZWGQRvKjTt3D8DeTcxahUpVm9sA57SaGUuE7lumQgIU9omD8/iho0TcmenULbhHR4St6Y6wrVKdDh/zdi3GM+sUFt/9/Exke3Mu/eIHnA//B8/vzGBeYgSVIsTcfOWewMsQYHhTi6MMCgBiD6022Wquv4gYzOZ4B4YbHBRJKM3uAyep//CEBSpyTTfnodAiGVdHWpgUMElS27TFRtlsHZG0G1z5IiWgmTEb3r27COGQjoCDvYVsfB0s6C45Hr/NtUCnEYXufQfiKaOwR1LGHP4+JC2n70svO6QZL1EJnh1anSnBbiaABxXTMYPDhb4kFOiStKmnE2Mh+x2i1YDsasVPbR7j/AxciyGJ9pofGdFUg8gHyQFU6QEEDhZYtSEDo+T5Yt/wm5LLKenK4M3Dst/nQcXxpYGCoBFPvsIZAx9i5KIFUTc9Ve2wy423Iy9i1SPLVBSmOe6uJR7ofWxWs0yU8aFhIpQLCTcxibpgYvp82vT7hfD+CniYJ0/iDAvgtuQOVD0IvrbkGb2+5BBMJD6SGSxhIFI+Cv597bBjW7jgLbx18Ei7/XdFBi0f0KJhR9FnYwzCLIUCZjXu6pSCdDk2KXG/AumPalFpgzLUGfeLUp9NisuImLjJi0VfWWzH0HO067TKdr9cAhaeX61fcgL0vX+bAcJcnoXTBMJRUJfjmmz8Cbt8EuJJu+HjbBVi+eJjXKcTwS7prDOwhW610k3HHBVvIOhlr3ESHbBB6tDrBTCf+kQzidkCTg1t6Bk0fy3+PoOv9emV3gQzGDErUQQGs+VRGTceE4afcmwl9/toZ8EsS+OYmwOFSPrXM5SSQpDvkNj3m5h6n97YHmr4IqnWNFhN7BMjwQYHH4XPV5jluWX1OOqc7HxZtlvbSEHBdnfb/DSkGGdpcO+BveiEOTk8a3GV3yvwTCS9Ijiy4fBOT58aHykByZuGNLh6O7pp4SgYw7qsv47ZrXHx4Jr6xdtlA4SvHv2HVP5BJOcE7Z2yyDb0KhiRw5KaAxV2ahOQtH2xcdR3Bokc+20yKkZ0z9dMG++t+klKXQmTRY+QyDhi9VsE3BAz+TgzOgbEbZfy3w5OB1PydMOLcdFeosygVtJu9Lbc9ywwSlZsgYDwV45C87ZvS5q0c5/tr7mYIt/TASCKhAkP7iqKW3lOJL2cjDzkrtMHywIDizClehAgthp0U4yvoVZQ6SxYc3nKQytbDJ4eSCBRZL0MUABMxyOZssMxg4SHj59/nwspn/oL0qGeS4CJQOFeRKuFG2S44+D3AT6dOM6CcVrlHtJgMZX/dr6TmkW/PLIaUM8MJrepNMIX2Vnngz8qPYMf+03D0eBQ9SicVs7qKzVa2Z1HkwMi4q+HgyWrYubEfxoZKWVY0ztPo0ZJX4c33vkaQxCnsxIrVSPbX/cC/7I9Xr1gduNhfGVyyaBiWLRjlhbdM0gVHezfAibP81RIC5VQx28lOne8IfukX2//VKmg98gTcdqbBVZKGExd43SVWbPxENwmwMTJV1P99xuPg0iG4PLgEQ1CUvuMtarHD0N0h6TsWkjh5HRjyjacmJpCrxPC8bR1bbMlT/hVgAEm7RfHr87alAAAAAElFTkSuQmCC';
 
-            qr_pdf.setFontSize(10);
-            qr_pdf.text(iurest_invoice.company_info.name, 195, 15, 'right');
-            qr_pdf.text(iurest_invoice.company_info.address, 195, 20, 'right');
-            qr_pdf.text(iurest_invoice.company_info.city + ', ' + iurest_invoice.company_info.country, 195, 25, 'right');
-            qr_pdf.text(iurest_invoice.company_info.phone, 195, 30, 'right');
-            qr_pdf.text(iurest_invoice.company_info.nit, 195, 35, 'right');
-            qr_pdf.text(iurest_invoice.company_info.regime, 195, 40, 'right');
-            qr_pdf.text(iurest_invoice.company_info.contribution, 195, 45, 'right');
-            qr_pdf.text(iurest_invoice.company_info.retainer, 195, 50, 'right');
-            qr_pdf.text(iurest_invoice.company_info.agent_retainter, 195, 55, 'right');
-            qr_pdf.text(resolution_msg + ' ' + iurest_invoice.company_info.resolution_number, 195, 60, 'right');
+        qr_pdf.addImage(imgData, 'png', 15, 13, 55, 16);
 
-            let from_date_formatted = iurest_invoice.company_info.resolution_start_date.getDate() + '/' +
-                (iurest_invoice.company_info.resolution_start_date.getMonth() + 1) + '/' +
-                iurest_invoice.company_info.resolution_start_date.getFullYear();
-            let to_date_formatted = iurest_invoice.company_info.resolution_end_date.getDate() + '/' +
-                (iurest_invoice.company_info.resolution_end_date.getMonth() + 1) + '/' +
-                iurest_invoice.company_info.resolution_end_date.getFullYear();
-            qr_pdf.text(res_from_date + ' ' + from_date_formatted + ' ' + res_to_date + ' ' + to_date_formatted, 195, 65, 'right');
+        qr_pdf.setFontSize(10);
+        qr_pdf.text(cyg_invoice.company_info.name, 195, 15, 'right');
+        qr_pdf.text(cyg_invoice.company_info.address, 195, 20, 'right');
+        qr_pdf.text(cyg_invoice.company_info.city + ', ' + cyg_invoice.company_info.country, 195, 25, 'right');
+        qr_pdf.text(cyg_invoice.company_info.phone, 195, 30, 'right');
+        qr_pdf.text(cyg_invoice.company_info.nit, 195, 35, 'right');
+        qr_pdf.text(cyg_invoice.company_info.regime, 195, 40, 'right');
+        qr_pdf.text(cyg_invoice.company_info.contribution, 195, 45, 'right');
+        qr_pdf.text(cyg_invoice.company_info.retainer, 195, 50, 'right');
+        qr_pdf.text(cyg_invoice.company_info.agent_retainter, 195, 55, 'right');
+        qr_pdf.text(resolution_msg + ' ' + cyg_invoice.company_info.resolution_number, 195, 60, 'right');
 
-            qr_pdf.text(res_from_value + ' ' + iurest_invoice.company_info.resolution_prefix + '-' + iurest_invoice.company_info.resolution_start_value + ' ' +
-                res_to_value + ' ' + iurest_invoice.company_info.resolution_prefix + '-' + iurest_invoice.company_info.resolution_end_value, 195, 70, 'right');
+        let from_date_formatted = cyg_invoice.company_info.resolution_start_date.getDate() + '/' +
+            (cyg_invoice.company_info.resolution_start_date.getMonth() + 1) + '/' +
+            cyg_invoice.company_info.resolution_start_date.getFullYear();
+        let to_date_formatted = cyg_invoice.company_info.resolution_end_date.getDate() + '/' +
+            (cyg_invoice.company_info.resolution_end_date.getMonth() + 1) + '/' +
+            cyg_invoice.company_info.resolution_end_date.getFullYear();
+        qr_pdf.text(res_from_date + ' ' + from_date_formatted + ' ' + res_to_date + ' ' + to_date_formatted, 195, 65, 'right');
 
-            qr_pdf.setFontSize(12);
-            qr_pdf.setFontStyle('bold');
-            qr_pdf.text(invoice_lbl, 15, 45);
-            qr_pdf.setFontStyle('normal');
-            qr_pdf.text(number_lbl + iurest_invoice.company_info.resolution_prefix + '-' + iurest_invoice.number, 15, 50);
+        qr_pdf.text(res_from_value + ' ' + cyg_invoice.company_info.resolution_prefix + '-' + cyg_invoice.company_info.resolution_start_value + ' ' +
+            res_to_value + ' ' + cyg_invoice.company_info.resolution_prefix + '-' + cyg_invoice.company_info.resolution_end_value, 195, 70, 'right');
 
-            let dateFormated = iurest_invoice.creation_date.getDate() + '/' + (iurest_invoice.creation_date.getMonth() + 1) + '/' + iurest_invoice.creation_date.getFullYear();
-            qr_pdf.text(date_lbl + dateFormated, 15, 55);
-            qr_pdf.text(payment_method_lbl + aux_payment_method, 15, 60);
-            qr_pdf.setFontSize(12);
-            qr_pdf.setFontStyle('bold');
-            qr_pdf.text(customer_lbl, 15, 70);
-            qr_pdf.setFontStyle('normal');
-            qr_pdf.text(iurest_invoice.client_info.name, 15, 75);
-            qr_pdf.text(iurest_invoice.client_info.address, 15, 80);
-            //qr_pdf.text(iurest_invoice.client_info.city + ', ' + aux_country, 15, 85);
-            qr_pdf.text(identication_lbl + '' + iurest_invoice.client_info.identification, 15, 90);
-            qr_pdf.text(phone_lbl + '' + iurest_invoice.client_info.phone, 15, 95);
-            qr_pdf.text(email_lbl + '' + iurest_invoice.client_info.email, 15, 100);
-            qr_pdf.setFontStyle('bold');
-            qr_pdf.text(desc_lbl, 15, 115);
-            qr_pdf.text(period_lbl, 110, 115);
-            qr_pdf.text(amount_lbl, 195, 115, 'right');
-            qr_pdf.line(15, 117, 195, 117);
-            qr_pdf.setFontStyle('normal');
-            var splitTitle = qr_pdf.splitTextToSize(aux_description, 75);
-            qr_pdf.text(15, 125, splitTitle);
-            qr_pdf.text(iurest_invoice.period, 110, 125);
-            qr_pdf.text(iurest_invoice.total.toString(), 185, 125, 'right');
-            qr_pdf.text(iurest_invoice.currency, 195, 125, 'right');
-            qr_pdf.line(15, 140, 195, 140);
-            qr_pdf.setFontStyle('bold');
-            qr_pdf.text(subtotal_lbl, 110, 150);
-            qr_pdf.setFontStyle('normal');
-            qr_pdf.text(iurest_invoice.total.toString(), 185, 150, 'right');
-            qr_pdf.text(iurest_invoice.currency, 195, 150, 'right');
-            qr_pdf.setFontStyle('bold');
-            qr_pdf.text(iva_lbl, 110, 155);
-            qr_pdf.setFontStyle('normal');
-            qr_pdf.text(iurest_invoice.iva.toString(), 185, 155, 'right');
-            qr_pdf.text(iurest_invoice.currency, 195, 155, 'right');
-            qr_pdf.setFontStyle('bold');
-            qr_pdf.text(total_lbl, 110, 160);
-            qr_pdf.setFontStyle('normal');
-            qr_pdf.text(iurest_invoice.total.toString(), 185, 160, 'right');
-            qr_pdf.text(iurest_invoice.currency, 195, 160, 'right');
-            qr_pdf.text(iurest_invoice.generated_computer_msg, 195, 290, 'right');
-            qr_pdf.output('save', iurest_invoice.number + '_' + dateFormated + '.pdf');
+        qr_pdf.setFontSize(12);
+        qr_pdf.setFontStyle('bold');
+        qr_pdf.text(invoice_lbl, 15, 45);
+        qr_pdf.setFontStyle('normal');
+        qr_pdf.text(number_lbl + cyg_invoice.company_info.resolution_prefix + '-' + cyg_invoice.number, 15, 50);
+
+        let dateFormated = cyg_invoice.creation_date.getDate() + '/' + (cyg_invoice.creation_date.getMonth() + 1) + '/' + cyg_invoice.creation_date.getFullYear();
+        qr_pdf.text(date_lbl + dateFormated, 15, 55);
+        qr_pdf.text(payment_method_lbl + aux_payment_method, 15, 60);
+        qr_pdf.setFontSize(12);
+        qr_pdf.setFontStyle('bold');
+        qr_pdf.text(customer_lbl, 15, 70);
+        qr_pdf.setFontStyle('normal');
+        qr_pdf.text(cyg_invoice.client_info.name, 15, 75);
+        qr_pdf.text(cyg_invoice.client_info.address, 15, 80);
+        qr_pdf.text(cyg_invoice.client_info.city + ', ' + aux_country, 15, 85);
+        qr_pdf.text(identication_lbl + '' + cyg_invoice.client_info.identification, 15, 90);
+        qr_pdf.text(phone_lbl + '' + cyg_invoice.client_info.phone, 15, 95);
+        qr_pdf.text(email_lbl + '' + cyg_invoice.client_info.email, 15, 100);
+        qr_pdf.setFontStyle('bold');
+        qr_pdf.text(desc_lbl, 15, 115);
+        //qr_pdf.text(period_lbl, 110, 115);
+        qr_pdf.text(amount_lbl, 195, 115, 'right');
+        qr_pdf.line(15, 117, 195, 117);
+        qr_pdf.setFontStyle('normal');
+        var splitTitle = qr_pdf.splitTextToSize(aux_description, 120);
+        qr_pdf.text(15, 125, splitTitle);
+        cyg_invoice.establishmentsInfo.forEach((establishmentInfo) => {
+            y = this.calculateY(y, 2);
+            qr_pdf.text(25, y, '- ' + establishmentInfo.establishment_name);
+            y = this.calculateY(y, 6);
+            qr_pdf.text(35, y, package_of_medal + ' ' + establishmentInfo.bag_plan_points + ' ' + medals);
+            qr_pdf.text(185, y, establishmentInfo.bag_plan_price, 'right');
+            qr_pdf.text(195, y, establishmentInfo.bag_plan_currency, 'right');
+            y = this.calculateY(y, 6);
+            if (parseInt(establishmentInfo.credit_points) > 0 && parseInt(establishmentInfo.credit_price) > 0) {
+                qr_pdf.text(35, y, pending_medals + ' ' + establishmentInfo.credit_points + ' ' + medals);
+                qr_pdf.text(185, y, establishmentInfo.credit_price, 'right');
+                qr_pdf.text(195, y, establishmentInfo.bag_plan_currency, 'right');
+                y = this.calculateY(y, 6);
+            }
+        });
+        qr_pdf.line(15, y, 195, y);
+        y = this.calculateY(y, 12);
+        qr_pdf.setFontStyle('bold');
+        qr_pdf.text(total_lbl, 140, y);
+        qr_pdf.setFontStyle('normal');
+        qr_pdf.text(185, y, cyg_invoice.total.toString(), 'right');
+        qr_pdf.text(195, y, cyg_invoice.currency, 'right');
+
+        qr_pdf.text(cyg_invoice.generated_computer_msg, 195, 290, 'right');
+        qr_pdf.output('save', cyg_invoice.number + '_' + dateFormated + '.pdf');
+    }
+
+    /**
+         * Calculate Invoice pdf height
+         * @param { Invoice } _pInvoice 
+         * @param { string } _pCountryId
+         */
+    calculateHeight(_pInvoice: CygInvoice): number {
+
+        let quantRows: number = 0;
+        let initialHeightPage: number = 280;
+
+        if (_pInvoice.country_id === '1900') {
+
+            _pInvoice.establishmentsInfo.forEach((establishmentInfo) => {
+                if (establishmentInfo.establishment_name) {
+                    quantRows += 6;
+                }
+                if (parseInt(establishmentInfo.bag_plan_points) > 0 &&
+                    parseInt(establishmentInfo.bag_plan_price) > 0 &&
+                    (establishmentInfo.bag_plan_currency != null || establishmentInfo.bag_plan_currency != undefined)) {
+                    quantRows += 6;
+                }
+                if (parseInt(establishmentInfo.credit_points) > 0 && parseInt(establishmentInfo.credit_price) > 0) {
+                    quantRows += 6;
+                }
+
+            });
+            initialHeightPage = initialHeightPage + quantRows;
+            return initialHeightPage
         }
+    }
+
+    /**
+     * Allow add top to pdf page
+     * @param { number } _pY 
+     * @param { number } _pAdd 
+     */
+    calculateY(_pY: number, _pAdd: number): number {
+        _pY = _pY + _pAdd;
+        return _pY;
     }
 
     /**

@@ -500,15 +500,12 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
             test: testAux
         }
 
-        console.log(JSON.stringify(ccRequestColombia));
-
         this._payuPaymentService.authorizeAndCapture(payuPaymentsApiURI, ccRequestColombia).subscribe(
             response => {
                 let transactionMessage: string;
                 let transactionIcon: string;
                 let showCancelBtn: boolean = false;
 
-                console.log(JSON.stringify(response));
                 if (response.code == 'ERROR') {
                     transactionMessage = 'PAYMENT_FORM.AUTH_ERROR_MSG';
                     transactionIcon = 'trn_declined.png';
@@ -634,7 +631,7 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
             });
 
             //Call meteor method for generate iurest invoice
-            //MeteorObservable.call('generateInvoiceInfo', payment_history, Meteor.userId()).subscribe();
+            MeteorObservable.call('generateInvoiceInfo', payment_history, Meteor.userId()).subscribe();
         }
     }
 
