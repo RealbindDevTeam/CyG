@@ -15,7 +15,7 @@ import '../both/methods/general/cron.methods';
 import '../both/methods/general/email.methods';
 import '../both/methods/general/change-email.methods';
 import '../both/methods/general/country.methods';
-import '../both/methods/general/iurest-invoice.methods';
+import '../both/methods/general/cyg-invoice.methods';
 import '../both/methods/general/push-notifications.methods';
 import '../both/methods/establishment/establishment.methods';
 import '../both/methods/reward/reward.methods';
