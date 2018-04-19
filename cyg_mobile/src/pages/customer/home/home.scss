@@ -41,8 +41,35 @@ $white_color-text: White;
 }*/
 
 page-home {
-    .profile-header {
-        height: 100px;
-        margin: -16px -16px 16px;
+    .button-profile {
+        height: 80px;
+        padding: 0;
+        margin: 0;
     }
+
+    .button-action {
+        height: 120px;
+    }
+    
+    .profile-header {
+        background-color: #0277BD;        
+        width: 100%;
+    }
+
+    .profile-header ion-item{
+        background-color: transparent;
+    }
+
+    .profile-header h2, .profile-header p {
+        color: white;
+    }
+
+    .profile-header img {
+        border-radius: 50%;
+        border:3px solid rgba(0, 0, 0, 0.2);
+        height: 60px;
+        width: 60px;
+    }
+
+    
 }
