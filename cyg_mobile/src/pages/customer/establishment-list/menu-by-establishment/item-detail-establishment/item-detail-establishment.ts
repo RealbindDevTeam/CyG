@@ -15,6 +15,7 @@ import { OptionValue } from 'cyg_web/both/models/menu/option-value.model';
 import { OptionValues } from 'cyg_web/both/collections/menu/option-value.collection';
 import { UserLanguageServiceProvider } from '../../../../../providers/user-language-service/user-language-service';
 import { Network } from '@ionic-native/network';
+import { LightboxPage } from "../../../../../pages/general/lightbox/lightbox";
 
 /*
   Generated class for the ItemDetail page.
@@ -124,6 +125,15 @@ export class ItemDetailEstablishmentPage implements OnInit, OnDestroy {
         });
       });
     });
+  }
+
+  /**
+   * open image if the item
+   * @param pItemImg {string}
+   */
+  openItemImage(pItemImg: string) {
+    let contactModal = this._modalCtrl.create(LightboxPage, { item_img: pItemImg });
+    contactModal.present();
   }
 
   ionViewDidEnter() {

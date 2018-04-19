@@ -46,6 +46,7 @@ export class MenuByEstablishmentPage implements OnInit, OnDestroy {
     private selected: string;
     private _additionsShow: boolean = false;
     private _establishmentId: string = "";
+    private _showMenu: boolean = true;
 
     constructor(public _translate: TranslateService,
         public _navCtrl: NavController,
@@ -54,61 +55,86 @@ export class MenuByEstablishmentPage implements OnInit, OnDestroy {
         private _ngZone: NgZone) {
         _translate.setDefaultLang('en');
         this.selected = 'all';
-        this._establishmentId = this._navParams.get('establishment_id');        
+        this._establishmentId = this._navParams.get('establishment_id');
     }
 
     ngOnInit() {
         this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
         this.removeSubscriptions();
+        let _sections: string[] = [];
+        let _categories: string[] = [];
         this._userEstablishmentSubscription = MeteorObservable.subscribe('getEstablishmentById', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._establishment = Establishments.findOne({ _id: this._establishmentId });
+            this._ngZone.run(() => {
+                this._establishment = Establishments.findOne({ _id: this._establishmentId });
+            });
         });
         this._sectionsSubscription = MeteorObservable.subscribe('sectionsByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._sections = Sections.find({});
-        });
-        this._categoriesSubscription = MeteorObservable.subscribe('categoriesByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._categories = Categories.find({});
-        });
-        this._subcategoriesSubscription = MeteorObservable.subscribe('subcategoriesByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._subcategories = Subcategories.find({});
+            this._ngZone.run(() => {
+                this._sections = Sections.find({ establishments: { $in: [this._establishmentId] }, is_active: true }).zone();
+                Sections.collection.find({ establishments: { $in: [this._establishmentId] }, is_active: true }).fetch().forEach(function <String>(s, index, arr) {
+                    _sections.push(s._id);
+                });
+                this._categoriesSubscription = MeteorObservable.subscribe('categoriesByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
+                    this._ngZone.run(() => {
+                        this._categories = Categories.find({ section: { $in: _sections }, is_active: true }).zone();
+                        Categories.collection.find({ section: { $in: _sections }, is_active: true }).fetch().forEach(function <String>(c, index, arr) {
+                            _categories.push(c._id);
+                        });
+                        this._subcategoriesSubscription = MeteorObservable.subscribe('subcategoriesByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
+                            this._ngZone.run(() => {
+                                this._subcategories = Subcategories.find({ category: { $in: _categories }, is_active: true }).zone();
+                            });
+                        });
+                    });
+                });
+            });
         });
         this._itemsSubscription = MeteorObservable.subscribe('itemsByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._items = Items.find({});
-            this._itemsRecommended = Items.find({ 'establishments.establishment_id': this._establishmentId, 'establishments.recommended': true }).zone();
+            this._ngZone.run(() => {
+                this._items = Items.find({ 'establishments.establishment_id': { $in: [this._establishmentId] }, is_active: true }).zone();
+                this._items.subscribe(() => { this.countItems(); });
+                this._itemsRecommended = Items.find({ 'establishments.establishment_id': this._establishmentId, 'establishments.recommended': true }).zone();
+            });
         });
         this._additionsSubscription = MeteorObservable.subscribe('additionsByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._additions = Additions.find({});
-            this._additions.subscribe(() => {
-                let _lAdditions: number = Additions.collection.find({}).count();
-                _lAdditions > 0 ? this._additionsShow = true : this._additionsShow = false;
+            this._ngZone.run(() => {
+                this._additions = Additions.find({ 'establishments.establishment_id': { $in: [this._establishmentId] }, is_active: true }).zone();
+                this._additions.subscribe(() => {
+                    let _lAdditions: number = Additions.collection.find({ 'establishments.establishment_id': { $in: [this._establishmentId] }, is_active: true }).count();
+                    _lAdditions > 0 ? this._additionsShow = true : this._additionsShow = false;
+                });
             });
         });
     }
 
+    countItems(): void {
+        Items.collection.find({ 'establishments.establishment_id': { $in: [this._establishmentId] }, is_active: true }).count() > 0 ? this._showMenu = true : this._showMenu = false;
+    }
+
     validateSection(section_selected) {
         if (section_selected === 'all') {
-          this._items = Items.find({});
-          this._itemsRecommended = Items.find({ 'establishments.establishment_id': this._establishmentId, 'establishments.recommended': true }).zone();
-          this._sections = Sections.find({});
-          this._categories = Categories.find({});
-          this._subcategories = Subcategories.find({});
+            this._items = Items.find({});
+            this._itemsRecommended = Items.find({ 'establishments.establishment_id': this._establishmentId, 'establishments.recommended': true }).zone();
+            this._sections = Sections.find({});
+            this._categories = Categories.find({});
+            this._subcategories = Subcategories.find({});
         } else if (section_selected === 'addition') {
-          this.goToAddAdditions();
+            this.goToAddAdditions();
         } else if (section_selected === 'recommended') {
-          this._items = null;
-          this._sections = null;
-          this._categories = null;
-          this._subcategories = null;
-          this._itemsRecommended = Items.find({ 'establishments.establishment_id': this._establishmentId, 'establishments.recommended': true }).zone();
+            this._items = null;
+            this._sections = null;
+            this._categories = null;
+            this._subcategories = null;
+            this._itemsRecommended = Items.find({ 'establishments.establishment_id': this._establishmentId, 'establishments.recommended': true }).zone();
         }
         else {
-          this._itemsRecommended = null;
-          this._sections = Sections.find({ _id: section_selected });
-          this._items = Items.find({ sectionId: section_selected });
-          this._categories = Categories.find({ section: section_selected });
-          this._subcategories = Subcategories.find({});
+            this._itemsRecommended = null;
+            this._sections = Sections.find({ _id: section_selected });
+            this._items = Items.find({ sectionId: section_selected });
+            this._categories = Categories.find({ section: section_selected });
+            this._subcategories = Subcategories.find({});
         }
-      }
+    }
 
     goTop() {
         this.select1.open();
