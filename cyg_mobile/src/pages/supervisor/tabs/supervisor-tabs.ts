@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SupervisorApproveRewardsPage } from '../approve-rewards/supervisor-approve-rewards';
-import { SettingsPage } from '../../customer/home/popover-options/settings/settings';
+import { SettingsPage } from '../../customer/options/settings/settings';
 import { SupervisorGiveMedalPage } from '../give-medal/supervisor-give-medal';
 
 @Component({

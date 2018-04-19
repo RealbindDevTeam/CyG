@@ -13,9 +13,9 @@ import { Languages } from 'cyg_web/both/collections/general/language.collection'
 import { Users } from 'cyg_web/both/collections/auth/user.collection';
 import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
 import { UserDetail, UserDetailImage } from 'cyg_web/both/models/auth/user-detail.model';
-import { UserLanguageServiceProvider } from '../../../../../providers/user-language-service/user-language-service';
-import { SigninComponent } from '../../../../auth/signin/signin';
-import { InitialComponent } from '../../../../auth/initial/initial';
+import { UserLanguageServiceProvider } from '../../../../providers/user-language-service/user-language-service';
+import { SigninComponent } from '../../../auth/signin/signin';
+import { InitialComponent } from '../../../auth/initial/initial';
 import { Network } from '@ionic-native/network';
 
 @Component({

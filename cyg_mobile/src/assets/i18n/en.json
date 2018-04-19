@@ -609,8 +609,15 @@
         },
         "USER_REWARDS": {
             "NO_REWARDS": "You have not redeemed rewards in this restaurant yet",
-            "TITLE": "Congratulations! These are the rewards that you have earned in",
+            "TITLE": "Awards",
+            "MSG": "Congratulations! These are the rewards that you have won",
             "MEDALS_REDEEMED": "Medals Redeemed"
+        },
+        "REWARDS": {
+            "TITLE": "Redeem Medals",
+            "MSG": "Select a restaurant to check the rewards it has for you",
+            "NO_REWARDS_MSG": "You have not accumulated medals in any restaurant yet. Encourage!",
+            "ACCUMULATED_MEDALS": "Accumulated Medals"
         }
     },
     "CURRENCIES": {

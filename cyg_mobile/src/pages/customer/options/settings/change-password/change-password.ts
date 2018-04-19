@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertController, NavController, NavParams, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { UserLanguageServiceProvider } from '../../../../../../providers/user-language-service/user-language-service';
+import { UserLanguageServiceProvider } from '../../../../../providers/user-language-service/user-language-service';
 import { Accounts } from 'meteor/accounts-base';
 
 @Component({
