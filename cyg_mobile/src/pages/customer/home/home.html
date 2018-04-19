@@ -26,29 +26,28 @@
         {{'MOBILE.HOME.HEADER_TITLE' | translate}}
     </h6-->
 
-    <div padding>
+    <div padding text-wrap>
+        <button ion-item detail-none no-lines class="button-action">
+            <img item-end src="assets/img/scan.png">
+            <div item-end class="object">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    width="66px" height="6px" viewBox="0 0 86 6" enable-background="new 0 0 86 6" xml:space="preserve">
+                    <g>
+                        <g>
+                            <path fill="#F16667" d="M3,5.555c26.667,0,53.333,0,80,0c3.295,0,3.295-5.109,0-5.109c-26.667,0-53.333,0-80,0
+                                C-0.295,0.445-0.295,5.555,3,5.555L3,5.555z" />
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <h2>{{'MOBILE.HOME.TITLE_CODE_BTN' | translate}}</h2>
+        </button>
 
-        <ion-card>
-            <ion-card-content>
-                <ion-item>
-                    <ion-thumbnail item-end>
-                        <img src="assets/img/scan.png">
-                    </ion-thumbnail>
-                    <h2>{{'MOBILE.HOME.TITLE_CODE_BTN' | translate}}</h2>
-                </ion-item>
-            </ion-card-content>
-        </ion-card>
+        <button ion-item detail-none no-lines class="button-action">
+            <img item-end src="assets/img/gif.png" class="animated infinite tada">
+            <h2>{{'MOBILE.HOME.TITLE_POINTS_BTN' | translate}}</h2>
+        </button>
 
-        <ion-card (click)="goToEstablishmentList()">
-            <ion-card-content>
-                <ion-item>
-                    <ion-thumbnail item-start>
-                        <img src="assets/img/restaurante.png">
-                    </ion-thumbnail>
-                    <h2>{{'MOBILE.HOME.TITLE_LIST_BTN' | translate}}</h2>
-                </ion-item>
-            </ion-card-content>
-        </ion-card>
     </div>
 
 
