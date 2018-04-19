@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HomePage } from "../home/home";
-import { SettingsPage } from '../../customer/home/popover-options/settings/settings';
-
+import { EstablishmentListPage } from '../establishment-list/establishment-list';
+import { OptionsPage } from '../options/options';
 
 @Component({
     selector: 'customer-tabs',
@@ -10,7 +10,8 @@ import { SettingsPage } from '../../customer/home/popover-options/settings/setti
 export class CustomerTabsPage implements OnInit, OnDestroy {
 
     tabHome: any = HomePage;
-    tabSettings: any = SettingsPage;
+    tabEstablishments: any = EstablishmentListPage;
+    tabOptions: any = OptionsPage;
 
     constructor() {
     }

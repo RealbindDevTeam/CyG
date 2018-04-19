@@ -609,8 +609,15 @@
         },
         "USER_REWARDS": {
             "NO_REWARDS": "Aún no has redimido recompensas en este restaurante",
-            "TITLE": "Felicitaciones! Estas son las recompensas que te has ganado en",
+            "TITLE": "Premios",
+            "MSG": "Felicitaciones! Estas son las recompensas que te has ganado",
             "MEDALS_REDEEMED": "Medallas Redimidas"
+        },
+        "REWARDS": {
+            "TITLE": "Redimir Medallas",
+            "MSG": "Selecciona un restaurante para consultar las recompensas que tiene para ti",
+            "NO_REWARDS_MSG": "Aún no has acumulado medallas en ningún restaurante. Animate!",
+            "ACCUMULATED_MEDALS": "Medallas Acumuladas"
         }
     },
     "CURRENCIES": {

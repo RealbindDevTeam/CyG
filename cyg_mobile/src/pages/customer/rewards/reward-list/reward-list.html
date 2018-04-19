@@ -12,7 +12,7 @@
             {{'MOBILE.REWARD_LIST.YOU_REDEEM' | translate}} {{_medalsInProcessToRedeem}} {{'MOBILE.REWARD_LIST.MEDALS' | translate}}
         </ion-card-header>
         <ion-card-header style="color: #4CAF50;font-weight: bold;">
-            {{'MOBILE.REWARD_LIST.MEDALS_AVAILABLE' | translate}}: {{_medalsAvailableToRedeem}}
+            {{_medalsAvailableToRedeem}} {{'MOBILE.REWARD_LIST.MEDALS_AVAILABLE' | translate}}
         </ion-card-header>
     </div>
     <ion-card-header *ngIf="!_establishmentIsActive" style="color: red;font-weight: bold;white-space: normal;">

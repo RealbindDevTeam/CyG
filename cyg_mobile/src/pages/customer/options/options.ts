@@ -1,99 +1,84 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { AlertController, NavParams, LoadingController, NavController, ViewController, Platform } from 'ionic-angular';
+import { NavController, NavParams, AlertController, Platform } from 'ionic-angular';
+import { Network } from '@ionic-native/network';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { Meteor } from 'meteor/meteor';
+import { Observable, Subscription, Subject } from 'rxjs';
 import { MeteorObservable } from 'meteor-rxjs';
 import { UserLanguageServiceProvider } from '../../../providers/user-language-service/user-language-service';
-import { Network } from '@ionic-native/network';
-import { Subscription, Subject, Observable } from 'rxjs';
-import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
-import { Establishments } from 'cyg_web/both/collections/establishment/establishment.collection';
-import { RewardListComponent } from '../rewards/reward-list/reward-list';
-import { PointsDetailPage } from '../points/points-detail/points-detail';
+import { Parameter } from 'cyg_web/both/models/general/parameter.model';
+import { Parameters } from 'cyg_web/both/collections/general/parameter.collection';
+import { SettingsPage } from './settings/settings';
+import { RewardsHistoryPage } from './rewards-history/rewards-history';
 
 @Component({
-    selector: 'medal-won',
-    templateUrl: 'medal-won.html'
+    selector: 'options',
+    templateUrl: 'options.html'
 })
-export class MedalWonPage implements OnInit {
+export class OptionsPage implements OnInit, OnDestroy {
 
-    private _establishmentId: string = '';
-
-    private _establishmentSub: Subscription;
+    private _parameterSub: Subscription;
     private disconnectSubscription: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
 
-    private _establishments: Observable<Establishment[]>;
-
     /**
-     * MedalWonPage Constructor
+     * OptionsPage Constructor
      * @param {NavController} _navCtrl 
-     * @param {NavParams} _navParams
-     * @param {ViewController} _viewCtrl 
-     * @param {TranslateService} _translate 
      * @param {AlertController} _alertCtrl 
-     * @param {UserLanguageServiceProvider} _userLanguageService 
      * @param {Platform} _platform 
      * @param {Network} _network 
-     * @param {NgZone} _ngZone
+     * @param {TranslateService} translate 
+     * @param {UserLanguageServiceProvider} _userLanguageService 
+     * @param {NgZone} _ngZone 
      */
-    constructor(private _navCtrl: NavController,
-        public _navParams: NavParams,
-        private _viewCtrl: ViewController,
-        public _translate: TranslateService,
+    constructor(public _navCtrl: NavController,
         public _alertCtrl: AlertController,
-        private _userLanguageService: UserLanguageServiceProvider,
         public _platform: Platform,
         private _network: Network,
-        private _ngZone: NgZone) {
-        _translate.setDefaultLang('en');
-        this._establishmentId = this._navParams.get("est_id");
+        public translate: TranslateService,
+        private _userLanguageService: UserLanguageServiceProvider,
+        private _ngZone: NgZone,
+        private iab: InAppBrowser) {
+        translate.setDefaultLang('en');
     }
 
     /**
      * ngOnInit implementation
      */
     ngOnInit() {
+        this.translate.use(this._userLanguageService.getLanguage(Meteor.user()));
         this.removeSubscriptions();
-        this.init();
-    }
-
-    ionViewWillEnter() {
-        this.removeSubscriptions();
-        this.init();
+        this._parameterSub = MeteorObservable.subscribe('getParameters').takeUntil(this._ngUnsubscribe).subscribe();
     }
 
     /**
-     * Initial function
+     * Go to settings page
      */
-    init() {
-        this.removeSubscriptions();
-        this._translate.use(this._userLanguageService.getLanguage(Meteor.user()));
-        this._establishmentSub = MeteorObservable.subscribe('getEstablishmentById', this._establishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._establishments = Establishments.find({ _id: this._establishmentId }).zone();
-            });
-        });
+    goToSettings() {
+        this._navCtrl.push(SettingsPage);
     }
 
     /**
-     * Function to show establishment rewards
+     * Go to rewards history
      */
-    showRewards(): void {
-        this._navCtrl.push(RewardListComponent, { establishment: this._establishmentId }).then(() => {
-            const index = this._viewCtrl.index;
-            this._navCtrl.remove(index);
-        });
+    goToRewardsHistory() {
+        this._navCtrl.push(RewardsHistoryPage);
     }
 
     /**
-     * Show establishment points
+     * go to term page
      */
-    showEstablishmentPoints(): void {
-        this._navCtrl.push(PointsDetailPage, { _establishment_id: this._establishmentId }).then(() => {
-            const index = this._viewCtrl.index;
-            this._navCtrl.remove(index);
-        });
+    goToTerms() {
+        let param: Parameter = Parameters.findOne({ name: 'terms_url' });
+        const browser = this.iab.create(param.value);
+    }
+
+    /**
+     * Go to policy page
+     */
+    goToPolicy() {
+        let param: Parameter = Parameters.findOne({ name: 'policy_url' });
+        const browser = this.iab.create(param.value);
     }
 
     /** 
@@ -152,24 +137,23 @@ export class MedalWonPage implements OnInit {
         alert.present();
     }
 
-    ionViewWillLeave() {
-        this.disconnectSubscription.unsubscribe();
-    }
-
-    ionViewWillUnload() {
-        this.removeSubscriptions();
-    }
-
+    /**
+     * Traduction function
+     * @param {string} itemName 
+     */
     itemNameTraduction(itemName: string): string {
         var wordTraduced: string;
-        this._translate.get(itemName).subscribe((res: string) => {
+        this.translate.get(itemName).subscribe((res: string) => {
             wordTraduced = res;
         });
         return wordTraduced;
     }
 
-    ngOnDestroy() {
-        this.removeSubscriptions();
+    /**
+     * ionViewWillLeave implementation
+     */
+    ionViewWillLeave() {
+        this.disconnectSubscription.unsubscribe();
     }
 
     /**
@@ -178,5 +162,12 @@ export class MedalWonPage implements OnInit {
     removeSubscriptions(): void {
         this._ngUnsubscribe.next();
         this._ngUnsubscribe.complete();
+    }
+
+    /**
+     * ngOnDestroy implemetation
+     */
+    ngOnDestroy() {
+        this.removeSubscriptions();
     }
 }
