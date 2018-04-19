@@ -540,7 +540,8 @@
             "REWARD_CONFIRM_TITLE": "Estas seguro de redimir esta recompensa?",
             "REWARD_CONFIRM_SUBTITLE": "El restaurante confirmara lo que estas redimiendo",
             "YES": "Si",
-            "NO": "No"
+            "NO": "No",
+            "REWARDS_MSG_2": "Te presentamos las recompensas del restaurante"
         },
         "POINTS": {
             "TITLE": "Mis Medallas",

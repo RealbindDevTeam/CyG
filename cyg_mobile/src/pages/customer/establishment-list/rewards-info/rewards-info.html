@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{'MOBILE.REWARD_LIST.TITLE' | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <h6 *ngIf="_thereRewards" style="margin: 20px;text-align: center">
+        {{'MOBILE.REWARD_LIST.REWARDS_MSG_2' | translate}}
+    </h6>
+    <div *ngIf="!_thereRewards" padding class="content-custom">
+        <div style="text-align: center;">
+            <img style="max-width: 75%;" src="assets/img/reward.png">
+        </div>
+        <div class="content" style="text-align: center">
+            <h1>{{'MOBILE.REWARD_LIST.NO_REWARDS' | translate}}</h1>
+        </div>
+    </div>
+    <div *ngIf="_thereRewards">
+        <ion-list>
+            <div *ngFor="let reward of _rewards | async">
+                <ion-card *ngIf="showReward(reward.item_id)">
+                    <ion-card-content>
+                        <ion-item style="padding-left: 0px">
+                            <ion-thumbnail item-left>
+                                <img src="{{getItemThumb(reward.item_id)}}">
+                            </ion-thumbnail>
+                            <h2 style="white-space: normal;font-weight: bold;"> {{reward.item_quantity}} {{getItemName(reward.item_id)}}</h2>
+                            <ion-badge class="rewardpts">{{reward.points}} {{'MOBILE.REWARD_LIST.MEDALS' | translate}}
+                                <ion-icon name="medal"></ion-icon>
+                            </ion-badge>
+                        </ion-item>
+                    </ion-card-content>
+                </ion-card>
+            </div>
+        </ion-list>
+    </div>
+</ion-content>

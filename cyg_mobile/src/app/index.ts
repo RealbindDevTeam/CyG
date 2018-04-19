@@ -30,6 +30,7 @@ import { GiveMedalPage } from '../pages/administrator/give-medal/give-medal';
 import { SupervisorGiveMedalPage } from '../pages/supervisor/give-medal/supervisor-give-medal';
 import { RewardsPage } from '../pages/customer/rewards/rewards';
 import { RewardsHistoryPage } from '../pages/customer/options/rewards-history/rewards-history';
+import { RewardsInfoPage } from '../pages/customer/establishment-list/rewards-info/rewards-info';
 
 export const PAGES_DECLARATIONS = [
     InitialComponent,
@@ -63,5 +64,6 @@ export const PAGES_DECLARATIONS = [
     SupervisorGiveMedalPage,
     RewardsPage,
     OptionsPage,
-    RewardsHistoryPage
+    RewardsHistoryPage,
+    RewardsInfoPage
 ];
