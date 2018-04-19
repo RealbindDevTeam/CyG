@@ -1,9 +1,9 @@
 import { CollectionObject } from '../collection-object.model';
 
 /**
- * Iurest Invoice Model
+ * CyG Invoice Model
  */
-export interface IurestInvoice extends CollectionObject {
+export interface CygInvoice extends CollectionObject {
     payment_history_id?: string;
     country_id?: string;
     number?: string;
@@ -18,6 +18,7 @@ export interface IurestInvoice extends CollectionObject {
     currency?: string;
     company_info?: CompanyInfo;
     client_info?: ClientInfo;
+    establishmentsInfo: EstablishmentInfo[];
     generated_computer_msg?: string;
 }
 
@@ -50,7 +51,21 @@ export interface ClientInfo {
     name?: string;
     address?: string;
     country?: string;
+    city?: string;
     identification?: string;
     phone?: string;
     email?: string;
+}
+
+/**
+ * Establishment Info
+ */
+export interface EstablishmentInfo {
+    establishment_name?: string;
+    bag_plan_name?: string;
+    bag_plan_currency?: string;
+    bag_plan_price?: string;
+    bag_plan_points?: string;
+    credit_price?: string;
+    credit_points?: string;
 }

@@ -1224,7 +1224,7 @@
         "DATE_LBL": "Fecha: ",
         "CUSTOMER_LBL": "Cliente",
         "DESCRIPTION_LBL": "Descripción",
-        "DESCRIPTION": "Licencia de software para el desarrollo comercial de contenidos digitales. Servicio mensual comeygana",
+        "DESCRIPTION": "Software para el desarrollo comercial de contenidos digitales.",
         "PERIOD_LBL": "Periodo",
         "AMOUNT_LBL": "Valor",
         "SUBTOTAL": "SubTotal: ",
@@ -1240,7 +1240,12 @@
         "IDENTIFICATION_NUMBER": "Identificación: ",
         "TELEPHONE_NUMBER": "Teléfono: ",
         "EMAIL": "Email: ",
-        "CC_PAYMENT_METHOD": "Tarjeta de crédito"
+        "CC_PAYMENT_METHOD": "Tarjeta de crédito",
+        "PACKAGE_MEDALS": "Package of medals:",
+        "PENDING_MEDALS": "Pending medals:",
+        "MEDALS": "Medals",
+        "PRICE": "Price: ",
+        "PACKAGE_MEDAL": "Package of "
     },
     "TRANSACTION_STATUS": {
         "APPROVED": "Approved",

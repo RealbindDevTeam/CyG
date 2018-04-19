@@ -5,5 +5,5 @@ import { PaymentsHistory } from '../../../../both/collections/payment/payment-hi
  * Meteor publication EmailContents
  */
 Meteor.publish('getHistoryPaymentsByUser', function (_userId: string) {
-    return PaymentsHistory.find({ creation_user: _userId, isInitial: false }, { sort: { creation_date: -1 } });
+    return PaymentsHistory.find({ creation_user: _userId}, { sort: { creation_date: -1 } });
 }); 
