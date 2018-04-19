@@ -8,14 +8,12 @@
 
 <ion-content>
     <button ion-button block color="dark" class="button-profile">
-        <div *ngFor="let user of _users | async">
-            <div class="profile-header">
-                <ion-item no-lines>
-                    <img item-start src="{{getUserImage(user._id)}}">
-                    <h2>{{getUserName(user._id)}}</h2>
-                    <p>{{getUserEmail(user._id)}}</p>
-                </ion-item>
-            </div>
+        <div *ngFor="let user of _users | async" class="profile-header">
+            <ion-item no-lines>
+                <img item-start src="{{getUserImage(user._id)}}">
+                <h2>{{getUserName(user._id)}}</h2>
+                <p>{{getUserEmail(user._id)}}</p>
+            </ion-item>
         </div>
     </button>
 
