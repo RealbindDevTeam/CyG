@@ -37,9 +37,6 @@ $white_color-text: White;
     -moz-osx-font-smoothing: grayscale;
 }
 
-/*ion-slide {
-    background-color: #fff;
-}*/
 .ios {
     page-home {
         .button-profile {
@@ -48,8 +45,7 @@ $white_color-text: White;
     }
 }
 
-page-home {
-    
+page-home {    
     .button-profile {
         border-radius: 0;
         height: 80px;
