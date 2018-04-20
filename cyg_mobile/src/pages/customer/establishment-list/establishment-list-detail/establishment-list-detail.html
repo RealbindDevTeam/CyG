@@ -42,7 +42,7 @@
                 </div>
                 <div style="text-align: center;" *ngIf="_establishmentProfile?.web_page || _establishmentProfile?.social_networks?.facebook || _establishmentProfile?.social_networks?.twitter  || _establishmentProfile?.social_networks?.instagram">
                     <a *ngIf="_establishmentProfile?.web_page" href="{{_establishmentProfile?.web_page}}" style="text-decoration: none;">
-                        <ion-icon name="navigate" class="web"></ion-icon>
+                        <ion-icon name="globe" class="web"></ion-icon>
                     </a>
                     <a *ngIf="_establishmentProfile?.social_networks?.facebook" href="{{_establishmentProfile?.social_networks?.facebook}}" style="text-decoration: none;">
                         <ion-icon name="logo-facebook" class="fb"></ion-icon>
@@ -74,9 +74,9 @@
                         <ion-icon name="chatbubbles"></ion-icon>
                         {{_establishmentProfile?.email}}
                     </ion-item>
-                    <ion-item *ngIf="_establishmentProfile?.types_of_food">
+                    <ion-item *ngIf="_establishmentProfile?.types_of_food.length > 0">
                         <ion-icon style="vertical-align: top;" name="restaurant"></ion-icon>
-                        <div style="white-space: normal;display: inline-block;">
+                        <div style="white-space: normal;display: inline-block;width: 85%;">
                             <span *ngFor="let typeOfFood of _typesOfFood | async">
                                 <span *ngFor="let type of _establishmentProfile.types_of_food">
                                     <span *ngIf="type === typeOfFood._id">{{typeOfFood.type_of_food | translate}}</span>
