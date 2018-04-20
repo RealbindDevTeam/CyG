@@ -112,6 +112,47 @@ ion-title.logo {
     text-align: center;
 }
 
+.button-profile {
+    border-radius: 0;
+    height: 80px;
+    padding: 0;
+    margin: 0;
+}
+
+.button-action {
+    height: 100px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    -webkit-box-shadow: 0px 5px 0px 0px #c8c7cc;
+    box-shadow: 0px 5px 0px 0px #c8c7cc;
+}
+
+.profile-header {
+    width: 100%;
+}
+
+.profile-header ion-item{
+    background-color: transparent;
+}
+
+.profile-header.color-text-white h2, .color-text-white.profile-header p {
+    color: white;
+}
+
+.profile-header img {
+    border-radius: 50%;
+    border:3px solid rgba(0, 0, 0, 0.2);
+    height: 60px;
+    width: 60px;
+}
+
 [padding] h2:first-child {
     margin-top: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.border {
+    -webkit-box-shadow: 0px 2px 0px 0px #bdbdbd;
+    box-shadow: 0px 2px 0px 0px #bdbdbd;
 }

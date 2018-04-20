@@ -45,21 +45,7 @@ $white_color-text: White;
     }
 }
 
-page-home {    
-    .button-profile {
-        border-radius: 0;
-        height: 80px;
-        padding: 0;
-        margin: 0;
-    }
-
-    .button-action {
-        height: 100px;
-        border-radius: 4px;
-        margin-bottom: 16px;
-        -webkit-box-shadow: 0px 5px 0px 0px #c8c7cc;
-        box-shadow: 0px 5px 0px 0px #c8c7cc;
-    }
+page-home {
 
     .button-action-img {
         position: absolute;
@@ -80,25 +66,6 @@ page-home {
     
     .b2 {
         background: linear-gradient(90deg, #ffffff 0%, #06beb6 40%, #48b1bf 90%);
-    }
-
-    .profile-header {
-        width: 100%;
-    }
-
-    .profile-header ion-item{
-        background-color: transparent;
-    }
-
-    .profile-header h2, .profile-header p {
-        color: white;
-    }
-
-    .profile-header img {
-        border-radius: 50%;
-        border:3px solid rgba(0, 0, 0, 0.2);
-        height: 60px;
-        width: 60px;
     }
 
     .animated {
