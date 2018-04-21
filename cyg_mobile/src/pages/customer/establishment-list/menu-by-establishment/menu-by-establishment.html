@@ -40,8 +40,8 @@
             </ion-card>
         </div>
 
-        <div *ngFor="let section of _sections | async">
-            <h4 class="text-align-center">{{section.name}}</h4>
+        <ion-item-group *ngFor="let section of _sections | async">
+            <h4 style="text-align: center;">{{section.name}}</h4>
             <div *ngFor="let item of _items | async">
                 <div *ngIf="(item.sectionId == section._id) && item.categoryId == '' && item.subcategoryId == ''" (click)="goToDetail(item._id)">
                     <ion-card>
@@ -51,29 +51,27 @@
                     </ion-card>
                 </div>
             </div>
-        </div>
-
-        <ion-item-group *ngFor="let category of _categories | async">
-            <h5 margin-start>{{category.name}}</h5>
-            <div *ngFor="let item of _items | async">
-                <ion-card *ngIf="(item.categoryId == category._id) && item.subcategoryId == ''" (click)="goToDetail(item._id)">
-                    <ion-card-content>
-                        <item-card-establishment [itemIdIn]="item" [resCode]="_establishmentId"></item-card-establishment>
-                    </ion-card-content>
-                </ion-card>
-            </div>
-            <div *ngFor="let subcategory of _subcategories | async">
-                <div *ngIf="subcategory.category == category._id">
-                    <h6 margin-start>{{subcategory.name}}</h6>
+            <ion-item-group *ngFor="let category of _categories | async">
+                <h5 *ngIf="category.section === section._id" margin-start>{{category.name}}</h5>
+                <div *ngFor="let item of _items | async">
+                    <ion-card *ngIf="(item.categoryId == category._id) && category.section === section._id && item.subcategoryId == ''" (click)="goToDetail(item._id)">
+                        <ion-card-content>
+                            <item-card-establishment [itemIdIn]="item" [resCode]="_establishmentId"></item-card-establishment>
+                        </ion-card-content>
+                    </ion-card>
+                </div>
+                <div *ngFor="let subcategory of _subcategories | async">
+                    <h6 *ngIf="category.section === section._id && subcategory.category == category._id" margin-start>{{subcategory.name}}</h6>
                     <div *ngFor="let item of _items | async">
-                        <ion-card *ngIf="item.subcategoryId == subcategory._id" (click)="goToDetail(item._id)">
+                        <ion-card *ngIf="item.subcategoryId == subcategory._id && category.section === section._id && subcategory.category == category._id"
+                            (click)="goToDetail(item._id)">
                             <ion-card-content>
                                 <item-card-establishment [itemIdIn]="item" [resCode]="_establishmentId"></item-card-establishment>
                             </ion-card-content>
                         </ion-card>
                     </div>
                 </div>
-            </div>
+            </ion-item-group>
         </ion-item-group>
     </div>
 </ion-content>

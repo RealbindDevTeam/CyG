@@ -70,7 +70,11 @@ export class RewardsPage implements OnInit, OnDestroy {
      * Validate establishment medals count
      */
     validateEstablishmentMedals(): void {
-        EstablishmentMedals.collection.find({ user_id: this._user }).count() > 0 ? this._showEstablishments = true : this._showEstablishments = false;
+        let _lMedalsCount: number = 0;
+        EstablishmentMedals.collection.find({ user_id: this._user }).fetch().forEach((est_med) => {
+            _lMedalsCount += est_med.medals;
+        });
+        _lMedalsCount > 0 ? this._showEstablishments = true : this._showEstablishments = false;
     }
 
     /**
