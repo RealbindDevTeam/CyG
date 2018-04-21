@@ -610,7 +610,7 @@
             "MSG": "Selecciona un restaurante para consultar su perfil y el menú que ofrece"
         },
         "USER_REWARDS": {
-            "NO_REWARDS": "Aún no has redimido recompensas en este restaurante",
+            "NO_REWARDS": "Aún no has redimido recompensas",
             "TITLE": "Premios",
             "MSG": "Felicitaciones! Estas son las recompensas que te has ganado",
             "MEDALS_REDEEMED": "Medallas Redimidas"
