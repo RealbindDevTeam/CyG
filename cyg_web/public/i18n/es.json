@@ -1847,7 +1847,17 @@
         "SUBTITLE": "Aquí puedes comprar los paquetes de medallas por restaurante que desees y las que tengas pendientes",
         "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
         "MESSAGE": "Registra uno para habilitar esta opción",
-        "RESTAURANT_REGISTER": "Registrar restaurante"
+        "RESTAURANT_REGISTER": "Registrar restaurante",
+        "RESTAURANT_NAME": "Nombre del restaurante",
+        "PACKAGE_OF_MEDALS": "Paquete de medallas",
+        "PRICE": "Precio",
+        "MEDALS": "Medallas",
+        "SELECTED_PACKAGE": "Paquete seleccionado",
+        "VALUE": "Valor",
+        "PENDING_MEDALS": "Medallas pendientes por pagar",
+        "TOTAL_PRICE": "Total: ",
+        "PAY": "Pagar",
+        "ADVICE_MEDALS": "* El valor de las medallas pendientes esta calculado con base al precio de una medalla del paquete mas pequeño"
     },
     "APPROVE_REWARDS": {
         "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",

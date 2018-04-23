@@ -1847,7 +1847,17 @@
         "SUBTITLE": "Here you can to purchase the package of points by restaurant that you want",
         "THERE_NOT_RESTAURANTS": "There are not restaurants register yet",
         "MESSAGE": "Register at least one restaurant to enable this option",
-        "RESTAURANT_REGISTER": ""
+        "RESTAURANT_REGISTER": "Restaurant register",
+        "RESTAURANT_NAME": "Restaurant name",
+        "PACKAGE_OF_MEDALS": "Package of medals",
+        "PRICE": "Price",
+        "MEDALS": "Medals",
+        "SELECTED_PACKAGE": "Selected package",
+        "VALUE": "Value",
+        "PENDING_MEDALS": "Pending medals to pay",
+        "TOTAL_PRICE": "Total: ",
+        "PAY": "Pay",
+        "ADVICE_MEDALS": "* The value of the pending medals is calculated according to the price of one medal of the smallest package"
     },
     "APPROVE_REWARDS": {
         "THERE_NOT_RESTAURANTS": "There are not restaurants register yet",
