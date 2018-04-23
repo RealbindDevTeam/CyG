@@ -17,6 +17,7 @@
         <ion-list>
           <h2 style="font-weight: bold;">{{'MOBILE.SECTIONS.UNIT_PRICE' | translate}} {{ getItemPrice( item ) }} {{_currencyCode}}</h2>
         </ion-list>
+        <br/>
         <div>
           <div *ngIf="(item.options.length > 0)">
             <div *ngFor="let option of _options | async">
@@ -38,11 +39,12 @@
             </div>
           </div>
           <div *ngIf="item.additions.length > 0">
-            <h3 class="custom-padding">{{'MOBILE.SECTIONS.ADDITIONS' | translate}}</h3>
+            <h3 class="custom-padding">{{'MOBILE.SECTIONS.ADDITIONS' | translate}}:</h3>
             <div>
               <div *ngFor="let itemAddition of item.additions">
                 <div *ngFor="let addition of _additions | async">
                   <ion-item class="ion-item-cust" style="padding-left: 0px" *ngIf="itemAddition ===  addition._id">
+                    <ion-icon name="restaurant" item-start></ion-icon>
                     <ion-label style="white-space: normal">{{addition.name}} -
                       <span style="color: #666">{{ getAdditionsPrice( addition ) }} {{_currencyCode}}</span>
                     </ion-label>

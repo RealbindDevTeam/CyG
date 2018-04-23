@@ -50,7 +50,7 @@ export class Recommended implements OnInit, OnDestroy {
     getEstablishmentName(_pEstablishmentId: string): string {
         let establishment: Establishment = Establishments.findOne({ _id: _pEstablishmentId });
         if (establishment) {
-            return establishment.name;
+            return establishment.name + ' - ' + establishment.address;
         } else {
             return;
         }
