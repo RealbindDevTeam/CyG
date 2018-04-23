@@ -335,7 +335,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
 
                 let _lEstablishmentQRCode: string = this.generateEstablishmentQRCode();
                 let _lCodeGenerator = generateQRCode(_lEstablishmentQRCode);
-                let _lUriRedirect: string = _lUrl + _lCodeGenerator.getQRCode();
+                let _lUriRedirect: string = _lUrl + '\0' + '/qr?' + _lCodeGenerator.getQRCode();
 
                 let _lQrCode = new QRious({
                     background: 'white',

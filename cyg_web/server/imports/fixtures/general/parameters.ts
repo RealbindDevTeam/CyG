@@ -46,7 +46,7 @@ export function loadParameters() {
             { _id: '8500', name: 'date_test_reactivate', value: 'January 6, 2018', description: 'Date test for reactivate restaurant for pay' },
             { _id: '30000', name: 'terms_url', value: 'http://www.comeygana.com/signin/', description: 'url to see terms and conditions' },
             { _id: '40000', name: 'policy_url', value: 'http://www.comeygana.com/signup/', description: 'url to see privacy policy' },
-            { _id: '50000', name: 'QR_code_url', value: 'http://www.comeygana.com/qr?', description: 'This url redirect to page the comeygana/download when scanned QR code from other application' },
+            { _id: '50000', name: 'QR_code_url', value: 'http://www.comeygana.com/gana-por-comer', description: 'This url redirect to page the comeygana/download when scanned QR code from other application' },
             { _id: '2300', name: 'user_start_points', value: '1', description: 'User start points' },
             { _id: '5000', name: 'max_medals_to_advice', value: '50', description: 'Max medals to evaluate on cron to send email' },
             { _id: '5500', name: 'max_days_to_advice', value: '2', description: 'Max day to advice pending medals' }
