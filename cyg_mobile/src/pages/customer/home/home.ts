@@ -163,8 +163,9 @@ export class HomePage implements OnInit, OnDestroy {
      * @param {string} _pQRCode 
      */
     validateQRCode(_pQRCode: string): void {
-        var split = _pQRCode.split('qr?', 2);
+        var split = _pQRCode.split('/qr?', 2);
         var qr_code: string = split[1];
+        qr_code = qr_code.replace('\0', '');
         MeteorObservable.call('verifyEstablishmentQRCode', qr_code).subscribe((establishmentQR: EstablishmentQR) => {
             if (establishmentQR) {
                 if (establishmentQR.is_active) {
