@@ -47,6 +47,10 @@ $white_color-text: White;
 
 page-home {
 
+    .button-action {
+        height: 100px;
+    }
+
     .button-action-img {
         position: absolute;
         top: 0;
@@ -61,11 +65,11 @@ page-home {
     }
 
     .b1 {
-        background: linear-gradient(90deg, #ffffff 0%, #ffb88c 40%, #de6262 90%);
+        background: linear-gradient(90deg, #ffffff 0%, #f8952e 50%);
     }
     
     .b2 {
-        background: linear-gradient(90deg, #ffffff 0%, #06beb6 40%, #48b1bf 90%);
+        background: linear-gradient(90deg, #ffffff 0%, #30cb67 50%);
     }
 
     .animated {

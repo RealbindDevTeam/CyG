@@ -119,14 +119,6 @@ ion-title.logo {
     margin: 0;
 }
 
-.button-action {
-    height: 100px;
-    border-radius: 4px;
-    margin-bottom: 16px;
-    -webkit-box-shadow: 0px 5px 0px 0px #c8c7cc;
-    box-shadow: 0px 5px 0px 0px #c8c7cc;
-}
-
 .profile-header {
     width: 100%;
 }
@@ -155,4 +147,63 @@ ion-title.logo {
 .border {
     -webkit-box-shadow: 0px 2px 0px 0px #bdbdbd;
     box-shadow: 0px 2px 0px 0px #bdbdbd;
+}
+
+.button-cust {
+    width: 100%;
+    height: 47px;
+    display: block;
+    color: #222;
+    margin: 5px auto 13px;
+    position: relative;
+    background: $white_color-text;
+    border-radius: 8px;
+    font-size: 23px;
+    -webkit-box-shadow: 0 4px 0 #bebebe, 0 5px 1px rgba(0,0,0,0.8);
+    box-shadow: 0 4px 0 #bebebe, 0 5px 1px rgba(0,0,0,0.8);
+    line-height: 54px;
+}
+
+.button-orange {
+    color: $white_color-text;
+    background: #FF9800;
+    -webkit-box-shadow: 0 5px 0 #EF6C00, 0 5px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 0 #EF6C00, 0 5px 1px rgba(0, 0, 0, 0.8);
+}
+
+.button-orange:hover {
+    background: #EF6C00
+}
+
+.button-green {
+    color: $white_color-text;
+    background: #4CAF50;
+    -webkit-box-shadow: 0 5px 0 #1B5E20, 0 5px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 0 #1B5E20, 0 5px 1px rgba(0, 0, 0, 0.8);
+}
+
+.button-green:hover {
+    background: #1B5E20;
+}
+
+.button-red {
+    color: $white_color-text;
+    background: #F44336;
+    -webkit-box-shadow: 0 5px 0 #B71C1C, 0 5px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 0 #B71C1C, 0 5px 1px rgba(0, 0, 0, 0.8);
+}
+
+.button-red:hover {
+    background: #B71C1C;
+}
+
+.button-blue {
+    color: $white_color-text;
+    background: #2196F3;
+    -webkit-box-shadow: 0 5px 0 #0D47A1, 0 5px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 0 #0D47A1, 0 5px 1px rgba(0, 0, 0, 0.8);
+}
+
+.button-blue:hover {
+    background: #0D47A1;
 }
