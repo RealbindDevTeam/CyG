@@ -73,7 +73,7 @@ export function createTranslateLoader(http: HttpClient) {
     MatChipsModule,
     MatTableModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCFXGTI9kCa4U7YyMd2USL9LCV_JlQinyw'
+      apiKey: 'AIzaSyDbQx6bQ9t8btOJoTZhv0goMXh486oehNg'
     }),
     ChartModule
   ],
