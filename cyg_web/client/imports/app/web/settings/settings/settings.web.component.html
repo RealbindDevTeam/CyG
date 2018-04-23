@@ -88,9 +88,15 @@
                         class="error-message">{{'ADMIN_SIGNUP.REQUIRED_ADDRESS' | translate}}</div>
                     <div *ngIf="_userForm.controls['shippingAddress'].hasError('maxlength') && _userForm.controls['shippingAddress'].touched"
                         class="error-message">{{'ADMIN_SIGNUP.MAX_LENGTH_ADDRESS' | translate}}</div>
+
+                    <mat-form-field style="width: 100%">
+                        <input matInput formControlName="city" placeholder="{{'ADMIN_SIGNUP.CITY' | translate}}" name="city">
+                    </mat-form-field>
+                    <div *ngIf="_userForm.controls['city'].hasError('maxlength') && _userForm.controls['city'].touched" class="error-message">{{'ADMIN_SIGNUP.MAX_LENGTH_CITY' | translate}}</div>
+
                     <mat-form-field style="width: 100%; margin-top: 10px">
                         <mat-select formControlName="country" placeholder="{{'ADMIN_SIGNUP.COUNTRY' | translate}}">
-                            <mat-option *ngFor="let country of _countries | async" value="{{country._id}}" (click)="changeCountry(country._id)">{{country.name | translate}}</mat-option>
+                            <mat-option *ngFor="let country of _countries | async" value="{{country._id}}">{{country.name | translate}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>

@@ -32,7 +32,7 @@ export function loadParameters() {
             { _id: '1700', name: 'facebook_link', value: 'https://www.facebook.com', description: 'facebook link for comeygana' },
             { _id: '1800', name: 'twitter_link', value: 'https://www.twitter.com', description: 'twitter link for comeygana' },
             { _id: '1900', name: 'instagram_link', value: 'https://www.instagram.com', description: 'instagram link for comeygana' },
-            { _id: '1610', name: 'iurest_img_url', value: 'https://www.comeygana.com/images/', description: 'comeygana images url' },
+            { _id: '1610', name: 'iurest_img_url', value: ' http://app.comeygana.com/images/', description: 'comeygana images url' },
             { _id: '3100', name: 'ip_public_service_url2', value: 'https://ipinfo.io/json', description: 'url for retrieve the client public ip #2' },
             { _id: '3200', name: 'ip_public_service_url3', value: 'https://ifconfig.co/json', description: 'url for retrieve the client public ip #3' },
             { _id: '9000', name: 'payu_is_prod', value: 'false', description: 'Flag to enable to prod payu payment' },
@@ -48,6 +48,8 @@ export function loadParameters() {
             { _id: '40000', name: 'policy_url', value: 'http://www.tsti4t-1935943095.com/signup/', description: 'url to see privacy policy' },
             { _id: '50000', name: 'QR_code_url', value: 'http://www.tsti4t-1935943095.com/qr?', description: 'This url redirect to page the comeygana/download when scanned QR code from other application' },
             { _id: '2300', name: 'user_start_points', value: '1', description: 'User start points' },
+            { _id: '5000', name: 'max_medals_to_advice', value: '50', description: 'Max medals to evaluate on cron to send email' },
+            { _id: '5500', name: 'max_days_to_advice', value: '2', description: 'Max day to advice pending medals' }
         ];
         parameters.forEach((parameter: Parameter) => Parameters.insert(parameter));
     }

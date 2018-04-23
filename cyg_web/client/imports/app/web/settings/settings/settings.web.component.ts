@@ -136,6 +136,9 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
 
                         let country: FormControl = new FormControl({ value: this._userDetail.country_id, disabled: false });
                         this._userForm.addControl('country', country);
+
+                        let city: FormControl = new FormControl({ value: this._userDetail.city_id, disabled: false }, [Validators.maxLength(50)])
+                        this._userForm.addControl('city', city);
                     } else {
                         this._userForm.controls['full_name'].disable();
                     }
@@ -201,21 +204,15 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
             });
 
             if (this._userDetail.role_id === '100') {
-                let citySelected: string = '';
-                let othercitySelected: string = '';
-                if (this._userForm.value.city === '0000') {
-                    othercitySelected = this._userForm.value.otherCity;
-                } else {
-                    citySelected = this._userForm.value.city;
-                }
+
                 UserDetails.update({ _id: this._userDetail._id }, {
                     $set: {
                         contact_phone: this._userForm.value.contactPhone,
                         dni_number: this._userForm.value.dniNumber,
                         address: this._userForm.value.shippingAddress,
                         country_id: this._userForm.value.country,
-                        city_id: citySelected,
-                        other_city: othercitySelected
+                        city_id: this._userForm.value.city,
+                        other_city: ''
                     }
                 });
             }

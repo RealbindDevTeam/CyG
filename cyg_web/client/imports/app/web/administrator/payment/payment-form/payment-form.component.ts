@@ -630,6 +630,17 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
                 });
             });
 
+            UserDetails.update({ _id: this._userDetail._id }, {
+                $set: {
+                    contact_phone: this._paymentForm.value.contactPhone,
+                    dni_number: this._paymentForm.value.dniNumber,
+                    address: this._paymentForm.value.streetOne,
+                    country_id: this._paymentForm.value.country,
+                    city_id: this._paymentForm.value.city,
+                    other_city: ''
+                }
+            });
+
             //Call meteor method for generate iurest invoice
             MeteorObservable.call('generateInvoiceInfo', payment_history, Meteor.userId()).subscribe();
         }
