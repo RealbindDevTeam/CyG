@@ -110,7 +110,7 @@ export class BagsPaymentComponent implements OnInit, OnDestroy {
                 });
 
                 this._bagPlansSub = MeteorObservable.subscribe('getBagPlansNoFree').takeUntil(this._ngUnsubscribe).subscribe(() => {
-                    this._bagPlans = BagPlans.find({}).zone();
+                    this._bagPlans = BagPlans.find({ name: { $nin: ['free'] } }).zone();
                 });
             });
         });

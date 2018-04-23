@@ -17,223 +17,134 @@ import { Parameter } from '../../models/general/parameter.model';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { RewardPoint } from '../../models/establishment/reward-point.model';
 import { RewardPoints } from '../../collections/establishment/reward-point.collection';
-import { UserDetail, UserRewardPoints } from '../../models/auth/user-detail.model';
+import { UserDetail } from '../../models/auth/user-detail.model';
 import { UserDetails } from '../../collections/auth/user-detail.collection';
+import { EstablishmentPoints } from '../../collections/points/establishment-points.collection';
+import { EstablishmentPoint } from '../../models/points/establishment-point.model';
 
 
 if (Meteor.isServer) {
     Meteor.methods({
         /**
-         * This function change the freeDays flag to false
-         * * @param {string} _countryId
-         */
-
-        changeFreeDaysToFalse: function (_countryId: string) {
-            Establishments.collection.update({ countryId: _countryId, freeDays: true, is_beta_tester: false }, { $set: { freeDays: false } });
-        },
-
-        /**
-         * This function send the email to warn for iurest charge soon
-         * * @param {string} _countryId
-         */
-        sendEmailChargeSoon: function (_countryId: string) {
-            let parameter: Parameter = Parameters.collection.findOne({ name: 'from_email' });
-            let iurest_url: Parameter = Parameters.collection.findOne({ name: 'iurest_url' });
-            let facebook: Parameter = Parameters.collection.findOne({ name: 'facebook_link' });
-            let twitter: Parameter = Parameters.collection.findOne({ name: 'twitter_link' });
-            let instagram: Parameter = Parameters.collection.findOne({ name: 'instagram_link' });
-            let iurestImgVar: Parameter = Parameters.collection.findOne({ name: 'iurest_img_url' });
-
-            let currentDate = new Date();
-            let lastMonthDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-            let auxArray: string[] = [];
-
-            Establishments.collection.find({ countryId: _countryId, isActive: true, is_beta_tester: false }).forEach(function <Establishment>(establishment, index, ar) {
-                let user: User = Users.collection.findOne({ _id: establishment.creation_user });
-                let indexofvar = auxArray.indexOf(user._id);
-
-                if (indexofvar < 0) {
-                    auxArray.push(user._id);
-                }
-            });
-
-            Users.collection.find({ _id: { $in: auxArray } }).forEach((user: User) => {
-                let auxEstablishments: string[] = [];
-                Establishments.collection.find({ creation_user: user._id, is_beta_tester: false }, { fields: { _id: 0, name: 1 } }).forEach(function <Establishment>(name, index, ar) {
-                    auxEstablishments.push(name.name);
-                });
-
-                let emailContent: EmailContent = EmailContents.collection.findOne({ language: user.profile.language_code });
-                let greetVar = Meteor.call('getEmailContent', emailContent.lang_dictionary, 'greetVar');
-                let greeting: string = (user.profile && user.profile.first_name) ? (greetVar + ' ' + user.profile.first_name + ",") : greetVar;
-                SSR.compileTemplate('chargeSoonEmailHtml', Assets.getText('charge-soon-email.html'));
-
-                var emailData = {
-                    greeting: greeting,
-                    reminderMsgVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderChargeSoonMsgVar'),
-                    establishmentListVar: auxEstablishments.toString(),
-                    reminderMsgVar2: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderChargeSoonMsgVar2'),
-                    dateVar: Meteor.call('convertDateToSimple', lastMonthDay),
-                    regardVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'regardVar'),
-                    followMsgVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'followMsgVar'),
-                    iurestUrl: iurest_url.value,
-                    facebookLink: facebook.value,
-                    twitterLink: twitter.value,
-                    instagramLink: instagram.value,
-                    iurestImgVar: iurestImgVar.value
-                }
-
-                Email.send({
-                    to: user.emails[0].address,
-                    from: parameter.value,
-                    subject: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'chargeSoonEmailSubjectVar'),
-                    html: SSR.render('chargeSoonEmailHtml', emailData),
-                });
-            });
-        },
-        /**
-         * This function send the email to warn for iurest expire soon
-         * * @param {string} _countryId
-         */
-        sendEmailExpireSoon: function (_countryId: string) {
-            let parameter: Parameter = Parameters.collection.findOne({ name: 'from_email' });
-            let iurest_url: Parameter = Parameters.collection.findOne({ name: 'iurest_url' });
-            let facebook: Parameter = Parameters.collection.findOne({ name: 'facebook_link' });
-            let twitter: Parameter = Parameters.collection.findOne({ name: 'twitter_link' });
-            let instagram: Parameter = Parameters.collection.findOne({ name: 'instagram_link' });
-            let iurestImgVar: Parameter = Parameters.collection.findOne({ name: 'iurest_img_url' });
-
-            let currentDate = new Date();
-            let firstMonthDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-            let maxPaymentDay = new Date(firstMonthDay);
-            let endDay = Parameters.collection.findOne({ name: 'end_payment_day' });
-            maxPaymentDay.setDate(maxPaymentDay.getDate() + (Number(endDay.value) - 1));
-            let auxArray: string[] = [];
-
-            Establishments.collection.find({ countryId: _countryId, isActive: true, freeDays: false, is_beta_tester: false }).forEach(function <Establishment>(establishment, index, ar) {
-                let user: User = Users.collection.findOne({ _id: establishment.creation_user });
-                let indexofvar = auxArray.indexOf(user._id);
-
-                if (indexofvar < 0) {
-                    auxArray.push(user._id);
-                }
-            });
-
-            Users.collection.find({ _id: { $in: auxArray } }).forEach((user: User) => {
-                let auxEstablishments: string[] = [];
-                Establishments.collection.find({ creation_user: user._id, isActive: true, freeDays: false, is_beta_tester: false }, { fields: { _id: 0, name: 1 } }).forEach(function <Establishment>(name, index, ar) {
-                    auxEstablishments.push(name.name);
-                });
-
-                let emailContent: EmailContent = EmailContents.collection.findOne({ language: user.profile.language_code });
-                let greetVar = Meteor.call('getEmailContent', emailContent.lang_dictionary, 'greetVar');
-                let greeting: string = (user.profile && user.profile.first_name) ? (greetVar + ' ' + user.profile.first_name + ",") : greetVar;
-                SSR.compileTemplate('expireSoonEmailHtml', Assets.getText('expire-soon-email.html'));
-
-                var emailData = {
-                    greeting: greeting,
-                    reminderMsgVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderExpireSoonMsgVar'),
-                    establishmentListVar: auxEstablishments.toString(),
-                    reminderMsgVar2: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderExpireSoonMsgVar2'),
-                    dateVar: Meteor.call('convertDateToSimple', maxPaymentDay),
-                    reminderMsgVar3: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderExpireSoonMsgVar3'),
-                    regardVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'regardVar'),
-                    followMsgVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'followMsgVar'),
-                    iurestUrl: iurest_url.value,
-                    facebookLink: facebook.value,
-                    twitterLink: twitter.value,
-                    instagramLink: instagram.value,
-                    iurestImgVar: iurestImgVar.value
-                }
-
-                Email.send({
-                    to: user.emails[0].address,
-                    from: parameter.value,
-                    subject: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'expireSoonEmailSubjectVar'),
-                    html: SSR.render('expireSoonEmailHtml', emailData),
-                });
-            });
-        },
-        /**
-         * This function validate the establishment registered in history_payment and change isActive to false if is not 
+         * This function evaluates de the current medals for send warning to user every two days
          * @param {string} _countryId
          */
-        validateActiveEstablishments: function (_countryId: string) {
-            let currentDate: Date = new Date();
-            let currentMonth: string = (currentDate.getMonth() + 1).toString();
-            let currentYear: string = currentDate.getFullYear().toString();
+        checkCurrentMedals: function (_countryId: string) {
+            let parameter: Parameter = Parameters.collection.findOne({ name: 'from_email' });
+            let iurest_url: Parameter = Parameters.collection.findOne({ name: 'iurest_url' });
+            let facebook: Parameter = Parameters.collection.findOne({ name: 'facebook_link' });
+            let twitter: Parameter = Parameters.collection.findOne({ name: 'twitter_link' });
+            let instagram: Parameter = Parameters.collection.findOne({ name: 'instagram_link' });
+            let iurestImgVar: Parameter = Parameters.collection.findOne({ name: 'iurest_img_url' });
+            let establishmentsArray: string[] = [];
+            let max_medals: number = parseInt(Parameters.collection.findOne({ name: 'max_medals_to_advice' }).value);
 
-            Establishments.collection.find({ countryId: _countryId, isActive: true, freeDays: false, is_beta_tester: false }).forEach(function <Establishment>(establishment, index, ar) {
-                let historyPayment: PaymentHistory;
-                let auxArray: string[] = [];
-                auxArray.push(establishment._id);
-                //historyPayment = HistoryPayments.collection.findOne({ establishment_ids: establishment._id, month: currentMonth, year: currentYear, status: 'APPROVED' });
-                historyPayment = PaymentsHistory.collection.findOne({ establishment_ids: { $in: auxArray }, month: currentMonth, year: currentYear, status: 'TRANSACTION_STATUS.APPROVED' });
+            Establishments.collection.find({ countryId: _countryId, is_beta_tester: false, isActive: true }).forEach(function <Establishment>(establishment, index, ar) {
+                establishmentsArray.push(establishment._id);
+            });
 
-                if (!historyPayment) {
-                    Establishments.collection.update({ _id: establishment._id, is_beta_tester: false }, { $set: { isActive: false, firstPay: false } });
+            EstablishmentPoints.collection.find({ establishment_id: { $in: establishmentsArray }, negative_balance: false, negative_advice_counter: { $eq: 0 } }).forEach(function <EstablishmentPoint>(establishmentPoint, index, ar) {
+                if (establishmentPoint.current_points <= max_medals && establishmentPoint.current_points > 0) {
+                    Establishments.collection.find({ _id: establishmentPoint.establishment_id }).forEach(function <Establishment>(establishment2, index, ar) {
+                        let user: User = Users.collection.findOne({ _id: establishment2.creation_user });
+                        let emailContent: EmailContent = EmailContents.collection.findOne({ language: user.profile.language_code });
+                        let greetVar = Meteor.call('getEmailContent', emailContent.lang_dictionary, 'greetVar');
+                        let greeting: string = (user.profile && user.profile.full_name) ? (greetVar + ' ' + user.profile.full_name + ",") : greetVar;
+                        SSR.compileTemplate('checkMedalsEmailHtml', Assets.getText('check-medals-email.html'));
 
-                    Tables.collection.find({ establishment_id: establishment._id }).forEach(function <Table>(table, index, ar) {
-                        Tables.collection.update({ _id: table._id }, { $set: { is_active: false } });
+                        var emailData = {
+                            greeting: greeting,
+                            reminderMsgVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderCurrentMedals1'),
+                            establishmentName: establishment2.name,
+                            reminderMsgVar2: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderCurrentMedals2'),
+                            currentMedals: establishmentPoint.current_points,
+                            reminderMsgVar3: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderCurrentMedals3'),
+                            reminderMsgVar4: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderCurrentMedals4'),
+                            regardVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'regardVar'),
+                            followMsgVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'followMsgVar'),
+                            iurestUrl: iurest_url.value,
+                            facebookLink: facebook.value,
+                            twitterLink: twitter.value,
+                            instagramLink: instagram.value,
+                            iurestImgVar: iurestImgVar.value
+                        };
+
+                        Email.send({
+                            to: user.emails[0].address,
+                            from: parameter.value,
+                            subject: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'checkMedalsSubjectVar'),
+                            html: SSR.render('checkMedalsEmailHtml', emailData),
+                        });
                     });
                 }
             });
         },
         /**
-         * This function send email to warn that the service has expired
+         * This function evaluates de the current medals for send warning to user every two days
          * @param {string} _countryId
          */
-        sendEmailRestExpired: function (_countryId: string) {
+        checkNegativeMedals: function (_countryId: string) {
             let parameter: Parameter = Parameters.collection.findOne({ name: 'from_email' });
             let iurest_url: Parameter = Parameters.collection.findOne({ name: 'iurest_url' });
             let facebook: Parameter = Parameters.collection.findOne({ name: 'facebook_link' });
             let twitter: Parameter = Parameters.collection.findOne({ name: 'twitter_link' });
             let instagram: Parameter = Parameters.collection.findOne({ name: 'instagram_link' });
             let iurestImgVar: Parameter = Parameters.collection.findOne({ name: 'iurest_img_url' });
+            let max_days: number = parseInt(Parameters.collection.findOne({ name: 'max_days_to_advice' }).value);
+            let establishmentsArray: string[] = [];
 
-            let auxArray: string[] = [];
-
-            Establishments.collection.find({ countryId: _countryId, isActive: false, freeDays: false, firstPay: false, is_beta_tester: false }).forEach(function <Establishment>(establishment, index, ar) {
-                let user: User = Users.collection.findOne({ _id: establishment.creation_user });
-                let indexofvar = auxArray.indexOf(user._id);
-
-                if (indexofvar < 0) {
-                    auxArray.push(user._id);
-                }
+            Establishments.collection.find({ countryId: _countryId, is_beta_tester: false, isActive: true }).forEach(function <Establishment>(establishment, index, ar) {
+                establishmentsArray.push(establishment._id);
             });
 
-            Users.collection.find({ _id: { $in: auxArray } }).forEach((user: User) => {
-                let auxEstablishments: string[] = [];
-                Establishments.collection.find({ creation_user: user._id, isActive: false, freeDays: false, firstPay: false, is_beta_tester: false }, { fields: { _id: 0, name: 1 } }).forEach(function <Establishment>(name, index, ar) {
-                    auxEstablishments.push(name.name);
-                });
+            EstablishmentPoints.collection.find({ establishment_id: { $in: establishmentsArray }, negative_balance: true, negative_advice_counter: { $gte: 0 } }).forEach(function <EstablishmentPoint>(establishmentPoint, index, ar) {
 
-                let emailContent: EmailContent = EmailContents.collection.findOne({ language: user.profile.language_code });
-                let greetVar = Meteor.call('getEmailContent', emailContent.lang_dictionary, 'greetVar');
-                let greeting: string = (user.profile && user.profile.first_name) ? (greetVar + ' ' + user.profile.first_name + ",") : greetVar;
-                SSR.compileTemplate('restExpiredEmailHtml', Assets.getText('rest-expired-email.html'));
+                let advice_aux: number = establishmentPoint.negative_advice_counter + 1;
+                if (establishmentPoint.negative_advice_counter <= max_days) {
+                    EstablishmentPoints.collection.update({ _id: establishmentPoint._id }, {
+                        $set: {
+                            negative_advice_counter: establishmentPoint.negative_advice_counter + 1
+                        }
+                    });
 
-                var emailData = {
-                    greeting: greeting,
-                    reminderMsgVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderRestExpiredVar'),
-                    establishmentListVar: auxEstablishments.toString(),
-                    reminderMsgVar2: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderRestExpiredVar2'),
-                    reminderMsgVar3: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderRestExpiredVar3'),
-                    regardVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'regardVar'),
-                    followMsgVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'followMsgVar'),
-                    iurestUrl: iurest_url.value,
-                    facebookLink: facebook.value,
-                    twitterLink: twitter.value,
-                    instagramLink: instagram.value,
-                    iurestImgVar: iurestImgVar.value
+                    Establishments.collection.find({ _id: establishmentPoint.establishment_id }).forEach(function <Establishment>(establishment2, index, ar) {
+                        let user: User = Users.collection.findOne({ _id: establishment2.creation_user });
+                        let emailContent: EmailContent = EmailContents.collection.findOne({ language: user.profile.language_code });
+                        let greetVar = Meteor.call('getEmailContent', emailContent.lang_dictionary, 'greetVar');
+                        let greeting: string = (user.profile && user.profile.full_name) ? (greetVar + ' ' + user.profile.full_name + ",") : greetVar;
+                        SSR.compileTemplate('checkNegativeEmailHtml', Assets.getText('check-negative-email.html'));
+
+                        var emailData = {
+                            greeting: greeting,
+                            reminderMsgVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderNegativeMedals1'),
+                            establishmentName: establishment2.name,
+                            reminderMsgVar2: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderNegativeMedals2'),
+                            currentMedals: establishmentPoint.current_points * -1,
+                            reminderMsgVar3: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderNegativeMedals3'),
+                            reminderMsgVar4: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'reminderNegativeMedals4'),
+                            regardVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'regardVar'),
+                            followMsgVar: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'followMsgVar'),
+                            iurestUrl: iurest_url.value,
+                            facebookLink: facebook.value,
+                            twitterLink: twitter.value,
+                            instagramLink: instagram.value,
+                            iurestImgVar: iurestImgVar.value
+                        };
+
+                        Email.send({
+                            to: user.emails[0].address,
+                            from: parameter.value,
+                            subject: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'checkNegativeSubjectVar'),
+                            html: SSR.render('checkNegativeEmailHtml', emailData),
+                        });
+                    });
+                } else {
+                    Establishments.collection.update({ _id: establishmentPoint.establishment_id }, {
+                        $set: {
+                            isActive: false
+                        }
+                    });
                 }
-
-                Email.send({
-                    to: user.emails[0].address,
-                    from: parameter.value,
-                    subject: Meteor.call('getEmailContent', emailContent.lang_dictionary, 'restExpiredEmailSubjectVar'),
-                    html: SSR.render('restExpiredEmailHtml', emailData),
-                });
             });
         },
         /**
@@ -257,38 +168,6 @@ if (Meteor.isServer) {
             let month = _date.getMonth() + 1;
             let day = _date.getDate();
             return day.toString() + '/' + month.toString() + '/' + year.toString();
-        },
-        /**
-         * This function validate the date of points to expire 
-         */
-        checkPointsToExpire(_countryId: string) {
-            let currentDate = new Date();
-
-            Establishments.collection.find({ countryId: _countryId }).forEach(function <Establishment>(establishment, index, ar) {
-                RewardPoints.collection.find({ establishment_id: establishment._id, is_active: true }).forEach(function <RewardPoint>(rewardPoint, index, ar) {
-                    let rewardPointDayMore = rewardPoint.expire_date.getDate() + 1;
-                    let rewardPointDate = new Date(rewardPoint.expire_date.getFullYear(), rewardPoint.expire_date.getMonth(), rewardPointDayMore);
-
-                    if ((rewardPointDate.getFullYear() === currentDate.getFullYear()) &&
-                        (rewardPointDate.getMonth() === currentDate.getMonth()) &&
-                        (rewardPointDate.getDate() === currentDate.getDate())) {
-
-                        let valueToSubtract: number;
-                        if (rewardPoint.difference === 0 || rewardPoint.difference === null || rewardPoint.difference === undefined) {
-                            valueToSubtract = rewardPoint.points;
-                        } else {
-                            valueToSubtract = rewardPoint.difference;
-                        }
-
-                        RewardPoints.collection.update({ _id: rewardPoint._id }, { $set: { is_active: false } });
-                        let userDetail: UserDetail = UserDetails.findOne({ user_id: rewardPoint.id_user });
-                        let userRewardPoints: UserRewardPoints = userDetail.reward_points.find(usrPoints => usrPoints.establishment_id === rewardPoint.establishment_id);
-
-                        UserDetails.update({ user_id: rewardPoint.id_user, 'reward_points.establishment_id': rewardPoint.establishment_id },
-                            { $set: { 'reward_points.$.points': (userRewardPoints.points - valueToSubtract) } });
-                    }
-                });
-            });
         }
     });
 }

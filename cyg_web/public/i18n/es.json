@@ -1374,7 +1374,8 @@
         "ORDER_MANAGEMENT_TEXT": "Las ordenes que realicen tus clientes serán asignadas a los meseros que vincules en el sistema, las ordenes se podrá visualizar desde cualquier dispositivo móvil o computador",
         "ORDERS_DAY": "Ordenes del día",
         "ORDERS_DAY_TEXT": "Por medio del rol cajero, podrás ver la información detallada de las ordenes que se han realizado en tu restaurante, y así poder identificar lo consumido por cada cliente y las recompensas que ha redimido",
-        "COPYRIGHT": "Todos los derechos reservados"
+        "COPYRIGHT": "Todos los derechos reservados",
+        "MAX_LENGTH_CITY": "La ciudad debe tener máximo 50 caracteres"
     },
     "ADMIN_DASHBOARD": {
         "TITLE": "Te damos la bienvenida a comeygana",
@@ -1846,7 +1847,17 @@
         "SUBTITLE": "Aquí puedes comprar los paquetes de medallas por restaurante que desees y las que tengas pendientes",
         "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
         "MESSAGE": "Registra uno para habilitar esta opción",
-        "RESTAURANT_REGISTER": "Registrar restaurante"
+        "RESTAURANT_REGISTER": "Registrar restaurante",
+        "RESTAURANT_NAME": "Nombre del restaurante",
+        "PACKAGE_OF_MEDALS": "Paquete de medallas",
+        "PRICE": "Precio",
+        "MEDALS": "Medallas",
+        "SELECTED_PACKAGE": "Paquete seleccionado",
+        "VALUE": "Valor",
+        "PENDING_MEDALS": "Medallas pendientes por pagar",
+        "TOTAL_PRICE": "Total: ",
+        "PAY": "Pagar",
+        "ADVICE_MEDALS": "* El valor de las medallas pendientes esta calculado con base al precio de una medalla del paquete mas pequeño"
     },
     "APPROVE_REWARDS": {
         "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",

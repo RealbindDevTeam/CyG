@@ -22,6 +22,9 @@ import { Countries } from '../../../../../../../both/collections/general/country
 import { CygInvoices } from '../../../../../../../both/collections/payment/cyg-invoices.collection';
 import { CygInvoice } from '../../../../../../../both/models/payment/cyg-invoice.model';
 import { PayuPaymentService } from '../../../services/payment/payu-payment.service';
+import { EstablishmentPoints } from '../../../../../../../both/collections/points/establishment-points.collection';
+import { EstablishmentPoint } from '../../../../../../../both/models/points/establishment-point.model';
+import { NegativePoints } from '../../../../../../../both/collections/points/negative-points.collection';
 
 let jsPDF = require('jspdf');
 
@@ -370,8 +373,30 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
             });
 
         if (_response.result.payload.state == 'APPROVED') {
-            _historyPayment.establishment_ids.forEach((establishmentId) => {
-                Establishments.collection.update({ _id: establishmentId }, { $set: { isActive: true, firstPay: false } });
+            _historyPayment.establishment_ids.forEach((establishment) => {
+                let establishmentPoint: EstablishmentPoint = EstablishmentPoints.findOne({ establishment_id: establishment.establishmentId });
+                let pointsToAdd: number = establishment.bagPlanPoints + establishment.creditPoints;
+
+                EstablishmentPoints.update({ _id: establishmentPoint._id }, {
+                    $set: {
+                        current_points: establishmentPoint.current_points + pointsToAdd,
+                        negative_balance: false,
+                        negative_advice_counter: 0,
+                        modification_user: Meteor.userId(),
+                        modification_date: new Date()
+                    }
+                });
+
+                NegativePoints.collection.find({ establishment_id: establishment.establishmentId, paid: false }).forEach(function <NegativePoint>(negativePoint, index, ar) {
+                    NegativePoints.update({ _id: negativePoint._id }, {
+                        $set: {
+                            paid: true,
+                            bag_plans_history_id: _historyPayment._id,
+                            modification_user: Meteor.userId(),
+                            modification_date: new Date()
+                        }
+                    });
+                });
             });
 
             //Call meteor method for generate iurest invoice
@@ -535,7 +560,6 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
                 if (parseInt(establishmentInfo.credit_points) > 0 && parseInt(establishmentInfo.credit_price) > 0) {
                     quantRows += 6;
                 }
-
             });
             initialHeightPage = initialHeightPage + quantRows;
             return initialHeightPage
