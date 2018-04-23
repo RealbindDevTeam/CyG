@@ -9,7 +9,6 @@ import { Subscription, Subject, Observable } from 'rxjs';
 import { Establishment } from 'cyg_web/both/models/establishment/establishment.model';
 import { Establishments } from 'cyg_web/both/collections/establishment/establishment.collection';
 import { RewardListComponent } from '../rewards/reward-list/reward-list';
-import { PointsDetailPage } from '../points/points-detail/points-detail';
 
 @Component({
     selector: 'medal-won',
@@ -81,16 +80,6 @@ export class MedalWonPage implements OnInit {
      */
     showRewards(): void {
         this._navCtrl.push(RewardListComponent, { establishment: this._establishmentId }).then(() => {
-            const index = this._viewCtrl.index;
-            this._navCtrl.remove(index);
-        });
-    }
-
-    /**
-     * Show establishment points
-     */
-    showEstablishmentPoints(): void {
-        this._navCtrl.push(PointsDetailPage, { _establishment_id: this._establishmentId }).then(() => {
             const index = this._viewCtrl.index;
             this._navCtrl.remove(index);
         });
