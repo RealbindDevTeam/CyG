@@ -83,9 +83,13 @@
     <engine name="android" spec="6.3.0" />
     <engine name="ios" spec="4.5.4" />
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
+    <plugin name="cordova-plugin-facebook4" spec="^1.7.4">
+        <variable name="APP_ID" value="128565331134597" />
+        <variable name="APP_NAME" value="devi4t" />
+    </plugin>
     <plugin name="cordova-plugin-googlemaps" spec="^2.2.9">
-        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyDUBo00GYeMdippV_w7-vQcz5dFLwmNUvg" />
-        <variable name="API_KEY_FOR_IOS" value="AIzaSyA6dAn1EKKLsL6LcJ8cdGD6BOThZEO4H3Q" />
+        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyBF9_4-7dq9SXko_FHMFtphI3dVbcE4jQc" />
+        <variable name="API_KEY_FOR_IOS" value="AIzaSyDBzEpFYRne6-5E5ulKNt8yGwG34lO7VDk" />
         <variable name="PLAY_SERVICES_VERSION" value="12.0.0" />
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.0" />
         <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="This app wants to get your location while this app runs only." />

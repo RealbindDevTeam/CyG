@@ -345,7 +345,7 @@
             "QUANTITY": "Units:",
             "ENTER_NUMBER": "Enter number",
             "OBSERVATIONS": "ADD COMMENTS",
-            "ADDITIONS": "Select the additions",
+            "ADDITIONS": "Recommended additions",
             "GARNISHES": "Side dishes",
             "MODAL_CANCEL": "Cancel",
             "MODEL_INDICATION": "Add your comments (e.g., no onion...)",
@@ -610,7 +610,7 @@
             "MSG": "Select a restaurant to check the profile and menu offered"
         },
         "USER_REWARDS": {
-            "NO_REWARDS": "You have not redeemed rewards in this restaurant yet",
+            "NO_REWARDS": "You have not redeemed rewards yet",
             "TITLE": "Awards",
             "MSG": "Congratulations! These are the rewards that you have won",
             "MEDALS_REDEEMED": "Medals Redeemed"

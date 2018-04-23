@@ -21,14 +21,14 @@
                             </div>
                             <div style="margin-top: 1%;">
                                 <mat-form-field style="width: 48%">
-                                    <textarea matInput required formControlName="name" placeholder="{{'RESTAURANT_REGISTER.NAME' | translate}}" minlength="1"
-                                        maxlength="50" #inputName></textarea>
+                                    <input matInput required formControlName="name" placeholder="{{'RESTAURANT_REGISTER.NAME' | translate}}" minlength="1"
+                                        maxlength="50" #inputName>
                                     <mat-hint align="end">{{inputName.value.length}} / 50</mat-hint>
                                 </mat-form-field>
                                 <mat-form-field style="width: 48%;margin-left: 2%;">
-                                    <textarea matInput required formControlName="address" placeholder="{{'RESTAURANT_REGISTER.ADDRESS' | translate}}" minlength="1"
-                                        maxlength="90" #inputAddress></textarea>
-                                    <mat-hint align="end">{{inputAddress.value.length}} / 90</mat-hint>
+                                    <input matInput required formControlName="address" placeholder="{{'RESTAURANT_REGISTER.ADDRESS' | translate}}" minlength="1"
+                                        maxlength="40" #inputAddress>
+                                    <mat-hint align="end">{{inputAddress.value.length}} / 40</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div style="margin-top: 1%;">
@@ -38,9 +38,9 @@
                                 </div>
                                 <mat-form-field style="width: 48%;margin-left: 2%;">
                                     <input matInput required formControlName="phone" type="tel" placeholder="{{'RESTAURANT_REGISTER.PHONE' | translate}}" minlength="1"
-                                        maxlength="30" #inputPhone>
+                                        maxlength="20" #inputPhone>
                                     <div matPrefix>{{_countryIndicative}}&nbsp;</div>
-                                    <mat-hint align="end">{{inputPhone.value.length}} / 30</mat-hint>
+                                    <mat-hint align="end">{{inputPhone.value.length}} / 20</mat-hint>
                                 </mat-form-field>
                             </div>
                             <div style="display: inline-block;width: 48%;text-align: left;">
@@ -68,7 +68,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <p>{{'RESTAURANT_REGISTER.TABLES_MSG' | translate}}</p>
                         </mat-card-content>
                         <mat-card-actions align="end">
                             <button mat-raised-button (click)="cancel()">{{'CANCEL' | translate}}</button>
