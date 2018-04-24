@@ -4,7 +4,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content text-wrap>
+<ion-content>
     <div *ngIf="!_showEstablishments" style="padding: 0 16px;">
         <div class="img">
             <img src="assets/img/payments-history.png">
@@ -23,25 +23,44 @@
             <ion-icon name="close"></ion-icon>
         </button>
     </div>
-    
-    <div *ngIf="_showEstablishments" class="main">
-        <span *ngFor="let establishment_medal of _establishmentMedals | async">
-            <span *ngFor="let _establishment of _establishments | async">
-                <span *ngIf="establishment_medal.establishment_id === _establishment._id && establishment_medal.medals > 0">
-                    <ion-list style="margin: 0 auto; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);">
-                        <button ion-item (click)="openRewardList(_establishment._id)">
-                            <ion-thumbnail item-left>
-                                <img *ngIf="_establishment.image" src="{{ _establishment.image.url }}">
-                                <img *ngIf="!_establishment.image" src="assets/img/default-restaurant.png">
-                            </ion-thumbnail>
-                            <h2>{{_establishment.name}}</h2>
-                            <p>{{_establishment.address}}</p>
-                            <p style="font-weight: bold;color: #4CAF50">{{establishment_medal.medals}} {{'MOBILE.REWARDS.ACCUMULATED_MEDALS' | translate}}</p>
+
+    <!--div *ngIf="_showEstablishments" padding>
+        <div *ngFor="let establishment_medal of _establishmentMedals | async">
+            <button *ngFor="let _establishment of _establishments | async;" ion-button block clear color="cwhite" class="button-profile border"
+                (click)="openRewardList(_establishment._id)">
+                <div class="profile-header">
+                    <ion-item no-lines>
+                        <img item-start *ngIf="_establishment.image" src="{{ _establishment.image.url }}">
+                        <img item-start *ngIf="!_establishment.image" src="assets/img/default-restaurant.png">
+                        <h2>{{_establishment.name}}</h2-->
+                        <!--p>
+                            <ion-icon color="danger" name="pin" item-start></ion-icon>
+                            {{establishment.address}}, {{establishment.city}}
+                        </p-->
+                        <!--p>{{establishment_medal.medals}} {{'MOBILE.REWARDS.ACCUMULATED_MEDALS' | translate}}</p>
+                        <button ion-button item-end color="corange" class="button-orange button-cust">
+                            Redimir
                         </button>
-                    </ion-list>
-                    <br/>
-                </span>
-            </span>
-        </span>
+
+                    </ion-item>
+                </div>
+            </button>
+        </div>
+    </div-->
+
+    <div *ngIf="_showEstablishments" padding text-wrap>
+        <div *ngFor="let establishment_medal of _establishmentMedals | async">
+            <button ion-button color="corange" class="button-action button-orange button-cust" *ngFor="let _establishment of _establishments | async;"
+                (click)="openRewardList(_establishment._id)">
+                <div class="profile-header color-text-white">
+                    <ion-item no-lines>
+                        <img item-start *ngIf="_establishment.image" src="{{ _establishment.image.url }}">
+                        <img item-start *ngIf="!_establishment.image" src="assets/img/default-restaurant.png">
+                        <h2>{{_establishment.name}}</h2>
+                        <p>{{establishment_medal.medals}} {{'MOBILE.REWARDS.ACCUMULATED_MEDALS' | translate}}</p>
+                    </ion-item>
+                </div>
+            </button>
+        </div>
     </div>
 </ion-content>

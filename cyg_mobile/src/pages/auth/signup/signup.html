@@ -59,7 +59,7 @@
       <p *ngIf="showConfirmError" class="error-message"> {{'MOBILE.SIGNUP.PASSWORD_NOT_MATCH' | translate}}</p>
     </div>
 
-    <button ion-button block class="button-red button-cust" type="submit" [disabled]="!signupForm.valid">{{'MOBILE.INITIAL.SIGNUP' | translate}}
+    <button ion-button block color="danger" class="button-red button-cust" type="submit" [disabled]="!signupForm.valid">{{'MOBILE.INITIAL.SIGNUP' | translate}}
     </button>
   </form>
 

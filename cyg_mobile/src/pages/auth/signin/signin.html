@@ -11,7 +11,7 @@
   <form [formGroup]="signinForm" (ngSubmit)="login()" novalidate>
     <ion-input type="text" formControlName="email" placeholder="{{'MOBILE.SIGNIN.EMAIL_USERNAME' | translate}}"></ion-input>
     <ion-input type="password" formControlName="password" placeholder="{{'MOBILE.SIGNIN.PASSWORD' | translate}}"></ion-input>
-    <button ion-button block class="button-red button-cust" type="submit" [disabled]="!signinForm.valid">{{'MOBILE.SIGNIN.START_SESSION' | translate}}</button>
+    <button ion-button color="danger" class="button-red button-cust" type="submit" [disabled]="!signinForm.valid">{{'MOBILE.SIGNIN.START_SESSION' | translate}}</button>
     <button (click)="sendEmailPrompt()" ion-button clear block style="color: #fff" class="button-social">{{'MOBILE.SIGNIN.FORGOT_PASSWORD' | translate}}</button>
   </form>
 

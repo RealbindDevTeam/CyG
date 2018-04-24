@@ -55,7 +55,7 @@
     "ionicons": "3.0.0",
     "meteor-node-stubs": "^0.3.2",
     "meteor-rxjs": "^0.4.8",
-    "phonegap-plugin-barcodescanner": "^7.0.0",
+    "phonegap-plugin-barcodescanner": "^7.1.1",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "typescript": "^2.6.1",
@@ -79,13 +79,8 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-statusbar": {},
-      "phonegap-plugin-barcodescanner": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-network-information": {},
-      "cordova-plugin-facebook4": {
-        "APP_ID": "128565331134597",
-        "APP_NAME": "devi4t"
-      },
       "cordova-plugin-googlemaps": {
         "API_KEY_FOR_ANDROID": "AIzaSyBF9_4-7dq9SXko_FHMFtphI3dVbcE4jQc",
         "API_KEY_FOR_IOS": "AIzaSyDBzEpFYRne6-5E5ulKNt8yGwG34lO7VDk",
@@ -93,6 +88,13 @@
         "ANDROID_SUPPORT_V4_VERSION": "24.1.0",
         "LOCATION_WHEN_IN_USE_DESCRIPTION": "This app wants to get your location while this app runs only.",
         "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background."
+      },
+      "cordova-plugin-facebook4": {
+        "APP_ID": "128565331134597",
+        "APP_NAME": "devi4t"
+      },
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
       }
     },
     "dependencies": {
@@ -179,8 +181,8 @@
       ]
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

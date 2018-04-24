@@ -20,13 +20,14 @@ export class RewardsPage implements OnInit, OnDestroy {
     private _user = Meteor.userId();
     private _establishmentsSub: Subscription;
     private _establishmentMedalSub: Subscription;
+    private disconnectSubscription: Subscription;
     private ngUnsubscribe: Subject<void> = new Subject<void>();
 
     private _establishmentMedals: Observable<EstablishmentMedal[]>;
     private _establishments: Observable<Establishment[]>;
 
     private _showEstablishments: boolean = true;
-    private disconnectSubscription: Subscription;
+    private _hiddenDiv: boolean = false;
 
     /**
      * RewardsPage constructor
@@ -147,6 +148,11 @@ export class RewardsPage implements OnInit, OnDestroy {
             ]
         });
         alert.present();
+    }
+
+
+    hiddenDiv(){
+        this._hiddenDiv = true;
     }
 
     itemNameTraduction(itemName: string): string {
