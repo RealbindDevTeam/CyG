@@ -8,8 +8,8 @@ import { Meteor } from 'meteor/meteor';
 import { Chart } from 'angular-highcharts';
 import { Establishment } from '../../../../../../../both/models/establishment/establishment.model';
 import { Establishments } from '../../../../../../../both/collections/establishment/establishment.collection';
-import { OrderHistory } from '../../../../../../../both/models/establishment/order-history.model';
-import { OrderHistories } from '../../../../../../../both/collections/establishment/order-history.collection';
+import { RewardHistory } from '../../../../../../../both/models/points/reward-history.model';
+import { RewardHistories } from '../../../../../../../both/collections/points/reward-history.collection';
 
 @Component({
     selector: 'reward-history-chart',
@@ -22,11 +22,9 @@ export class RewardHistoryChartComponent implements OnInit, OnDestroy {
     private _establishmentId: string = null;
     private rewardHistoryChart;
     private _establishmentsSubscription: Subscription;
+    private _rewardHistoriesSubscription: Subscription;
     private _establishment: Establishment = null;
-
-    private _orderHistoriesSubscription: Subscription;
-    private _ordersHistory: Observable<OrderHistory[]>;
-
+    private _rewardHistories: Observable<RewardHistory[]>;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
     private xAxisArray: string[] = [];
     private yesterdaySeriesArray: number[] = [];
@@ -83,20 +81,56 @@ export class RewardHistoryChartComponent implements OnInit, OnDestroy {
             });
         });
 
-        this._orderHistoriesSubscription = MeteorObservable.subscribe('getOrderHistoryByEstablishment', this._establishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._ordersHistory = OrderHistories.find({}).zone();
-                this._ordersHistory.subscribe(() => {
-                    this.setBarChartData();
-                });
+        this._rewardHistoriesSubscription = MeteorObservable.subscribe('getRewardHistoriesByEstablishmentId', this._establishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
+            this._rewardHistories = RewardHistories.find({ establishment_id: this._establishmentId }).zone();
+            this._rewardHistories.subscribe(() => {
+                this.setBarChartData();
             });
         });
     }
+    /**
+    * Set the chart data according to the initial conditions
+    */
+    setBarChartData() {
+        let chartTitle: string = this.itemNameTraduction('REWARD_HISTORY_CHART.CHART_TITLE');
+        let chartSubtitle: string = this.itemNameTraduction('REWARD_HISTORY_CHART.CHART_SUBTITLE');
+        let unitsLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.UNITS_LBL');
+        let itemsLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.REWARDS_LBL');
+        let yesterdayLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.YESTERDAY')
+        let lastSevenDaysLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.SEVEN_DAYS');
+        let lastThirtyDaysLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.THIRTY_DAYS');
+
+        this.xAxisArray = [];
+        this.yesterdaySeriesArray = [];
+        this.lastSevenDaysArray = [];
+        this.lastThirtyDaysArray = [];
+        this.rewardNameArray = [];
+
+        RewardHistories.collection.find({}).fetch().forEach((rewardHistory) => {
+            let indexofvar = this.rewardNameArray.indexOf(rewardHistory.item_name);
+            if (indexofvar < 0) {
+                this.rewardNameArray.push(rewardHistory.item_name);
+            }
+        });
+        this.rewardNameArray.sort();
+        this.xAxisArray = this.rewardNameArray;
+
+        this.rewardNameArray.forEach((itemName) => {
+            let _yesterdayAggregate: number = 0;
+            let _lastSevenDaysAggregate: number = 0;
+            let _lastThirtyDaysAggregate: number = 0;
+
+            
+        });
+
+    }
+
+
 
     /**
      * Set the chart data according to the initial conditions
      */
-    setBarChartData() {
+    setBarChartData1() {
         let chartTitle: string = this.itemNameTraduction('REWARD_HISTORY_CHART.CHART_TITLE');
         let chartSubtitle: string = this.itemNameTraduction('REWARD_HISTORY_CHART.CHART_SUBTITLE');
         let unitsLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.UNITS_LBL');
