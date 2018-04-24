@@ -122,8 +122,8 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
             country: new FormControl('', [Validators.required]),
             city: new FormControl('', [Validators.required]),
             name: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
-            address: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(90)]),
-            phone: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]),
+            address: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
+            phone: new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
             image: new FormControl(''),
             paymentMethods: this._paymentsFormGroup
         });
@@ -335,7 +335,7 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
 
                 let _lEstablishmentQRCode: string = this.generateEstablishmentQRCode();
                 let _lCodeGenerator = generateQRCode(_lEstablishmentQRCode);
-                let _lUriRedirect: string = _lUrl + _lCodeGenerator.getQRCode();
+                let _lUriRedirect: string = _lUrl + '\0' + '/qr?' + _lCodeGenerator.getQRCode();
 
                 let _lQrCode = new QRious({
                     background: 'white',

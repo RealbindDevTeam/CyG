@@ -1374,7 +1374,8 @@
         "ORDER_MANAGEMENT_TEXT": "The orders that your clients make will be assigned to the servers that you link in the system, the orders can be viewed from any mobile device or computer.",
         "ORDERS_DAY": "Orders of the day",
         "ORDERS_DAY_TEXT": "Through the cashier role, you can see the detailed information of the orders that have been made in your restaurant, and thus be able to identify what is consumed by each client and the rewards that have been redeemed.",
-        "COPYRIGHT": "All rights reserved"
+        "COPYRIGHT": "All rights reserved",
+        "MAX_LENGTH_CITY": "The city cannot exceed 50 characters long"
     },
     "ADMIN_DASHBOARD": {
         "TITLE": "Welcome to comeygana",
@@ -1846,7 +1847,17 @@
         "SUBTITLE": "Here you can to purchase the package of points by restaurant that you want",
         "THERE_NOT_RESTAURANTS": "There are not restaurants register yet",
         "MESSAGE": "Register at least one restaurant to enable this option",
-        "RESTAURANT_REGISTER": ""
+        "RESTAURANT_REGISTER": "Restaurant register",
+        "RESTAURANT_NAME": "Restaurant name",
+        "PACKAGE_OF_MEDALS": "Package of medals",
+        "PRICE": "Price",
+        "MEDALS": "Medals",
+        "SELECTED_PACKAGE": "Selected package",
+        "VALUE": "Value",
+        "PENDING_MEDALS": "Pending medals to pay",
+        "TOTAL_PRICE": "Total: ",
+        "PAY": "Pay",
+        "ADVICE_MEDALS": "* The value of the pending medals is calculated according to the price of one medal of the smallest package"
     },
     "APPROVE_REWARDS": {
         "THERE_NOT_RESTAURANTS": "There are not restaurants register yet",

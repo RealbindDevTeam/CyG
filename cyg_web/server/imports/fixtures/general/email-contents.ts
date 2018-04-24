@@ -26,7 +26,17 @@ export function loadEmailContents() {
                     { label: 'reminderRestExpiredVar2', traduction: 'Has expired' },
                     { label: 'reminderRestExpiredVar3', traduction: 'If you want to continue using all the system features, entering with your email or username and select the menu Payments > Reactivate ' },
                     { label: 'restExpiredEmailSubjectVar', traduction: 'Your comeygana service has expired' },
-                    { label: 'resetPasswordSubjectVar', traduction: 'Reset your password on' }
+                    { label: 'resetPasswordSubjectVar', traduction: 'Reset your password on' },
+                    { label: 'reminderCurrentMedals1', traduction: 'Soon you will finish your medals for ' },
+                    { label: 'reminderCurrentMedals2', traduction: 'You only have ' },
+                    { label: 'reminderCurrentMedals3', traduction: ' medals' },
+                    { label: 'reminderCurrentMedals4', traduction: 'Select the menu Packages > Buy packages and continues loyalty your customers with comeygana' },
+                    { label: 'checkMedalsSubjectVar', traduction: 'Your medals will end soon' },
+                    { label: 'reminderNegativeMedals1', traduction: 'You have finished your medals for ' },
+                    { label: 'reminderNegativeMedals2', traduction: 'But do not worry, we have lent you ' },
+                    { label: 'reminderNegativeMedals3', traduction: 'medals while you buy a new package' },
+                    { label: 'reminderNegativeMedals4', traduction: 'To buy a new package select the menu Packages > Buy packages and continues loyalty your customers with comeygana' },
+                    { label: 'checkNegativeSubjectVar', traduction: 'Your medals are over' }
                 ]
             },
             {
@@ -51,7 +61,17 @@ export function loadEmailContents() {
                     { label: 'reminderRestExpiredVar2', traduction: 'ha expirado' },
                     { label: 'reminderRestExpiredVar3', traduction: 'Si deseas seguir usando todas las funcionalidades del sistema, ingresa con tu usuario o correo y selecciona la opción Pagos > Reactivar ' },
                     { label: 'restExpiredEmailSubjectVar', traduction: 'Tu servicio de comeygana ha expirado' },
-                    { label: 'resetPasswordSubjectVar', traduction: 'Cambio de contraseña en' }
+                    { label: 'resetPasswordSubjectVar', traduction: 'Cambio de contraseña en' },
+                    { label: 'reminderCurrentMedals1', traduction: 'Pronto terminarás tus medallas para ' },
+                    { label: 'reminderCurrentMedals2', traduction: 'Únicamente tienes ' },
+                    { label: 'reminderCurrentMedals3', traduction: ' medallas' },
+                    { label: 'reminderCurrentMedals4', traduction: 'Selecciona el menú Paquetes > Compra de paquetes, y continua fidelizando a tus clientes con comeygana' },
+                    { label: 'checkMedalsSubjectVar', traduction: 'Tus medallas comeygana están próximas a terminar' },
+                    { label: 'reminderNegativeMedals1', traduction: 'Has terminado las medallas para ' },
+                    { label: 'reminderNegativeMedals2', traduction: 'Pero no te preocupes te préstamos las ' },
+                    { label: 'reminderNegativeMedals3', traduction: 'medallas que has usado, mientras adquieres un nuevo paquete' },
+                    { label: 'reminderNegativeMedals4', traduction: 'Para comprar un nuevo paquete selecciona el menu Paquetes > Compra de paquetes, y continua fidelizando tu cliente con comeygana' },
+                    { label: 'checkNegativeSubjectVar', traduction: 'Tus medallas se han acabado' }
                 ]
             }
         ];

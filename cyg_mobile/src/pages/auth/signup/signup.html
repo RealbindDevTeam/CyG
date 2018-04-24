@@ -59,12 +59,15 @@
       <p *ngIf="showConfirmError" class="error-message"> {{'MOBILE.SIGNUP.PASSWORD_NOT_MATCH' | translate}}</p>
     </div>
 
-    <button ion-button block class="button-primary button-social" type="submit" [disabled]="!signupForm.valid">{{'MOBILE.INITIAL.SIGNUP' | translate}}
+    <button ion-button block class="button-red button-cust" type="submit" [disabled]="!signupForm.valid">{{'MOBILE.INITIAL.SIGNUP' | translate}}
     </button>
   </form>
 
-  <button ion-button block class="btn-facebook button-social" (click)="loginWithFacebook()">
-    <i class="fab fa-facebook-f icon-social"></i>Facebook
+  <button ion-button block class="btn-facebook button-cust" (click)="loginWithFacebook()">
+    <span class="icon-social">
+      <i class="fab fa-facebook-f"></i>
+    </span>
+    Facebook
   </button>
   <button ion-button clear block style="color: #fff" class="button-social">{{'MOBILE.POPOVER_OPTIONS.TERMS' | translate}}</button>
 </ion-content>

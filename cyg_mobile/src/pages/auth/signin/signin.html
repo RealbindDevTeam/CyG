@@ -11,12 +11,14 @@
   <form [formGroup]="signinForm" (ngSubmit)="login()" novalidate>
     <ion-input type="text" formControlName="email" placeholder="{{'MOBILE.SIGNIN.EMAIL_USERNAME' | translate}}"></ion-input>
     <ion-input type="password" formControlName="password" placeholder="{{'MOBILE.SIGNIN.PASSWORD' | translate}}"></ion-input>
-    <button ion-button block class="button-primary button-social" type="submit" [disabled]="!signinForm.valid">{{'MOBILE.SIGNIN.START_SESSION' | translate}}</button>
+    <button ion-button block class="button-red button-cust" type="submit" [disabled]="!signinForm.valid">{{'MOBILE.SIGNIN.START_SESSION' | translate}}</button>
     <button (click)="sendEmailPrompt()" ion-button clear block style="color: #fff" class="button-social">{{'MOBILE.SIGNIN.FORGOT_PASSWORD' | translate}}</button>
   </form>
 
-  <button ion-button block class="btn-facebook button-social" type="submit" (click)="loginWithFacebook()">
-    <i class="fab fa-facebook-f icon-social"></i>
+  <button ion-button block class="btn-facebook button-cust" type="submit" (click)="loginWithFacebook()">
+    <span class="icon-social">
+      <i class="fab fa-facebook-f"></i>
+    </span>
     Facebook
   </button>
 </ion-content>

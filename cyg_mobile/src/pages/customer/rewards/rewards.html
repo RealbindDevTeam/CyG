@@ -9,13 +9,21 @@
         <div class="img">
             <img src="assets/img/payments-history.png">
         </div>
-        <div class="content" style="text-align: center">
+        <div class="content">
             <h1>{{'MOBILE.REWARDS.NO_REWARDS_MSG' | translate}}</h1>
         </div>
     </div>
-    <h6 *ngIf="_showEstablishments" style="margin: 20px;text-align: center">
+    <!--h6 *ngIf="_showEstablishments" style="margin: 20px;text-align: center">
         {{'MOBILE.REWARDS.MSG' | translate}}
-    </h6>
+    </h6-->
+
+    <div *ngIf="_showEstablishments" [hidden]="_hiddenDiv" padding class="page-title">
+        <span>{{'MOBILE.REWARDS.MSG' | translate}}</span>
+        <button id="close" class="close-btn" (click)="hiddenDiv()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+    </div>
+    
     <div *ngIf="_showEstablishments" class="main">
         <span *ngFor="let establishment_medal of _establishmentMedals | async">
             <span *ngFor="let _establishment of _establishments | async">
