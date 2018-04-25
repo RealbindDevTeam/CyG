@@ -136,6 +136,7 @@ export class RewardUnitsChartComponent implements OnInit, OnDestroy {
             },
             yAxis: {
                 min: 0,
+                allowDecimals: false,
                 title: {
                     text: unitsLbl,
                     align: 'high'

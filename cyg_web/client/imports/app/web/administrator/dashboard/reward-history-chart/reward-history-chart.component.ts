@@ -120,102 +120,51 @@ export class RewardHistoryChartComponent implements OnInit, OnDestroy {
             let _lastSevenDaysAggregate: number = 0;
             let _lastThirtyDaysAggregate: number = 0;
 
-            
-        });
-
-    }
-
-
-
-    /**
-     * Set the chart data according to the initial conditions
-     */
-    setBarChartData1() {
-        let chartTitle: string = this.itemNameTraduction('REWARD_HISTORY_CHART.CHART_TITLE');
-        let chartSubtitle: string = this.itemNameTraduction('REWARD_HISTORY_CHART.CHART_SUBTITLE');
-        let unitsLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.UNITS_LBL');
-        let itemsLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.REWARDS_LBL');
-        let yesterdayLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.YESTERDAY')
-        let lastSevenDaysLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.SEVEN_DAYS');
-        let lastThirtyDaysLbl: string = this.itemNameTraduction('REWARD_HISTORY_CHART.THIRTY_DAYS');
-
-        this.xAxisArray = [];
-        this.yesterdaySeriesArray = [];
-        this.lastSevenDaysArray = [];
-        this.lastThirtyDaysArray = [];
-        this.rewardNameArray = [];
-
-        OrderHistories.collection.find({}).fetch().forEach((orderHistory) => {
-            orderHistory.items.forEach((item) => {
-                if (item.is_reward) {
-                    let indexofvar = this.rewardNameArray.indexOf(item.item_name);
-                    if (indexofvar < 0) {
-                        this.rewardNameArray.push(item.item_name);
-                    }
-                }
-            });
-        });
-        this.rewardNameArray.sort();
-        this.xAxisArray = this.rewardNameArray;
-
-        this.rewardNameArray.forEach((itemName) => {
-            let _yesterdayAggregate: number = 0;
-            let _lastSevenDaysAggregate: number = 0;
-            let _lastThirtyDaysAggregate: number = 0;
-
             //Orders yesterday
-            OrderHistories.collection.find({
-                'items.item_name': itemName,
-                'creation_date': {
+            RewardHistories.collection.find({
+                item_name: itemName,
+                creation_date: {
                     $gte: new Date(this._yesterdayDateIni.getFullYear(), this._yesterdayDateIni.getMonth(), this._yesterdayDateIni.getDate()),
                     $lte: new Date(this._yesterdayDateEnd.getFullYear(), this._yesterdayDateEnd.getMonth(), this._yesterdayDateEnd.getDate(), 23, 59, 59)
                 }
-            }).fetch().forEach((orderHistory) => {
-                orderHistory.items.forEach((orderHistoryItem) => {
-                    if ((orderHistoryItem.item_name === itemName) && orderHistoryItem.is_reward) {
-                        _yesterdayAggregate = _yesterdayAggregate + orderHistoryItem.quantity;
-                    }
-                });
+            }).fetch().forEach((rewardHistory) => {
+                if (rewardHistory.item_name === itemName) {
+                    _yesterdayAggregate = _yesterdayAggregate + rewardHistory.item_quantity;
+                }
             });
             this.yesterdaySeriesArray.push(_yesterdayAggregate);
 
             //Orders last seven days
-            OrderHistories.collection.find({
-                'items.item_name': itemName,
-                'creation_date': {
+            RewardHistories.collection.find({
+                item_name: itemName,
+                creation_date: {
                     $gte: new Date(this._lastSevenDaysDateIni.getFullYear(), this._lastSevenDaysDateIni.getMonth(), this._lastSevenDaysDateIni.getDate()),
                     $lte: new Date(this._lastSevenDaysDateEnd.getFullYear(), this._lastSevenDaysDateEnd.getMonth(), this._lastSevenDaysDateEnd.getDate(), 23, 59, 59)
                 }
-            }).fetch().forEach((orderHistory) => {
-                orderHistory.items.forEach((orderHistoryItem) => {
-                    if ((orderHistoryItem.item_name === itemName) && orderHistoryItem.is_reward) {
-                        _lastSevenDaysAggregate = _lastSevenDaysAggregate + orderHistoryItem.quantity;
-                    }
-                });
+            }).fetch().forEach((rewardHistory) => {
+                if (rewardHistory.item_name === itemName) {
+                    _lastSevenDaysAggregate = _lastSevenDaysAggregate + rewardHistory.item_quantity;
+                }
             });
             this.lastSevenDaysArray.push(_lastSevenDaysAggregate);
 
-            //Orders last thirty days
-            OrderHistories.collection.find({
-                'items.item_name': itemName,
-                'creation_date': {
+            RewardHistories.collection.find({
+                item_name: itemName,
+                creation_date: {
                     $gte: new Date(this._lastThirtyDaysDateIni.getFullYear(), this._lastThirtyDaysDateIni.getMonth(), this._lastThirtyDaysDateIni.getDate()),
                     $lte: new Date(this._lastThirtyDaysDateEnd.getFullYear(), this._lastThirtyDaysDateEnd.getMonth(), this._lastThirtyDaysDateEnd.getDate(), 23, 59, 59)
                 }
-            }).fetch().forEach((orderHistory) => {
-                orderHistory.items.forEach((orderHistoryItem) => {
-                    if ((orderHistoryItem.item_name === itemName) && orderHistoryItem.is_reward) {
-                        _lastThirtyDaysAggregate = _lastThirtyDaysAggregate + orderHistoryItem.quantity;
-                    }
-                });
+            }).fetch().forEach((rewardHistory) => {
+                if (rewardHistory.item_name === itemName) {
+                    _lastThirtyDaysAggregate = _lastThirtyDaysAggregate + rewardHistory.item_quantity;
+                }
             });
             this.lastThirtyDaysArray.push(_lastThirtyDaysAggregate);
         });
 
         this.rewardHistoryChart = new Chart({
             chart: {
-                type: 'bar',
-                height: "100%"
+                type: 'bar'
             },
             title: {
                 text: chartTitle,
@@ -231,6 +180,7 @@ export class RewardHistoryChartComponent implements OnInit, OnDestroy {
             },
             yAxis: {
                 min: 0,
+                allowDecimals: false,
                 title: {
                     text: unitsLbl,
                     align: 'high'
