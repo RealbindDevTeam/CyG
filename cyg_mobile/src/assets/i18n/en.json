@@ -619,7 +619,7 @@
             "TITLE": "Redeem Medals",
             "MSG": "Select a restaurant to check the rewards it has for you",
             "NO_REWARDS_MSG": "You have not accumulated medals in any restaurant yet. Encourage!",
-            "ACCUMULATED_MEDALS": "Accumulated Medals"
+            "ACCUMULATED_MEDALS": "Medals"
         }
     },
     "CURRENCIES": {

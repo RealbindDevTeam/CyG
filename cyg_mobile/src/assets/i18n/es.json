@@ -619,7 +619,7 @@
             "TITLE": "Redimir Medallas",
             "MSG": "Selecciona un restaurante para consultar las recompensas que tiene para ti",
             "NO_REWARDS_MSG": "Aún no has acumulado medallas en ningún restaurante. Animate!",
-            "ACCUMULATED_MEDALS": "Medallas Acumuladas"
+            "ACCUMULATED_MEDALS": "Medallas"
         }
     },
     "CURRENCIES": {
