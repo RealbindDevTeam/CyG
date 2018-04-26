@@ -212,38 +212,6 @@ export function loadMenus() {
                             icon_name: "",
                             order: 3003
                         }, {
-                            _id: "3004",
-                            is_active: true,
-                            name: "MENUS.MENU_DEFINITION.ADDITIONS",
-                            url: "/app/additions",
-                            icon_name: "",
-                            order: 3004
-                        }, {
-                            _id: "3005",
-                            is_active: true,
-                            name: "MENUS.MENU_DEFINITION.OPTIONS_VALUES",
-                            url: "",
-                            icon_name: "",
-                            order: 3005,
-                            children: [
-                                {
-                                    _id: "30051",
-                                    is_active: true,
-                                    name: "MENUS.MENU_DEFINITION.OPTIONS",
-                                    url: "/app/options",
-                                    icon_name: "",
-                                    order: 30051
-                                },
-                                {
-                                    _id: "30052",
-                                    is_active: true,
-                                    name: "MENUS.MENU_DEFINITION.VALUES",
-                                    url: "/app/option-values",
-                                    icon_name: "",
-                                    order: 30052
-                                }
-                            ]
-                        }, {
                             _id: "3006",
                             is_active: true,
                             name: "MENUS.MENU_DEFINITION.ITEMS",

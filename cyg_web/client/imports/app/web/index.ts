@@ -5,14 +5,12 @@ import { SignupWebComponent } from './auth/signup/signup.web.component';
 import { SigninWebComponent } from './auth/signin/signin.web.component';
 import { CategoryComponent } from './administrator/menu/categories/categories/categories.component';
 import { SubcategoryComponent } from './administrator/menu/subcategories/subcategories/subcategories.component';
-import { AdditionComponent } from './administrator/menu/additions/addition/addition.component';
 import { TableComponent } from './administrator/administration/tables/table/table.component';
 import { EstablishmentRegisterComponent } from './administrator/administration/establishment/register/establishment-register.component';
 import { SettingsWebComponent } from './settings/settings/settings.web.component';
 import { ChangeEmailWebComponent } from './settings/modal-dialog/change-email/change-email.web.component';
 import { ChangePasswordWebComponent } from './settings/modal-dialog/change-password/change-password.web.component';
 import { EstablishmentComponent } from './administrator/administration/establishment/establishment/establishment.component';
-import { AdditionEditComponent } from './administrator/menu/additions/addition-edit/addition-edit.component';
 import { CategoriesEditComponent } from './administrator/menu/categories/categories-edit/categories-edit.component';
 import { SubcategoryEditComponent } from './administrator/menu/subcategories/subcategories-edit/subcategories-edit.component';
 import { SectionEditComponent } from './administrator/menu/sections/section-edit/section-edit.component';
@@ -56,10 +54,6 @@ import { RewardEditComponent } from './administrator/rewards/reward-edit/reward-
 import { AfterEstablishmentCreationComponent } from './administrator/administration/establishment/register/after-establishment-creation/after-establishment-creation.component';
 import { LightBoxComponent } from './general/lightbox/lightbox.component';
 import { RewardUnitsChartComponent } from './administrator/dashboard/reward-units-chart/reward-units-chart.component';
-import { OptionsComponent } from './administrator/menu/options/options/option/option.component';
-import { OptionEditComponent } from './administrator/menu/options/options/option-edit/option-edit.component';
-import { OptionValueComponent } from './administrator/menu/options/values/option-value/option-value.component';
-import { OptionValueEditComponent } from './administrator/menu/options/values/option-value-edit/option-value-edit.component';
 import { RewardHistoryChartComponent } from './administrator/dashboard/reward-history-chart/reward-history-chart.component';
 import { BagsPaymentComponent } from './administrator/payment/bags-payment/bags-payment.component';
 import { PaymentFormComponent } from './administrator/payment/payment-form/payment-form.component';
@@ -78,7 +72,6 @@ export const WEB_DECLARATIONS = [
     SectionComponent,
     CategoryComponent,
     SubcategoryComponent,
-    AdditionComponent,
     ItemComponent,
     ItemEditionComponent,
     ItemCreationComponent,
@@ -104,8 +97,6 @@ export const WEB_DECLARATIONS = [
     RewardComponent,
     RewardUnitsChartComponent,
     RewardHistoryChartComponent,
-    OptionsComponent,
-    OptionValueComponent,
     RewardHistoryChartComponent,
     BagsPaymentComponent,
     PaymentFormComponent,
@@ -120,7 +111,6 @@ export const MODAL_DIALOG_DECLARATIONS = [
     SectionEditComponent,
     ChangeEmailWebComponent,
     ChangePasswordWebComponent,
-    AdditionEditComponent,
     CategoriesEditComponent,
     SubcategoryEditComponent,
     RecoverWebComponent,
@@ -137,9 +127,7 @@ export const MODAL_DIALOG_DECLARATIONS = [
     Recommended,
     RewardEditComponent,
     AfterEstablishmentCreationComponent,
-    LightBoxComponent,
-    OptionEditComponent,
-    OptionValueEditComponent
+    LightBoxComponent
 ];
 
 export const SERVICES_DECLARATIONS = [
