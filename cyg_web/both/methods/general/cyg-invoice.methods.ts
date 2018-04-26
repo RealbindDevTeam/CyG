@@ -159,7 +159,7 @@ if (Meteor.isServer) {
                 period: _firstMonthDay.getDate() + '/' + (_firstMonthDay.getMonth() + 1) + '/' + _firstMonthDay.getFullYear() +
                     ' - ' + _lastMonthDay.getDate() + '/' + (_lastMonthDay.getMonth() + 1) + '/' + _lastMonthDay.getFullYear(),
                 amount_no_iva: Meteor.call('getReturnBase', lPaymentHistory.paymentValue).toString(),
-                subtotal: "0",
+                subtotal: lPaymentHistory.paymentValue.toString(),
                 iva: "0",
                 total: lPaymentHistory.paymentValue.toString(),
                 currency: lPaymentHistory.currency,
