@@ -3,7 +3,6 @@ import { UserDetails } from '../../../both/collections/auth/user-detail.collecti
 import { Sections } from '../../../both/collections/menu/section.collection';
 import { Categories } from '../../../both/collections/menu/category.collection';
 import { Subcategories } from '../../../both/collections/menu/subcategory.collection';
-import { Additions } from '../../../both/collections/menu/addition.collection';
 import { Items } from '../../../both/collections/menu/item.collection';
 import { PaymentMethods } from '../../../both/collections/general/paymentMethod.collection';
 import { PaymentsHistory } from '../../../both/collections/payment/payment-history.collection';
@@ -18,8 +17,6 @@ import { Languages } from '../../../both/collections/general/language.collection
 import { RewardPoints } from '../../../both/collections/establishment/reward-point.collection';
 import { Rewards } from '../../../both/collections/establishment/reward.collection';
 import { Parameters } from '../../../both/collections/general/parameter.collection';
-import { OptionValues } from '../../../both/collections/menu/option-value.collection';
-import { Options } from '../../../both/collections/menu/option.collection';
 import { InvoicesInfo } from '../../../both/collections/payment/invoices-info.collection';
 import { EstablishmentPoints } from '../../../both/collections/points/establishment-points.collection';
 import { NegativePoints } from '../../../both/collections/points/negative-points.collection';
@@ -50,10 +47,6 @@ export function createdbindexes() {
     // Subcategory Collection Indexes
     Subcategories.collection._ensureIndex({ creation_user: 1 });
     Subcategories.collection._ensureIndex({ category: 1 });
-
-    // Addition Collection Indexes
-    Additions.collection._ensureIndex({ creation_user: 1 });
-    Additions.collection._ensureIndex({ establishments: 1 });
 
     // Item Collection Indexes
     Items.collection._ensureIndex({ creation_user: 1 });
@@ -106,14 +99,6 @@ export function createdbindexes() {
 
     // Parameters Collection Indexes
     Parameters.collection._ensureIndex({ name: 1 });
-
-    // OptionValues Collection Indexes
-    OptionValues.collection._ensureIndex({ creation_user: 1 });
-    OptionValues.collection._ensureIndex({ option_id: 1 });
-
-    // Options Collection Indexes
-    Options.collection._ensureIndex({ creation_user: 1 });
-    Options.collection._ensureIndex({ establishments: 1 });
 
     // InvoicesInfo Collection Indexes
     InvoicesInfo.collection._ensureIndex({ country_id: 1 });
