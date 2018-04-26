@@ -525,7 +525,19 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
             }
         });
         qr_pdf.line(15, y, 195, y);
-        y = this.calculateY(y, 12);
+        y = this.calculateY(y, 10);
+        qr_pdf.setFontStyle('bold');
+        qr_pdf.text(subtotal_lbl, 140, y);
+        qr_pdf.setFontStyle('normal');
+        qr_pdf.text(185, y, cyg_invoice.subtotal.toString(), 'right');
+        qr_pdf.text(195, y, cyg_invoice.currency, 'right');
+        y = this.calculateY(y, 6);
+        qr_pdf.setFontStyle('bold');
+        qr_pdf.text(iva_lbl, 140, y);
+        qr_pdf.setFontStyle('normal');
+        qr_pdf.text(185, y, cyg_invoice.iva.toString(), 'right');
+        qr_pdf.text(195, y, cyg_invoice.currency, 'right');
+        y = this.calculateY(y, 6);
         qr_pdf.setFontStyle('bold');
         qr_pdf.text(total_lbl, 140, y);
         qr_pdf.setFontStyle('normal');
