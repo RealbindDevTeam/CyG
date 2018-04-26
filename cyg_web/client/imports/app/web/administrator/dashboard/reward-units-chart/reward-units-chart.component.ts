@@ -8,9 +8,8 @@ import { Meteor } from 'meteor/meteor';
 import { Chart } from 'angular-highcharts';
 import { Establishment } from '../../../../../../../both/models/establishment/establishment.model';
 import { Establishments } from '../../../../../../../both/collections/establishment/establishment.collection';
-import { OrderHistory } from '../../../../../../../both/models/establishment/order-history.model';
-import { OrderHistories } from '../../../../../../../both/collections/establishment/order-history.collection';
-
+import { RewardHistory } from '../../../../../../../both/models/points/reward-history.model';
+import { RewardHistories } from '../../../../../../../both/collections/points/reward-history.collection';
 
 @Component({
     selector: 'reward-units-chart',
@@ -23,10 +22,9 @@ export class RewardUnitsChartComponent implements OnInit, OnDestroy {
     private _establishmentId: string = null;
     private rewardUnitsChart;
     private _establishmentsSubscription: Subscription;
-    private _orderHistoriesSubscription: Subscription;
+    private _rewardHistoriesSubscription: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
-
-    private _orderHistories: Observable<OrderHistory[]>;
+    private _rewardHistories: Observable<RewardHistory[]>;
     private _establishment: Establishment = null;
 
     private xAxisArray: string[] = [];
@@ -66,19 +64,17 @@ export class RewardUnitsChartComponent implements OnInit, OnDestroy {
             });
         });
 
-        this._orderHistoriesSubscription = MeteorObservable.subscribe('getOrderHistoryByEstablishment', this._establishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._orderHistories = OrderHistories.find({}).zone();
-                this._orderHistories.subscribe(() => {
-                    this.setBarChartData();
-                });
+        this._rewardHistoriesSubscription = MeteorObservable.subscribe('getRewardHistoriesByEstablishmentId', this._establishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
+            this._rewardHistories = RewardHistories.find({ establishment_id: this._establishmentId }).zone();
+            this._rewardHistories.subscribe(() => {
+                this.setBarChartData();
             });
         });
     }
 
     /**
     * Set the chart data according to the initial conditions
-     */
+    */
     setBarChartData() {
         let chartTitle: string = this.itemNameTraduction('REWARD_UNIT_CHART.CHART_TITLE');
         let chartSubtitle: string = this.itemNameTraduction('REWARD_UNIT_CHART.CHART_SUBTITLE');
@@ -90,39 +86,34 @@ export class RewardUnitsChartComponent implements OnInit, OnDestroy {
         this.todaySeriesArray = [];
         this.rewardNameArray = [];
 
-        OrderHistories.collection.find({
-            'creation_date': {
+        RewardHistories.collection.find({
+            creation_date: {
                 $gte: new Date(this._todayDateIni.getFullYear(), this._todayDateIni.getMonth(), this._todayDateIni.getDate()),
                 $lte: new Date(this._todayDateEnd.getFullYear(), this._todayDateEnd.getMonth(), this._todayDateEnd.getDate(), 23, 59, 59)
             }
-        }).fetch().forEach((orderHistory) => {
-            orderHistory.items.forEach((item) => {
-                if (item.is_reward) {
-                    let indexofvar = this.rewardNameArray.indexOf(item.item_name);
-                    if (indexofvar < 0) {
-                        this.rewardNameArray.push(item.item_name);
-                    }
-                }
-            });
+        }).fetch().forEach((rewardHistory) => {
+            let indexofvar = this.rewardNameArray.indexOf(rewardHistory.item_name);
+            if (indexofvar < 0) {
+                this.rewardNameArray.push(rewardHistory.item_name);
+            }
         });
 
         this.rewardNameArray.sort();
         this.xAxisArray = this.rewardNameArray;
+
         this.rewardNameArray.forEach((itemName) => {
             let _todayAggregate: number = 0;
-            //Orders today
-            OrderHistories.collection.find({
-                'items.item_name': itemName,
-                'creation_date': {
+
+            RewardHistories.collection.find({
+                item_name: itemName,
+                creation_date: {
                     $gte: new Date(this._todayDateIni.getFullYear(), this._todayDateIni.getMonth(), this._todayDateIni.getDate()),
                     $lte: new Date(this._todayDateEnd.getFullYear(), this._todayDateEnd.getMonth(), this._todayDateEnd.getDate(), 23, 59, 59)
                 }
-            }).fetch().forEach((orderHistory) => {
-                orderHistory.items.forEach((orderHistoryItem) => {
-                    if ((orderHistoryItem.item_name === itemName) && orderHistoryItem.is_reward) {
-                        _todayAggregate = _todayAggregate + orderHistoryItem.quantity;
-                    }
-                });
+            }).fetch().forEach((rewardHistory) => {
+                if (rewardHistory.item_name === itemName) {
+                    _todayAggregate = _todayAggregate + rewardHistory.item_quantity;
+                }
             });
             this.todaySeriesArray.push(_todayAggregate);
         });
@@ -145,6 +136,7 @@ export class RewardUnitsChartComponent implements OnInit, OnDestroy {
             },
             yAxis: {
                 min: 0,
+                allowDecimals: false,
                 title: {
                     text: unitsLbl,
                     align: 'high'

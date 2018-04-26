@@ -33,6 +33,8 @@ import { TrnResponseConfirmComponent } from './transaction-response-confirm/trn-
 import { PaymentsHistory } from '../../../../../../../both/collections/payment/payment-history.collection';
 import { NegativePoints } from '../../../../../../../both/collections/points/negative-points.collection';
 import { NegativePoint } from '../../../../../../../both/models/points/negative-point.model';
+import { EstablishmentMedals } from '../../../../../../../both/collections/points/establishment-medal.collection';
+import { EstablishmentMedal } from '../../../../../../../both/models/points/establishment-medal.model';
 
 let md5 = require('md5');
 
@@ -619,10 +621,20 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
                 });
 
                 NegativePoints.collection.find({ establishment_id: establishmentPaid.establishmentId, paid: false }).forEach(function <NegativePoint>(negativePoint, index, ar) {
-                    NegativePoints.update({ _id: negativePoint._id }, {
+                    NegativePoints.collection.update({ _id: negativePoint._id }, {
                         $set: {
                             paid: true,
                             bag_plans_history_id: payment_history,
+                            modification_user: Meteor.userId(),
+                            modification_date: new Date()
+                        }
+                    });
+                });
+
+                EstablishmentMedals.collection.find({ establishment_id: establishmentPaid.establishmentId }).forEach(function <EstablishmentMedal>(establishmentMedal, index, ar) {
+                    EstablishmentMedals.collection.update({ _id: establishmentMedal._id }, {
+                        $set: {
+                            is_active: true,
                             modification_user: Meteor.userId(),
                             modification_date: new Date()
                         }
