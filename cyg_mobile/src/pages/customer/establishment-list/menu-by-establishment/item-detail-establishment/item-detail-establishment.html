@@ -17,43 +17,6 @@
         <ion-list>
           <h2 style="font-weight: bold;">{{'MOBILE.SECTIONS.UNIT_PRICE' | translate}} {{ getItemPrice( item ) }} {{_currencyCode}}</h2>
         </ion-list>
-        <br/>
-        <div>
-          <div *ngIf="(item.options.length > 0)">
-            <div *ngFor="let option of _options | async">
-              <div *ngFor="let opt of item.options">
-                <div *ngIf="option._id === opt.option_id">
-                  <p style="font-weight:bold;">{{option.name}}</p>
-                  <span *ngFor="let value of _optionValues | async">
-                    <span *ngFor="let val of opt.values">
-                      <ion-item *ngIf="value._id === val.option_value_id" style="padding-left: 0px">
-                        <ion-label style="white-space: normal">
-                          {{value.name}}
-                          <span *ngIf="val.have_price" style="color: #666">- {{val.price}} {{_currencyCode}}</span>
-                        </ion-label>
-                      </ion-item>
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="item.additions.length > 0">
-            <h3 class="custom-padding">{{'MOBILE.SECTIONS.ADDITIONS' | translate}}:</h3>
-            <div>
-              <div *ngFor="let itemAddition of item.additions">
-                <div *ngFor="let addition of _additions | async">
-                  <ion-item class="ion-item-cust" style="padding-left: 0px" *ngIf="itemAddition ===  addition._id">
-                    <ion-icon name="restaurant" item-start></ion-icon>
-                    <ion-label style="white-space: normal">{{addition.name}} -
-                      <span style="color: #666">{{ getAdditionsPrice( addition ) }} {{_currencyCode}}</span>
-                    </ion-label>
-                  </ion-item>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </ion-card-content>
     </ion-card>
   </div>

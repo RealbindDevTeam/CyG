@@ -10,10 +10,8 @@ import { Sections } from 'cyg_web/both/collections/menu/section.collection';
 import { Categories } from 'cyg_web/both/collections/menu/category.collection';
 import { Subcategories } from 'cyg_web/both/collections/menu/subcategory.collection';
 import { Items } from 'cyg_web/both/collections/menu/item.collection';
-import { Additions } from 'cyg_web/both/collections/menu/addition.collection';
 import { ItemCardEstablishmentComponent } from './item-card-establishment';
 import { ItemDetailEstablishmentPage } from './item-detail-establishment/item-detail-establishment';
-import { AdditionsEstablishmentPage } from '../additions-establishment/additions-establishment';
 
 @Component({
     selector: 'menu-by-establishment-page',
@@ -30,7 +28,6 @@ export class MenuByEstablishmentPage implements OnInit, OnDestroy {
     private _categoriesSubscription: Subscription;
     private _subcategoriesSubscription: Subscription;
     private _itemsSubscription: Subscription;
-    private _additionsSubscription: Subscription;
     private ngUnsubscribe: Subject<void> = new Subject<void>();
 
     //private _userDetail: any;
@@ -41,10 +38,8 @@ export class MenuByEstablishmentPage implements OnInit, OnDestroy {
     private _categories: any;
     private _subcategories: any;
     private _itemImagesThumbs: any;
-    private _additions: any;
 
     private selected: string;
-    private _additionsShow: boolean = false;
     private _establishmentId: string = "";
     private _showMenu: boolean = true;
 
@@ -96,15 +91,6 @@ export class MenuByEstablishmentPage implements OnInit, OnDestroy {
                 this._itemsRecommended = Items.find({ 'establishments.establishment_id': this._establishmentId, 'establishments.recommended': true }).zone();
             });
         });
-        this._additionsSubscription = MeteorObservable.subscribe('additionsByEstablishment', this._establishmentId).takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._ngZone.run(() => {
-                this._additions = Additions.find({ 'establishments.establishment_id': { $in: [this._establishmentId] }, is_active: true }).zone();
-                this._additions.subscribe(() => {
-                    let _lAdditions: number = Additions.collection.find({ 'establishments.establishment_id': { $in: [this._establishmentId] }, is_active: true }).count();
-                    _lAdditions > 0 ? this._additionsShow = true : this._additionsShow = false;
-                });
-            });
-        });
     }
 
     countItems(): void {
@@ -118,8 +104,6 @@ export class MenuByEstablishmentPage implements OnInit, OnDestroy {
             this._sections = Sections.find({});
             this._categories = Categories.find({});
             this._subcategories = Subcategories.find({});
-        } else if (section_selected === 'addition') {
-            this.goToAddAdditions();
         } else if (section_selected === 'recommended') {
             this._items = null;
             this._sections = null;
@@ -144,10 +128,6 @@ export class MenuByEstablishmentPage implements OnInit, OnDestroy {
 
     goToDetail(_itemId) {
         this._navCtrl.push(ItemDetailEstablishmentPage, { item_id: _itemId, res_id: this._establishmentId });
-    }
-
-    goToAddAdditions() {
-        this._navCtrl.push(AdditionsEstablishmentPage, { res_id: this._establishmentId });
     }
 
     ngOnDestroy() {

@@ -5,14 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Subscription, Subject, Observable } from 'rxjs';
 import { Items } from 'cyg_web/both/collections/menu/item.collection';
-import { Additions } from 'cyg_web/both/collections/menu/addition.collection';
-import { Addition } from 'cyg_web/both/models/menu/addition.model';
 import { Item } from 'cyg_web/both/models/menu/item.model';
 import { Currencies } from 'cyg_web/both/collections/general/currency.collection';
-import { Option } from 'cyg_web/both/models/menu/option.model';
-import { Options } from 'cyg_web/both/collections/menu/option.collection';
-import { OptionValue } from 'cyg_web/both/models/menu/option-value.model';
-import { OptionValues } from 'cyg_web/both/collections/menu/option-value.collection';
 import { UserLanguageServiceProvider } from '../../../../../providers/user-language-service/user-language-service';
 import { Network } from '@ionic-native/network';
 import { LightboxPage } from "../../../../../pages/general/lightbox/lightbox";
@@ -32,24 +26,16 @@ export class ItemDetailEstablishmentPage implements OnInit, OnDestroy {
   private _userLang: string;
   private _items;
   private _itemSub: Subscription;
-  private _additionSub: Subscription;
   private _currenciesSub: Subscription;
   private disconnectSubscription: Subscription;
-  private _optionSub: Subscription;
-  private _optionValuesSub: Subscription;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
-
-  private _options: Observable<Option[]>;
-  private _optionValues: Observable<OptionValue[]>;
 
   private _item_code: string = '';
   private _res_code: string = '';
   private _observations: string = '';
-  private _additions;
   private _item: any[] = [];
   private _showAddBtn: boolean = true;
   private _lastQuantity: number = 1;
-  private _additionsList: any[] = [];
   private _letChange: boolean = true;
   private _disabledAddBtn: boolean = false;
   private _loadingMsg: string;
@@ -98,32 +84,8 @@ export class ItemDetailEstablishmentPage implements OnInit, OnDestroy {
       });
     });
 
-    this._additionSub = MeteorObservable.subscribe('additionsByEstablishment', this._res_code).takeUntil(this.ngUnsubscribe).subscribe(() => {
-      this._zone.run(() => {
-        this._additions = Additions.find({}).zone();
-        this._additionsList = Additions.collection.find({}).fetch();
-      });
-    });
-
     this._currenciesSub = MeteorObservable.subscribe('getCurrenciesByEstablishmentsId', [this._res_code]).takeUntil(this.ngUnsubscribe).subscribe(() => {
       this._currencyCode = Currencies.collection.find({}).fetch()[0].code + ' ';
-    });
-
-    let _optionIds: string[] = [];
-    this._optionSub = MeteorObservable.subscribe('optionsByEstablishment', [this._res_code]).takeUntil(this.ngUnsubscribe).subscribe(() => {
-      this._zone.run(() => {
-        this._options = Options.find({ establishments: { $in: [this._res_code] }, is_active: true }).zone();
-        this._options.subscribe(() => {
-          Options.find({ establishments: { $in: [this._res_code] }, is_active: true }).fetch().forEach((opt) => {
-            _optionIds.push(opt._id);
-          });
-          this._optionValuesSub = MeteorObservable.subscribe('getOptionValuesByOptionIds', _optionIds).takeUntil(this.ngUnsubscribe).subscribe(() => {
-            this._zone.run(() => {
-              this._optionValues = OptionValues.find({ option_id: { $in: _optionIds }, is_active: true }).zone();
-            });
-          });
-        });
-      });
     });
   }
 
@@ -207,14 +169,6 @@ export class ItemDetailEstablishmentPage implements OnInit, OnDestroy {
    */
   getItemPrice(_pItem: Item): number {
     return _pItem.establishments.filter(r => r.establishment_id === this._res_code)[0].price;
-  }
-
-  /**
-   * Return Addition price by current establishment
-   * @param {Addition} _pAddition
-   */
-  getAdditionsPrice(_pAddition: Addition): number {
-    return _pAddition.establishments.filter(r => r.establishment_id === this._res_code)[0].price;
   }
 
   /**

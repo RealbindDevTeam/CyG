@@ -24,7 +24,6 @@
                             <ion-option value="all" selected="true">{{'MOBILE.SECTIONS.ALL' | translate}}</ion-option>
                             <ion-option value="recommended" selected="true">{{'MOBILE.SECTIONS.RECOMMENDED' | translate}}</ion-option>
                             <ion-option *ngFor="let section of _sections | async" value="{{section._id}}">{{section.name}}</ion-option>
-                            <ion-option *ngIf="_additionsShow" value="addition">{{'MOBILE.SECTIONS.ADDITION' | translate}}</ion-option>
                         </ion-select>
                     </ion-item>
                 </ion-list>
