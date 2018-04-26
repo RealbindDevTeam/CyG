@@ -21,6 +21,8 @@ import { UserDetail } from '../../models/auth/user-detail.model';
 import { UserDetails } from '../../collections/auth/user-detail.collection';
 import { EstablishmentPoints } from '../../collections/points/establishment-points.collection';
 import { EstablishmentPoint } from '../../models/points/establishment-point.model';
+import { EstablishmentMedals } from '../../collections/points/establishment-medal.collection';
+import { EstablishmentMedal } from '../../models/points/establishment-medal.model';
 
 
 if (Meteor.isServer) {
@@ -141,8 +143,18 @@ if (Meteor.isServer) {
                 } else {
                     Establishments.collection.update({ _id: establishmentPoint.establishment_id }, {
                         $set: {
-                            isActive: false
+                            isActive: false,
+                            modification_date: new Date()
                         }
+                    });
+
+                    EstablishmentMedals.collection.find({ establishment_id: establishmentPoint.establishment_id }).forEach(function <EstablishmentMedal>(establishmentMedal, index, ar) {
+                        EstablishmentMedals.collection.update({ _id: establishmentMedal._id }, {
+                            $set: {
+                                is_active: false,
+                                modification_date: new Date()
+                            }
+                        });
                     });
                 }
             });
