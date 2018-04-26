@@ -90,6 +90,23 @@
     </mat-card-content>
 </mat-card>
 
+<mat-card *ngIf="_thereAreEstablishments && (_rewards | async)?.length <= 0" mat-cell="12" class="demo-card demo-basic">
+    <mat-card-content>
+        <div class="card_initial">
+            <div class="card_initial has-image">
+                <div class="card_initial-image-container">
+                    <img class="card_initial-image" src="/images/no-rewards.png" />
+                </div>
+                <div class="card_initial-copy">
+                    <div class="card_initial-tagline">
+                        {{'APPROVE_REWARDS.NO_REWARDS_FOUND' | translate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
 <div *ngFor="let reward of _rewards | async" class="reward">
     <div *ngFor="let item of _items | async">
         <ng-template [ngIf]="reward.item_id === item._id">

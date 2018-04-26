@@ -61,11 +61,20 @@
                         <ion-option *ngFor="let lang of _languages | async" value="{{lang.language_code}}">{{'MOBILE.LANGUAGE.' + lang.language_code | translate}}</ion-option>
                     </ion-select>
                 </ion-item>
-                
+
                 <button ion-button block color="danger" class="button-red button-cust" type="submit" [disabled]="!_userForm.valid">
                     {{'MOBILE.UPDATE' | translate}}
                 </button>
+
             </ion-card-content>
         </ion-card>
     </form>
+    <button *ngIf="_userDetail && _userDetail.role_id !== '400'" ion-button block clear class="button-profile border" (click)="showComfirmSignOut()">
+        <div class="profile-header">
+            <ion-item no-lines>
+                <ion-icon color="danger" name="log-out" item-start></ion-icon>
+                {{'MOBILE.SETTINGS.SIGN_OUT' | translate}}
+            </ion-item>
+        </div>
+    </button>
 </ion-content>
