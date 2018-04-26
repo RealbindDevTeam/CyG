@@ -40,18 +40,6 @@ $text-input-highlight-color-valid: #E0E0E0;
     -webkit-box-shadow: 0px 5px 0px 0px $red-color-900;
     box-shadow: 0px 5px 0px 0px $red-color-900;
 }
-.button-primary:hover {
-    //background-color: $button-primary-hover !important;
-}
-
-.button-secundary {
-    background-color: $button-secundary !important;
-    color: $button-color-secundary !important;
-}
-
-.button-secundary:hover {
-    background-color: $button-secundary-hover !important;
-}
 
 .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
     color: #fff;
@@ -92,14 +80,14 @@ $text-input-highlight-color-valid: #E0E0E0;
     margin: auto;
 }
 
-.ios .card{
-    margin: 12px 0 !important;
-    width: 100% !important;
+.ios .card-custom {
+    margin: 0 0 12px 0;
+    width: 100%;
 }
 
-.md .card{
-    margin: 10px 0 !important;
-    width: 100% !important;
+.md .card-custom {
+    margin: 0 0 10px 0;
+    width: 100%;
 }
 
 ion-title.logo {
@@ -112,6 +100,119 @@ ion-title.logo {
     text-align: center;
 }
 
+.button-profile {
+    border-radius: 0;
+    height: 80px;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-header {
+    width: 100%;
+}
+
+.profile-header ion-item{
+    background-color: transparent;
+}
+
+.profile-header.color-text-white h2, .color-text-white.profile-header p {
+    color: white;
+}
+
+.profile-header img {
+    border-radius: 50%;
+    border:3px solid rgba(0, 0, 0, 0.2);
+    height: 60px;
+    width: 60px;
+}
+
 [padding] h2:first-child {
     margin-top: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.border {
+    -webkit-box-shadow: 0px 2px 0px 0px #bdbdbd;
+    box-shadow: 0px 2px 0px 0px #bdbdbd;
+}
+
+.page-title {
+    display: block;
+    background: #1676be;
+    color: #fff;        
+}
+
+.close-btn {
+    background: transparent;
+    position: absolute;
+    font-size: 16px;
+    top: 7px;
+    right: 0;
+    color: white;
+}
+
+.button-action {
+    height: 100px;
+}
+
+.button-cust {
+    width: 100%;
+    display: block;
+    margin: 5px auto 13px;
+    position: relative;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 4px 0 #bebebe, 0 4px 1px rgba(0,0,0,0.8);
+    box-shadow: 0 4px 0 #bebebe, 0 4px 1px rgba(0,0,0,0.8);
+    line-height: 54px;
+}
+
+.button-orange {
+    -webkit-box-shadow: 0 5px 0 #EF6C00, 0 5px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 0 #EF6C00, 0 5px 1px rgba(0, 0, 0, 0.8);
+}
+
+.button-orange:hover {
+    background: #EF6C00
+}
+
+.button-green {
+    -webkit-box-shadow: 0 5px 0 #1B5E20, 0 5px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 0 #1B5E20, 0 5px 1px rgba(0, 0, 0, 0.8);
+}
+
+.button-green:hover {
+    background: #1B5E20;
+}
+
+.button-red {
+    -webkit-box-shadow: 0 5px 0 #B71C1C, 0 5px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 0 #B71C1C, 0 5px 1px rgba(0, 0, 0, 0.8);
+}
+
+.button-red:hover {
+    background: #B71C1C;
+}
+
+.button-blue {
+    -webkit-box-shadow: 0 5px 0 #0D47A1, 0 5px 1px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 5px 0 #0D47A1, 0 5px 1px rgba(0, 0, 0, 0.8);
+}
+
+.button-blue:hover {
+    background: #0D47A1;
+}
+
+/**
+ * inputs style
+ */
+ion-input {
+    background-color: whitesmoke;
+    border-radius: 4px;
+    color: #3c4146;
+    margin-bottom: 16px;
+}
+
+.text-input-ios {
+    margin: 11px 8px 11px 8px;
 }

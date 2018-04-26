@@ -5,12 +5,11 @@ page-signin, page-signup {
     color: #fff;
     -webkit-box-shadow: 0px 5px 0px 0px #2E4476;
     box-shadow: 0px 5px 0px 0px #2E4476;
-    text-transform: uppercase;
     font-weight: 500;
   }
 
   .btn-facebook:hover {
-    //background: #f5f5f5;
+    background: #2E4476;
   }
 
   .button-social{
@@ -76,17 +75,6 @@ page-signin, page-signup {
 
   .header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before{
     background-image: none;
-  }
-
-  ion-input {
-    background-color: whitesmoke;
-    border-radius: 4px;
-    color: #3c4146;
-    margin-bottom: 16px;
-  }
-
-  .text-input-ios {
-    margin: 11px 8px 11px 8px;
   }
 
 }

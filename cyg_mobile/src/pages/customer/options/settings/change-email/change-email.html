@@ -11,44 +11,32 @@
 </ion-header>
 
 <ion-content>
-    <div [formGroup]="_emailEditForm" novalidate>
-        <ion-card>
+    <form [formGroup]="_emailEditForm" novalidate>
+        <ion-card class="card-custom">
             <ion-card-content>
-                <ion-list no-lines>
-                    <ion-item>
-                        <ion-label floating>{{'MOBILE.EMAIL' | translate}}</ion-label>
-                        <ion-input formControlName="email"></ion-input>
-                    </ion-item>
-                    <div *ngIf="_emailEditForm.controls['email'].hasError('invalidEmailAddress') && _emailEditForm.controls['email'].touched" class="error-message">{{'MOBILE.SIGNUP.REQUIRED_EMAIL' | translate}}</div>
-                    <div *ngIf="_emailEditForm.controls['email'].hasError('minlength') && _emailEditForm.controls['email'].touched" class="error-message">{{'MOBILE.SIGNUP.MIN_LENGTH_EMAIL' | translate}}</div>
-                    <div *ngIf="_emailEditForm.controls['email'].hasError('maxlength') && _emailEditForm.controls['email'].touched" class="error-message">{{'MOBILE.SIGNUP.MAX_LENGTH_EMAIL' | translate}}</div>
-                    <ion-item>
-                        <ion-label floating>{{'MOBILE.PASSWORD' | translate}}</ion-label>
-                        <ion-input type="password" formControlName="password"></ion-input>
-                    </ion-item>
-                    <div *ngIf="_emailEditForm.controls['password'].hasError('minlength') && _emailEditForm.controls['password'].touched" class="error-message">{{'MOBILE.SIGNUP.MIN_LENGTH_PASSWORD' | translate}}</div>
-                    <div *ngIf="_emailEditForm.controls['password'].hasError('maxlength') && _emailEditForm.controls['password'].touched" class="error-message">{{'MOBILE.SIGNUP.MAX_LENGTH_PASSWORD' | translate}}</div>
-                    <div *ngIf="_emailEditForm.controls['password'].hasError('required') && _emailEditForm.controls['password'].touched" class="error-message">{{'MOBILE.SIGNUP.REQUIRED_PASSWORD' | translate}}</div>
-                    <ion-item>
-                        <ion-label floating>{{'MOBILE.SETTINGS.NEW_EMAIL' | translate}}</ion-label>
-                        <ion-input formControlName="new_email"></ion-input>
-                    </ion-item>
-                    <div *ngIf="_emailEditForm.controls['new_email'].hasError('invalidEmailAddress') && _emailEditForm.controls['new_email'].touched" class="error-message">{{'MOBILE.SIGNUP.REQUIRED_EMAIL' | translate}}</div>
-                    <div *ngIf="_emailEditForm.controls['new_email'].hasError('minlength') && _emailEditForm.controls['new_email'].touched" class="error-message">{{'MOBILE.SIGNUP.MIN_LENGTH_EMAIL' | translate}}</div>
-                    <div *ngIf="_emailEditForm.controls['new_email'].hasError('maxlength') && _emailEditForm.controls['new_email'].touched" class="error-message">{{'MOBILE.SIGNUP.MAX_LENGTH_EMAIL' | translate}}</div>
-                    <ion-item>
-                        <ion-label floating>{{'MOBILE.SETTINGS.CONFIRM_NEW_EMAIL' | translate}}</ion-label>
-                        <ion-input formControlName="confirm_new_email"></ion-input>
-                    </ion-item>
-                    <div *ngIf="_emailEditForm.controls['confirm_new_email'].hasError('invalidEmailAddress') && _emailEditForm.controls['confirm_new_email'].touched" class="error-message">{{'MOBILE.SIGNUP.REQUIRED_EMAIL' | translate}}</div>
-                    <div *ngIf="_emailEditForm.controls['confirm_new_email'].hasError('minlength') && _emailEditForm.controls['confirm_new_email'].touched" class="error-message">{{'MOBILE.SIGNUP.MIN_LENGTH_EMAIL' | translate}}</div>
-                    <div *ngIf="_emailEditForm.controls['confirm_new_email'].hasError('maxlength') && _emailEditForm.controls['confirm_new_email'].touched" class="error-message">{{'MOBILE.SIGNUP.MAX_LENGTH_EMAIL' | translate}}</div>
-                </ion-list>
+                <ion-input formControlName="email" type="text" placeholder="{{'MOBILE.EMAIL' | translate}}"></ion-input>
+                <div *ngIf="_emailEditForm.controls['email'].hasError('invalidEmailAddress') && _emailEditForm.controls['email'].touched"
+                    class="error-message">{{'MOBILE.SIGNUP.REQUIRED_EMAIL' | translate}}</div>
+                <div *ngIf="_emailEditForm.controls['email'].hasError('minlength') && _emailEditForm.controls['email'].touched" class="error-message">{{'MOBILE.SIGNUP.MIN_LENGTH_EMAIL' | translate}}</div>
+                <div *ngIf="_emailEditForm.controls['email'].hasError('maxlength') && _emailEditForm.controls['email'].touched" class="error-message">{{'MOBILE.SIGNUP.MAX_LENGTH_EMAIL' | translate}}</div>
+                <ion-input formControlName="password" type="password" placeholder="{{'MOBILE.PASSWORD' | translate}}"></ion-input>
+                <div *ngIf="_emailEditForm.controls['password'].hasError('minlength') && _emailEditForm.controls['password'].touched" class="error-message">{{'MOBILE.SIGNUP.MIN_LENGTH_PASSWORD' | translate}}</div>
+                <div *ngIf="_emailEditForm.controls['password'].hasError('maxlength') && _emailEditForm.controls['password'].touched" class="error-message">{{'MOBILE.SIGNUP.MAX_LENGTH_PASSWORD' | translate}}</div>
+                <div *ngIf="_emailEditForm.controls['password'].hasError('required') && _emailEditForm.controls['password'].touched" class="error-message">{{'MOBILE.SIGNUP.REQUIRED_PASSWORD' | translate}}</div>
+                <ion-input formControlName="new_email" type="text" placeholder="{{'MOBILE.SETTINGS.NEW_EMAIL' | translate}}"></ion-input>
+                <div *ngIf="_emailEditForm.controls['new_email'].hasError('invalidEmailAddress') && _emailEditForm.controls['new_email'].touched"
+                    class="error-message">{{'MOBILE.SIGNUP.REQUIRED_EMAIL' | translate}}</div>
+                <div *ngIf="_emailEditForm.controls['new_email'].hasError('minlength') && _emailEditForm.controls['new_email'].touched" class="error-message">{{'MOBILE.SIGNUP.MIN_LENGTH_EMAIL' | translate}}</div>
+                <div *ngIf="_emailEditForm.controls['new_email'].hasError('maxlength') && _emailEditForm.controls['new_email'].touched" class="error-message">{{'MOBILE.SIGNUP.MAX_LENGTH_EMAIL' | translate}}</div>
+                <ion-input formControlName="confirm_new_email" type="text" placeholder="{{'MOBILE.SETTINGS.CONFIRM_NEW_EMAIL' | translate}}"></ion-input>
+                <div *ngIf="_emailEditForm.controls['confirm_new_email'].hasError('invalidEmailAddress') && _emailEditForm.controls['confirm_new_email'].touched"
+                    class="error-message">{{'MOBILE.SIGNUP.REQUIRED_EMAIL' | translate}}</div>
+                <div *ngIf="_emailEditForm.controls['confirm_new_email'].hasError('minlength') && _emailEditForm.controls['confirm_new_email'].touched"
+                    class="error-message">{{'MOBILE.SIGNUP.MIN_LENGTH_EMAIL' | translate}}</div>
+                <div *ngIf="_emailEditForm.controls['confirm_new_email'].hasError('maxlength') && _emailEditForm.controls['confirm_new_email'].touched"
+                    class="error-message">{{'MOBILE.SIGNUP.MAX_LENGTH_EMAIL' | translate}}</div>
+                <button ion-button block color="danger" class="button-red button-cust" type="submit" (click)="changeEmail()">{{'MOBILE.MODIFY' | translate}}</button>
             </ion-card-content>
         </ion-card>
-
-        <div padding>
-            <button ion-button block outline type="submit" (click)="changeEmail()">{{'MOBILE.MODIFY' | translate}}</button>
-        </div>
-    </div>
+    </form>
 </ion-content>

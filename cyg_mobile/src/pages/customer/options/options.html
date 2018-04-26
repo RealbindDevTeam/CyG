@@ -6,16 +6,26 @@
     </ion-navbar>
 </ion-header>
 <ion-content text-wrap padding>
-    <button ion-button block (click)="goToSettings()">
+    <button class="button-orange button-cust" ion-button color="corange" (click)="goToSettings()">
         Ajustes
     </button>
-    <button ion-button block (click)="goToRewardsHistory()">
+    <button class="button-green button-cust" ion-button block color="cgreen" (click)="goToRewardsHistory()">
         Premios Reclamados
     </button>
-    <button ion-button block (click)="goToTerms()">
+    <button class="button-red button-cust" ion-button block color="danger" (click)="goToTerms()">
         Terminos y condiciones
     </button>
-    <button ion-button block (click)="goToPolicy()">
+    <button class="button-blue button-cust" ion-button block (click)="goToPolicy()">
         Politica de Privacidad
     </button>
 </ion-content>
+<ion-footer>
+    <button ion-button block clear class="button-profile border" (click)="showComfirmSignOut()">
+        <div class="profile-header">
+            <ion-item no-lines>
+                <ion-icon color="danger" name="log-out" item-start></ion-icon>
+                {{'MOBILE.SETTINGS.SIGN_OUT' | translate}}
+            </ion-item>
+        </div>
+    </button>
+</ion-footer>

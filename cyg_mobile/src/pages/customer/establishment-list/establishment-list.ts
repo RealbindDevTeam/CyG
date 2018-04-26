@@ -10,6 +10,7 @@ import { UserLanguageServiceProvider } from '../../../providers/user-language-se
 import { Network } from '@ionic-native/network';
 
 @Component({
+    selector: "establishment-list",
     templateUrl: 'establishment-list.html'
 })
 export class EstablishmentListPage implements OnInit, OnDestroy {
@@ -18,6 +19,7 @@ export class EstablishmentListPage implements OnInit, OnDestroy {
     private _establishmentSubscription: Subscription;
     private _establishments: Observable<Establishment[]>;
     private disconnectSubscription: Subscription;
+    private _hiddenDiv: boolean = false;
 
     constructor(public _translate: TranslateService,
         public _navCtrl: NavController,
@@ -121,6 +123,10 @@ export class EstablishmentListPage implements OnInit, OnDestroy {
     removeSubscriptions(): void {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
+    }
+
+    hiddenDiv(){
+        this._hiddenDiv = true;
     }
 
     ionViewWillLeave() {

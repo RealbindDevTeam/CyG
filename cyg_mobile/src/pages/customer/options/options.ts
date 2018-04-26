@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
-import { NavController, NavParams, AlertController, Platform } from 'ionic-angular';
+import { App, NavController, NavParams, AlertController, Platform, LoadingController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,6 +10,7 @@ import { Parameter } from 'cyg_web/both/models/general/parameter.model';
 import { Parameters } from 'cyg_web/both/collections/general/parameter.collection';
 import { SettingsPage } from './settings/settings';
 import { RewardsHistoryPage } from './rewards-history/rewards-history';
+import { InitialComponent } from '../../auth/initial/initial';
 
 @Component({
     selector: 'options',
@@ -32,10 +33,12 @@ export class OptionsPage implements OnInit, OnDestroy {
      * @param {NgZone} _ngZone 
      */
     constructor(public _navCtrl: NavController,
+        public _app: App,
         public _alertCtrl: AlertController,
         public _platform: Platform,
-        private _network: Network,
         public translate: TranslateService,
+        public _loadingCtrl: LoadingController,
+        private _network: Network,
         private _userLanguageService: UserLanguageServiceProvider,
         private _ngZone: NgZone,
         private iab: InAppBrowser) {
@@ -147,6 +150,50 @@ export class OptionsPage implements OnInit, OnDestroy {
             wordTraduced = res;
         });
         return wordTraduced;
+    }
+
+    /**
+   * This function show the confirm dialog to sign out from the app
+   */
+    showComfirmSignOut() {
+        let btn_no = this.itemNameTraduction('MOBILE.SIGN_OUT.NO_BTN');
+        let btn_yes = this.itemNameTraduction('MOBILE.SIGN_OUT.YES_BTN');
+        let title = this.itemNameTraduction('MOBILE.SIGN_OUT.TITLE_CONFIRM');
+        let content = this.itemNameTraduction('MOBILE.SIGN_OUT.CONTENT_CONFIRM');
+
+        let prompt = this._alertCtrl.create({
+            title: title,
+            message: content,
+            buttons: [
+                {
+                    text: btn_no,
+                    handler: data => {
+                    }
+                },
+                {
+                    text: btn_yes,
+                    handler: data => {
+                        this.signOut();
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    }
+
+    /**
+   * User account sign out
+   */
+    signOut() {
+        let loading_msg = this.itemNameTraduction('MOBILE.SIGN_OUT.LOADING');
+        let loading = this._loadingCtrl.create({ content: loading_msg });
+        loading.present();
+        setTimeout(() => {
+            loading.dismiss();
+            Meteor.logout();
+            this._navCtrl.pop();
+            this._app.getRootNavs()[0].setRoot(InitialComponent);
+        }, 1500);
     }
 
     /**
