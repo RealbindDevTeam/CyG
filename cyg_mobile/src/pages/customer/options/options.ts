@@ -191,7 +191,7 @@ export class OptionsPage implements OnInit, OnDestroy {
         setTimeout(() => {
             loading.dismiss();
             Meteor.logout();
-            this._navCtrl.pop();
+            //this._navCtrl.pop();
             this._app.getRootNavs()[0].setRoot(InitialComponent);
         }, 1500);
     }

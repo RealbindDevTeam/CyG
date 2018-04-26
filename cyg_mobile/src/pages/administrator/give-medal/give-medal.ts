@@ -30,6 +30,7 @@ export class GiveMedalPage implements OnInit, OnDestroy {
 
     private _userFilter: string = "";
     private _establishmentFilter: string = "";
+    private _thereAreEstablishments: boolean = true;
 
     /**
      * GiveMedalPage Constructor
@@ -61,11 +62,18 @@ export class GiveMedalPage implements OnInit, OnDestroy {
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._establishments = Establishments.find({ creation_user: this._user }).zone();
-                //this._establishments.subscribe(() => { this.countEstablishments(); });
+                this._establishments.subscribe(() => { this.countEstablishments(); });
             });
         });
         this._usersSub = MeteorObservable.subscribe('getUsers').takeUntil(this._ngUnsubscribe).subscribe();
         this._userDetailsSub = MeteorObservable.subscribe('getUsersDetails').takeUntil(this._ngUnsubscribe).subscribe();
+    }
+
+    /**
+     * Validate if establishments exists
+     */
+    countEstablishments(): void {
+        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**
