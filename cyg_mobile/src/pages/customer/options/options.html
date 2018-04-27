@@ -1,33 +1,31 @@
-<div>
-    <ion-card (click)="goToWaiterCall()">
-        <ion-card-content>
-            <ion-item>
-                <ion-thumbnail item-start>
-                    <img src="assets/img/payment-pending.png">
-                </ion-thumbnail>
-                <h2>{{'MOBILE.OPTIONS.WAITER_CALL' | translate}}</h2>
-                <p *ngIf="_showWaiterAlert" style="color: #Ef5350;">{{'MOBILE.OPTIONS.PENDING_CALL' | translate}}</p>
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            <img class="nav-logo" src="assets/img/logo_iurest_1000_x_260.png">
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content text-wrap padding>
+    <button class="button-orange button-cust" ion-button color="corange" (click)="goToSettings()">
+        Ajustes
+    </button>
+    <button class="button-green button-cust" ion-button block color="cgreen" (click)="goToRewardsHistory()">
+        Premios Reclamados
+    </button>
+    <button class="button-red button-cust" ion-button block color="danger" (click)="goToTerms()">
+        Terminos y condiciones
+    </button>
+    <button class="button-blue button-cust" ion-button block (click)="goToPolicy()">
+        Politica de Privacidad
+    </button>
+</ion-content>
+<ion-footer>
+    <button ion-button block clear class="button-profile border" (click)="showComfirmSignOut()">
+        <div class="profile-header">
+            <ion-item no-lines>
+                <ion-icon color="danger" name="log-out" item-start></ion-icon>
+                {{'MOBILE.SETTINGS.SIGN_OUT' | translate}}
             </ion-item>
-        </ion-card-content>
-    </ion-card>
-    <ion-card (click)="goToChangeTable()">
-        <ion-card-content>
-            <ion-item>
-                <ion-thumbnail item-end>
-                    <img src="assets/img/change_table.png">
-                </ion-thumbnail>
-                <h2>{{'MOBILE.OPTIONS.WAITER_CALL' | translate}}</h2>
-            </ion-item>
-        </ion-card-content>
-    </ion-card>
-    <ion-card (click)="goToEstablishmentExit()">
-        <ion-card-content>
-            <ion-item>
-                <ion-thumbnail item-start>
-                    <img src="assets/img/exit.png">
-                </ion-thumbnail>
-                <h2>{{'MOBILE.OPTIONS.ESTABLISHMENT_EXIT' | translate}}</h2>
-            </ion-item>
-        </ion-card-content>
-    </ion-card>
-</div>
+        </div>
+    </button>
+</ion-footer>

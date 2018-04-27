@@ -1,0 +1,64 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{'APPROVE_REWARDS.TITLE' | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content text-wrap>
+    <div *ngIf="!_thereAreEstablishments" padding class="content-custom">
+        <div style="text-align: center;">
+            <img style="max-width: 75%;" src="assets/img/restaurante.png">
+        </div>
+        <div class="content" style="text-align: center">
+            <h1>{{'APPROVE_REWARDS.THERE_NOT_RESTAURANTS' | translate}}</h1>
+        </div>
+    </div>
+
+    <div *ngIf="_thereAreEstablishments">
+        <h6 style="margin: 20px;text-align: center">
+            {{'APPROVE_REWARDS.SUBTITLE' | translate}}
+        </h6>
+
+        <ion-item>
+            <ion-label>{{'APPROVE_REWARDS.SELECT_RESTAURANT' | translate}}</ion-label>
+            <ion-select [(ngModel)]="_establishmentFilter" interface="action-sheet" cancelText="{{'MOBILE.SECTIONS.CANCEL'| translate}}"
+                (ionChange)="rewardsConfirmSearch(_establishmentFilter)">
+                <ion-option *ngFor="let est of _establishments | async" value="{{est._id}}" selected="true">{{est.name}} - {{est.address}}</ion-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-icon name="person"></ion-icon>
+            <ion-input placeholder="{{'APPROVE_REWARDS.SEARCH_BY_NAME' | translate}}" [(ngModel)]="_userFilter" (ionChange)="doFilter()"
+                clearInput></ion-input>
+        </ion-item>
+    </div>
+
+    <div *ngFor="let rewardConfirmation of _rewardsConfirmations | async" class="cards">
+        <div *ngFor="let reward of _rewards | async">
+            <div *ngIf="rewardConfirmation.reward_id === reward._id">
+                <div *ngFor="let item of _items | async">
+                    <div *ngIf="item._id === reward.item_id">
+                        <ion-card>
+                            <ion-card-content>
+                                <ion-item>
+                                    <ion-avatar item-start>
+                                        <img src="{{getUserImage(rewardConfirmation.user_id)}}">
+                                    </ion-avatar>
+                                    <h2 style="color: #114b5f">{{item.name}} - {{rewardConfirmation.medals_to_redeem}} {{'APPROVE_REWARDS.MEDALS' |
+                                        translate}}
+                                    </h2>
+                                    <h3>{{'APPROVE_REWARDS.CUSTOMER' | translate}}: {{getUserName(rewardConfirmation.user_id)}}</h3>
+                                </ion-item>
+                                <div style="text-align: center;">
+                                    <button ion-button outline class="action" style="height: 25px;width: 120px;" (click)="disapproveRewardConfirmation(rewardConfirmation)">{{'APPROVE_REWARDS.NO_APPROVE' | translate}}</button>
+                                    <button ion-button outline class="action" style="height: 25px;width: 120px;" (click)="approveRewardConfirmation(rewardConfirmation)">{{'APPROVE_REWARDS.APPROVE' | translate}}</button>
+                                </div>
+                            </ion-card-content>
+                        </ion-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>

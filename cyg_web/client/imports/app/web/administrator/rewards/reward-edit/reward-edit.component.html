@@ -4,8 +4,8 @@
         <form [formGroup]="_editRewardForm" (ngSubmit)="editReward();">
             <p class="item">{{_itemName}} - {{'REWARD.QUANTITY' | translate}}: {{ _quantityCount }}</p>
             <mat-form-field class="points">
-                <mat-select formControlName="points" placeholder="{{'REWARD.SELECT_POINTS' | translate}}">
-                    <mat-option *ngFor="let point of _points | async" value="{{point._id}}" ng-selected="_pointValue == point._id"> {{point.point}}</mat-option>
+                <mat-select formControlName="points" placeholder="{{'REWARD.SELECT_MEDALS' | translate}}">
+                    <mat-option *ngFor="let point of _points | async" value="{{point._id}}" ng-selected="'_pointValue' === point._id"> {{point.point}} {{'REWARD.MEDALS' | translate}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-slide-toggle formControlName="isActive" class="active">{{'STATE' | translate}}</mat-slide-toggle>

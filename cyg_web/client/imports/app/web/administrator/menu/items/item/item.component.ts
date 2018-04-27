@@ -16,6 +16,8 @@ import { Establishments } from '../../../../../../../../both/collections/establi
 import { AlertConfirmComponent } from '../../../../general/alert-confirm/alert-confirm.component';
 import { UserDetails } from '../../../../../../../../both/collections/auth/user-detail.collection';
 import { UserDetail } from '../../../../../../../../both/models/auth/user-detail.model';
+import { Rewards } from "../../../../../../../../both/collections/establishment/reward.collection";
+import { Reward } from "../../../../../../../../both/models/establishment/reward.model";
 import { Recommended } from "./recommended/recommended.component";
 
 @Component({
@@ -27,6 +29,7 @@ export class ItemComponent implements OnInit, OnDestroy {
 
     private _user = Meteor.userId();
     private _itemsSub: Subscription;
+    private _rewardsSub: Subscription;
     private _currenciesSub: Subscription;
     private _establishmentSub: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -74,7 +77,7 @@ export class ItemComponent implements OnInit, OnDestroy {
         this.removeSubscriptions();
         this._itemsSub = MeteorObservable.subscribe('items', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._items = Items.find({}).zone();
+                this._items = Items.find({ creation_user: this._user }).zone();
                 this.countItems();
                 this._items.subscribe(() => { this.countItems(); });
             });
@@ -82,28 +85,29 @@ export class ItemComponent implements OnInit, OnDestroy {
         this._currenciesSub = MeteorObservable.subscribe('currencies').takeUntil(this._ngUnsubscribe).subscribe();
         this._establishmentSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
-                Establishments.collection.find({}).fetch().forEach((establishment: Establishment) => {
+                this._establishments = Establishments.find({ creation_user: this._user }).zone();
+                Establishments.collection.find({ creation_user: this._user }).fetch().forEach((establishment: Establishment) => {
                     this._lEstablishmentsId.push(establishment._id);
                 });
                 this.countEstablishments();
                 this._establishments.subscribe(() => { this.countEstablishments(); });
             });
         });
+        this._rewardsSub = MeteorObservable.subscribe('getRewards', this._user).takeUntil(this._ngUnsubscribe).subscribe();
     }
 
     /**
      * Validate if establishments exists
      */
     countEstablishments(): void {
-        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**
      * Validate if items exists
      */
     countItems(): void {
-        Items.collection.find({}).count() > 0 ? this._thereAreItems = true : this._thereAreItems = false;
+        Items.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreItems = true : this._thereAreItems = false;
     }
 
     /**
@@ -200,8 +204,13 @@ export class ItemComponent implements OnInit, OnDestroy {
      */
     removeItem(_pItem: Item): void {
         let _lMessage: string;
-        Items.remove(_pItem._id);
-        _lMessage = this.itemNameTraduction('ITEMS.ITEM_REMOVED');
+        let _lReward = Rewards.collection.find({ item_id: _pItem._id }).count();
+        if (_lReward <= 0) {
+            Items.remove(_pItem._id);
+            _lMessage = this.itemNameTraduction('ITEMS.ITEM_REMOVED');
+        } else {
+            _lMessage = this.itemNameTraduction('ITEMS.ITEM_IS_REWARD');
+        }
         this.snackBar.open(_lMessage, '', {
             duration: 2500
         });

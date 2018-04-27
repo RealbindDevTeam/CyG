@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Rewards } from '../../../../both/collections/establishment/reward.collection';
 import { check } from 'meteor/check';
 import { Items } from '../../../../both/collections/menu/item.collection';
+import { UserDetails } from '../../../../both/collections/auth/user-detail.collection';
 
 /**
  * Meteor publication rewards with creation user condition
@@ -17,6 +18,21 @@ Meteor.publish('getRewards', function (_userId: string) {
 Meteor.publish('getEstablishmentRewards', function (_establishmentId: string) {
     check(_establishmentId, String);
     return Rewards.find({ establishments: { $in: [_establishmentId] }, is_active: true });
+});
+
+/**
+ * Meteor publications getRewardsByEstablishmentWork
+ * @param {string} _userId
+ */
+
+Meteor.publish('getRewardsByEstablishmentWork', function (_userId: string) {
+    check(_userId, String);
+    var user_detail = UserDetails.findOne({ user_id: _userId });
+    if (user_detail) {
+        return Rewards.find({ establishments: { $in: [user_detail.establishment_work] } });
+    } else {
+        return;
+    }
 });
 
 /**

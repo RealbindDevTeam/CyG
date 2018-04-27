@@ -6,11 +6,12 @@ import { MeteorObservable } from 'meteor-rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Device } from '@ionic-native/device';
 import { InitialComponent } from '../pages/auth/initial/initial';
-import { HomeMenu } from '../pages/customer/home-menu/home-menu';
-import { TabsPage } from '../pages/waiter/tabs/tabs';
-import { UserLogin } from 'i4t_web/both/models/auth/user-login.model';
-import { HomePage } from '../pages/customer/home/home';
+import { UserLogin } from 'cyg_web/both/models/auth/user-login.model';
+//import { HomePage } from '../pages/customer/home/home';
+import { CustomerTabsPage } from "../pages/customer/tabs/customer-tabs";
 import { Network } from '@ionic-native/network';
+import { TabsPage } from "../pages/administrator/tabs/tabs";
+import { SupervisorTabsPage } from "../pages/supervisor/tabs/supervisor-tabs";
 
 @Component({
   templateUrl: 'app.html'
@@ -38,7 +39,8 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       if (platform.is('cordova')) {
-        statusBar.styleLightContent();
+        //statusBar.styleLightContent();
+        statusBar.backgroundColorByHexString('#1565C0');
         splashScreen.hide();
       }
 
@@ -46,8 +48,15 @@ export class MyApp {
         MeteorObservable.call('getRole').subscribe((role) => {
           if (role == "400") {
             this.insertUserInfo();
-            this.rootPage = HomePage;
-          } else if (role == "200") {
+            this.rootPage = CustomerTabsPage;
+          } else if (role == "100") {
+            this.insertUserInfo();
+            this.rootPage = TabsPage;
+          } else if (role==="600") {
+            this.insertUserInfo();
+            this.rootPage = SupervisorTabsPage;
+          }
+          /*else if (role == "200") {
             MeteorObservable.call('validateEstablishmentIsActive').subscribe((_restaruantActive) => {
               if (_restaruantActive) {
                 MeteorObservable.call('validateUserIsActive').subscribe((active) => {
@@ -68,7 +77,7 @@ export class MyApp {
                 Meteor.logout();
               }
             });
-          }
+          }*/
         });
       } else {
         this.rootPage = InitialComponent;

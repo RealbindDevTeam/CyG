@@ -64,10 +64,13 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="point">
-                <mat-select formControlName="points" placeholder="{{'REWARD.SELECT_POINTS' | translate}}">
-                    <mat-option *ngFor="let point of _points | async" value="{{point._id}}">{{point.point}}</mat-option>
+                <mat-select formControlName="points" placeholder="{{'REWARD.SELECT_MEDALS' | translate}}">
+                    <mat-option *ngFor="let point of _points | async" value="{{point._id}}" (click)="changeMedals(point.point);">{{point.point}} {{'REWARD.MEDALS' | translate}}</mat-option>
                 </mat-select>
             </mat-form-field>
+            <p *ngIf="_showMessageFirstRange" class="first-range">{{'REWARD.FIRST_RANGE_MSG' | translate}}</p>
+            <p *ngIf="_showMessageSecondRange" class="second-range">{{'REWARD.SECOND_RANGE_MSG' | translate}}</p>
+            <p *ngIf="_showMessageThirdRange" class="third-range">{{'REWARD.THIRD_RANGE_MSG' | translate}}</p>
             <div>
                 <p>{{'REWARD.ESTABLISHMENTS' | translate}}</p>
                 <p>
@@ -87,15 +90,32 @@
     </mat-card-content>
 </mat-card>
 
+<mat-card *ngIf="_thereAreEstablishments && (_rewards | async)?.length <= 0" mat-cell="12" class="demo-card demo-basic">
+    <mat-card-content>
+        <div class="card_initial">
+            <div class="card_initial has-image">
+                <div class="card_initial-image-container">
+                    <img class="card_initial-image" src="/images/no-rewards.png" />
+                </div>
+                <div class="card_initial-copy">
+                    <div class="card_initial-tagline">
+                        {{'APPROVE_REWARDS.NO_REWARDS_FOUND' | translate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
 <div *ngFor="let reward of _rewards | async" class="reward">
     <div *ngFor="let item of _items | async">
         <ng-template [ngIf]="reward.item_id === item._id">
             <mat-card>
                 <mat-card-title-group>
                     <mat-card-title>{{item.name}}</mat-card-title>
-                    <mat-card-subtitle>{{'REWARD.QUANTITY' | translate}}: {{reward.item_quantity}}</mat-card-subtitle>
+                    <mat-card-subtitle class="subtitle">{{'REWARD.QUANTITY' | translate}}: {{reward.item_quantity}}</mat-card-subtitle>
                     <mat-chip-list>
-                        <mat-chip class="points">{{reward.points}} {{'REWARD.POINTS' | translate}}</mat-chip>
+                        <mat-chip class="points">{{reward.points}} {{'REWARD.MEDALS' | translate}}</mat-chip>
                     </mat-chip-list>
                 </mat-card-title-group>
                 <mat-card-content>

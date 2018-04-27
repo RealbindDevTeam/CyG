@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{'GIVE_MEDAL.TITLE' | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content text-wrap>
+    <div *ngIf="!_thereAreEstablishments" padding class="content-custom">
+        <div style="text-align: center;">
+            <img style="max-width: 75%;" src="assets/img/restaurante.png">
+        </div>
+        <div class="content" style="text-align: center">
+            <h1>{{'APPROVE_REWARDS.THERE_NOT_RESTAURANTS' | translate}}</h1>
+        </div>
+    </div>
+
+    <div *ngIf="_thereAreEstablishments">
+        <h6 style="margin: 20px;text-align: center">
+            {{'GIVE_MEDAL.SUBTITLE' | translate}}
+        </h6>
+        <ion-item>
+            <ion-label>{{'GIVE_MEDAL.SELECT_RESTAURANT' | translate}}</ion-label>
+            <ion-select [(ngModel)]="_establishmentFilter" interface="action-sheet" cancelText="{{'MOBILE.SECTIONS.CANCEL'| translate}}">
+                <ion-option *ngFor="let est of _establishments | async" value="{{est._id}}" selected="true">{{est.name}} - {{est.address}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-icon name="person"></ion-icon>
+            <ion-input placeholder="{{'GIVE_MEDAL.NAME_FILTER' | translate}}" [(ngModel)]="_userFilter" (ionChange)="doFilter()" clearInput></ion-input>
+        </ion-item>
+    </div>
+    <div *ngFor="let user of _users | async">
+        <ion-card>
+            <ion-card-content>
+                <ion-item>
+                    <ion-avatar item-start>
+                        <img src="{{getUserImage(user._id)}}">
+                    </ion-avatar>
+                    <h2 style="color: #114b5f">{{getUserName(user._id)}}</h2>
+                </ion-item>
+                <div style="text-align: center;">
+                    <button ion-button outline class="action" style="height: 25px;width: 120px;" (click)="giveMedalToUser(user._id)">{{'GIVE_MEDAL.GIVE_MEDAL' | translate}}</button>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>

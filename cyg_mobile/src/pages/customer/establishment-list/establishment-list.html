@@ -1,23 +1,32 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{'MOBILE.SECTIONS.MENU' | translate}}</ion-title>
+        <ion-title>
+            <img class="nav-logo" src="assets/img/logo_iurest_1000_x_260.png">
+        </ion-title>
     </ion-navbar>
 </ion-header>
 
-<ion-content text-wrap>
-    <ion-card *ngFor="let establishment of _establishments | async" (click)="viewEstablishmentProfile(establishment)">
-        <ion-card-content>
-            <button ion-item detail-none>
-                <ion-thumbnail item-left>
-                    <img *ngIf="establishment.image" src="{{ establishment.image.url }}">
-                    <img *ngIf="!establishment.image" src="assets/img/default-restaurant.png">
-                </ion-thumbnail>
-                <h2>{{establishment.name}}</h2>
-                <p>
-                    <ion-icon name="pin" item-start></ion-icon>
-                    {{establishment.address}}{{getCityName(establishment.cityId)}}
-                </p>
-            </button>
-        </ion-card-content>
-    </ion-card>
+<ion-content>
+    <div [hidden]="_hiddenDiv" padding class="page-title">
+        <span>{{'MOBILE.ESTABLISHMENT_LIST.MSG' | translate}}</span>
+        <button id="close" class="close-btn" (click)="hiddenDiv()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+    </div>
+    <div padding>
+        <button *ngFor="let establishment of _establishments | async;" ion-button block clear color="cwhite" class="button-profile border"
+            (click)="viewEstablishmentProfile(establishment)">
+            <div class="profile-header">
+                <ion-item no-lines text-wrap>
+                    <img item-start *ngIf="establishment.image" src="{{ establishment.image.url }}">
+                    <img item-start *ngIf="!establishment.image" src="assets/img/default-restaurant.png">
+                    <h2>{{establishment.name}}</h2>
+                    <p>
+                        <ion-icon color="danger" name="pin" item-start></ion-icon>
+                        {{establishment.address}}, {{establishment.city}}
+                    </p>
+                </ion-item>
+            </div>
+        </button>
+    </div>
 </ion-content>

@@ -28,7 +28,7 @@
     <form [formGroup]="_subcategoryForm" (ngSubmit)="addSubcategory();">
       <div>
         <mat-form-field class="name">
-          <input matInput required formControlName="name" placeholder="{{'NAME' | translate}}" minlength="1" maxlength="50" #inputName>
+          <input matInput required formControlName="name" placeholder="{{'SUBCATEGORIES.SUBCATEGORY_NAME' | translate}}" minlength="1" maxlength="50" #inputName>
           <mat-hint align="end">{{inputName.value.length}} / 50</mat-hint>
         </mat-form-field>
         <mat-form-field class="select">

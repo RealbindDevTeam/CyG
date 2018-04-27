@@ -8,7 +8,7 @@
     "HELLO": "Hola",
     "IMAGE": "Imagen",
     "MODIFICATION_DATE": "Fecha de modificación",
-    "NAME": "Nombres y Apellidos",
+    "NAME": "Nombre",
     "PASSWORD": "Contraseña",
     "PRICING": "Precio",
     "STATE": "Estado",
@@ -154,6 +154,7 @@
         "SLOGAN": "Cambio de contraseña"
     },
     "SECTIONS": {
+        "SECTION_NAME": "Nombre",
         "SECTION_CREATION": "Creación de secciones",
         "SECTION_TEXT": "Crea las secciones del menú para cada restaurante",
         "SECTION_EDIT": "Edición de la sección",
@@ -179,6 +180,7 @@
         "SECTION_NOT_REMOVED": "La sección tiene categorias o items, no se ha podido remover"
     },
     "CATEGORIES": {
+        "CATEGORY_NAME": "Nombre",
         "CATEGORIES_CREATION": "Creación de categorías",
         "SECCION_SELECTION": "Selecciona sección",
         "CATEGORIES_TEXT": "Crea las categorías de tu menú y selecciona la sección a la que pertenece",
@@ -198,6 +200,7 @@
         "CATEGORY_NOT_REMOVED": "La categoría tiene subcategorias o items, no se ha podido remover"
     },
     "SUBCATEGORIES": {
+        "SUBCATEGORY_NAME": "Nombre",
         "SUBCATEGORY_CREATION": "Creación de subcategorías",
         "CATEGORY_SELECTION": "Selecciona categoría",
         "SUBCATEGORY_TEXT": "Crea las subcategorías de tu menú y selecciona la categoría a la que pertenece",
@@ -218,6 +221,7 @@
         "SUBCATEGORY_NOT_REMOVED": "La subcategoría tiene items, no se ha podido remover"
     },
     "ADDITIONS": {
+        "ADDITIONS_NAME": "Nombre",
         "ADDITION_CREATION": "Creación de adiciones",
         "RESTAURANTS": "Restaurantes",
         "RESTAURANT_ADDITION": "Selecciona los restaurantes en donde se encontrara disponible la adición",
@@ -270,6 +274,8 @@
             "DASHBOARD": "Tablero de control"
         },
         "REWARDS": "Recompensas",
+        "APPROVE_REWARDS": "Aprobaciones",
+        "GIVE_MEDAL": "Dar Medallas",
         "ADMINISTRATION": {
             "MANAGEMENT": "Administración",
             "RESTAURANTS": "Restaurantes",
@@ -288,8 +294,8 @@
             "MONTHLY_PAYMENT": "Pago mensual",
             "PAYMENT_HISTORY": "Historial de Pagos",
             "REACTIVATE_RESTAURANT": "Reactivar restaurante",
-            "BAGS": "Bolsas",
-            "PURCHASE_BAGS": "Compra de bolsas"
+            "BAGS": "Paquetes",
+            "PURCHASE_BAGS": "Compra de paquetes"
         },
         "MENU_DEFINITION": {
             "MENU_DEFINITION": "Menú",
@@ -298,7 +304,6 @@
             "SUBCATEGORIES": "Subcategorías",
             "ADDITIONS": "Adiciones",
             "PROMOTIONS": "Promociones",
-            "GARNISHFOOD": "Guarniciones",
             "ITEMS": "Items",
             "ITEMS_ENABLE": "Habilitar items",
             "ORDERS_CHEF": "Ordenes",
@@ -312,7 +317,7 @@
         "SETTINGS": "Ajustes",
         "TABLES": "Cambiar mesa",
         "RESTAURANT_EXIT": "Salir del Restaurante",
-        "POINTS": "Mis puntos"
+        "POINTS": "Mis medallas"
     },
     "PROMOTIONS": {
         "PROMOTION_CREATION": "Creación de promociones",
@@ -326,38 +331,9 @@
         "UPDATE_IMAGE": "Actualizar imagen de la promoción",
         "NO_RESTAURANT_CREATED": "No se encuentran restaurantes creados en el sistema"
     },
-    "GARNISHFOOD": {
-        "GARNISHFOOD_CREATION": "Creación de guarniciones",
-        "RESTAURANTS": "Restaurantes",
-        "RESTAURANT_GARNISHFOOD": "Selecciona los restaurantes en donde se encontrara disponible la guarnición",
-        "GARNISHFOOD_EDIT": "Edición de la guarnición",
-        "UPDATE_IMAGE": "Actualizar imagen de la guarnición",
-        "IMAGE_NOT_AVAILABLE": "Imagen no disponible",
-        "GARNISHFOOD_TEXT": "Crea las guarniciones de tu menú y selecciona los restaurantes donde se verán",
-        "NO_DESCRIPTION": "No has ingresado descripción de la guarnición",
-        "NO_RESTAURANT": "No has seleccionado restaurante",
-        "NO_RESTAURANT_CREATED": "No se encuentran restaurantes creados en el sistema",
-        "MODIFY": "Modificar",
-        "ACTIVATE": "Activar",
-        "INACTIVATE": "Inactivar",
-        "SELECT_RESTAURANTS": "Por favor selecciona el(los) restaurante(s) donde se encontrara disponible la guarnición",
-        "GARNISHFOOD_PRICES": "Por favor ingresa el precio de la guarnición ( En caso de no tener valor ingresa 0 ). ",
-        "GARNISHFOOD_PRICE": "Precio de la guarnición",
-        "GARNISHFOOD_TAXES": "Ingresa los impuestos( En caso de no tener valor ingresa 0 ).",
-        "TAXES": "Impuestos",
-        "PRICES": "Precios",
-        "GARNISH_FOOD_CREATED": "Guarnición creada correctamente",
-        "GARNISH_FOOD_EDITED": "Guarnición editada correctamente",
-        "WARNING": "Advertencia: Tienes ",
-        "WARNING_2": "usuarios activos en tus restaurantes",
-        "WARNING_3": "Modificar la configuración de una guarnición podría afectar la experiencia de los usuarios",
-        "REMOVE_TITLE": "Remover guarnición",
-        "REMOVE_MSG": "Deseas remover la guarnición?",
-        "GARNISHFOOD_REMOVED": "Guarnición removida correctamente"
-    },
     "RESTAURANT_REGISTER": {
         "SELECT_COUNTRY": "Selecciona país",
-        "SELECT_CITY": "Selecciona ciudad",
+        "CITY": "Ciudad / Estado / Provincia",
         "NAME": "Nombre del restaurante",
         "ADDRESS": "Dirección del restaurante",
         "PHONE": "Teléfono de contacto",
@@ -402,12 +378,13 @@
         "TABLES_MSG": "En caso de necesitar más mesas para tu restaurante, en la opción Administración -> Restaurantes -> Configuración, podrás agregar las que necesites.",
         "CREATION_ERROR": "Se ha presentado un error creando el restaurante. Por favor intenta nuevamente.",
         "RESTAURANT_CREATED": "Restaurante Creado",
-        "POINTS_VALIDITY": "Selecciona la vigencia de los puntos de recompensa",
+        "POINTS_VALIDITY": "Selecciona la vigencia de las medallas de recompensa",
         "DAYS": "Días",
         "DIALOG_SENTENCE_1A": "A partir de la creación del restaurante vas a tener una bolsa de ",
-        "DIALOG_SENTENCE_1B": "puntos comeygama ",
-        "DIALOG_SENTENCE_2": "Los puntos se restan de la bolsa cada vez que un consumidor redime una recompensa",
-        "DIALOG_SENTENCE_3": "Estas seguro que deseas crear el restaurante?"
+        "DIALOG_SENTENCE_1B": "medallas comeygama ",
+        "DIALOG_SENTENCE_2": "Las medallas se restan de la bolsa cada vez que un consumidor redime una recompensa",
+        "DIALOG_SENTENCE_3": "Estas seguro que deseas crear el restaurante?",
+        "POINTS_PLACEHOLER": "Medallas de Recompensa"
     },
     "WEEK": {
         "MONDAY": "Lunes",
@@ -577,7 +554,11 @@
         "RESTAURANT_INACTIVE": "Restaurante inactivo",
         "RESTAURANT_ACTIVE": "Restaurante activo",
         "WAITERS_ERROR": "Hay restaurantes que no cuentan con meseros. Por favor verifica en la opción de colaboradores",
-        "AVAILABLE_POINTS": "Puntos Disponibles"
+        "AVAILABLE_POINTS": "Medallas Disponibles",
+        "QR_CODE": "Código_QR",
+        "QR_CODE_DOWNLOADED": "Código QR Descargado",
+        "QR_CODE_ERROR": "Error descargando código QR",
+        "DOWNLOAD_QR_CODE": "Descargar QR"
     },
     "TABLES": {
         "TABLES_CREATION": "Creación de mesas",
@@ -602,7 +583,7 @@
     },
     "GO_TO_STORE": {
         "CLIENT": {
-            "TITTLE": "Ordena desde tu celular, acumula y redime tus puntos",
+            "TITTLE": "Ordena desde tu celular, acumula y redime tus medallas",
             "SUB_TITTLE": "",
             "CONTENT": "Descarga gratis en: ",
             "BUTTON": "Descargar"
@@ -646,6 +627,7 @@
         "USER_NAME_WILL_BE": "El nombre del usuario será "
     },
     "ITEMS": {
+        "ITEM_NAME": "Nombre",
         "ITEMS_MANAGEMENT": "Administración de items",
         "ITEMS_MANAGEMENT_TEXT": "Creacion y administración de items",
         "CREATE_NEW_ITEM": "Crear nuevo ítem",
@@ -699,8 +681,9 @@
         "REMOVE_TITLE": "Remover ítem",
         "REMOVE_MSG": "Deseas remover el ítem?",
         "ITEM_REMOVED": "Ítem removido correctamente",
-        "REWARD_LABEL": "Asignar puntos de recompensa",
-        "POINTS_PLACEHOLER": "Puntos",
+        "ITEM_IS_REWARD": "El item es una recompensa, no se ha eliminado",
+        "REWARD_LABEL": "Asignar medallas de recompensa",
+        "POINTS_PLACEHOLER": "Medallas",
         "MENU_RECOMMENDED": "Menú recomendado",
         "ESTABLISHMENTS": "Establecimientos",
         "RECOMMENDED_CHANGED": "Recomendación de ítem modificada",
@@ -760,7 +743,7 @@
         "GENERAL_INFO": "Información general del restaurante",
         "GENERAL_INFO_TEXT": "Edita la información del restaurante. Dicha información será visualizada por las personas en internet y te dará mayor visivilidad",
         "SELECT_COUNTRY": "Selecciona país",
-        "SELECT_CITY": "Selecciona ciudad",
+        "CITY": "Ciudad / Estado / Provincia",
         "ADDRESS": "Dirección",
         "PHONE": "Teléfono",
         "WEBPAGE": "Página de internet",
@@ -793,7 +776,8 @@
         "PLAN_TWO": "Plan Dos",
         "PLAN_THREE": "Plan Tres",
         "OTHER": "Otra...",
-        "CITY_OTHER": "Si seleccionaste otra ciudad, escribela en el siguiente campo"
+        "CITY_OTHER": "Si seleccionaste otra ciudad, escribela en el siguiente campo",
+        "RESTAURANT_EDITED": "Restaurante Editado"
     },
     "RESTAURANT_LOCATION": {
         "TITTLE": "Ubicación del establecimiento",
@@ -807,7 +791,7 @@
         "INFORMATION": "Información",
         "SCHEDULE": "Horario",
         "LOCATION": "Ubicación",
-        "POINTS": "Puntos Disponibles"
+        "POINTS": "Medallas disponibles"
     },
     "RESTAURANT_LOCATION_INFO": {
         "TITTLE": "Ubicación del establecimiento",
@@ -839,7 +823,7 @@
         "SEARCH_MENU": "Buscar Menú",
         "RECOMMENDED": "Recomendados",
         "REWARD": "Recompensa",
-        "POINTS": "puntos",
+        "POINTS": "medallas",
         "TOTAL_ITEM_POINTS": "Total",
         "MENU": "Menú",
         "GET_POINTS": "Obtienes",
@@ -1028,7 +1012,7 @@
         "IUREST_NO_ACTIVE": "El restaurante no tiene el servicio de comeygana activo. No es posible ingresar.",
         "RESTAURANT_NOT_EXISTS": "El restaurante no existe. No es posible ingresar.",
         "PENALTY": "En el momento no tienes disponible la opción para crear ordenes. Intenta de nuevo después del ",
-        "REDEEM_POINTS": "Redimir puntos"
+        "REDEEM_POINTS": "Redimir medallas"
     },
     "MONTHLY_PAYMENT": {
         "TITLE": "Pago del servicio mensual de comeygana",
@@ -1145,10 +1129,10 @@
         "CANCEL_ORDER_CONFIRM": "Orden Cancelada",
         "ITEM_REDEEMED": "Item Redimido"
     },
-    "PAYU_PAYMENT_FORM": {
-        "TITLE": "Medio de pago",
+    "PAYMENT_FORM": {
+        "TITLE": "Medio de pago - Tarjeta de crédito",
         "SUBTITLE": "Por favor diligencia todos los campos para realizar el pago",
-        "SELECT_METHOD": "Medio de pago *",
+        "SELECT_METHOD": "Selecciona tarjeta *",
         "CARD_NUMBER": "Número de tarjeta (Sin espacio, ni guiones) *",
         "EXPIRATION_YEAR": "Año de caducidad *",
         "EXPIRATION_MONTH": "Mes de caducidad *",
@@ -1189,21 +1173,28 @@
         "PRICE": "Precio: ",
         "PAY_CONFIRM": "Confirmar",
         "PAY_CANCEL": "Cancelar",
-        "ORDER_DESCRIPTION": "Pago mensual de servicio comeygana",
+        "ORDER_DESCRIPTION": "Pago de paquete comeygana",
         "TRANSACTION_STATUS": "Estado de la transacción",
         "TRANSACTION_APPROVED": "El pago ha sido aprobado",
         "TRANSACTION_DECLINED": "El pago ha sido rechazado",
         "TRANSACTION_PENDING": "El pago esta pendiente por aprobar",
         "TRANSACTION_EXPIRED": "La transacción ha expirado",
         "TRANSACTION_ERROR": "Error procesando la transacción",
-        "TRANSACTION_MSG": "Puedes ir al menú Pagos > Historial de pagos, para revisar el estado de tus pagos",
+        "TRANSACTION_MSG": "Puedes ir al menú Compra de paquetes > Historial de pagos, para revisar el estado de tus pagos",
         "PAY_ACCEPT": "Aceptar",
         "AUTH_ERROR_MSG": "Los datos ingresados de tu tarjeta no coinciden, por favor verifícalos",
         "FIRST_NAME": "Nombres",
         "LAST_NAME": "Apellidos",
         "UNAVAILABLE_PAYMENT": "La opción de pago no esta disponible por el momento, por favor intenta mas tarde",
         "CC_PAYMENT_METHOD": "Tarjeta de crédito",
-        "DESCRIPTION": "Servicio mensual de comeygana"
+        "DESCRIPTION": "Servicio mensual de comeygana",
+        "FULL_NAME": "Nombre",
+        "SYSTEM_MSG": "Mensaje del sistema",
+        "ACCEPT": "Aceptar",
+        "PACKAGE_OF_MEDALS": "Paquete de medallas: ",
+        "PENDING_MEDALS": "Medallas pendientes: ",
+        "MEDALS": "Medallas",
+        "CITY_MAX": "La ciudad debe tener máximo 50 caracteres"
     },
     "RES_PAYMENT_HISTORY": {
         "TITLE": "Historial de pagos",
@@ -1233,7 +1224,7 @@
         "DATE_LBL": "Fecha: ",
         "CUSTOMER_LBL": "Cliente",
         "DESCRIPTION_LBL": "Descripción",
-        "DESCRIPTION": "Licencia de software para el desarrollo comercial de contenidos digitales. Servicio mensual comeygana",
+        "DESCRIPTION": "Software para el desarrollo comercial de contenidos digitales.",
         "PERIOD_LBL": "Periodo",
         "AMOUNT_LBL": "Valor",
         "SUBTOTAL": "SubTotal: ",
@@ -1249,7 +1240,12 @@
         "IDENTIFICATION_NUMBER": "Identificación: ",
         "TELEPHONE_NUMBER": "Teléfono: ",
         "EMAIL": "Email: ",
-        "CC_PAYMENT_METHOD": "Tarjeta de crédito"
+        "CC_PAYMENT_METHOD": "Tarjeta de crédito",
+        "PACKAGE_MEDALS": "Paquete de medallas:",
+        "PENDING_MEDALS": "Medallas pendientes:",
+        "MEDALS": "Medallas",
+        "PRICE": "Precio: ",
+        "PACKAGE_MEDAL": "Paquete de "
     },
     "TRANSACTION_STATUS": {
         "APPROVED": "Aprobado",
@@ -1295,8 +1291,8 @@
     },
     "ADMIN_SIGNUP": {
         "HOME_CONTENT": {
-            "TITLE": "Conoce y premia a tus clientes por su fidelidad",
-            "SUB_TITLE": "Te ofrecemos un sistema rápido y sencillo que te permite crear una relación estable con tus clientes a través de un sistema de puntos personalizable"
+            "TITLE": "Estas a un paso de comezar a fidelizar tus clientes!",
+            "SUB_TITLE": "Registrate y recibe tu primer paquete de 350 medallas totalmente gratis para que conozcas tus clientes y premiarlos por ir a tu negocio"
         },
         "ABOUT_CONTENT": {
             "MSG_1": "Ingresa información detallada del menú, para que los clientes puedan verlo, y ordenar desde sus celulares, tablets o computadores",
@@ -1326,7 +1322,7 @@
         "LASTNAME": "Apellidos",
         "FULLNAME": "Nombre completo",
         "REQUIRED_FULLNAME": "El nombre no puede estar vacío",
-        "MAX_LENGTH_FULLNAME": "El nombre debe tener máximo 200 caracteres",
+        "MAX_LENGTH_FULLNAME": "El nombre debe tener máximo 150 caracteres",
         "REQUIRED_LASTNAME": "El apellido no puede estar vacío",
         "MIN_LENGTH_LASTNAME": "",
         "MAX_LENGTH_LASTNAME": "El apellido debe tener máximo 70 caracteres",
@@ -1378,7 +1374,8 @@
         "ORDER_MANAGEMENT_TEXT": "Las ordenes que realicen tus clientes serán asignadas a los meseros que vincules en el sistema, las ordenes se podrá visualizar desde cualquier dispositivo móvil o computador",
         "ORDERS_DAY": "Ordenes del día",
         "ORDERS_DAY_TEXT": "Por medio del rol cajero, podrás ver la información detallada de las ordenes que se han realizado en tu restaurante, y así poder identificar lo consumido por cada cliente y las recompensas que ha redimido",
-        "COPYRIGHT": "Todos los derechos reservados"
+        "COPYRIGHT": "Todos los derechos reservados",
+        "MAX_LENGTH_CITY": "La ciudad debe tener máximo 50 caracteres"
     },
     "ADMIN_DASHBOARD": {
         "TITLE": "Te damos la bienvenida a comeygana",
@@ -1406,7 +1403,7 @@
         "REWARDS": "Recompensas redimidas hoy",
         "ITEMS_HISTORY": "Items ordenados históricamente",
         "REWARDS_HISTORY": "Recompensas redimidas históricamente",
-        "AVAILABLE_POINTS": "Puntos Disponibles"
+        "AVAILABLE_POINTS": "Medallas disponibles"
     },
     "ITEM_UNIT_CHART": {
         "TODAY": "Hoy",
@@ -1677,42 +1674,47 @@
         "READ_LESS": "Leer menos"
     },
     "AFTER_RESTAURANT_CREATION": {
-        "A": "Ingresa a la opción Administración/colaboradores, y crea los empleados del restaurante",
-        "B": "Ve a la opción Administración/Mesas/Buscar mesas, para seleccionar e imprimir los Códigos QR de tus mesas",
-        "C": "Carga la información de tu menú desde la opción Menú, así los usuarios podrán verlo desde sus dispositivos",
+        "A": "Descarga tu código QR para que los clientes lo escaneen al momento de realizar sus pagos",
+        "B": "Digitaliza tu menú y estará disponible para tus clientes",
+        "C": "Define tus recompensas para que tus clientes las rediman",
+        "D": "Crea colaboradores con el rol supervisor",
         "NOT_SHOW": "No volver a mostrar"
     },
     "REWARD": {
         "THERE_NOT_ESTABLISHMENTS": "Aún no hay restaurantes registrados",
         "MESSAGE": "Registra uno para habilitar esta opción",
         "ESTABLISHMENT_REGISTER": "Registrar restaurante",
-        "MSG_INITIAL": "Implementa una manera ordenada y fácil de visualizar tu menú",
+        "MSG_INITIAL": "Crea items para poder crear tus recompensas",
         "CREATE_NEW_ITEM": "Crear nuevo item",
         "TITLE": "Recompensas",
-        "SUBTITLE": "Crea las recompensas para tus clientes. Ingresa cuantos items otorgaras (cantidad), el item y los puntos necesarios para redimir la recompensa",
+        "SUBTITLE": "Crea las recompensas para tus clientes. Ingresa cuantos items otorgaras (cantidad), el item y las medallas necesarias para redimir la recompensa",
         "QUANTITY": "Cantidad",
         "ESTABLISHMENTS": "Selecciona los establecimientos donde se encontrara disponible la recompensa",
         "NO_ESTABLISHMENTS_CREATED": "No se encuentran establecimientos creados",
-        "POINTS": "Puntos",
+        "POINTS": "Medallas",
         "NO_ESTABLISHMENTS": "No se encuentran establecimientos",
         "MODIFY": "MODIFICAR",
         "REMOVE": "REMOVER",
         "SELECT_ITEM": "Selecciona un ítem",
-        "SELECT_POINTS": "Selecciona los puntos",
+        "SELECT_MEDALS": "Selecciona las medallas",
         "REWARD_CREATED": "Recompensa creada",
         "REMOVE_TITLE": "Remover Recompensa",
         "REMOVE_MSG": "Deseas remover la recompensa?",
         "REWARD_REMOVED": "Recompensa removida",
         "EDIT_REWARD": "Edición de la Recompensa",
-        "REWARD_EDITED": "Recompensa Editada"
+        "REWARD_EDITED": "Recompensa Editada",
+        "MEDALS": "Medallas",
+        "FIRST_RANGE_MSG": "En promedio un cliente irá a tu restaurante entre 3 y 5 veces para reclamar esta recompensa. Recuerda verificar tus cuentas, para que, lo que ofreces de recompensa no afecte tus ingresos.",
+        "SECOND_RANGE_MSG": "En promedio un cliente irá a tu restaurante entre 6 y 8 veces para reclamar esta recompensa. Es muy buena opción para dar a tus clientes recompensas alcanzables y que se animen a comprarte.",
+        "THIRD_RANGE_MSG": "En promedio un cliente irá a tu restaurante entre 9 y 10 veces para reclamar esta recompensa. Procura que tu recompensa sea muy atractiva, de lo contrario los clientes no se animaran a comprarte."
     },
     "REWARD_DETAIL": {
         "REWARD_TITLE": "Recompensas",
-        "POINTS_TO_REDEEM": "Puntos disponibles para redimir",
-        "POINTS": "Puntos",
+        "POINTS_TO_REDEEM": "Medallas disponibles para redimir",
+        "POINTS": "Medallas",
         "UNAVAILABLE": "No disponible",
         "REDEEM": "Redimir",
-        "GET_POINTS": "Obtén puntos",
+        "GET_POINTS": "Obtén medallas",
         "REWARD_AGGREGATED": "Recompensa agregada",
         "ERROR": "Error agregando la recompensa. Intenta nuevamente",
         "ORDER_ERROR": "Puedes redimir máximo una recompensa por orden",
@@ -1720,27 +1722,28 @@
         "NO_REWARDS": "No hay recompensas"
     },
     "CUSTOMER_POINTS": {
-        "NO_POINTS_MSG": "Aún no has acumulado puntos en ningún restaurante. Animate!",
+        "NO_POINTS_MSG": "Aún no has acumulado medallas en ningún restaurante. Animate!",
         "GO_TO_ORDERS": "Ir a ordenes",
         "ADDRESS": "Dirección",
-        "ACCUMULATED_POINTS": "Puntos Acumulados",
-        "POINTS": "Puntos",
+        "ACCUMULATED_POINTS": "Medallas Acumulados",
+        "POINTS": "Medallas",
         "YOU_HAVE": "Tienes",
-        "POINTS_FOR_EXPIRING": "puntos para vencer el día",
+        "POINTS_FOR_EXPIRING": "Medallas para vencer el día",
         "DETAIL": "Detalle"
     },
     "POINTS_DETAIL": {
-        "TITLE": "Historial de ordenes y puntos",
-        "SUBTITLE": "Te presentamos las ordenes que has pedido en el restaurante, los puntos que has ganado y has redimido",
+        "TITLE": "Historial de ordenes y medallas",
+        "SUBTITLE": "Te presentamos las ordenes que has pedido en el restaurante, las medallas que has ganado y has redimido",
         "ORDER": "Orden",
         "YOU_EARNED": "Ganaste",
-        "POINTS": "Puntos",
+        "POINTS": "Medallas",
         "YOU_REDEEMED": "Redimiste",
         "QUANT": "Cant. ",
         "REWARD": "Recompensa",
         "TOTAL": "Total"
     },
     "OPTIONS": {
+        "OPTION_NAME": "Nombre",
         "OPTION_CREATION": "Creación de opciones",
         "OPTION_TEXT": "Crea las opciones que necesitas para tus items",
         "OPTION_EDIT": "Edición de la opción",
@@ -1791,7 +1794,7 @@
         "NO_RECORDS_FOUND": "No se encontrarón ordenes",
         "ACCUMULATED": "acumulados",
         "REDEEMED": "redimidos",
-        "AVAILABLE_POINTS": "Puntos Disponibles"
+        "AVAILABLE_POINTS": "Medallas disponibles"
     },
     "TYPE_OF_FOOD": {
         "GERMAN_FOOD": "Comida Alemana",
@@ -1840,7 +1843,54 @@
         "LARGE": "A LA CARTA"
     },
     "BAGS_PAYMENT": {
-        "TITLE": "Compra de bolsas",
-        "SUBTITLE": "Aquí puedes comprar la bolsa de puntos por restaurante que desees"
+        "TITLE": "Compra de paquetes",
+        "SUBTITLE": "Aquí puedes comprar los paquetes de medallas por restaurante que desees y las que tengas pendientes",
+        "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
+        "MESSAGE": "Registra uno para habilitar esta opción",
+        "RESTAURANT_REGISTER": "Registrar restaurante",
+        "RESTAURANT_NAME": "Nombre del restaurante",
+        "PACKAGE_OF_MEDALS": "Paquete de medallas",
+        "PRICE": "Precio",
+        "MEDALS": "Medallas",
+        "SELECTED_PACKAGE": "Paquete seleccionado",
+        "VALUE": "Valor",
+        "PENDING_MEDALS": "Medallas pendientes por pagar",
+        "TOTAL_PRICE": "Total: ",
+        "PAY": "Pagar",
+        "ADVICE_MEDALS": "* El valor de las medallas pendientes esta calculado con base al precio de una medalla del paquete mas pequeño"
+    },
+    "APPROVE_REWARDS": {
+        "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
+        "MESSAGE": "Registra uno para habilitar esta opción",
+        "RESTAURANT_REGISTER": "Registrar restaurante",
+        "TITLE": "Aprobación De Recompensas",
+        "SUBTITLE": "Esta página te permite aprobar las recompensas que los clientes redimen en tus restaurantes",
+        "SELECT_RESTAURANT": "Selecciona restaurante",
+        "NO_REWARDS_FOUND": "No se han encontrado recompensas por aprobar para el restaurante seleccionado",
+        "MEDALS": "Medallas",
+        "CUSTOMER": "Cliente",
+        "NO_APPROVE": "No Aprobar",
+        "APPROVE": "Aprobar",
+        "APPROVE_REWARD": "Aprobar Recompensa",
+        "APPROVE_REWARD_MSG": "Estas seguro de aprobar la recompensa?",
+        "REWARD_APPROVED": "Recompensa Aprobada",
+        "REJECT_REWARD": "Rechazar Recompensa",
+        "REJECT_REWARD_MSG": "Estas seguro de rechazar la recompensa?",
+        "REWARD_REJECTED": "Recompensa Rechazada",
+        "NAME_FILTER": "Buscar usuario por nombre o correo eléctronico"
+    },
+    "GIVE_MEDAL": {
+        "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
+        "MESSAGE": "Registra uno para habilitar esta opción",
+        "RESTAURANT_REGISTER": "Registrar restaurante",
+        "TITLE": "Otorgar Medallas",
+        "SUBTITLE": "Esta opción te permite otorgar medallas a un usuario específico. Selecciona el restaurante y busca al usuario por su nombre o correo electrónico para darle una medalla",
+        "SELECT_RESTAURANT": "Selecciona restaurante",
+        "NAME_FILTER": "Buscar usuario por nombre o correo eléctronico",
+        "NO_USERS_FOUND": "No se han encontrado usuarios con la búsqueda realizada",
+        "GIVE_MEDAL": "Dar Medalla",
+        "GIVE_MEDAL_TITLE": "Otorgar Medalla",
+        "GIVE_MEDAL_SUBTITLE": "Estas seguro de dar una (1) medalla a ",
+        "MEDAL_GIVEN": "Medalla Entregada"
     }
 }

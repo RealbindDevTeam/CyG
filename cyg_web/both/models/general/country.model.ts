@@ -10,15 +10,16 @@ export interface Country {
     numericCode: string;
     indicative: string;
     currencyId: string;
-    itemsWithDifferentTax: boolean;
-    queue: string[];
-    establishment_price: number;
-    tablePrice: number;
-    cronValidateActive: string;
+    itemsWithDifferentTax?: boolean;
+    establishment_price?: number;
+    tablePrice?: number;
+    cronValidateActive?: string;
     cronChangeFreeDays?: string;
-    cronEmailChargeSoon: string;
-    cronEmailExpireSoon: string;
-    cronEmailRestExpired: string;
+    cronEmailChargeSoon?: string;
+    cronEmailExpireSoon?: string;
+    cronEmailRestExpired?: string;
     max_number_tables?: number;
-    cronPointsExpire: string
+    cronPointsExpire?: string;
+    cronCheckCurrentMedals: string;
+    cronCheckNegativeMedals: string;
 }

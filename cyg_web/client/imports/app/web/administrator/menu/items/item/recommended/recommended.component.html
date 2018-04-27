@@ -5,7 +5,7 @@
         <h3 mat-subheader>{{'ITEMS.ESTABLISHMENTS' | translate}}</h3>
         <mat-list-item *ngFor="let establishment of data.item.establishments">
             <mat-icon mat-list-icon>store</mat-icon>
-            <h4 mat-line>{{getEstablishmentName(establishment.establishment_id)}}</h4>
+            <h4 mat-line style="white-space: normal;">{{getEstablishmentName(establishment.establishment_id)}}</h4>
             <mat-slide-toggle [checked]="establishment.recommended" (change)="updateRecommendedFlag(establishment.establishment_id)"></mat-slide-toggle>
         </mat-list-item>
     </mat-list>

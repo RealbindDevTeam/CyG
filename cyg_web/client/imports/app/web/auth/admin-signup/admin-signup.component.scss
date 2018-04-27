@@ -40,7 +40,7 @@ mat-toolbar {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
-    margin-top: -64px;
+    //margin-top: -64px;
   }
 
 .container {
@@ -186,7 +186,7 @@ mat-toolbar {
 @media only screen and (min-width: 767px) {
     .dwi {
       display: block;
-      top: 0;
+      top: -64px;
       left: 60%;
     }
 }

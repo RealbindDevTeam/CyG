@@ -1,3 +1,214 @@
-ion-slide {
-    background-color: #fff;
+//$primary-color: #EF5350 !important;
+//$primary-color: #1e222a !important;
+$primary-color: #01579B !important;
+$white_color-text: White;
+
+.toolbar-background-md {
+    background: $primary-color;
+}
+
+.toolbar-background-ios {
+    background: $primary-color;
+}
+
+.toolbar-title-md {
+    color: $white_color-text;
+}
+
+.toolbar-title-ios {
+    color: $white_color-text;
+}
+
+.tabs-md .tabbar {
+    background: #fff;
+}
+
+.tabs-ios .tabbar {
+    background: #fff;
+}
+
+.button-effect {
+    background-color: $primary-color;
+}
+
+.nav-logo{
+    width: 14rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.ios {
+    page-home {
+        .button-profile {
+            height: 76px;
+        }
+    }
+}
+
+page-home {
+
+    .button-action-img {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 210px;
+    }
+
+    .button-action-svg {
+        margin: 0 !important; 
+        z-index: 999 !important;
+    }
+
+    .b1 {
+        background: linear-gradient(90deg, #ffffff 0%, #f8952e 50%);
+    }
+    
+    .b2 {
+        background: linear-gradient(90deg, #ffffff 0%, #30cb67 50%);
+    }
+
+    .animated {
+        -webkit-animation-duration: 5s;
+        animation-duration: 5s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+      
+    .animated.infinite {
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+    }
+
+    @-webkit-keyframes tada {
+        from, 30%, 50%, 100% {
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+      
+        2%,
+        5% {
+            -webkit-transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+            transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+        }
+      
+        7%,
+        12%,
+        16%,
+        22% {
+            -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+            transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+        }
+      
+        10%,
+        15%,
+        20% {
+            -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+            transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+        }
+      
+        to {
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+    }
+    
+    @keyframes tada {
+        from {
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+      
+        10%,
+        20% {
+            -webkit-transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+            transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+        }
+      
+        30%,
+        50%,
+        70%,
+        90% {
+            -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+            transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+        }
+      
+        40%,
+        60%,
+        80% {
+            -webkit-transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+            transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+        }
+      
+        to {
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+    }
+      
+    .tada {
+        -webkit-animation-name: tada;
+        animation-name: tada;
+    }
+
+    @-webkit-keyframes swing {
+        20% {
+          -webkit-transform: rotate3d(0, 0, 1, 15deg);
+          transform: rotate3d(0, 0, 1, 15deg);
+        }
+      
+        40% {
+          -webkit-transform: rotate3d(0, 0, 1, -10deg);
+          transform: rotate3d(0, 0, 1, -10deg);
+        }
+      
+        60% {
+          -webkit-transform: rotate3d(0, 0, 1, 5deg);
+          transform: rotate3d(0, 0, 1, 5deg);
+        }
+      
+        80% {
+          -webkit-transform: rotate3d(0, 0, 1, -5deg);
+          transform: rotate3d(0, 0, 1, -5deg);
+        }
+      
+        to {
+          -webkit-transform: rotate3d(0, 0, 1, 0deg);
+          transform: rotate3d(0, 0, 1, 0deg);
+        }
+    }
+      
+    @keyframes swing {
+        20% {
+            -webkit-transform: rotate3d(0, 0, 1, 15deg);
+            transform: rotate3d(0, 0, 1, 15deg);
+        }
+      
+        40% {
+            -webkit-transform: rotate3d(0, 0, 1, -10deg);
+            transform: rotate3d(0, 0, 1, -10deg);
+        }
+      
+        60% {
+            -webkit-transform: rotate3d(0, 0, 1, 5deg);
+            transform: rotate3d(0, 0, 1, 5deg);
+        }
+      
+        80% {
+            -webkit-transform: rotate3d(0, 0, 1, -5deg);
+            transform: rotate3d(0, 0, 1, -5deg);
+        }
+      
+        to {
+            -webkit-transform: rotate3d(0, 0, 1, 0deg);
+            transform: rotate3d(0, 0, 1, 0deg);
+        }
+    }
+      
+    .swing {
+        -webkit-transform-origin: top center;
+        transform-origin: top center;
+        -webkit-animation-name: swing;
+        animation-name: swing;
+    }
 }
