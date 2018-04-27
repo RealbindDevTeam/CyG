@@ -23,7 +23,7 @@
     
     <div *ngIf="_showEstablishments" padding>
         <div *ngFor="let establishment_medal of _establishmentMedals | async">
-            <button ion-button color="cwhite" class="button-action button-cust" *ngFor="let _establishment of _establishments | async;"
+            <button ion-button text-wrap color="cwhite" class="button-action button-cust" *ngFor="let _establishment of _establishments | async;"
                 (click)="openRewardList(_establishment._id)">
                 <div class="profile-header">
                     <ion-item no-lines>
@@ -31,7 +31,7 @@
                         <img item-start *ngIf="!_establishment.image" src="assets/img/default-restaurant.png">
                         <h2>{{_establishment.name}}</h2>
                         <p color="cgreen" class="medal">{{establishment_medal.medals}} {{'MOBILE.REWARDS.ACCUMULATED_MEDALS' | translate}}</p>
-                        <svg item-end version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        <!--svg item-end version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             width="50px" height="50px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
                             <g id="Layer_1" display="none">
                                 <g display="inline">
@@ -157,12 +157,7 @@
 			32.505,51.972 41.253,61.096 39.188,73.998 		" />
                                 </g>
                             </g>
-
-                            <!--path class="star-dashes-1 infinite" fill="#FF9800" stroke="#FF9800" stroke-width="5" stroke-linecap="round" stroke-miterlimit="10"
-                                d="M20.881,6.26
-          l6.333,7.333 M103.214,63.961l-9.173-3.122 M78.519,13.835l5.724-7.818 M52.777,100.544l0.048-9.69 M11.823,61.737l-9.436,2.204"
-                            /-->
-                        </svg>
+                        </svg-->
                     </ion-item>
                 </div>
             </button>
