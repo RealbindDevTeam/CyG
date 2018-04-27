@@ -9,7 +9,6 @@ import { SectionComponent } from './web/administrator/menu/sections/section/sect
 import { SigninWebComponent } from './web/auth/signin/signin.web.component';
 import { CategoryComponent } from './web/administrator/menu/categories/categories/categories.component';
 import { SubcategoryComponent } from './web/administrator/menu/subcategories/subcategories/subcategories.component';
-import { AdditionComponent } from './web/administrator/menu/additions/addition/addition.component';
 //import { TableComponent } from './web/administrator/administration/tables/table/table.component';
 import { EstablishmentRegisterComponent } from './web/administrator/administration/establishment/register/establishment-register.component';
 import { SettingsWebComponent } from './web/settings/settings/settings.web.component';
@@ -36,8 +35,6 @@ import { TableDetailComponent } from './web/administrator/administration/tables/
 import { EstablishmentProfileComponent } from './web/administrator/administration/establishment/profile/establishment-profile.component';
 import { RewardComponent } from './web/administrator/rewards/reward/reward.component';
 import { RewardUnitsChartComponent } from 'client/imports/app/web/administrator/dashboard/reward-units-chart/reward-units-chart.component';
-import { OptionsComponent } from './web/administrator/menu/options/options/option/option.component';
-import { OptionValueComponent } from './web/administrator/menu/options/values/option-value/option-value.component';
 import { RewardHistoryChartComponent } from './web/administrator/dashboard/reward-history-chart/reward-history-chart.component';
 //import { EstablishmentListComponent } from './web/administrator/administration/establishment/monthly-config/establishment-list/establishment-list.component';
 import { EnableDisableComponent } from './web/administrator/administration/establishment/monthly-config/enable-disable/enable-disable.component';
@@ -58,7 +55,6 @@ export const routes: Route[] = [
             { path: 'sections', component: SectionComponent, canActivate: [AdminGuard] },
             { path: 'categories', component: CategoryComponent, canActivate: [AdminGuard] },
             { path: 'subcategories', component: SubcategoryComponent, canActivate: [AdminGuard] },
-            { path: 'additions', component: AdditionComponent, canActivate: [AdminGuard] },
             { path: 'items', component: ItemComponent, canActivate: [AdminGuard] },
             { path: 'items-creation', component: ItemCreationComponent, canActivate: [AdminGuard] },
             { path: 'items-edition/:param1', component: ItemEditionComponent, canActivate: [AdminGuard] },
@@ -79,8 +75,6 @@ export const routes: Route[] = [
             { path: 'supervisor-reward-units-chart/:param1', component: RewardUnitsChartComponent, canActivate: [SupervisorGuard] },
             { path: 'reward-history-chart/:param1', component: RewardHistoryChartComponent, canActivate: [AdminGuard] },
             { path: 'supervisor-reward-history-chart/:param1', component: RewardHistoryChartComponent, canActivate: [SupervisorGuard] },
-            { path: 'options', component: OptionsComponent, canActivate: [AdminGuard] },
-            { path: 'option-values', component: OptionValueComponent, canActivate: [AdminGuard] },
             { path: 'reward-history-chart/:param1', component: RewardHistoryChartComponent, canActivate: [AdminGuard] },
             { path: 'bags-payment', component: BagsPaymentComponent, canActivate: [AdminGuard] },
             { path: 'payment-form', component: PaymentFormComponent, canActivate: [AdminGuard] },

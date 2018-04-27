@@ -15,7 +15,6 @@ import { EstablishmentListDetailPage } from "../pages/customer/establishment-lis
 import { MenuByEstablishmentPage } from "../pages/customer/establishment-list/menu-by-establishment/menu-by-establishment";
 import { ItemCardEstablishmentComponent } from "../pages/customer/establishment-list/menu-by-establishment/item-card-establishment";
 import { ItemDetailEstablishmentPage } from "../pages/customer/establishment-list/menu-by-establishment/item-detail-establishment/item-detail-establishment";
-import { AdditionsEstablishmentPage } from "../pages/customer/establishment-list/additions-establishment/additions-establishment";
 import { MedalWonPage } from '../pages/customer/medal-won/medal-won';
 import { UserRewardsPage } from '../pages/customer/points/points-detail/user-rewards/user-rewards';
 import { UserMedalsPage } from '../pages/customer/points/points-detail/user-medals/user-medals';
@@ -50,7 +49,6 @@ export const PAGES_DECLARATIONS = [
     MenuByEstablishmentPage,
     ItemCardEstablishmentComponent,
     ItemDetailEstablishmentPage,
-    AdditionsEstablishmentPage,
     MedalWonPage,
     UserRewardsPage,
     UserMedalsPage,

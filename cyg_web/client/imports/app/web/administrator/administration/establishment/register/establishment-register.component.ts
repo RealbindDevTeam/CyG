@@ -21,8 +21,6 @@ import { Table } from '../../../../../../../../both/models/establishment/table.m
 import { Tables } from '../../../../../../../../both/collections/establishment/table.collection';
 import { AlertConfirmComponent } from '../../../../../web/general/alert-confirm/alert-confirm.component';
 import { ImageService } from '../../../../services/general/image.service';
-import { Addition, AdditionPrice, AdditionEstablishment } from '../../../../../../../../both/models/menu/addition.model';
-import { Additions } from '../../../../../../../../both/collections/menu/addition.collection';
 import { AfterEstablishmentCreationComponent } from './after-establishment-creation/after-establishment-creation.component';
 import { Parameter } from '../../../../../../../../both/models/general/parameter.model';
 import { Parameters } from '../../../../../../../../both/collections/general/parameter.collection';
@@ -54,7 +52,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
     private _currencySub: Subscription;
     private _countriesSub: Subscription;
     private _paymentMethodsSub: Subscription;
-    private _additionsSub: Subscription;
     private _usrDetailSubscription: Subscription;
     private _parameterSubscription: Subscription;
     private _bagPlansSubscription: Subscription;
@@ -143,7 +140,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
             });
         });
         this._currencySub = MeteorObservable.subscribe('currencies').takeUntil(this._ngUnsubscribe).subscribe();
-        this._additionsSub = MeteorObservable.subscribe('additions', this._user).takeUntil(this._ngUnsubscribe).subscribe();
         this._parameterSubscription = MeteorObservable.subscribe('getParameters').takeUntil(this._ngUnsubscribe).subscribe();
         this._bagPlansSubscription = MeteorObservable.subscribe('getBagPlans').takeUntil(this._ngUnsubscribe).subscribe();
         this._currentDate = new Date();
@@ -369,17 +365,6 @@ export class EstablishmentRegisterComponent implements OnInit, OnDestroy {
                 Currencies.find({ _id: _lEstabl.currencyId }).fetch().forEach((cu) => {
                     _lCurrency = cu;
                 });
-
-                if (Additions.collection.find({ creation_user: this._user }).count() > 0) {
-                    Additions.collection.find({ creation_user: this._user }).forEach(function <Addition>(addition, index, arr) {
-                        addition.prices.forEach(function <AdditionPrice>(additionPrice, index, arr) {
-                            if (_lCurrency._id === additionPrice.currencyId) {
-                                let _lAdditionEstablishment: AdditionEstablishment = { establishment_id: _lEstabl._id, price: additionPrice.price };
-                                Additions.update({ _id: addition._id }, { $push: { establishments: _lAdditionEstablishment } });
-                            }
-                        });
-                    });
-                }
 
                 resolve(_lNewEstablishment);
                 if (this.showRestCreation) {
