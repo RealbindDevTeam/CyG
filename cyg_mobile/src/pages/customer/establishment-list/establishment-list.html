@@ -17,7 +17,7 @@
         <button *ngFor="let establishment of _establishments | async;" ion-button block clear color="cwhite" class="button-profile border"
             (click)="viewEstablishmentProfile(establishment)">
             <div class="profile-header">
-                <ion-item no-lines>
+                <ion-item no-lines text-wrap>
                     <img item-start *ngIf="establishment.image" src="{{ establishment.image.url }}">
                     <img item-start *ngIf="!establishment.image" src="assets/img/default-restaurant.png">
                     <h2>{{establishment.name}}</h2>
