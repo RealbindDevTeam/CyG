@@ -7,8 +7,6 @@ import { Subscription, Observable, Subject } from 'rxjs';
 import { UserLanguageService } from '../../services/general/user-language.service';
 import { Countries } from '../../../../../../both/collections/general/country.collection';
 import { Country } from '../../../../../../both/models/general/country.model';
-import { City } from '../../../../../../both/models/general/city.model';
-import { Cities } from '../../../../../../both/collections/general/city.collection';
 import { Language } from '../../../../../../both/models/general/language.model';
 import { Languages } from '../../../../../../both/collections/general/language.collection';
 import { Users } from '../../../../../../both/collections/auth/user.collection';
@@ -33,11 +31,9 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
     private _userDetailSubscription: Subscription;
     private _subscription: Subscription;
     private _countrySubscription: Subscription;
-    private _citySubscription: Subscription;
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
 
     private _countries: Observable<Country[]>;
-    private _cities: Observable<City[]>;
     private _languages: Observable<Language[]>;
 
     private _mdDialogRef: MatDialogRef<any>;
@@ -55,7 +51,6 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
     private titleMsg: string;
     private btnAcceptLbl: string;
     private _disabled: boolean = true;
-    private _showOtherCity: boolean = false;
     private _validateChangeEmail: boolean = true;
     private _validateChangePass: boolean = true;
     private _loading: boolean = false;
@@ -98,8 +93,6 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
             });
         });
 
-        this._citySubscription = MeteorObservable.subscribe('cities').takeUntil(this._ngUnsubscribe).subscribe();
-
         this._subscription = MeteorObservable.subscribe('languages').takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._languages = Languages.find({}).zone();
@@ -109,7 +102,7 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
         this._userDetailSubscription = MeteorObservable.subscribe('getUserDetailsByUser', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
 
-                this._user = Users.findOne({ _id: Meteor.userId() });;
+                this._user = Users.findOne({ _id: Meteor.userId() });
                 this._userDetail = UserDetails.findOne({ user_id: Meteor.userId() });
 
                 if (this._user.services.facebook) {
@@ -123,7 +116,7 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
                 if (this._user.username) {
                     this._userForm = new FormGroup({
                         username: new FormControl({ value: this._user.username, disabled: true }),
-                        full_name: new FormControl({ value: this._user.profile.full_name, disabled: false }, [Validators.maxLength(50)]),
+                        full_name: new FormControl({ value: this._user.profile.full_name, disabled: false }, [Validators.maxLength(150)]),
                         language_code: new FormControl({ value: this._user.profile.language_code, disabled: false }),
                         gender: new FormControl({ value: this._user.profile.gender, disabled: false }, [Validators.required])
                     });
@@ -138,25 +131,14 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
                         let contactPhone: FormControl = new FormControl({ value: this._userDetail.contact_phone, disabled: false }, [Validators.maxLength(20)]);
                         this._userForm.addControl('contactPhone', contactPhone);
 
-                        let shippingAddress: FormControl = new FormControl({ value: this._userDetail.address, disabled: false }, [Validators.maxLength(150)]);
+                        let shippingAddress: FormControl = new FormControl({ value: this._userDetail.address, disabled: false }, [Validators.maxLength(100)]);
                         this._userForm.addControl('shippingAddress', shippingAddress);
 
                         let country: FormControl = new FormControl({ value: this._userDetail.country_id, disabled: false });
                         this._userForm.addControl('country', country);
 
-                        this.changeCountry(this._userDetail.country_id);
-
-                        let city: FormControl = new FormControl({ value: this._userDetail.city_id, disabled: false });
+                        let city: FormControl = new FormControl({ value: this._userDetail.city_id, disabled: false }, [Validators.maxLength(50)])
                         this._userForm.addControl('city', city);
-
-                        let otherCity: FormControl = new FormControl();
-                        this._userForm.addControl('otherCity', otherCity);
-
-                        if (this._userDetail.other_city) {
-                            this._showOtherCity = true;
-                            this._userForm.controls['city'].setValue('0000');
-                            this._userForm.controls['otherCity'].setValue(this._userDetail.other_city);
-                        }
                     } else {
                         this._userForm.controls['full_name'].disable();
                     }
@@ -176,31 +158,6 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
     removeSubscriptions(): void {
         this._ngUnsubscribe.next();
         this._ngUnsubscribe.complete();
-    }
-
-    /**
-    * This function changes de country to select
-    *@param {string} _countryId
-    */
-    changeCountry(_countryId: string) {
-        this._cities = Cities.find({ country: _countryId }).zone();
-    }
-
-    /**
-     * This function changes de city to select other city
-     * @param {string} cityId
-     */
-    changeOtherCity(cityId: string) {
-        this._showOtherCity = true;
-        this._userForm.controls['otherCity'].setValidators(Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(50)]));
-    }
-
-    /**
-     * This function changes de city 
-     */
-    changeCity() {
-        this._showOtherCity = false;
-        this._userForm.controls['otherCity'].clearValidators();
     }
 
     /**
@@ -247,21 +204,15 @@ export class SettingsWebComponent implements OnInit, OnDestroy {
             });
 
             if (this._userDetail.role_id === '100') {
-                let citySelected: string = '';
-                let othercitySelected: string = '';
-                if (this._userForm.value.city === '0000') {
-                    othercitySelected = this._userForm.value.otherCity;
-                } else {
-                    citySelected = this._userForm.value.city;
-                }
+
                 UserDetails.update({ _id: this._userDetail._id }, {
                     $set: {
                         contact_phone: this._userForm.value.contactPhone,
                         dni_number: this._userForm.value.dniNumber,
                         address: this._userForm.value.shippingAddress,
                         country_id: this._userForm.value.country,
-                        city_id: citySelected,
-                        other_city: othercitySelected
+                        city_id: this._userForm.value.city,
+                        other_city: ''
                     }
                 });
             }

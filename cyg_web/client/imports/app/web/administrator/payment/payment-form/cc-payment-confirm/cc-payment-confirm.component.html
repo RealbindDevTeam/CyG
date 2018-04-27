@@ -1,0 +1,51 @@
+<mat-card style="box-shadow: none">
+    <mat-card-title>{{'PAYMENT_FORM.DIALOG_TITLE' | translate}}</mat-card-title>
+    <mat-card-subtitle>{{'PAYMENT_FORM.DIALOG_PLEASE' | translate}}</mat-card-subtitle>
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item *ngFor="let establishment of data.establishmentarray">
+                <img mat-list-avatar class="image" src="/images/restaurantes.png">
+                <h2 mat-line class="card-title">{{getEstablishmentName(establishment.establishmentId)}}</h2>
+                <p mat-line>
+                    {{'PAYMENT_FORM.PACKAGE_OF_MEDALS' | translate}} {{establishment.bagPlanPoints}} {{'PAYMENT_FORM.MEDALS' | translate}} -
+                    {{'PAYMENT_FORM.PRICE' | translate}} {{establishment.bagPlanPrice}} {{establishment.bagPlanCurrency}}
+                </p>
+                <p *ngIf="establishment.creditPoints > 0" mat-line>
+                    {{'PAYMENT_FORM.PENDING_MEDALS' | translate}} {{establishment.creditPoints}} {{'PAYMENT_FORM.MEDALS' | translate}} - {{'PAYMENT_FORM.PRICE'
+                    | translate}} {{establishment.creditPrice}} {{establishment.bagPlanCurrency}}
+                </p>
+            </mat-list-item>
+        </mat-list>
+
+        <mat-list>
+            <mat-list-item>
+                <img mat-list-avatar class="image" src="{{data.ccfranchise}}">
+                <h2 mat-line class="card-title">{{'PAYMENT_FORM.PAY' | translate}}</h2>
+                <p mat-line>{{'PAYMENT_FORM.CARD_FINISHED_IN' | translate}}{{_cardNumber}}</p>
+                <p mat-line>{{data.payername}}</p>
+            </mat-list-item>
+        </mat-list>
+        <mat-list>
+            <mat-list-item>
+                <img mat-list-avatar class="image" src="/images/orders.png">
+                <h2 mat-line class="card-title">{{'PAYMENT_FORM.PERSONAL_INFO' | translate}}</h2>
+                <p mat-line>{{data.buyername}}</p>
+                <p mat-line>{{data.address}}</p>
+                <p mat-line>{{data.country | translate}}</p>
+                <p mat-line>{{'PAYMENT_FORM.PERSONAL_TEL' | translate}} {{data.telephone}}</p>
+            </mat-list-item>
+        </mat-list>
+        <mat-list>
+            <mat-list-item>
+                <img mat-list-avatar class="image" src="/images/credit-card-payment.png">
+                <h2 mat-line class="card-title">{{'PAYMENT_FORM.PRICE' | translate}}
+                    <span style="font-weight: 600">{{_totalPrice}} {{_totalCurrency}}</span>
+                </h2>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-raised-button class="secondary-button" (click)="cancel()">{{ 'PAYMENT_FORM.PAY_CANCEL' | translate }}</button>
+        <button mat-raised-button class="primary-button" (click)="closeConfirm()">{{ 'PAYMENT_FORM.PAY_CONFIRM' | translate }}</button>
+    </mat-card-actions>
+</mat-card>

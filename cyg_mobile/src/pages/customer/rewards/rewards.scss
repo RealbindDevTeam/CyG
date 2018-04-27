@@ -1,0 +1,36 @@
+rewards {
+    .medal {
+        color: #4CAF50;
+        font-weight: bold;
+    }
+}
+
+.star-dashes-1 {
+    opacity: 0;
+}
+
+.star-dashes-1 {
+    -webkit-animation: flash-1 2s forwards;
+    -webkit-animation-iteration-count: forwards;
+    animation-iteration-count: 1;
+}
+
+@-webkit-keyframes flash-1 {
+    50% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes star-checked-1 {
+    50% {
+       stroke-dashoffset: 0;
+    }
+    75% {
+        stroke-dashoffset: 0;
+        -webkit-transform-origin: center;
+        -webkit-transform: rotate(360deg) scale(1.5);
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}

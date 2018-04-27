@@ -17,6 +17,7 @@
     },
     "MOBILE": {
         "CANCEL": "Cancelar",
+        "ACCEPT": "Aceptar",
         "CATEGORY": "Categoría",
         "CONFIRM_PASSWORD": "Confirmar contraseña",
         "CREATE": "Crear",
@@ -344,7 +345,7 @@
             "QUANTITY": "Cantidad:",
             "ENTER_NUMBER": "Ingresa número",
             "OBSERVATIONS": "AGREGAR COMENTARIOS",
-            "ADDITIONS": "Selecciona las adiciones que desees",
+            "ADDITIONS": "Adiciones recomendadas",
             "GARNISHES": "Guarniciones",
             "MODAL_CANCEL": "Cancelar",
             "MODEL_INDICATION": "Agrega tus comentarios (por ejemplo, sin cebolla...)",
@@ -365,7 +366,8 @@
             "FOOD_ACCOMPANIMENT": "Acompañamientos",
             "ADDITION_LBL": "Adición",
             "CONFIRM": "Confirmar",
-            "OPTIONS_ERROR": "Por favor completa la información para agregar el ítem a la orden"
+            "OPTIONS_ERROR": "Por favor completa la información para agregar el ítem a la orden",
+            "MSG": "Lo sentimos, este restaurante aún no ha registrado su menu en comeygana"
         },
         "ITEM_EDIT": {
             "MODIFY": "Modificar",
@@ -468,10 +470,10 @@
                 "2": "2. Revisa lo que cuesta tu orden",
                 "3": "3. Solicita un mesero"
             },
-            "HEADER_TITLE": "Bienvenido a comeygana!, sigue adelante y disfruta ordenando",
-            "TITLE_LIST_BTN": "Mira los restaurantes donde puedes ganar puntos",
-            "TITLE_ORDER_BTN": "Ordena en un restaurante",
-            "TITLE_POINTS_BTN": "Revisa tus puntos acumulados"
+            "HEADER_TITLE": "Bienvenido a comeygana!, sigue adelante y disfruta ganando",
+            "TITLE_LIST_BTN": "Mira los restaurantes donde puedes ganar medallas",
+            "TITLE_CODE_BTN": "Escanea el código y gana una medalla nueva!",
+            "TITLE_POINTS_BTN": "Revisa tus medallas acumuladas"
         },
         "HOME-MENU": {
             "HOME": "Inicio",
@@ -480,10 +482,13 @@
             "SETTINGS": "Ajustes"
         },
         "RESTAURANT_PROFILE": {
+            "TITLE": "Perfil del restaurante",
             "MENU_BTN": "Menú",
             "PAYMENT_METHODS": "Métodos de pago",
             "NO_PROFILE": "Lo sentimos. Este restaurante no ha configurado su perfil.",
-            "SHOW_MORE": "Ver mas"
+            "SHOW_MORE": "Ver mas",
+            "SHOW_LESS": "Ver menos",
+            "REWARDS_BTN": "Recompensas"
         },
         "SCHEDULE": {
             "SCHEDULE": "Horario de atención",
@@ -525,11 +530,23 @@
             "REWARD_DELETED": "Recompensa eliminada de la orden",
             "ORDER_ERROR": "Puedes redimir máximo una recompensa por orden",
             "REWARDS_MSG": "Reclama una recompensa y el plato te sale gratis! Disfrutalo!",
-            "NO_REWARDS": "No hay recompensas"
+            "NO_REWARDS": "No hay recompensas",
+            "MEDALS": "Medallas",
+            "YOU_REDEEM": "En este momento estás redimiendo",
+            "MEDALS_AVAILABLE": "Medallas disponibles para redimir",
+            "MORE_MEDALS": "Acumula más medallas para redimir esta recompensa",
+            "ESTABLISHMENT_NO_ACTIVE": "Lo sentimos, el restaurante en el momento no tiene activado el servicio de comeygana para redimir recompensas",
+            "REWARD_IN_PROCESS": "Recompensa en proceso",
+            "REWARD_CONFIRM_TITLE": "Estas seguro de redimir esta recompensa?",
+            "REWARD_CONFIRM_SUBTITLE": "El restaurante confirmara lo que estas redimiendo",
+            "YES": "Si",
+            "NO": "No",
+            "REWARDS_MSG_2": "Te presentamos las recompensas del restaurante"
         },
         "POINTS": {
-            "TITLE": "Mis Puntos",
-            "NO_POINTS_MSG": "Aún no has acumulado puntos en ningún restaurante. Animate!",
+            "TITLE": "Mis Medallas",
+            "MSG": "Selecciona un restaurante para consultar tus medallas",
+            "NO_POINTS_MSG": "Aún no has acumulado medallas en ningún restaurante. Animate!",
             "ACCUMULATED_POINTS": "Puntos acumulados",
             "YOU_HAVE": "Tienes",
             "POINTS_FOR_EXPIRING": "puntos para vencer el día"
@@ -540,7 +557,10 @@
             "POINTS": "Puntos",
             "YOU_REDEEMED": "Redimiste",
             "REWARD": "Recompensa",
-            "TOTAL": "Total"
+            "TOTAL": "Total",
+            "NO_USER_MEDALS_MSG": "Actualmente no cuentas con medallas en",
+            "CURRENT_MEDALS": "Actualmente cuentas con",
+            "MEDALS_IN": "medallas en"
         },
         "POPOVER_OPTIONS": {
             "SETTINGS": "Ajustes",
@@ -548,9 +568,9 @@
             "POLICIES": "Política de privacidad"
         },
         "SEGMENTS": {
-            "WIN_EATING": "Gana comiendo!",
-            "ORDERS": "Ordenes",
-            "OPTIONS": "Opciones"
+            "COMEYGANA": "comeygana",
+            "MEDALS": "Medallas",
+            "REWARDS": "Recompensas"
         },
         "OPTIONS": {
             "WAITER_CALL": "Llama a un mesero para que atienda tus inquietudes",
@@ -567,6 +587,39 @@
             "TITLE": "Error de servicio",
             "SUBTITLE": "En este momento el servicio comeygana no esta disponible por favor intenta de nuevo",
             "BTN": "Reintentar"
+        },
+        "SCAN_CODE": {
+            "TITTLE": "Escanear código QR",
+            "CONTENT": "Escanea el código QR del restaurante para que puedas acumular una nueva medalla",
+            "QR": "Escanear Código QR",
+            "QR_NO_ACTIVE": "El código QR no se encuentra activo",
+            "QR_NO_EXISTS": "El código QR no existe. Verifica que sea un codigo QR de comeygana.",
+            "RESTAURANT_NOT_EXISTS": "El restaurante no existe. No es posible ingresar.",
+            "CYG_NO_ACTIVE": "El Restaurante no tiene el servicio de comeygana activo. No es posible ingresar",
+            "PENALTY": "En el momento no tienes disponible la opción para acumular medallas. Intenta de nuevo después del ",
+            "ERROR": "Se ha presentado un error. Intenta nuevamente."
+        },
+        "MEDAL_WON": {
+            "CONGRATULATIONS": "Felicitaciones!",
+            "MSG": "Has Acumulado una nueva medalla en ",
+            "SHOW_REWARDS": "Mira las recompensas",
+            "SHOW_MEDALS": "Mira tus medallas"
+        },
+        "ESTABLISHMENT_LIST": {
+            "TITLE": "Restaurantes",
+            "MSG": "Selecciona un restaurante para consultar su perfil y el menú que ofrece"
+        },
+        "USER_REWARDS": {
+            "NO_REWARDS": "Aún no has redimido recompensas",
+            "TITLE": "Premios",
+            "MSG": "Felicitaciones! Estas son las recompensas que te has ganado",
+            "MEDALS_REDEEMED": "Medallas Redimidas"
+        },
+        "REWARDS": {
+            "TITLE": "Redimir Medallas",
+            "MSG": "Selecciona un restaurante para consultar las recompensas que tiene para ti",
+            "NO_REWARDS_MSG": "Aún no has acumulado medallas en ningún restaurante. Animate!",
+            "ACCUMULATED_MEDALS": "Medallas"
         }
     },
     "CURRENCIES": {
@@ -736,5 +789,40 @@
         "SANDWICHES": "Sándwiches",
         "SUSHI": "Sushi",
         "VEGANISM": "Veganismo"
+    },
+    "APPROVE_REWARDS": {
+        "SEARCH_BY_NAME": "Busca por nombre o correo eléctronico",
+        "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
+        "MESSAGE": "Registra uno para habilitar esta opción",
+        "RESTAURANT_REGISTER": "Registrar restaurante",
+        "TITLE": "Aprobación De Recompensas",
+        "SUBTITLE": "Esta página te permite aprobar las recompensas que los clientes redimen en tus restaurantes",
+        "SELECT_RESTAURANT": "Selecciona restaurante",
+        "NO_REWARDS_FOUND": "No se han encontrado recompensas por aprobar para el restaurante seleccionado",
+        "MEDALS": "Medallas",
+        "CUSTOMER": "Cliente",
+        "NO_APPROVE": "No Aprobar",
+        "APPROVE": "Aprobar",
+        "APPROVE_REWARD": "Aprobar Recompensa",
+        "APPROVE_REWARD_MSG": "Estas seguro de aprobar la recompensa?",
+        "REWARD_APPROVED": "Recompensa Aprobada",
+        "REJECT_REWARD": "Rechazar Recompensa",
+        "REJECT_REWARD_MSG": "Estas seguro de rechazar la recompensa?",
+        "REWARD_REJECTED": "Recompensa Rechazada",
+        "MSG_SELECT_EST": "Seleccionar un establicimiento y volver a consultar"
+    },
+    "GIVE_MEDAL": {
+        "THERE_NOT_RESTAURANTS": "Aún no hay restaurantes registrados",
+        "MESSAGE": "Registra uno para habilitar esta opción",
+        "RESTAURANT_REGISTER": "Registrar restaurante",
+        "TITLE": "Otorgar Medallas",
+        "SUBTITLE": "Esta opción te permite otorgar medallas a un usuario específico. Selecciona el restaurante y busca al usuario por su nombre o correo electrónico para darle una medalla",
+        "SELECT_RESTAURANT": "Selecciona restaurante",
+        "NAME_FILTER": "Buscar usuario por nombre o correo eléctronico",
+        "NO_USERS_FOUND": "No se han encontrado usuarios con la búsqueda realizada",
+        "GIVE_MEDAL": "Dar Medalla",
+        "GIVE_MEDAL_TITLE": "Otorgar Medalla",
+        "GIVE_MEDAL_SUBTITLE": "Estas seguro de dar una (1) medalla a ",
+        "MEDAL_GIVEN": "Medalla Entregada"
     }
 }

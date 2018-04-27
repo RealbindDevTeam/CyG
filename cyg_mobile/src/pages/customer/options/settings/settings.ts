@@ -8,11 +8,11 @@ import { Subscription, Subject } from 'rxjs';
 import { ChangeEmailPage } from './change-email/change-email';
 import { ChangePasswordPage } from './change-password/change-password';
 
-import { Language } from 'i4t_web/both/models/general/language.model';
-import { Languages } from 'i4t_web/both/collections/general/language.collection';
-import { Users } from 'i4t_web/both/collections/auth/user.collection';
-import { UserDetails } from 'i4t_web/both/collections/auth/user-detail.collection';
-import { UserDetail, UserDetailImage } from 'i4t_web/both/models/auth/user-detail.model';
+import { Language } from 'cyg_web/both/models/general/language.model';
+import { Languages } from 'cyg_web/both/collections/general/language.collection';
+import { Users } from 'cyg_web/both/collections/auth/user.collection';
+import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
+import { UserDetail, UserDetailImage } from 'cyg_web/both/models/auth/user-detail.model';
 import { UserLanguageServiceProvider } from '../../../../providers/user-language-service/user-language-service';
 import { SigninComponent } from '../../../auth/signin/signin';
 import { InitialComponent } from '../../../auth/initial/initial';

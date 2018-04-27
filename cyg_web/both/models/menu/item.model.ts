@@ -10,15 +10,9 @@ export interface Item extends CollectionObject {
     subcategoryId?: string;
     name: string;
     description: string;
-    time: string;
     establishments: ItemEstablishment[];
     prices: ItemPrice[];
-    observations: boolean;
     image?: ItemImage;
-    options: ItemOption[];
-    additions: string[];
-    has_reward?: boolean;
-    reward_points?: string;
 }
 
 /**
@@ -59,22 +53,4 @@ export interface ItemPrice {
     currencyId: string;
     price: number;
     itemTax?: number;
-}
-
-/**
- * Item Option model
- */
-export interface ItemOption {
-    option_id: string;
-    is_required: boolean;
-    values: ItemOptionValue[];
-}
-
-/**
- * Item Option Value model
- */
-export interface ItemOptionValue {
-    option_value_id: string;
-    have_price: boolean;
-    price?: number;
 }

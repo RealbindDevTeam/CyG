@@ -1,7 +1,7 @@
 /**
  * CcRequestColombia model
  */
-export class CcRequestColombia {
+export interface CcRequestColombia {
     language: string;
     command: string;
     merchant: Merchant;
@@ -12,7 +12,7 @@ export class CcRequestColombia {
 /**
  * Merchant model
  */
-export class Merchant {
+export interface Merchant {
     apiKey: string;
     apiLogin: string;
 }
@@ -20,7 +20,7 @@ export class Merchant {
 /**
  * Transaction model
  */
-export class Transaction {
+export interface Transaction {
     order: Order;
     payer: Payer;
     creditCard: CreditCard;
@@ -37,7 +37,7 @@ export class Transaction {
 /**
  * Order model
  */
-export class Order {
+export interface Order {
     accountId: number;
     referenceCode: string;
     description: string;
@@ -52,7 +52,7 @@ export class Order {
 /**
  * Payer model
  */
-export class Payer {
+export interface Payer {
     merchantPayerId?: string;
     fullName: string;
     emailAddress: string;
@@ -64,7 +64,7 @@ export class Payer {
 /**
  * CreditCard model
  */
-export class CreditCard {
+export interface CreditCard {
     number: string;
     securityCode: string;
     expirationDate: string;
@@ -74,7 +74,7 @@ export class CreditCard {
 /**
  * ExtraParameters model
  */
-export class ExtraParameters {
+export interface ExtraParameters {
     INSTALLMENTS_NUMBER?: number;
     RESPONSE_URL?: string;
 }
@@ -82,7 +82,7 @@ export class ExtraParameters {
 /**
  * AdditionalValues model
  */
-export class AdditionalValues {
+export interface AdditionalValues {
     TX_VALUE: TX_VALUE;
     TX_TAX?: TX_TAX;
     TX_TAX_RETURN_BASE?: TX_TAX_RETURN_BASE;
@@ -91,7 +91,7 @@ export class AdditionalValues {
 /**
  * TX_VALUE model
  */
-export class TX_VALUE {
+export interface TX_VALUE {
     value: number;
     currency: string;
 }
@@ -99,7 +99,7 @@ export class TX_VALUE {
 /**
  * TX_TAX model
  */
-export class TX_TAX {
+export interface TX_TAX {
     value: number;
     currency: string;
 }
@@ -107,7 +107,7 @@ export class TX_TAX {
 /**
  * TX_TAX_RETURN_BASE model
  */
-export class TX_TAX_RETURN_BASE {
+export interface TX_TAX_RETURN_BASE {
     value: number;
     currency: string;
 }
@@ -115,7 +115,7 @@ export class TX_TAX_RETURN_BASE {
 /**
  * Buyer model
  */
-export class Buyer {
+export interface Buyer {
     merchantBuyerId?: string;
     fullName: string;
     emailAddress: string;
@@ -127,12 +127,12 @@ export class Buyer {
 /**
  * ShippingBillingAddress
  */
-export class ShippingBillingAddress {
-    street1?: string;
+export interface ShippingBillingAddress {
+    street1: string;
     street2?: string;
-    city?: string;
+    city: string;
     state?: string;
-    country?: string;
+    country: string;
     postalCode?: string;
     phone?: string;
 }

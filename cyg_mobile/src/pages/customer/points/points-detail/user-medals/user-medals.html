@@ -1,0 +1,19 @@
+<div *ngIf="_medals.length <= 0">
+    <span *ngFor="let establishment of _establishments | async">
+        <h6 style="margin: 20px;text-align: center">
+            {{'MOBILE.POINTS_DETAIL.NO_USER_MEDALS_MSG' | translate}} {{establishment.name}} - {{establishment.address}}
+        </h6>
+    </span>
+</div>
+<div *ngIf="_medals.length > 0">
+    <span *ngFor="let establishment of _establishments | async">
+        <h6 style="margin: 20px;text-align: center">
+            {{'MOBILE.POINTS_DETAIL.CURRENT_MEDALS' | translate}} {{_medals.length}} {{'MOBILE.POINTS_DETAIL.MEDALS_IN' | translate}} {{establishment.name}} - {{establishment.address}}
+        </h6>
+    </span>
+    <div class="magictime slideUpReturn">
+        <span *ngFor="let medal of _medals">
+            <medal-cyg [width]="100" [height]="100"></medal-cyg>
+        </span>
+    </div>
+</div>

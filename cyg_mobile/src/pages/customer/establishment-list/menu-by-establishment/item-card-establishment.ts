@@ -1,11 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Item } from 'i4t_web/both/models/menu/item.model';
-import { Currencies } from 'i4t_web/both/collections/general/currency.collection';
+import { Item } from 'cyg_web/both/models/menu/item.model';
+import { Currencies } from 'cyg_web/both/collections/general/currency.collection';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Subscription } from 'rxjs';
 import { UserLanguageServiceProvider } from '../../../../providers/user-language-service/user-language-service';
-import { Items } from 'i4t_web/both/collections/menu/item.collection';
+import { Items } from 'cyg_web/both/collections/menu/item.collection';
 
 @Component({
   selector: 'item-card-establishment',
@@ -62,7 +62,9 @@ export class ItemCardEstablishmentComponent implements OnInit, OnDestroy {
    * @param {Item} _pItem 
    */
   getItemPrice(_pItem: Item): number {
-    return _pItem.establishments.filter(r => r.establishment_id === this.resCode)[0].price;
+    if(_pItem){
+      return _pItem.establishments.filter(r => r.establishment_id === this.resCode)[0].price;
+    }
   }
 
   /**

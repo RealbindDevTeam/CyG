@@ -10,19 +10,6 @@ import { UserDetails } from '../../../../both/collections/auth/user-detail.colle
  */
 Meteor.publish( 'paymentMethods', () => PaymentMethods.find( { isActive: true } ) );
 
-/**
- * Meteor publication return payment methods by current establishment of the user
- */
-Meteor.publish('getPaymentMethodsByUserCurrentEstablishment', function ( _pUserId : string ) {
-    let _lUserDetail = UserDetails.findOne({ user_id: _pUserId });
-    if(_lUserDetail.current_establishment){
-        let _lEstablishment : Establishment = Establishments.findOne({ _id: _lUserDetail.current_establishment });
-        return PaymentMethods.find({_id : {$in : _lEstablishment.paymentMethods }, isActive: true });
-    } else {
-        return PaymentMethods.find({isActive: true});
-    }
-});
-
 /*
  * Meteor publication return establishment payment methods
  */

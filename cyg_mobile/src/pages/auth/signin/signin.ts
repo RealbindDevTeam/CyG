@@ -5,17 +5,19 @@ import { App, ViewController, NavController, AlertController, Platform, LoadingC
 import { TranslateService } from '@ngx-translate/core';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Device } from '@ionic-native/device';
-import { UserDetails } from 'i4t_web/both/collections/auth/user-detail.collection';
+import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collection';
 import { Meteor } from 'meteor/meteor';
 //import { HomeMenu } from '../../customer/home-menu/home-menu';
-import { HomePage } from '../../customer/home/home';
+//import { HomePage } from '../../customer/home/home';
+import { CustomerTabsPage } from "../../customer/tabs/customer-tabs";
 //import { Menu } from '../../waiter/menu/menu';
-import { TabsPage } from '../../waiter/tabs/tabs';
-import { UserLogin } from 'i4t_web/both/models/auth/user-login.model';
+import { UserLogin } from 'cyg_web/both/models/auth/user-login.model';
 import { Accounts } from 'meteor/accounts-base';
 import { Facebook } from '@ionic-native/facebook';
 import { Network } from '@ionic-native/network';
 import { Subscription } from 'rxjs/Subscription';
+import { TabsPage } from "../../administrator/tabs/tabs";
+import { SupervisorTabsPage } from "../../supervisor/tabs/supervisor-tabs";
 
 /*
   Generated class for the Signin page.
@@ -86,9 +88,11 @@ export class SigninComponent implements OnInit {
                                     //role 400 customer
                                     //this.addUserDevice();
                                     this.insertUserInfo();
-                                    this.navCtrl.setRoot(HomePage);
-                                } else if (role == "200") {
-                                    MeteorObservable.call('validateEstablishmentIsActive').subscribe((_establishmenttActive) => {
+                                    this.navCtrl.setRoot(CustomerTabsPage);
+                                } else if (role == "100") {
+                                    this.insertUserInfo();
+                                    this.navCtrl.setRoot(TabsPage);
+                                    /*MeteorObservable.call('validateEstablishmentIsActive').subscribe((_establishmenttActive) => {
                                         if (_establishmenttActive) {
                                             MeteorObservable.call('validateUserIsActive').subscribe((active) => {
                                                 if (active) {
@@ -103,8 +107,10 @@ export class SigninComponent implements OnInit {
                                             let confirmMsg = this.itemNameTraduction('MOBILE.SIGNIN.RESTAURANT_NO_ACTIVE');
                                             this.showComfirm(confirmMsg);
                                         }
-                                    });
-                                } else {
+                                    });*/
+                                } else if (role==="600") {
+                                    this.insertUserInfo();
+                                    this.navCtrl.setRoot(SupervisorTabsPage);
                                 }
                             }, 1500);
                         }, (error) => {
@@ -171,13 +177,10 @@ export class SigninComponent implements OnInit {
                         user_id: Meteor.userId(),
                         role_id: '400',
                         is_active: true,
-                        establishment_work: '',
-                        penalties: [],
-                        current_establishment: '',
-                        current_table: ''
+                        penalties: []
                     });
                 }
-                this.navCtrl.push(HomePage);
+                this.navCtrl.push(CustomerTabsPage);
             }, (error) => {
                 this.error;
             });

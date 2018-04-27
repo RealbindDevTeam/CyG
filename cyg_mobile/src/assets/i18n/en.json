@@ -17,6 +17,7 @@
     },
     "MOBILE": {
         "CANCEL": "Cancel",
+        "ACCEPT": "Accept",
         "CATEGORY": "Category",
         "CONFIRM_PASSWORD": "Confirm password",
         "CREATE": "Create",
@@ -344,7 +345,7 @@
             "QUANTITY": "Units:",
             "ENTER_NUMBER": "Enter number",
             "OBSERVATIONS": "ADD COMMENTS",
-            "ADDITIONS": "Select the additions",
+            "ADDITIONS": "Recommended additions",
             "GARNISHES": "Side dishes",
             "MODAL_CANCEL": "Cancel",
             "MODEL_INDICATION": "Add your comments (e.g., no onion...)",
@@ -365,7 +366,8 @@
             "FOOD_ACCOMPANIMENT": "Food accompaniment",
             "ADDITION_LBL": "Addition",
             "CONFIRM": "Confirm",
-            "OPTIONS_ERROR": "Please complete the information to add the item to the order"
+            "OPTIONS_ERROR": "Please complete the information to add the item to the order",
+            "MSG": "We're sorry, this restaurant has not registered it's menu in comeygana yet"
         },
         "ITEM_EDIT": {
             "MODIFY": "Modify",
@@ -468,10 +470,10 @@
                 "2": "2. See your order cost",
                 "3": "3. Call a waiter/waitress"
             },
-            "HEADER_TITLE": "Welcome to comeygana!, go ahead and enjoy ordering",
-            "TITLE_LIST_BTN": "Look at the restaurant where you can get points",
-            "TITLE_ORDER_BTN": "Ordering in a restaurant",
-            "TITLE_POINTS_BTN": "Check your points accumulated"
+            "HEADER_TITLE": "Welcome to comeygana!, go ahead and enjoy winning",
+            "TITLE_LIST_BTN": "Look at the restaurant where you can get medals",
+            "TITLE_CODE_BTN": "Scan the code and win a new medal!",
+            "TITLE_POINTS_BTN": "Check your medals accumulated"
         },
         "HOME-MENU": {
             "HOME": "Home",
@@ -480,10 +482,13 @@
             "SETTINGS": "Settings"
         },
         "RESTAURANT_PROFILE": {
+            "TITLE": "Restaurant profile",
             "MENU_BTN": "Menu",
             "PAYMENT_METHODS": "Payment methods",
             "NO_PROFILE": "This restaurant has not configured its profile",
-            "SHOW_MORE": "Show more"
+            "SHOW_MORE": "Show more",
+            "SHOW_LESS": "Show less",
+            "REWARDS_BTN": "Rewards"
         },
         "SCHEDULE": {
             "SCHEDULE": "Schedule",
@@ -525,11 +530,23 @@
             "REWARD_DELETED": "Reward deleted from order",
             "ORDER_ERROR": "You can redeem maximum one reward per order",
             "REWARDS_MSG": "Redeeming a reward and the item is free! Enjoy it!",
-            "NO_REWARDS": "The are no rewards"
+            "NO_REWARDS": "The are no rewards",
+            "MEDALS": "Medals",
+            "YOU_REDEEM": "In this moment you are redeeming",
+            "MEDALS_AVAILABLE": "Medals available to redeem",
+            "MORE_MEDALS": "Earn more medals to redeem this reward",
+            "ESTABLISHMENT_NO_ACTIVE": "We are sorry, the restaurant at the moment has not activated the comeygana service to redeem rewards",
+            "REWARD_IN_PROCESS": "Reward in process",
+            "REWARD_CONFIRM_TITLE": "Are you sure you will redeem this reward?",
+            "REWARD_CONFIRM_SUBTITLE": "The restaurant will confirm what you are redeeming",
+            "YES": "Yes",
+            "NO": "No",
+            "REWARDS_MSG_2": "We present you the rewards of the restaurant"
         },
         "POINTS": {
-            "TITLE": "My points",
-            "NO_POINTS_MSG": "You have not accumulated points in any restaurant yet. Encourage!",
+            "TITLE": "My Medals",
+            "MSG": "Select a restaurant to check your medals",
+            "NO_POINTS_MSG": "You have not accumulated medals in any restaurant yet. Encourage!",
             "ACCUMULATED_POINTS": "Accumulated points",
             "YOU_HAVE": "You have",
             "POINTS_FOR_EXPIRING": "points for expiring the day"
@@ -540,7 +557,10 @@
             "POINTS": "Points",
             "YOU_REDEEMED": "You redeemed",
             "REWARD": "Reward",
-            "TOTAL": "Total"
+            "TOTAL": "Total",
+            "NO_USER_MEDALS_MSG": "Currently you do not have medals in",
+            "CURRENT_MEDALS": "Currently you have",
+            "MEDALS_IN": "medals in"
         },
         "POPOVER_OPTIONS": {
             "SETTINGS": "Settings",
@@ -548,9 +568,9 @@
             "POLICIES": "Privacy policy"
         },
         "SEGMENTS": {
-            "WIN_EATING": "Win eating!",
-            "ORDERS": "Orders",
-            "OPTIONS": "Options"
+            "COMEYGANA": "comeygana",
+            "MEDALS": "Medals",
+            "REWARDS": "Rewards"
         },
         "OPTIONS": {
             "WAITER_CALL": "Call a waiter to attend to your concerns",
@@ -567,6 +587,39 @@
             "TITLE": "Service error",
             "SUBTITLE": "In this moment the comeygana service is not available, please try again",
             "BTN": "Try again"
+        },
+        "SCAN_CODE": {
+            "TITTLE": "Scan QR Code",
+            "CONTENT": "Scan the QR code of the restaurant so you can accumulate a new medal",
+            "QR": "Scan the QR Code",
+            "QR_NO_ACTIVE": "The QR code is not active",
+            "QR_NO_EXISTS": "QR code does not exist. Verify that it is a QR code of comeygana.",
+            "RESTAURANT_NOT_EXISTS": "The restaurant doen't exist. It is not possible to enter.",
+            "CYG_NO_ACTIVE": "The restaurant doesn't have the comeygana service active. It is not possible to enter.",
+            "PENALTY": "At the moment you don't have available the option to accumulate medals. Try later ",
+            "ERROR": "An error has occurred. Try again."
+        },
+        "MEDAL_WON": {
+            "CONGRATULATIONS": "Congratulations!",
+            "MSG": "You have accumulated a new medal in ",
+            "SHOW_REWARDS": "Show rewards",
+            "SHOW_MEDALS": "Show medals"
+        },
+        "ESTABLISHMENT_LIST": {
+            "TITLE": "Restaurants",
+            "MSG": "Select a restaurant to check the profile and menu offered"
+        },
+        "USER_REWARDS": {
+            "NO_REWARDS": "You have not redeemed rewards yet",
+            "TITLE": "Awards",
+            "MSG": "Congratulations! These are the rewards that you have won",
+            "MEDALS_REDEEMED": "Medals Redeemed"
+        },
+        "REWARDS": {
+            "TITLE": "Redeem Medals",
+            "MSG": "Select a restaurant to check the rewards it has for you",
+            "NO_REWARDS_MSG": "You have not accumulated medals in any restaurant yet. Encourage!",
+            "ACCUMULATED_MEDALS": "Medals"
         }
     },
     "CURRENCIES": {
@@ -736,5 +789,40 @@
         "SANDWICHES": "Sándwiches",
         "SUSHI": "Sushi",
         "VEGANISM": "Veganism"
+    },
+    "APPROVE_REWARDS": {
+        "SEARCH_BY_NAME": "Search by name or email",
+        "THERE_NOT_RESTAURANTS": "There are not restaurants register yet",
+        "MESSAGE": "Register at least one restaurant to enable this option",
+        "RESTAURANT_REGISTER": "Register Restaurant",
+        "TITLE": "Reward Approval",
+        "SUBTITLE": "This page allows you to approve the rewards that customers redeem in your restaurants",
+        "SELECT_RESTAURANT": "Select Restaurant",
+        "NO_REWARDS_FOUND": "No rewards have been found for approving the selected restaurant",
+        "MEDALS": "Medals",
+        "CUSTOMER": "Customer",
+        "NO_APPROVE": "No Approve",
+        "APPROVE": "Approve",
+        "APPROVE_REWARD": "Approve Reward",
+        "APPROVE_REWARD_MSG": "Are you sure you approve the reward?",
+        "REWARD_APPROVED": "Reward Approved",
+        "REJECT_REWARD": "Reject Reward",
+        "REJECT_REWARD_MSG": "Are you sure you reject the reward?",
+        "REWARD_REJECTED": "Reward Rejected",
+        "MSG_SELECT_EST": "Select an establishment and check again"
+    },
+    "GIVE_MEDAL": {
+        "THERE_NOT_RESTAURANTS": "There are not restaurants register yet",
+        "MESSAGE": "Register at least one restaurant to enable this option",
+        "RESTAURANT_REGISTER": "Register Restaurant",
+        "TITLE": "Give Medals",
+        "SUBTITLE": "This option allows you to award medals to a specific user. Select the restaurant and search the user by name or email to give him a medal",
+        "SELECT_RESTAURANT": "Select Restaurant",
+        "NAME_FILTER": "Search user by name or email",
+        "NO_USERS_FOUND": "No users found with the search",
+        "GIVE_MEDAL": "Give Medal",
+        "GIVE_MEDAL_TITLE": "Give Medal",
+        "GIVE_MEDAL_SUBTITLE": "Are you sure to give one (1) medal to ",
+        "MEDAL_GIVEN": "Medal Given"
     }
 }

@@ -86,9 +86,7 @@ export class SignupWebComponent extends AuthClass implements OnInit {
                                 role_id: '400',
                                 is_active: true,
                                 penalties: [],
-                                grant_start_points: true,
-                                current_establishment: '',
-                                current_table: ''
+                                grant_start_points: true
                             });
                             this.openDialog(this.titleMsg, '', confirmMsg, '', this.btnAcceptLbl, false);
                             Meteor.logout();

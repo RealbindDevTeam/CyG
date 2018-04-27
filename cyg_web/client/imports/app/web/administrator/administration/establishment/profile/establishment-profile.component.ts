@@ -88,9 +88,18 @@ export class EstablishmentProfileComponent implements OnInit, OnDestroy {
      */
     ngOnInit() {
         this.removeSubscriptions();
+        this._profileForm = new FormGroup({
+            establishment_description: new FormControl('', [Validators.required]),
+            web_page: new FormControl(),
+            email: new FormControl(),
+            facebookLink: new FormControl(),
+            instagramLink: new FormControl(),
+            twitterLink: new FormControl(),
+            types_of_food: this._typesOfFoodFormGroup
+        });
         this._establishmentsSub = MeteorObservable.subscribe('establishments', this._user).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
-                this._establishments = Establishments.find({}).zone();
+                this._establishments = Establishments.find({ creation_user: this._user }).zone();
                 this.countEstablishments();
                 this._establishments.subscribe(() => { this.countEstablishments(); });
             });
@@ -156,7 +165,7 @@ export class EstablishmentProfileComponent implements OnInit, OnDestroy {
      * Validate if establishments exists
      */
     countEstablishments(): void {
-        Establishments.collection.find({}).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
+        Establishments.collection.find({ creation_user: this._user }).count() > 0 ? this._thereAreEstablishments = true : this._thereAreEstablishments = false;
     }
 
     /**
@@ -169,15 +178,8 @@ export class EstablishmentProfileComponent implements OnInit, OnDestroy {
         this._establishmentName = _pEstablishmentName;
         this._anyEstablishmentIsSelected = true;
         this._selectedIndex = 0;
-        this._profileForm = new FormGroup({
-            establishment_description: new FormControl('', [Validators.required]),
-            web_page: new FormControl(),
-            email: new FormControl(),
-            facebookLink: new FormControl(),
-            instagramLink: new FormControl(),
-            twitterLink: new FormControl(),
-            types_of_food: this._typesOfFoodFormGroup
-        });
+        this._scheduleInEditMode = false;
+        this._scheduleToEdit = {};
         this._establishmentProfileSub = MeteorObservable.subscribe('getEstablishmentProfile', _pEstablishmentId).takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this._establishmentsProfile = EstablishmentsProfile.find({ establishment_id: _pEstablishmentId }).zone();
@@ -253,6 +255,7 @@ export class EstablishmentProfileComponent implements OnInit, OnDestroy {
      * @param {string} _pEstablishmentId 
      */
     validateProfileImages(_pEstablishmentId: string): void {
+        this._profileImages = [];
         let _lImagesCount: number = 0;
         let _lEstablishmentProfile: EstablishmentProfile = EstablishmentsProfile.findOne({ establishment_id: _pEstablishmentId });
         if (_lEstablishmentProfile) {

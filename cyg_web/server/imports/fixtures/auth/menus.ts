@@ -31,6 +31,22 @@ export function loadMenus() {
                 order: 10000
             },
             {
+                _id: "15000",
+                is_active: true,
+                name: "MENUS.APPROVE_REWARDS",
+                url: "/app/approve-rewards",
+                icon_name: "assignment",
+                order: 15000
+            },
+            {
+                _id: "16000",
+                is_active: true,
+                name: "MENUS.GIVE_MEDAL",
+                url: "/app/give-medals",
+                icon_name: "card_giftcard",
+                order: 16000
+            },
+            {
                 _id: "1000",
                 is_active: true,
                 name: "MENUS.ADMINISTRATION.MANAGEMENT",
@@ -62,16 +78,16 @@ export function loadMenus() {
                                         url: "/app/establishment-profile",
                                         icon_name: "",
                                         order: 10012
-                                    }, {
+                                    }/*, {
                                         _id: "10013",
                                         is_active: true,
                                         name: "MENUS.ADMINISTRATION.MONTHLY_CONFIG",
                                         url: "/app/establishment-list",
                                         icon_name: "",
                                         order: 10013
-                                    }
+                                    }*/
                                 ]
-                        }, {
+                        }/*, {
                             _id: "1002",
                             is_active: true,
                             name: "MENUS.ADMINISTRATION.TABLES",
@@ -96,7 +112,7 @@ export function loadMenus() {
                                         order: 10022
                                     }
                                 ]
-                        }, {
+                        }*/, {
                             _id: "1003",
                             is_active: true,
                             name: "MENUS.ADMINISTRATION.COLLABORATORS",
@@ -109,12 +125,20 @@ export function loadMenus() {
             {
                 _id: "1100",
                 is_active: true,
-                name: "MENUS.ADMINISTRATION.COLLABORATORS",
-                url: "/app/supervisor-collaborators",
-                icon_name: "supervisor account",
+                name: "MENUS.APPROVE_REWARDS",
+                url: "/app/supervisor-approve-rewards",
+                icon_name: "assignment",
                 order: 1100
             },
             {
+                _id: "1200",
+                is_active: true,
+                name: "MENUS.GIVE_MEDAL",
+                url: "/app/supervisor-give-medals",
+                icon_name: "card_giftcard",
+                order: 1200
+            },
+            /*{
                 _id: "1200",
                 is_active: true,
                 name: "MENUS.ADMINISTRATION.TABLES",
@@ -129,7 +153,7 @@ export function loadMenus() {
                 url: "/app/supervisor-establishment-table-control",
                 icon_name: "list",
                 order: 1300
-            },
+            },*/
             {
                 _id: "2000",
                 is_active: true,
@@ -156,14 +180,6 @@ export function loadMenus() {
                             order: 2002
                         }
                     ]
-            },
-            {
-                _id: "1400",
-                is_active: true,
-                name: "MENUS.ADMINISTRATION.ORDERS_TODAY",
-                url: "/app/orders-today",
-                icon_name: "assignment",
-                order: 1300
             },
             {
                 _id: "3000",
@@ -196,62 +212,23 @@ export function loadMenus() {
                             icon_name: "",
                             order: 3003
                         }, {
-                            _id: "3004",
-                            is_active: true,
-                            name: "MENUS.MENU_DEFINITION.ADDITIONS",
-                            url: "/app/additions",
-                            icon_name: "",
-                            order: 3004
-                        }, {
-                            _id: "3005",
-                            is_active: true,
-                            name: "MENUS.MENU_DEFINITION.OPTIONS_VALUES",
-                            url: "",
-                            icon_name: "",
-                            order: 3005,
-                            children: [
-                                {
-                                    _id: "30051",
-                                    is_active: true,
-                                    name: "MENUS.MENU_DEFINITION.OPTIONS",
-                                    url: "/app/options",
-                                    icon_name: "",
-                                    order: 30051
-                                },
-                                {
-                                    _id: "30052",
-                                    is_active: true,
-                                    name: "MENUS.MENU_DEFINITION.VALUES",
-                                    url: "/app/option-values",
-                                    icon_name: "",
-                                    order: 30052
-                                }
-                            ]
-                        }, {
                             _id: "3006",
                             is_active: true,
                             name: "MENUS.MENU_DEFINITION.ITEMS",
                             url: "/app/items",
                             icon_name: "",
                             order: 3006
-                        }, {
-                            _id: "3007",
-                            is_active: true,
-                            name: "MENUS.MENU_DEFINITION.ITEMS_ENABLE",
-                            url: "/app/items-enable",
-                            icon_name: "",
-                            order: 3007
                         }
                     ]
             },
-            {
+            /*{
                 _id: "3100",
                 is_active: true,
                 name: "MENUS.MENU_DEFINITION.ITEMS_ENABLE",
                 url: "/app/items-enable-sup",
                 icon_name: "done all",
                 order: 3100
-            },
+            },*/
             {
                 _id: "4000",
                 is_active: true,
