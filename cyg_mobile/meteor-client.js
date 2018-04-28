@@ -1,7 +1,7 @@
 __meteor_runtime_config__ = {
   "meteorEnv": {},
-  "DDP_DEFAULT_CONNECTION_URL": "https://app.comeygana.com/",
-  "ROOT_URL": "https://app.comeygana.com/"
+  "DDP_DEFAULT_CONNECTION_URL": "http://35.190.80.67/",
+  "ROOT_URL": "http://35.190.80.67/"
 };
 
 //////////////////////////////////////////////////////////////////////////
