@@ -4,14 +4,17 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <h6 style="margin: 20px;text-align: center">
-        {{'MOBILE.REWARD_LIST.REWARDS_MSG' | translate}}
-    </h6>
+    <div [hidden]="_hiddenDiv" padding class="page-title">
+        <span>{{'MOBILE.REWARD_LIST.REWARDS_MSG' | translate}}</span>
+        <button id="close" class="close-btn" (click)="hiddenDiv()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+    </div>
     <div *ngIf="_establishmentIsActive">
         <ion-card-header *ngIf="_showMedalsInProcessToRedeem" style="white-space: normal;color: #EF5350;font-weight: bold;">
             {{'MOBILE.REWARD_LIST.YOU_REDEEM' | translate}} {{_medalsInProcessToRedeem}} {{'MOBILE.REWARD_LIST.MEDALS' | translate}}
         </ion-card-header>
-        <ion-card-header style="color: #4CAF50;font-weight: bold;">
+        <ion-card-header text-wrap style="color: #4CAF50;font-weight: bold;">
             {{_medalsAvailableToRedeem}} {{'MOBILE.REWARD_LIST.MEDALS_AVAILABLE' | translate}}
         </ion-card-header>
     </div>

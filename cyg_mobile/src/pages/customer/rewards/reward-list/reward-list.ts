@@ -39,6 +39,7 @@ export class RewardListComponent implements OnInit, OnDestroy {
     private _showMedalsInProcessToRedeem: boolean = false;
     private _medalsAvailableToRedeem: number = 0;
     private _establishmentIsActive: boolean = true;
+    private _hiddenDiv: boolean = false;
 
     /**
      * RewardListComponent Constructor
@@ -344,6 +345,11 @@ export class RewardListComponent implements OnInit, OnDestroy {
     removeSubscriptions() {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
+    }
+
+
+    hiddenDiv(){
+        this._hiddenDiv = true;
     }
 
     /**
