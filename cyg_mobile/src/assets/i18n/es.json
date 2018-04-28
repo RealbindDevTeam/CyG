@@ -472,8 +472,8 @@
             },
             "HEADER_TITLE": "Bienvenido a comeygana!, sigue adelante y disfruta ganando",
             "TITLE_LIST_BTN": "Mira los restaurantes donde puedes ganar medallas",
-            "TITLE_CODE_BTN": "Escanea el código y gana una medalla nueva!",
-            "TITLE_POINTS_BTN": "Revisa tus medallas acumuladas"
+            "TITLE_CODE_BTN": "Escanea y gana una medalla!",
+            "TITLE_POINTS_BTN": "Revisa tus tarjetas"
         },
         "HOME-MENU": {
             "HOME": "Inicio",
