@@ -9,9 +9,9 @@ import { UserDetails } from 'cyg_web/both/collections/auth/user-detail.collectio
 import { SigninComponent } from '../signin/signin';
 import { Accounts } from 'meteor/accounts-base';
 import { Meteor } from 'meteor/meteor';
-import { InitialComponent } from '../initial/initial';
 import { Network } from '@ionic-native/network';
 import { Subscription } from 'rxjs/Subscription';
+import { CustomerTabsPage } from '../../customer/tabs/customer-tabs';
 
 import { Facebook } from '@ionic-native/facebook';
 
@@ -95,9 +95,7 @@ export class SignupComponent implements OnInit {
                             });
                             confirmMsg = 'MOBILE.SIGNUP.SUCCESS';
                             this.showComfirm(this.itemNameTraduction(confirmMsg));
-                            Meteor.logout();
-                            //this.navCtrl.setRoot(InitialComponent);
-                            this.navCtrl.pop();
+                            this.navCtrl.setRoot(CustomerTabsPage);
                         }
                     });
                 });
