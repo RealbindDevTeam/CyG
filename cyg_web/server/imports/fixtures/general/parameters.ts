@@ -35,7 +35,7 @@ export function loadParameters() {
             { _id: '1610', name: 'iurest_img_url', value: ' https://app.comeygana.com/images/', description: 'comeygana images url' },
             { _id: '3100', name: 'ip_public_service_url2', value: 'https://ipinfo.io/json', description: 'url for retrieve the client public ip #2' },
             { _id: '3200', name: 'ip_public_service_url3', value: 'https://ifconfig.co/json', description: 'url for retrieve the client public ip #3' },
-            { _id: '9000', name: 'payu_is_prod', value: 'false', description: 'Flag to enable to prod payu payment' },
+            { _id: '9000', name: 'payu_is_prod', value: 'true', description: 'Flag to enable to prod payu payment' },
             { _id: '9100', name: 'payu_test_state', value: 'APPROVED', description: 'Test state for payu payment transaction' },
             { _id: '9200', name: 'payu_reference_code', value: 'CYG_P_', description: 'Prefix for reference code on payu transactions' },
             { _id: '2100', name: 'max_user_penalties', value: '3', description: 'Max number of user penalties' },
