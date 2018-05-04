@@ -25,6 +25,8 @@ import { PayuPaymentService } from '../../../services/payment/payu-payment.servi
 import { EstablishmentPoints } from '../../../../../../../both/collections/points/establishment-points.collection';
 import { EstablishmentPoint } from '../../../../../../../both/models/points/establishment-point.model';
 import { NegativePoints } from '../../../../../../../both/collections/points/negative-points.collection';
+import { EstablishmentMedals } from '../../../../../../../both/collections/points/establishment-medal.collection';
+import { EstablishmentMedal } from '../../../../../../../both/models/points/establishment-medal.model';
 
 let jsPDF = require('jspdf');
 
@@ -62,6 +64,11 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
     private is_prod_flag: string;
     private isProd: boolean;
     private cygImage: string;
+    private _negativePointsSub: Subscription;
+    private _establishmentMedalsSub: Subscription;
+    private _establishmentPointSub: Subscription;
+
+    private _establishmentMedArra: Observable<EstablishmentMedal[]>;
 
     /**
      * PaymentHistoryComponent Constructor
@@ -114,7 +121,9 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
         this._iurestInvoiceSub = MeteorObservable.subscribe('getCygInvoiceByUser', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
         this._establishmentSub = MeteorObservable.subscribe('establishments', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
         this._paymentTransactionSub = MeteorObservable.subscribe('getTransactionsByUser', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
-
+        this._establishmentMedalsSub = MeteorObservable.subscribe('getEstablishmentByAdminUsr', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
+        this._negativePointsSub = MeteorObservable.subscribe('getNegativePointsByAdminUser', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
+        this._establishmentPointSub = MeteorObservable.subscribe('getEstablishmentPointsByUser', Meteor.userId()).takeUntil(this._ngUnsubscribe).subscribe();
         this._parameterSub = MeteorObservable.subscribe('getParameters').takeUntil(this._ngUnsubscribe).subscribe(() => {
             this._ngZone.run(() => {
                 this.is_prod_flag = Parameters.findOne({ name: 'payu_is_prod' }).value;
@@ -244,7 +253,6 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
             this.openDialog(this.titleMsg, '', errorMsg, '', this.btnAcceptLbl, false);
             this._loading = false;
         }
-
     }
 
     /**
@@ -256,7 +264,6 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
         let merchant = new Merchant();
         let details = new Details();
         let credentialArray: string[] = [];
-        //let isProd: boolean = (this.is_prod_flag == 'true');
         let responseMessage: string;
         let responseIcon: string;
         let payuReportsApiURI: string;
@@ -388,7 +395,7 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
                 });
 
                 NegativePoints.collection.find({ establishment_id: establishment.establishmentId, paid: false }).forEach(function <NegativePoint>(negativePoint, index, ar) {
-                    NegativePoints.update({ _id: negativePoint._id }, {
+                    NegativePoints.collection.update({ _id: negativePoint._id }, {
                         $set: {
                             paid: true,
                             bag_plans_history_id: _historyPayment._id,
@@ -396,6 +403,24 @@ export class PaymentHistoryComponent implements OnInit, OnDestroy {
                             modification_date: new Date()
                         }
                     });
+                });
+
+                EstablishmentMedals.collection.find({ establishment_id: establishment.establishmentId }).forEach(function <EstablishmentMedal>(establishmentMedal, index, ar) {
+                    EstablishmentMedals.collection.update({ _id: establishmentMedal._id }, {
+                        $set: {
+                            is_active: true,
+                            modification_user: Meteor.userId(),
+                            modification_date: new Date()
+                        }
+                    });
+                });
+
+                Establishments.collection.update({ _id: establishment.establishmentId }, {
+                    $set: {
+                        isActive: true,
+                        modification_date: new Date(),
+                        modification_user: Meteor.userId()
+                    }
                 });
             });
 
