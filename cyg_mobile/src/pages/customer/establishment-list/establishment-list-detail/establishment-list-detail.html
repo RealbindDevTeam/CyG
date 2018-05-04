@@ -6,22 +6,23 @@
 
 <ion-content>
     <div class="initial">
-        <ion-list style="margin: 0 auto; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);" *ngFor="let establishment of _establishments | async;">
-            <div ion-item style="background-image: url(assets/img/background_waiter.png);" class="img-header">
-                <ion-thumbnail item-left>
-                    <img *ngIf="establishment.image" src="{{ establishment.image.url }}">
-                    <img *ngIf="!establishment.image" src="assets/img/default-restaurant.png">
-                </ion-thumbnail>
-                <h2 style="white-space: normal;">{{establishment.name}}</h2>
+        <button ion-button block color="dark" class="button-profile" *ngFor="let establishment of _establishments | async;">
+            <div class="profile-header color-text-white">
+                <ion-item no-lines>
+                    <img item-start *ngIf="establishment.image" src="{{ establishment.image.url }}">
+                    <img item-start *ngIf="!establishment.image" src="assets/img/default-restaurant.png">
+                    <h2>{{establishment.name}}</h2>
+                </ion-item>
             </div>
-        </ion-list>
+        </button>
+
         <div *ngIf="_showMap" id="map_canvas"></div>
 
-        <ion-card *ngFor="let _establishment of _establishments | async;" class="card-nm">
+        <ion-card *ngFor="let _establishment of _establishments | async;" class="card-custom">
             <ion-card-content>
-                <div style="text-align: center;">
-                    <button style="width: 45%;" ion-button outline (click)="openRewardsInfo(_establishment._id)">{{'MOBILE.RESTAURANT_PROFILE.REWARDS_BTN' | translate}}</button>
-                    <button style="width: 45%;" ion-button outline (click)="goToMenuByEstablishment(_establishment._id)">{{'MOBILE.RESTAURANT_PROFILE.MENU_BTN' | translate}}</button>
+                <div class="buttons-inline">
+                    <button ion-button class="button-orange button-cust" color="corange" (click)="openRewardsInfo(_establishment._id)">{{'MOBILE.RESTAURANT_PROFILE.REWARDS_BTN' | translate}}</button>
+                    <button ion-button class="button-blue button-cust" (click)="goToMenuByEstablishment(_establishment._id)">{{'MOBILE.RESTAURANT_PROFILE.MENU_BTN' | translate}}</button>
                 </div>
                 <p *ngIf="_establishmentProfile?.establishment_description?.length <= 20" class="margin">
                     {{_establishmentProfile?.establishment_description}}
@@ -104,7 +105,7 @@
             </ion-slides>
         </span>
 
-        <ion-card *ngFor="let _establishment of _establishments | async;" class="card-nm">
+        <ion-card *ngFor="let _establishment of _establishments | async;" class="card-custom">
             <ion-card-content>
 
                 <div class="pm">
