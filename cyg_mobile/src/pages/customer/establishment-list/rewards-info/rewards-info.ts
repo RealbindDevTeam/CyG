@@ -27,6 +27,7 @@ export class RewardsInfoPage implements OnInit, OnDestroy {
 
     private _establishmentId: string;
     private _thereRewards: boolean = true;
+    private _hiddenDiv: boolean = false;
 
     /**
      * RewardsInfoPage Constructor
@@ -202,6 +203,13 @@ export class RewardsInfoPage implements OnInit, OnDestroy {
     removeSubscriptions() {
         this.ngUnsubscribe.next();
         this.ngUnsubscribe.complete();
+    }
+
+    /**
+     * Div hidden
+     */
+    hiddenDiv(){
+        this._hiddenDiv = true;
     }
 
     /**

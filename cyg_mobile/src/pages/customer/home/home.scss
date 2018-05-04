@@ -211,4 +211,8 @@ page-home {
         -webkit-animation-name: swing;
         animation-name: swing;
     }
+
+    .item-ios, .item-md {
+        padding-left: 16px;
+    }
 }
