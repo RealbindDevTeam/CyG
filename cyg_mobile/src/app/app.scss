@@ -128,8 +128,6 @@ ion-title.logo {
 
 [padding] h2:first-child {
     margin-top: 0;
-    //overflow: hidden;
-    //text-overflow: ellipsis;
 }
 
 .border {
@@ -215,4 +213,8 @@ ion-input {
 
 .text-input-ios {
     margin: 11px 8px 11px 8px;
+}
+
+.item-ios, .item-md {
+    padding-left: 0;
 }

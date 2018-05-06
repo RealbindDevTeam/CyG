@@ -45,10 +45,6 @@ page-establishment-list-detail {
     ion-label, ion-list.margin {
         margin: 0 !important;
     }
-    
-    ion-item, ion-list.margin button{
-        padding-left: 0 !important;
-    }
 
     ion-label > ion-icon {
         color: #EF5350;
@@ -79,5 +75,17 @@ page-establishment-list-detail {
 
     .img{
         margin: 0 auto;
+    }
+
+    .buttons-inline {
+        display: flex;
+    }
+
+    .buttons-inline button {
+        width: 49%;
+    }
+
+    .item-ios, .item-md {
+        padding-left: 16px;
     }
 }
