@@ -80,7 +80,7 @@
                                 </mat-form-field>
                                 <mat-form-field style="width: 49%; margin-left: 2%">
                                     <mat-select formControlName="country" placeholder="{{'ADMIN_SIGNUP.COUNTRY' | translate}}">
-                                        <mat-option *ngFor="let country of _countries | async" value="{{country._id}}" (click)="changeCountry(country._id)">{{country.name | translate}}</mat-option>
+                                        <mat-option *ngFor="let country of _countries | async" value="{{country._id}}" (click)="changeCountry(country)">{{country.name | translate}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>

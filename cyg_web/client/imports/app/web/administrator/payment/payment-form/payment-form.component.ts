@@ -85,6 +85,7 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
     private _establishmentPointSub: Subscription;
     private _establishmentsArray: string[] = [];
     private _negativePointsSub: Subscription;
+    private _establishmentMedalsSub: Subscription;
 
     /**
      * PaymentFormComponent Constructor
@@ -241,6 +242,7 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
             this._establishmentsArray.push(establishment.establishmentId);
         });
         this._negativePointsSub = MeteorObservable.subscribe('getNegativePointsByEstablishmentsArray', this._establishmentsArray).takeUntil(this._ngUnsubscribe).subscribe();
+        this._establishmentMedalsSub = MeteorObservable.subscribe('getEstablishmentMedalsByArray', this._establishmentsArray).takeUntil(this._ngUnsubscribe).subscribe();
         this._userAgent = navigator.userAgent;
     }
 
@@ -330,7 +332,6 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
      * This function gets custPayInfo credentials
      */
     getPayInfo() {
-
         try {
             this.fillAuthorizationCaptureObject(this._payuPaymentService.al, this._payuPaymentService.ak, this._payuPaymentService.ai, this._payuPaymentService.mi);
         } catch (e) {
@@ -379,7 +380,7 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
         let payuPaymentsApiURI: string;
 
         if (this._isProd) {
-            ccardNameAux = this._paymentForm.value.fullName;
+            ccardNameAux = this._paymentForm.value.payerName;
             testAux = false;
             payuPaymentsApiURI = Parameters.findOne({ name: 'payu_payments_url_prod' }).value;
         } else {
@@ -604,6 +605,17 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
             creation_user: Meteor.userId()
         });
 
+        UserDetails.update({ _id: this._userDetail._id }, {
+            $set: {
+                contact_phone: this._paymentForm.value.contactPhone,
+                dni_number: this._paymentForm.value.dniNumber,
+                address: this._paymentForm.value.streetOne,
+                country_id: this._paymentForm.value.country,
+                city_id: this._paymentForm.value.city,
+                other_city: ''
+            }
+        });
+
         if (_response.transactionResponse.state == 'APPROVED') {
 
             this.dataArray.forEach((establishmentPaid) => {
@@ -640,17 +652,14 @@ export class PaymentFormComponent implements OnInit, OnDestroy {
                         }
                     });
                 });
-            });
 
-            UserDetails.update({ _id: this._userDetail._id }, {
-                $set: {
-                    contact_phone: this._paymentForm.value.contactPhone,
-                    dni_number: this._paymentForm.value.dniNumber,
-                    address: this._paymentForm.value.streetOne,
-                    country_id: this._paymentForm.value.country,
-                    city_id: this._paymentForm.value.city,
-                    other_city: ''
-                }
+                Establishments.collection.update({ _id: establishmentPaid.establishmentId }, {
+                    $set: {
+                        isActive: true,
+                        modification_date: new Date(),
+                        modification_user: Meteor.userId()
+                    }
+                });
             });
 
             //Call meteor method for generate iurest invoice

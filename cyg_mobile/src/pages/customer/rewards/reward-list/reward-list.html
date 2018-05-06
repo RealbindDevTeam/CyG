@@ -29,7 +29,7 @@
             <h1>{{'MOBILE.REWARD_LIST.NO_REWARDS' | translate}}</h1>
         </div>
     </div>
-    <ion-list>
+    <!--ion-list>
         <div *ngFor="let reward of _rewards | async">
             <ion-card *ngIf="showReward(reward.item_id)">
                 <ion-card-content>
@@ -52,5 +52,23 @@
                 </ion-card-content>
             </ion-card>
         </div>
-    </ion-list>
+    </ion-list-->
+
+    <div padding>
+        <div *ngFor="let reward of _rewards | async">
+            <div *ngIf="showReward(reward.item_id)" ion-button block clear color="cwhite" class="button-profile border">
+                <div class="profile-header">
+                    <ion-item no-lines>
+                        <img item-start src="{{getItemThumb(reward.item_id)}}">
+                        <h2>{{reward.item_quantity}} {{getItemName(reward.item_id)}}</h2>
+                        <ion-badge class="rewardpts">{{reward.points}} {{'MOBILE.REWARD_LIST.MEDALS' | translate}}
+                            <ion-icon name="medal"></ion-icon>
+                        </ion-badge>
+                        <button class="button-red button-cust" ion-button small color="danger" *ngIf="_establishmentIsActive && isValidRewardPoints(reward.points)" (click)="redeemReward(reward._id, reward.points)">{{'MOBILE.REWARD_LIST.REDEEM_BTN' | translate}}</button>
+                        <p *ngIf="_establishmentIsActive && !isValidRewardPoints(reward.points)" style="white-space: normal;color: #EF5350">{{'MOBILE.REWARD_LIST.MORE_MEDALS' | translate}}</p>
+                    </ion-item>
+                </div>
+            </div>
+        </div>
+    </div>
 </ion-content>
